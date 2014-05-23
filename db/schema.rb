@@ -13,18 +13,33 @@
 
 ActiveRecord::Schema.define(version: 20140522025216) do
 
+  create_table "students", force: true do |t|
+    t.string  "ucinetid",     limit: 8
+    t.string  "first_name",   limit: 30
+    t.string  "middle_name",  limit: 30
+    t.string  "last_name",    limit: 30
+    t.string  "nickname",     limit: 20
+    t.integer "experience"
+    t.string  "availability", limit: 11
+    t.string  "imgsrc",       limit: 200
+    t.string  "level",        limit: 4
+    t.string  "major",        limit: 10
+    t.string  "opt",          limit: 5
+  end
+
   create_table "users", force: true do |t|
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
+    t.string   "email",                  default: "",   null: false
+    t.string   "encrypted_password",     default: "",   null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
+    t.integer  "sign_in_count",          default: 0,    null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.string   "status"
+    t.string   "status",                 default: "No"
+    t.string   "partner1"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name"
