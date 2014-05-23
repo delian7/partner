@@ -79,3 +79,9 @@ pickle-email-*.html
 .powenv
 
 db/schema.rb
+
+Gemfile.lock
+
+Gemfile.lock
+
+*.lock
