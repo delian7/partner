@@ -1,19 +1,21 @@
-<%# navigation styled for Bootstrap 3.0 %>
-<nav class="navbar navbar-inverse navbar-fixed-top">
-  <div class="container">
-    <div class="navbar-header">
+
+
+<nav class="navbar navbar-default">
+  <div id='cssmenu'>
+    <div class="cssmenu">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <%= link_to 'Home', root_path, class: 'navbar-brand' %>
+      <li><%= link_to 'Home', root_path, class: 'navbar-brand' %></li>
     </div>
     <div class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
         <%= render 'layouts/navigation_links' %>
       </ul>
     </div>
-  </div>
+
+</div>
 </nav>

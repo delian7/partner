@@ -50,23 +50,26 @@ Recipes:
 Preferences:
 
 * git: true
-* apps4: none
+* apps4: rails-devise
+* authentication: devise
+* authorization: false
+* better_errors: true
+* deployment: none
+* local_env_file: false
+* pry: false
+* quiet_assets: true
+* starter_app: false
 * dev_webserver: webrick
 * prod_webserver: same
 * database: mysql
 * templates: erb
-* tests: none
+* tests: rspec
+* continuous_testing: none
 * frontend: bootstrap3
 * email: gmail
-* authentication: none
-* authorization: pundit
-* form_builder: simple_form
-* starter_app: admin_app
-* rvmrc: false
-* quiet_assets: true
-* better_errors: true
-* ban_spiders: true
-* github: true
+* devise_modules: default
+* form_builder: none
+* rvmrc: true
 
 Ruby on Rails
 -------------
@@ -89,8 +92,8 @@ Development
 -   Template Engine: ERB
 -   Testing Framework: Test::Unit
 -   Front-end Framework: Bootstrap 3.0 (Sass)
--   Form Builder: SimpleForm
--   Authentication: None
+-   Form Builder: None
+-   Authentication: Devise
 -   Authorization: None
 -   Admin: None
 
