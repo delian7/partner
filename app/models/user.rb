@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
  
  def status_name
-        status ? "Request Partner" : "No"
+        status ? "Unsend" : "Request"
  end
-         
+ 
 end

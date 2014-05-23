@@ -1,7 +1,16 @@
+<% if current_user.status == false%>
 <td><%= user.name %></td>
 <td><%= link_to user.email, user %></td>
-<% if user.status == "No" %>
+
+<% if user.status == false%>
+<td>Available</td>
 <td><%=  link_to user.status_name, flop_user_path(user), :class=>"bluebutton" %></td>
-<% else %>
+<td></td>
+<%else%>
 <td>Partnered</td>
+
+<% end %>
+
+<% else %>
+<td>You are already partnered!</td>
 <% end %>

@@ -3,21 +3,13 @@
   <a href="/"><img width=100% src="/assets/PartnerUpLogo.png"></a>
 </div>
 <div style="float: right; width: 50%; text-align:right;">
-<br>
-  You are signed in as <a href=""></a>
-</div>
-
-
-<div style="float: right; width: 50%; text-align:right;">
-  <% if user_signed_in? %>
-  <li><%= link_to 'Edit account', edit_user_registration_path %> <br></li>
-  <li><%= link_to 'Sign out', destroy_user_session_path, :method=>'delete' %></li>
+ <% if user_signed_in? %>
+   You are signed in as <%= current_user.name%></a><br><br>
+ <%= link_to 'Edit account', edit_user_registration_path %> <br>
+<%= link_to 'Sign out', destroy_user_session_path, :method=>'delete' %>
 <% else %>
-  <li><%= link_to 'Sign in', new_user_session_path %> <br></li>
-  <li><%= link_to 'Sign up', new_user_registration_path %></li>
-<% end %>
-<% if user_signed_in? %>
-  <li><%= link_to 'Users', users_path %></li>
+<%= link_to 'Sign in', new_user_session_path %> <br>
+<%= link_to 'Sign up', new_user_registration_path %>
 <% end %>
 </div>
   <br style="clear: both;" />
