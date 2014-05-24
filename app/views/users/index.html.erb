@@ -1,14 +1,12 @@
 <div class="container">
   <div class="row">
-    <h3>Users</h3>
+    <h3>Find a Partner</h3>
     <div class="column" style="width:100%;">
       <table class="table">
         <tbody>
-          <% @users.each do |user| %>
-            <tr>
-              <%= render user %>
-            </tr>
-          <% end %>
+            <% @users.each do |user| %>
+            <tr><%= render user %></tr>
+            <%end%>
         </tbody>
       </table>
     </div>

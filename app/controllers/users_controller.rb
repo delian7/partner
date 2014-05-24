@@ -7,7 +7,8 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    unless @user == current_user
+  unless user_signed_in?
+  #  unless @user == current_user
       redirect_to :back, :alert => "Access denied."
     end
   end
@@ -16,14 +17,17 @@ class UsersController < ApplicationController
     user = User.find(params[:id])
     user.status = !user.status # flop the status
     current_user.status = !current_user.status
+
+    if current_user.partner1 == ""
     current_user.partner1 = user.name
     user.partner1 = current_user.name
-    
+    else
+    current_user.partner1 = ""
+    user.partner1 = ""
+    end
+
     user.save
     current_user.save
-
     redirect_to users_path(user)
 end
-
-
 end
