@@ -49,12 +49,15 @@
 <CFSET TEMP=StructInsert(PARAMS,#GetToken(var3,1,"=")#,#GetToken(var3,2,"=")#)>
 <CFSET TEMP=StructInsert(PARAMS,#GetToken(var4,1,"=")#,#GetToken(var4,2,"=")#)>
 
+
+
+
 <CFSET ID = PARAMS.ucinetid>
 <CFSET TIMEIN = PARAMS.age_in_seconds>
 <cfif ID is "">
 <!-- Check if login is valid -->
 <meta http-equiv="refresh" 
-content="0;URL=https://login.uci.edu/ucinetid/webauth?return_url=http://server.domain.uci.edu/weblogin.cfm">
+content="0;URL=https://login.uci.edu/ucinetid/webauth?return_url=http://isis.ics.uci.edu:3000">
 
 
 <CFELSE>
@@ -62,7 +65,7 @@ content="0;URL=https://login.uci.edu/ucinetid/webauth?return_url=http://server.d
   <cfif TIMEIN GT 3600>
 <!-- Check age of the login -->
   <meta http-equiv="refresh" 
-content="2;URL=https://login.uci.edu/ucinetid/webauth?return_url=http://server.domain.uci.edu/weblogin.cfm">
+content="2;URL=https://login.uci.edu/ucinetid/webauth?return_url=http://isis.ics.uci.edu:3000">
     <TITLE>Login</TITLE>
   </HEAD>
 <BODY bgcolor="#FFFFFF" text="navy" >
@@ -100,7 +103,7 @@ content="2;URL=https://login.uci.edu/ucinetid/webauth?return_url=http://server.d
 
 <!-- they don't have the cookie -->
 <meta http-equiv="refresh" 
-content="0;URL=https://login.uci.edu/ucinetid/webauth?return_url=http://server.domain.uci.edu/weblogin.cfm">
+content="0;URL=https://login.uci.edu/ucinetid/webauth?return_url=http://isis.ics.uci.edu:3000">
     <TITLE>Login</TITLE>
   </HEAD>
 <BODY bgcolor="#FFFFFF" text="navy" >
