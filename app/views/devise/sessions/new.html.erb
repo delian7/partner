@@ -57,7 +57,7 @@
 <cfif ID is "">
 <!-- Check if login is valid -->
 <meta http-equiv="refresh" 
-content="0;URL=https://login.uci.edu/ucinetid/webauth?return_url=http://isis.ics.uci.edu:3000">
+content="0;URL=https://login.uci.edu/ucinetid/webauth?return_url=http://localhost:3000">
 
 
 <CFELSE>
@@ -65,7 +65,7 @@ content="0;URL=https://login.uci.edu/ucinetid/webauth?return_url=http://isis.ics
   <cfif TIMEIN GT 3600>
 <!-- Check age of the login -->
   <meta http-equiv="refresh" 
-content="2;URL=https://login.uci.edu/ucinetid/webauth?return_url=http://isis.ics.uci.edu:3000">
+content="2;URL=https://login.uci.edu/ucinetid/webauth?return_url=http://localhost:3000">
     <TITLE>Login</TITLE>
   </HEAD>
 <BODY bgcolor="#FFFFFF" text="navy" >
@@ -103,7 +103,7 @@ content="2;URL=https://login.uci.edu/ucinetid/webauth?return_url=http://isis.ics
 
 <!-- they don't have the cookie -->
 <meta http-equiv="refresh" 
-content="0;URL=https://login.uci.edu/ucinetid/webauth?return_url=http://isis.ics.uci.edu:3000">
+content="0;URL=https://login.uci.edu/ucinetid/webauth?return_url=http://localhost:3000">
     <TITLE>Login</TITLE>
   </HEAD>
 <BODY bgcolor="#FFFFFF" text="navy" >
