@@ -1,0 +1,87 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+
+
+
+.bigdiv {
+background: #ffffff;
+background: -moz-radial-gradient(center, ellipse cover,  #ffffff 0%, #c7e3f9 71%, #b3cce0 100%);
+background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#ffffff), color-stop(71%,#c7e3f9), color-stop(100%,#b3cce0));
+background: -webkit-radial-gradient(center, ellipse cover,  #ffffff 0%,#c7e3f9 71%,#b3cce0 100%);
+background: -o-radial-gradient(center, ellipse cover,  #ffffff 0%,#c7e3f9 71%,#b3cce0 100%);
+background: -ms-radial-gradient(center, ellipse cover,  #ffffff 0%,#c7e3f9 71%,#b3cce0 100%);
+background: radial-gradient(ellipse at center,  #ffffff 0%,#c7e3f9 71%,#b3cce0 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#b3cce0',GradientType=1 );
+
+display:inline-block;
+float: left;
+font-family:arial;color:black;font-size:14px;
+border-radius:10px;
+border:1px solid #8EA2B2;
+box-shadow: 1px 1px 1px #999;
+}
+
+.profilediv {
+  display:inline-block;
+  float: left;
+  font-family:arial;color:black;font-size:14px;
+}
+
+#kaylogo {
+    position: fixed;
+    bottom: 0px;
+    right: 0px; 
+    opacity:0.0;
+    filter:alpha(opacity=00); 
+}
+
+#kaylogo:hover{
+    opacity:1.0;
+    filter:alpha(opacity=100); /* IE8 and earlier */
+    width:50%;
+
+}
+
+td{
+padding: 2% 2% 2% 2%;
+  font-family:arial;color:black;font-size:13x;
+}
+
+th{
+  text-align: center;
+  padding: 2% 2% 2% 2%;
+    font-family:arial;color:black;font-size:13px;
+}
+
+
+body {
+  -moz-font-smoothing: antialiased;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  border-radius:10px;
+  padding:1% 5% 5% 5%;
+  border:1px solid #C1C7F7;
+  font-family:arial;color:black;font-size:14px;
+  background: -moz-linear-gradient(top,  #ffffff 0%, #f3f3f3 50%, #ededed 51%, #ffffff 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(50%,#f3f3f3), color-stop(51%,#ededed), color-stop(100%,#ffffff));
+  background: -webkit-linear-gradient(top,  #ffffff 0%,#f3f3f3 50%,#ededed 51%,#ffffff 100%);
+  background: -o-linear-gradient(top,  #ffffff 0%,#f3f3f3 50%,#ededed 51%,#ffffff 100%);
+  background: -ms-linear-gradient(top,  #ffffff 0%,#f3f3f3 50%,#ededed 51%,#ffffff 100%);
+  background: linear-gradient(to bottom,  #ffffff 0%,#f3f3f3 50%,#ededed 51%,#ffffff 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff',GradientType=0 );
+
+}
