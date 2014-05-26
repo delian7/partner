@@ -35,9 +35,31 @@ img {
 main {
   @extend .container;
   background-color: #eee;
-  padding-bottom: 80px;
+  padding-bottom: 10px;
+  margin-bottom: 40px;
   width: 100%;
-  margin-top: 51px; // accommodate the navbar
+
+
+
+
+background: #ffffff;
+background: -moz-radial-gradient(center, ellipse cover,  #ffffff 0%, #cde6f7 100%);
+background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#ffffff), color-stop(100%,#cde6f7));
+background: -webkit-radial-gradient(center, ellipse cover,  #ffffff 0%,#cde6f7 100%);
+background: -o-radial-gradient(center, ellipse cover,  #ffffff 0%,#cde6f7 100%);
+background: -ms-radial-gradient(center, ellipse cover,  #ffffff 0%,#cde6f7 100%);
+background: radial-gradient(ellipse at center,  #ffffff 0%,#cde6f7 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#cde6f7',GradientType=1 );
+
+
+display:inline-block;
+float: left;
+font-family:arial;color:black;font-size:14px;
+border-radius:10px;
+border:1px solid #8EA2B2;
+box-shadow: 1px 1px 1px #999;
+
+
   }
 section {
   @extend .row;
@@ -104,7 +126,7 @@ section {
 .navbar-default .navbar-nav > .active > a, 
 .navbar-default .navbar-nav > .active > a:hover, 
 .navbar-default .navbar-nav > .active > a:focus {
-    color: #555;
+    color: #000;
     background-color: #E7E7E7;
 }
 .navbar-default .navbar-nav > .open > a, 
