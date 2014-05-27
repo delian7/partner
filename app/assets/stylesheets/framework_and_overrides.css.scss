@@ -35,11 +35,9 @@ img {
 main {
   @extend .container;
   background-color: #eee;
-  padding-bottom: 10px;
+  padding-bottom: 80px;
   margin-bottom: 40px;
   width: 100%;
-
-
 
 
 background: #ffffff;
@@ -126,7 +124,7 @@ section {
 .navbar-default .navbar-nav > .active > a, 
 .navbar-default .navbar-nav > .active > a:hover, 
 .navbar-default .navbar-nav > .active > a:focus {
-    color: #000;
+    color: #555;
     background-color: #E7E7E7;
 }
 .navbar-default .navbar-nav > .open > a, 

@@ -1,8 +1,14 @@
 class UsersController < ApplicationController
   before_filter :authenticate_user!
+  require 'net/http'
+    require 'net/https'
+require 'uri'
+
 
   def index
     @users = User.all
+
+
   end
 
   def show
@@ -30,4 +36,8 @@ class UsersController < ApplicationController
     current_user.save
     redirect_to users_path(user)
 end
+
+
+
+
 end
