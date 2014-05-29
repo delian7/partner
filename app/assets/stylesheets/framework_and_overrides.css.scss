@@ -157,6 +157,7 @@ section {
 .navbar-default .navbar-toggle:focus {
     background-color: #DDD;
 }
+
 .navbar-default .navbar-toggle .icon-bar {
     background-color: #CCC;
 }
@@ -168,4 +169,15 @@ section {
     .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
         color: #333;
     }
+}
+
+
+
+
+.radio input[type="radio"],
+.radio-inline input[type="radio"],
+.checkbox input[type="checkbox"],
+.checkbox-inline input[type="checkbox"] {
+  float: left;
+  margin-left: 0px;
 }
