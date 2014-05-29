@@ -1,88 +1,16 @@
-<h3>Profile Page of <%= @user.name%></h3>
+<div style="width:100%;">
+	<div class= "profilediv" style="width: 27%; padding: 2% 2% 3% 2%; text-align:center;">
+		<%= image_tag(@user.imgsrc, width: '80%' ) %><br><br>
+
+
+
+	</div> 
+	<div class= "profilediv" style="padding: 2% 0% 4% 2%; width: 40.6%; text-align:left;">	
+
+<h3>Profile Page of <b><%= @user.name%></h3></b>
 <p>Name: <%= @user.name if @user.name %></p>
 <p>Email: <%= @user.email if @user.email %></p>
 <p>Last Sign In: <%= @user.last_sign_in_at if @user.last_sign_in_at %></p>
-<HTML>
-	<HEAD>
-<CFSET #SESSION.LOGINOK# = "0">
-
-<cfif IsDefined("cookie.ucinetid_auth") AND (#cookie.ucinetid_auth# NEQ "no_key")>
-
-<CFSET #request# = "http://login.uci.edu/ucinetid/webauth_check?ucinetid_auth=" & #cookie.ucinetid_auth#>
-<CFHTTP METHOD="GET" URL=#request# > 
-</CFHTTP>
-
-
-<CFSET OkToProceed = 1>
-<CFSET stripped = #StripCR(cfhttp.filecontent)#>
-<CFSET var1 = #GetToken(#stripped#,1)#>
-<CFSET var2 = #GetToken(#stripped#,2)#>
-<CFSET var3 = #GetToken(#stripped#,3)#>
-<CFSET var4 = #GetToken(#stripped#,4)#>
-
-<CFSET PARAMS=StructNew()>
-<CFSET TEMP=StructInsert(PARAMS,#GetToken(var1,1,"=")#,#GetToken(var1,2,"=")#)>
-<CFSET TEMP=StructInsert(PARAMS,#GetToken(var2,1,"=")#,#GetToken(var2,2,"=")#)>
-<CFSET TEMP=StructInsert(PARAMS,#GetToken(var3,1,"=")#,#GetToken(var3,2,"=")#)>
-<CFSET TEMP=StructInsert(PARAMS,#GetToken(var4,1,"=")#,#GetToken(var4,2,"=")#)>
-
-<CFSET ID = PARAMS.ucinetid>
-<CFSET TIMEIN = PARAMS.age_in_seconds>
-<cfif ID is "">
-<!-- Check if login is valid -->
-<meta http-equiv="refresh" 
-content="0;URL=https://login.uci.edu/ucinetid/webauth?return_url=http://server.domain.uci.edu/weblogin.cfm">
-
-
-<CFELSE>
-
-	<cfif TIMEIN GT 3600>
-<!-- Check age of the login -->
-	<meta http-equiv="refresh" 
-content="2;URL=https://login.uci.edu/ucinetid/webauth?return_url=http://server.domain.uci.edu/weblogin.cfm">
-    <TITLE>Login</TITLE>
-	</HEAD>
-<BODY bgcolor="#FFFFFF" text="navy" >
-<center>
-<br clear=all>
-<p>
-<font size=5 face="Verdana","arial","helvetica" color="Navy">
-<b>Login System (You are running this web page, download it instead)</b></font>
-<br><br>
-<hr width=275 color="navy"><br>
-
-			<font face="arial","helvetica" size="4">
-			<b>User Login & Authentication</b><br><br>
-		
-			<hr width=275 color="navy">
-		
-						<font face="arial","helvetica" size="3">
-			<center>You have been logged in too long and need to login again.
-         <cfoutput>#StructCount(PARAMS)#</cfoutput></center>
-				
-
-</CFIF>
-
-<p>
-<font size=2 face="arial","helvetica">
-
-	<cfabort>
-	</cfif>
-
-
-<!-- Authentication successful, put your login scripts here and check authorization-->
+	</div>
 
 	
-	<CFELSE>
-
-<!-- they don't have the cookie -->
-<meta http-equiv="refresh" 
-content="0;URL=https://login.uci.edu/ucinetid/webauth?return_url=http://server.domain.uci.edu/weblogin.cfm">
-    <TITLE>Login</TITLE>
-	</HEAD>
-<BODY bgcolor="#FFFFFF" text="navy" >
-
-
-</CFIF>
-</BODY>
-</HTML>

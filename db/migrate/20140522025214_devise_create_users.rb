@@ -19,8 +19,8 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.datetime :last_sign_in_at
       t.string   :current_sign_in_ip
       t.string   :last_sign_in_ip
-      t.boolean  :status, :default => 0
-      t.string   :partner1
+      t.boolean  :status, null: false, default: "0"
+      t.string   :partner1, null: false, default: ""
 
 
       ## Confirmable

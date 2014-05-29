@@ -1,2 +1,21 @@
-<h3>Welcome to Partner UP!</h3>
-<p><%= link_to 'Users:', users_path %> <%= User.count %> registered</p>
+<h2>Welcome to Partner UP!</h2>	
+
+<% if user_signed_in? %>
+<div style="width:100%;">
+	<div class= "profilediv" style="width: 37%; padding: 2% 2% 3% 2%; text-align:center;">
+<% if current_user.status == false%><br>
+<h4>There are currently <%= User.count %> registered users </h4><br><br><br>
+<% end %>
+	</div> <div class= "profilediv" style="padding: 2% 2% 2% 1%; width: 20.6%; text-align:center;">	
+</div>
+	<div class= "bigdiv" style="padding: 2% 2% 2% 1%; width: 40.6%; text-align:center;">	
+<h2>Partner Status</h2>	
+<% if current_user.status == false%><br>
+	<b>You are have no partners</b><br><br>
+	<%= link_to ' Find a Partner', users_path, :class=> "bluebutton" %><br><br>
+<% else %><br>
+    <h4>You are partnered with <b><%= current_user.partner1%></b> </h4>
+<% end %>
+	</div>
+
+<%else %><%end%>
