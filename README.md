@@ -57,33 +57,33 @@ The application is configured to send email using a Gmail account.
 Features
 --------
 ####Sign up with confirmation emails
-> Sign up will create an account in the database 
++ Sign up will create an account in the database 
 
 ####Sign in/Sign out
-> Sign in / Sign out will destroy or create a new user session
++ Sign in / Sign out will destroy or create a new user session
 
 ####Forgot Password
-> If you forget your password you can have a link to reset your password emailed to you
++ If you forget your password you can have a link to reset your password emailed to you
 
 ####Edit Account
-> Users can edit their name, email or password if they want. 
++ Users can edit their name, email or password if they want. 
 
 ####Delete Account
-> Users can delete their accounts
++ Users can delete their accounts
 
 ####Student View
 
 #####Request Partner
-> Students can partner with other students, and it will be recorded in the database
++ Students can partner with other students, and it will be recorded in the database
 
 #####Undo Partnership
-> Students can undo a partnership if they need to
++ Students can undo a partnership if they need to
 
 #####View Profile
-> Students can view their own and other student's profiles
++ Students can view their own and other student's profiles
 
 #####Check Partner Status
-> Students can check their status to see if they are partered and with whom.
++ Students can check their status to see if they are partered and with whom.
 
 
 
@@ -113,6 +113,7 @@ Documentation and Support
 >Pictures are stored in the database as URLs for now.
 
 #### Contact
+ # # # DANA WHAT DOES THE CONTACT MODEL DO? # # #
 
 ###2. Controllers
 ####Users_controller
@@ -133,7 +134,7 @@ Documentation and Support
 + create - makes @contact a new Contact (from model) taking parameters and renders alert based on delivery success
 
 ####Application_controller
-Currently filled with pundit code for authorization. Available if we need it later.
+Currently filled with pundit code for authorization. Available if we need it later.  <a href="http://www.oit.uci.edu/help/webauth/webauth_instructions.html">Prevents CSRF attacks by raising an exception, as suggested in Webauth documentation.</a>
 
 
 ###3. Views
@@ -145,10 +146,6 @@ There are two main pages that will be used, visitors#index and users#index.
 >Visitors index is the "Homepage". It displays your profile info and partner status if you're a user, or number of registered users if you're a admin/vip. If you are not signed in, 
 
 ####Users#Index
-
-
-
->Renders User-
 First we check for database inconsistencies that will cause problems with rendering the page.
 >>######if (current_user.status == true && !current_user.partner1.empty?) || (current_user.status == false && current_user.partner1.empty?)
 >>First users index checks to make sure that the current user doesn't have either
@@ -160,14 +157,12 @@ First we check for database inconsistencies that will cause problems with render
 
 >If either of these cases are true, then it will show a button with clear_user_path link. clear is a method in the user controller, and the path was made in routes.rb. This will clear both the status and partner1 to defaults.
 
->Otherwise, 
-
->It will render the appropriate header and table th's for users and admin/vips.
+>Otherwise, It will render the appropriate header and table th's for users and admin/vips.
 
 >Then for each user in the database, it will render the partial user. The user partial is _user.html.erb. Each rendered user is a row in the table. It will render a user for each user in the database.
 
 >+ For admins/vips this is a table of student names and their partners.
->+ For students this is a table of other students names, emails, status and request button.
+>+ For students this is a table of other students names, emails, status and request button. Students will see a different views based on their partner status. This is done with if statements in the view. There is probably a better way to do this in the future.
 
 
 ### Issues
