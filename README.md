@@ -85,16 +85,6 @@ Features
 #####Check Partner Status
 > Students can check their status to see if they are partered and with whom.
 
-####Professor View
-
-#####View Roster of Students
-> Professors and Admins can view the roster of students signed up
-
-#####Export Roster as CSV
-> Professors and Admins can download a CSV of the partnership data
-
-#####Clear all Partnerships
-> Professors can clear partnership data if they need to for some reason
 
 
 Getting Started
@@ -126,12 +116,27 @@ Documentation and Support
 
 ###2. Controllers
 ####Users_controller
++ index
++ show - This can be used later to determine whether to show a user or not. Currently the commented code restricts access to user profiles, only the current_users profile is visible to the current_user
++ update - current code updates the attributes as secure parameters and displays alert messages to user
++ destroy - destroys user, can be used by admins. 
++ flop - flips the user's status to partnered and puts the partners name in partner1 of the current_user and puts the current_user name in the partner's partner1
++ cancel - clear current_user partnership and status. a reset to unpartnered. for database inconsistencies.
++ clearall - resets all partnerships.
++ export - Downloads csv of html table
+
 ####Visitors_controller
+
 ####Contacts_controller
++ index
++ new - makes @contact a new Contact (from model)
++ create - makes @contact a new Contact (from model) taking parameters and renders alert based on delivery success
+
 ####Application_controller
+Currently filled with pundit code for authorization. Available if we need it later.
+
 
 ###3. Views
-
 ####Layout#Application
 >In every page header, the _headerbar.html.erb partial is rendered.  That's the partnerup logo and the sign out/edit links. Then the _navigation.html.erb is rendered. That's the Nav bar Then the body first leaves room for dismissable bootstrap messages to be displayed at the top of the body. Then yields to content. The footer contains _footer.html.erb which is the report bug, submit suggestion and the kay easter egg.
 There are two main pages that will be used, visitors#index and users#index.
