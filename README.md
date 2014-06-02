@@ -91,18 +91,28 @@ Features
 
 ####Student View
 
-#####Partner
+######Partner
 + Students can partner with other students, and it will be recorded in the database
 
-#####Undo Partnership
+######Undo Partnership
 + Students can undo a partnership if they need to
 
-#####View Profile
+######View Profile
 + Students can view their own and other student's profiles
 
-#####Check Partner Status
+######Check Partner Status
 + Students can check their status to see if they are partered and with whom.
 
+####Professor View
+
+######View Roster
++ Professors and TAs can view a list of all students who have registered an account and who they have partnered with
+
+######Download Roster
++ Professors and TAs can download a CSV file of the partnership data
+
+######Clear Partnerships
++ Professors and TAs have the ability to clear all partnerships and return the students to unpartnered state
 
 
 Getting Started
@@ -114,20 +124,20 @@ Documentation and Support
 
 ###1. Models
 #### Users
-#####Roles
+######Roles
 | "Roles" | Types of User                 | Enum DB Value |
 |---------|-------------------------------|---------------|
 | User    | Student                       | 0             |
 | VIP     | Professor, TA, Course Manager | 1             |
 | Admin   | Webmaster                     | 2             |
 
-#####Status
+######Status
 >Status is a boolean value of the partnership status of a user. "True" or 1 means 'is partnered'. "False" or 0 means 'is NOT partnered'
 
-#####Partner1
+######Partner1
 >Partner1 is a column of corresponding names of the partners.  This should probably be done by ID in the future to make it easier to find current_user's partner's imgsrc for example.
 
-#####Imgsrc
+######Imgsrc
 >Pictures are stored in the database as URLs for now.
 
 #### Contact
@@ -145,6 +155,7 @@ Documentation and Support
 + export - Downloads csv of html table
 
 ####Visitors_controller
+empty for now
 
 ####Contacts_controller
 + index
@@ -152,7 +163,7 @@ Documentation and Support
 + create - makes @contact a new Contact (from model) taking parameters and renders alert based on delivery success
 
 ####Application_controller
-Currently filled with pundit code for authorization. Available if we need it later.  <a href="http://www.oit.uci.edu/help/webauth/webauth_instructions.html">Prevents CSRF attacks by raising an exception, as suggested in Webauth documentation.</a>
+Currently filled with pundit code for authorization. Available if we need it later.  <a href="http://www.oit.uci.edu/help/webauth/webauth_instructions.html">Prevents CSRF Cross Site Request Forgery attacks by raising an exception, as suggested in Webauth documentation.</a>
 
 
 ###3. Views
