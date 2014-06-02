@@ -1,7 +1,26 @@
 Partner Up 1.0
 =========
 
->Partner up 1.0 is a partner management system that allows students to find partners and allows professors to download the data in csv format. It uses a signup-signin-signout interface to identify users and has different views for different user "roles". It requries confirmation emails to sign in and access the features of the website.
+>Partner up 1.0 is a partner management website that will update the current methods of class partner management which are tedious and cumbersome. Partner up is a fast and easy way for students to find partners and provides an effortless way for professors to oversee student progress. 
+
+Description of MVP
+-----------------
+Our MVP has succeeded in implementing the following features
+Account Creation, Updating and Deleting
+Partnerships based on student input
+Partner data spreadsheet
+>What ifs covered
++ What if a user forgets their password?
++ What if students make more than one account?
++ What if students drop the class?
++ What if the user encounters a bug?
++ What if someone else accessed their email account and used a forgot password link to reset the password?
++ What if a confirmation email never arrives
++ 
+
+
+It uses accounts created in the database to identify users and has different views for different user "roles". It requires email confirmation to sign in and access the features of the website. We have a feature in case students forget their password that will email a link to allow them to change their password. This will prevent students from being locked out of their account. Forgot password and email confirmations will expire after a given amount of time, and only one token is active at a time. This is to add a layer of security so users will not have their accounts comprimised if their email accounts are comprimised.
+Professors and TAs can view the list of students signed up and their respective partners. At the bottom of the table there is a button that will download the table in csv format. At the moment we only track one project at a time, so in the case of a new project the TA user could clear the table and reset the users to unpartnered status, after downloading the partnerhip data of the previous project.
 <img src="http://i62.tinypic.com/eg5veu.png">
 
 Diagnostics
@@ -73,7 +92,7 @@ Features
 
 ####Student View
 
-#####Request Partner
+#####Partner
 + Students can partner with other students, and it will be recorded in the database
 
 #####Undo Partnership
@@ -159,10 +178,11 @@ First we check for database inconsistencies that will cause problems with render
 
 >Otherwise, It will render the appropriate header and table th's for users and admin/vips.
 
->Then for each user in the database, it will render the partial user. The user partial is _user.html.erb. Each rendered user is a row in the table. It will render a user for each user in the database.
+>Then for each user in the database, it will render the partial _user.html.erb. Each rendered user is a row in the table. It will render a user for each user in the database.
 
->+ For admins/vips this is a table of student names and their partners.
+
 >+ For students this is a table of other students names, emails, status and request button. Students will see a different views based on their partner status. This is done with if statements in the view. There is probably a better way to do this in the future.
+>+ For admins/vips this is a table of student names and their partners. Below that list are two buttons, to export the data to csv format, and to clear the database of all partnerships and reset all users status to 0/false andall users partner1 to "".
 
 
 ### Issues
