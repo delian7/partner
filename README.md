@@ -1,11 +1,11 @@
 Partner Up 1.0
 =========
-
+<img src="http://i62.tinypic.com/eg5veu.png">
 >Partner up 1.0 is a partner management website that will update the current methods of class partner management which are tedious and cumbersome. Partner up is a fast and easy way for students to find partners and provides an effortless way for professors to oversee student progress. 
 
 Description of MVP
 -----------------
-Our MVP has succeeded in implementing the following features
+>Our MVP has succeeded in implementing the following features
 Account Creation, Updating and Deleting
 Partnerships based on student input
 Partner data spreadsheet
@@ -16,12 +16,11 @@ Partner data spreadsheet
 + What if the user encounters a bug?
 + What if someone else accessed their email account and used a forgot password link to reset the password?
 + What if a confirmation email never arrives
-+ 
 
 
-It uses accounts created in the database to identify users and has different views for different user "roles". It requires email confirmation to sign in and access the features of the website. We have a feature in case students forget their password that will email a link to allow them to change their password. This will prevent students from being locked out of their account. Forgot password and email confirmations will expire after a given amount of time, and only one token is active at a time. This is to add a layer of security so users will not have their accounts comprimised if their email accounts are comprimised.
-Professors and TAs can view the list of students signed up and their respective partners. At the bottom of the table there is a button that will download the table in csv format. At the moment we only track one project at a time, so in the case of a new project the TA user could clear the table and reset the users to unpartnered status, after downloading the partnerhip data of the previous project.
-<img src="http://i62.tinypic.com/eg5veu.png">
+>It uses accounts created in the database to identify users and has different views for different user "roles". It requires email confirmation to sign in and access the features of the website. We have a feature in case students forget their password that will email a link to allow them to change their password. This will prevent students from being locked out of their account. Forgot password and email confirmations will expire after a given amount of time, and only one token is active at a time. This is to add a layer of security so users will not have their accounts comprimised if their email accounts are comprimised.
+>Professors and TAs can view the list of students signed up and their respective partners. At the bottom of the table there is a button that will download the table in csv format. At the moment we only track one project at a time, so in the case of a new project the TA user could clear the table and reset the users to unpartnered status, after downloading the partnerhip data of the previous project.
+
 
 Diagnostics
 -----------
