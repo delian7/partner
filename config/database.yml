@@ -31,7 +31,7 @@ test:
   adapter: mysql2
   encoding: utf8
   reconnect: false
-  database: partner_test
+  database: partner_up_test
   pool: 5
   username: root
   password: 
@@ -41,7 +41,7 @@ production:
   adapter: mysql2
   encoding: utf8
   reconnect: false
-  database: partner_production
+  database: partner_up_production
   pool: 5
   username: root
   password: 

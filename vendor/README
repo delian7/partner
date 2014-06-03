@@ -1,0 +1,33 @@
+=WebAuth
+
+A plug-in to use WebAuth with a Rails application.  This adds a method 'webauth_athenticate' into the ApplicationController to use as a before_filter (presumably).  The method takes two parameters:
+
+* A session key where you want to store the identifying information
+* The data from webauth_check that you want to store
+
+This allows the WebAuth plug-in to interact with your authorization system without your authorization system needing to understand WebAuth specifics.
+
+*NOTE*: Because the method takes arguments, it can not be called simply as a symbol passed to before_filter, it needs to be passed as a block.
+
+=Example
+
+This example sets session[:user] to the value for "campus_id" returned by WebAuth check.  
+
+Then an Authorization Filter uses that to do a lookup by campus_id.  The Authorization Filter section isn't part of the WebAuth plug-in and will be whatever authorization system your app uses.  It's included to point out that the WebAuth plug-in only does authentication and authorization still needs to occur.
+
+
+ class SomeController < ApplicationController
+   # filter method takes arguments, pass a block to before_filter
+   before_filter do |controller|
+     controller.webauth_authenticate(:session_key => :user, :webauth_data => :campus_id)
+   end
+
+   before_filter do 
+     user=AuthorizedUsers.find_by_campus_id(session[:user])   
+     return true if user
+     redirect_to :controller => :error, :action => :not_authorized and return false
+   end
+
+ 
+---
+Copyright (c) 2012

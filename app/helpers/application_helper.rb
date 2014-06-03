@@ -1,29 +1,15 @@
 module ApplicationHelper
-require 'net/http'
-require 'net/https'
-require 'uri'
 
-def ohshit
-url = URI.parse('http://www.it.uci.edu/help/webauth/weblogin.coldfusion.txt')
-req = Net::HTTP::Get.new(url.path)
-res = Net::HTTP.start(url.host, url.port) {|http|
-  http.request(req)
-}
- @page_content =  res.body
-end
+  def display_base_errors resource
+    return '' if (resource.errors.empty?) or (resource.errors[:base].empty?)
+    messages = resource.errors[:base].map { |msg| content_tag(:p, msg) }.join
+    html = <<-HTML
+    <div class="alert alert-error alert-block">
+      <button type="button" class="close" data-dismiss="alert">&#215;</button>
+      #{messages}
+    </div>
+    HTML
+    html.html_safe
+  end
 
-
-
-
-def ohshish
-url = URI.parse ('https://login.uci.edu/ucinetid/webauth_check?ucinetid_auth=true')
-http = Net::HTTP.new(url.host, url.port)
-http.use_ssl = (url.scheme == 'https')
-request = Net::HTTP::Get.new(url.path)
-request.basic_auth url.user, url.password
-response = http.request(request)
-
-@page_content = response.body
-
-end
 end

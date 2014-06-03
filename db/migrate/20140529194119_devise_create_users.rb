@@ -12,16 +12,15 @@ class DeviseCreateUsers < ActiveRecord::Migration
       ## Rememberable
       t.datetime :remember_created_at
 
-      ## Trackable
+     ## Trackable
       t.integer  :sign_in_count, default: 0, null: false
-      t.string   :ucinetid
       t.datetime :current_sign_in_at
       t.datetime :last_sign_in_at
       t.string   :current_sign_in_ip
       t.string   :last_sign_in_ip
-      t.boolean  :status, null: false, default: "0"
-      t.string   :partner1, null: false, default: ""
-
+      t.boolean :status, :default => 0
+      t.string   :partner1, :default=> ""
+      t.string    :imgsrc, :default =>"http://www.naijaticketshop.com/images/default_profile.jpg"
 
       ## Confirmable
       # t.string   :confirmation_token
