@@ -1,5 +1,5 @@
 .navbar{
-border:1px solid #8EA2B2;
+  border:1px solid #8EA2B2;
   border-bottom: 6px solid #006BB2;;
 }
 
@@ -15,8 +15,9 @@ border:1px solid #8EA2B2;
 }
 
 .navbar .brand {
-  padding: 0px 0px 0px;
-  font-size: 20px;
+  padding: 0px 0px 0px 0px;
+  margin: 0px 0px 0px 0px;
+  font-size: 0px;
   color: #4f4d4d;
 }
 
@@ -33,12 +34,12 @@ border:1px solid #8EA2B2;
 }
 .navbar .nav > li > a:hover,
 .navbar .nav > li > a:focus {
-   background-color:#006BB2;
-   color:#ffffff;
+  background-color:#006BB2;
+  color:#ffffff;
   box-shadow: 1px 1px 1px #999;
   border-top-left-radius: 15px;
   border-top-right-radius:15px;
-    padding: 15px 10px 15px;
+    padding: 15px 10px 11px;
 }
 
 .navbar .nav > .active > a,

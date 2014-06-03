@@ -1,4 +1,4 @@
-Partner
+Partner Up
 =========
 
 This application was generated with the [rails_apps_composer](https://github.com/RailsApps/rails_apps_composer) gem
@@ -50,9 +50,9 @@ Recipes:
 Preferences:
 
 * git: true
-* apps4: rails-devise
+* apps4: rails-devise-pundit
 * authentication: devise
-* authorization: false
+* authorization: pundit
 * better_errors: true
 * deployment: none
 * local_env_file: false
@@ -63,13 +63,13 @@ Preferences:
 * prod_webserver: same
 * database: mysql
 * templates: erb
-* tests: rspec
-* continuous_testing: none
+* tests: none
 * frontend: bootstrap3
 * email: gmail
-* devise_modules: default
-* form_builder: none
+* devise_modules: confirmable
+* form_builder: simple_form
 * rvmrc: true
+* ban_spiders: true
 
 Ruby on Rails
 -------------
@@ -92,7 +92,7 @@ Development
 -   Template Engine: ERB
 -   Testing Framework: Test::Unit
 -   Front-end Framework: Bootstrap 3.0 (Sass)
--   Form Builder: None
+-   Form Builder: SimpleForm
 -   Authentication: Devise
 -   Authorization: None
 -   Admin: None

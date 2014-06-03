@@ -30,10 +30,19 @@
         <%= f.password_field :current_password, class: 'form-control' %>
       </div>
     </fieldset>
-    <%= f.submit 'Update', :class => 'button right', :style => 'width:33%; height:33px;' %>
+    <%= f.submit 'Update', :class => 'updatebutton', :style => 'width:53%; height:55px; float:center;' %>
   <% end %>
 </div>
-<div style= "text-align:center;"><br><br>
+<div style= "text-align:right;"><br><br><hr>
 <h3>Cancel Account</h3>
-<%= button_to "Cancel my account", registration_path(resource_name), :data => { :confirm => "Are you sure?" }, :method => :delete, :class => 'button right' %>
+  <%if current_user.partner1 == ""%>
+  <%= link_to "DELETE", registration_path(resource_name), :data => { :confirm => "Are you sure?" }, :method => :delete, :class => 'deleteaccount' %>
+  <%else%>
+  <% User.all.each do |user| %>
+  <% if current_user.partner1 == user.name %>
+  
+  <%=  link_to "DELETE", cancel_user_path(user), :data => { :confirm => "Are you sure?" }, :class=>'deleteaccount' %>
+ <%end%><%end%><%end%>
+</fieldset>
+
 </div>
