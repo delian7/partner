@@ -19,11 +19,11 @@ class UsersController < ApplicationController
     current_user.status = !current_user.status
 
     if current_user.partner1 == ""
-    current_user.partner1 = user.name
-    user.partner1 = current_user.name
+      current_user.partner1 = user.name
+      user.partner1 = current_user.name
     else
-    current_user.partner1 = ""
-    user.partner1 = ""
+      current_user.partner1 = ""
+      user.partner1 = ""
     end
 
     user.save
