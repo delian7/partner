@@ -1,17 +1,20 @@
-<% if current_user.id != user.id%>
-<% if current_user.status == false%>
-	<td><%= user.name %></td>
-	<td><%= link_to user.email, user %></td>
-	<% if user.status == false%>
-		<td>Available</td>
-		<td><%=  link_to "Request", flop_user_path(user), :class=>"requestbutton" %></td>
-		<td></td><%else%><td>Partnered</td><td></td>
-	<% end %><%else%>
-<% if current_user.partner1 == user.name %>
-	<td><%= current_user.partner1 %></td>
-	<td><%= link_to user.email, user %></td>
-		<td>You are already partnered with <%= current_user.partner1 %> </td>
-		<td><%=  link_to "UNDO", flop_user_path(user), :class=>"button" %></td>
-<% end %>
-<% end %>
-<% end %>
+<% if current_user.role== "user"%> <% if user.role== "user"%>
+<% if current_user.id != user.id && current_user.status == false%>
+		<td><%= user.name %></td>     <td><%= link_to user.email, user %></td>	
+		<% if user.status == false%>
+				<td>Available</td>
+				<td><%=  link_to "Partner", flop_user_path(user), :class=>"requestbutton" %></td><td></td>
+		<%else%><td>Partnered</td><td></td>
+		<% end %>
+	<%elsif current_user.partner1 == user.name %>
+			<td><%= current_user.partner1 %></td>
+			<td><%= link_to user.email, user %></td>
+			<td>You are already partnered with <%= current_user.partner1 %> </td>
+			<td><%=  link_to "UNDO", flop_user_path(user), :class=>"button" %></td>
+	<% end %>
+<%end%>
+<% elsif current_user.role!= "user"%>
+	<% if current_user.id != user.id %>
+	            <tr> <td><%= user.name %></td><td><%= user.partner1 %></td></tr>
+	<%end%>
+<%end%>
