@@ -35,13 +35,5 @@
 </div>
 <div style= "text-align:center;"><br><br>
 <h3>Cancel Account</h3>
-<%if current_user.partner1 == ""%>
-<%= button_to "Cancel my account", registration_path(resource_name), :data => { :confirm => "Are you sure?" }, :method => :delete, :class => "button" %>
-<%else%>
- <% User.all.each do |user| %>
-<% if current_user.partner1 == user.name %>
-<%=  link_to "Cancel my account", cancel_user_path(user), :class=>'button' %>
- <%end%><%end%><%end%>
-
-
+<%= button_to "Cancel my account", registration_path(resource_name), :data => { :confirm => "Are you sure?" }, :method => :delete, :class => 'button right' %>
 </div>
