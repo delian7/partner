@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_filter :authenticate_user!
-  #after_action :verify_authorized, except: [:show]
+  after_action :verify_authorized, except: [:show]
 require 'csv'
 
 def index
@@ -8,7 +8,9 @@ def index
   #@user = User.find(params[:id])
   authorize @users
 end
-
+def new
+  @partners = User.find(params[:id])
+end
 def show
   @user = User.find(params[:id])
   unless user_signed_in?
@@ -38,10 +40,13 @@ def destroy
   end
 end
 
-
+# If the user is partnered, it will clear the partnership of the current_user and the partner
+# If the user is unpartnered, it will partner them
+# Partnering sets status to 1 or true and fills the current_user (and their partner's) partner1 with the other person's name
 def flop
+  if current_user.role == "user"
   user = User.find(params[:id])
-
+  authorize user
   user.status = !user.status # flop the status
   current_user.status = !current_user.status
 
@@ -59,11 +64,12 @@ def flop
     current_user.save
     redirect_to users_path(current_user)
 end
+end
 
-
+# Cancels account and ensures partnerships are cleared
 def cancel
   user = User.find(params[:id])
-
+  authorize user
   user.status = false
   current_user.status = false
   current_user.partner1 = ""
@@ -76,10 +82,22 @@ def cancel
 
 end
 
+# Force clear partnership in case of database inconsistency
+def clearpartnership
+  user = User.find(params[:id])
+  authorize user
+  current_user.status = false
+  current_user.partner1 = ""
+  current_user.save
 
+  redirect_to users_path(user)
+end
+
+# Clear all users partner1 columns to "" and reset statuses to 0 or false
 def clearall
   User.all.each do |user|
   user = User.find(user)
+  authorize user
   user.status = false
   user.partner1 = ""
   user.save
@@ -87,7 +105,9 @@ end
   redirect_to users_path(current_user), :alert => "All Partnerships have been cleared."
 end
 
+# Start download of csv file of partner data
 def export
+    authorize User.all
     @roster = User.all
     roster_csv = CSV.generate do |csv|
     csv << ["Name", "Partner"]
@@ -99,9 +119,10 @@ def export
 end
 
 
+
   private
   def secure_params
     params.require(:user).permit(:role)
   end
-
 end
+

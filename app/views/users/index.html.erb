@@ -1,6 +1,11 @@
 <div class="container">
 <div class="row">
 
+<% if (current_user.status == true && current_user.partner1.empty?) || (current_user.status == false && !current_user.partner1.empty?)%>
+<%= link_to "Find A Partner", clearpartnership_user_path(current_user), :class=>"requestbutton"%>
+<%else%>
+
+
 <% if current_user.role=="user"%>
   <h3>Find a Partner</h3>
   <table style="width:85%;"> <tr><td style="width:10%;"><b>Student Name</td><td style="width:12%;"><b>Email</td><td style="width:15%"><b>Available?</td></td> <td style="width:11%;"><b>Request</td></table></b>
@@ -29,7 +34,7 @@
 
 --  Make sure to export table first  --" }, :class=>"clear" %></div>
       <% end %>
-      
+      <%end%>
      
     </div>
   </div>

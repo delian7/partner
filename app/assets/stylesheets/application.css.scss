@@ -40,18 +40,18 @@ box-shadow: 1px 1px 1px #999;
   font-family:arial;color:black;font-size:14px;
 }
 
-#kaylogo {
+img#kaylogo {
     position: fixed;
     bottom: 0px;
-    right: 0px; 
+    right: 20%; 
     opacity:0.0;
     filter:alpha(opacity=00); 
 }
 
-#kaylogo:hover{
+img#kaylogo:hover{
     opacity:1.0;
     filter:alpha(opacity=100); /* IE8 and earlier */
-    width:50%;
+    width:10%;
 
 }
 

@@ -1,1 +1,8 @@
-<div><h1>Thanks for your Report</h1><p></p>
+<div>
+  <% flash.each do |key, value| %>
+    <div>
+      <a href="#" data-dismiss="alert">×</a>
+        <%= value %>
+    </div>
+  <% end %>
+</div>

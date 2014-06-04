@@ -10,18 +10,21 @@ Rails.application.routes.draw do
         get :cancel
         get :clearall
         get :export
+        get :clearpartnership
     end
     end
 
-  resources :visitors do
+
+  resources :contacts do
     member do
         get :new
+        get :create
+        get :bug
     end
     end
-
-resources "contacts", only: [:new, :create]
 
 get '/bug', to: 'contacts#bug'
+get '/contacts/new', to: 'contacts#new'
 
 devise_scope :user do
   get "sign_in", to: "devise/sessions#new"
