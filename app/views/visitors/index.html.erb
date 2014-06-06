@@ -12,7 +12,7 @@
 		<h2>Partner Status</h2>	
 							<% if current_user.status == false%><br>
 								<b>You have no partner</b><br><br>
-								<%= link_to ' Find a Partner', users_path, :class=> "bluebutton" %><br><br>
+								<%= link_to ' Find a Partner', users_path, {:style=>'width:90%;', :class => "bluebutton"} %><br><b>
 							<% else %><br>
 								 <% User.all.each do |user| %>
 									 <% if current_user.partner1 == user.name %>
@@ -20,7 +20,8 @@
 							  		  <%= image_tag(user.imgsrc, width: '30%' ) %>
 								     <% end %>
 								 <%end%>
-							<%end%></div><%= render "visitors/userwelcomemsg"%></div>
+							<%end%></div>
+				<%= render "visitors/userwelcomemsg"%></div>
 		<%elsif current_user.role == "1"||"2"%><p>There are currently <%= User.count %> registered users </p>
 		<%= render "visitors/adminwelcomemsg"%>
 		
