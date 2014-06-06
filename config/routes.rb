@@ -17,16 +17,16 @@ devise_for :users, :controllers => { registrations: 'registrations' }
     end
 
 
-  resources :contacts do
-    member do
-        get :new
-        get :create
-        get :bug
-    end
-    end
+#   resources :contacts do
+#     member do
+#         get :new
+#         get :create
+#         get :bug
+#     end
+#     end
 
-get '/bug', to: 'contacts#bug'
-get '/contacts/new', to: 'contacts#new'
+# get '/bug', to: 'contacts#bug'
+# get '/contacts/new', to: 'contacts#new'
 
 devise_scope :user do
   get "sign_in", to: "devise/sessions#new"
