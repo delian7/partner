@@ -64,6 +64,7 @@ def flop
     current_user.save
     redirect_to users_path(current_user)
 end
+ChangeMailer.send_change_message(user.email).deliver
 end
 
 # Cancels account and ensures partnerships are cleared
@@ -111,7 +112,7 @@ def export
     @roster = User.all
     roster_csv = CSV.generate do |csv|
     csv << ["Name", "Partner"]
-    User.all.each do |user|
+    User.where(role: 0).each do |user|
       csv << [user.name, user.partner1]     
     end 
     end    
@@ -119,10 +120,8 @@ def export
 end
 
 
-
   private
   def secure_params
     params.require(:user).permit(:role)
   end
 end
-
