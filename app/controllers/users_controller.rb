@@ -96,11 +96,11 @@ end
 # Clear all users partner1 columns to "" and reset statuses to 0 or false
 def clearall
   User.all.each do |user|
-  user = User.find(user)
-  authorize user
-  user.status = false
-  user.partner1 = ""
-  user.save
+    user = User.find(user)
+    authorize user
+    user.status = false
+    user.partner1 = ""
+    user.save
 end
   redirect_to users_path(current_user), :alert => "All Partnerships have been cleared."
 end
