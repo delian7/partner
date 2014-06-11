@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'users/profile'
+  get 'help/index'
 
   root :to => "visitors#index"
 #  devise_for :users
@@ -13,6 +15,7 @@ devise_for :users, :controllers => { registrations: 'registrations' }
         get :export
         get :registrations
         get :clearpartnership
+        get :confirm
     end
     end
 
