@@ -1,12 +1,18 @@
 <div class="container">
 <div class="row">
-
-<% if (current_user.status == true && current_user.partner1.empty?) || (current_user.status == false && !current_user.partner1.empty?)%>
-<%= link_to "Find A Partner", clearpartnership_user_path(current_user), :class=>"requestbutton"%>
-<%else%>
-<%= render "users/tableheader"%>
+<table class="table" style="width:85%;">
+</div>
+  <%case current_user.role %>
+  <%when "user"%>
+    <h3>Find a Partner</h3>
+   <tr><td><b>Student Name</td><td><b>Email</td><td><b>Available?</td></td> <td><b>Request</td></tr></b>
+  <%when "vip"%>
+    <h3>View Roster</h3>
+  <tr><td><b>Student Name</td><td><b>Partner</td></td></tr></b>
+  <%when "admin"%>
+  <tr><td><b>Student Name</td><td><b>Partner</td></td> </tr></b>
+  <%end%>
       <div class="column" style="width:100%;">
-        <table class="table" style="width:85%;">
           <tbody>
               <% @users.each do |user| %>
               <tr><%= render user %></tr></div>
@@ -15,5 +21,5 @@
         </table>
       </div>
       <%= render "users/vipbuttons"%>
-      <%end%>    </div>
+        </div>
   </div>

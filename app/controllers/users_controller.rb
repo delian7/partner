@@ -58,7 +58,6 @@ end
 def flop
   user = User.find(params[:id])
   authorize user
-  if current_user.role == "user"
   user.status = !user.status # flop the status
   current_user.status = !current_user.status
 
@@ -78,8 +77,6 @@ def flop
     # Delay Mailer to reduce flop lag
     #ChangeMailer.delay.send_change_message(user.email)
     # Regular Mailer no delay
-    
-end
 ChangeMailer.send_change_message(user.email).deliver
 end
 
