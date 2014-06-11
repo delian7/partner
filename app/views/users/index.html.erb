@@ -10,7 +10,8 @@
     <h3>View Roster</h3>
   <tr><td><b>Student Name</td><td><b>Partner</td></td></tr></b>
   <%when "admin"%>
-  <tr><td><b>Student Name</td><td><b>Partner</td></td> </tr></b>
+  <h3>Control Panel</h3>
+  <tr><td><b>Student Name</td><td><b>Action</td></td> </tr></b>
   <%end%>
       <div class="column" style="width:100%;">
           <tbody>
@@ -20,6 +21,8 @@
           </tbody>
         </table>
       </div>
+     <% if current_user.role == "vip"%>
       <%= render "users/vipbuttons"%>
-        </div>
+      <%end%>
+      </div>
   </div>

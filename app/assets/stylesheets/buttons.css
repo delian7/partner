@@ -89,6 +89,44 @@
     background-size: 100% 100%;
 }
 
+
+.smallbluebutton {
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    padding: 5px 42px;
+    border: 1px solid #000000;
+    border-radius: 8px;
+    background: #bde6f0;
+    background: -webkit-gradient(linear, left top, left bottom, from(#bde6f0), to(#3d8abd));
+    background: -moz-linear-gradient(top, #bde6f0, #3d8abd);
+    background: linear-gradient(to bottom, #bde6f0, #3d8abd);
+    text-shadow: #000000 1px 1px 1px;
+    font: normal normal bold 16px arial;
+    color: #ffffff;
+    text-decoration: none;
+}
+.smallbluebutton:hover,
+.smallbluebutton:focus {
+    background: #e3ffff;
+    background: -webkit-gradient(linear, left top, left bottom, from(#e3ffff), to(#49a6e3));
+    background: -moz-linear-gradient(top, #e3ffff, #49a6e3);
+    background: linear-gradient(to bottom, #e3ffff, #49a6e3);
+    color: #ffffff;
+    text-decoration: none;
+}
+.smallbluebutton:active {
+    background: #718a90;
+    background: -webkit-gradient(linear, left top, left bottom, from(#718a90), to(#3d8abd));
+    background: -moz-linear-gradient(top, #718a90, #3d8abd);
+    background: linear-gradient(to bottom, #718a90, #3d8abd);
+}
+
+
+
+
+
+
 .bluebutton {
   -moz-box-shadow:inset 0px 0px 50px -30px #122233;
   -webkit-box-shadow:inset 0px 0px 50px -30px #122233;
