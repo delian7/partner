@@ -26,7 +26,7 @@ function dosomething() {
 </div>
 <%case current_user.role %>
 <%when "user"%>
-  	<% if (current_user.id != user.id) && !(user.confirmed_at.nil?) %> 
+  	<% if current_user.id != user.id %> 
 		<% if user.role == "user" && current_user.status == false%>
 				<td><%= link_to (image_tag (user.avatar.url), :style => 'max-height: 25xpx; max-width: 25px;'), user %></td> <td><%= link_to user.name, user %></td>     <td><%= user.email %></td>	
 				<% if user.status == false%>
@@ -48,11 +48,11 @@ function dosomething() {
 		<% end %>
 	<%end%>
 <%when "vip"%>
-  <% if (user.role=="user") && !(user.confirmed_at.nil?)%>
+  <% if (user.role=="user")%>
          <tr> <td><%= user.name %></td><td><%= user.partner1 %></td></tr>
 	<%end%>
 <%when "admin"%>
-  <% if (user.role=="user") && (user.confirmed_at.nil?)%> 
+  <% if (user.role=="user")%> 
          <tr> <td><a href="" class="popper" data-popbox="pop1"><%= user.name %></a></td><td><%=  link_to "Confirm Email", confirm_user_path(user), :class=>"smallbluebutton" %></td><td></td>
 	<%end%>
 <%end%>

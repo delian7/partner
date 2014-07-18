@@ -6,13 +6,13 @@
 	
 </div>
 <div style="float: right; width: 50%; text-align:right;">
- <% if user_signed_in? %>
-   You are signed in as <%= current_user.name%></a><br><br>
+
+<%if user_signed_in? %>
 <%= link_to 'Edit account', edit_user_registration_path %> <br>
-<%= link_to 'Sign out', destroy_user_session_path, :method=>'delete' %>
+<%= link_to 'Sign out', "https://login.uci.edu/ucinetid/webauth_logout" %>
 <% else %>
-<%= link_to 'Sign in', new_user_session_path %> <br>
-<%= link_to 'Create Account', new_user_registration_path %>
+<%= link_to "Login","https://login.uci.edu/"%><br>
+<%= @signed_in_resource%>
 <% end %>
 </div>
   <br style="clear: both;" />

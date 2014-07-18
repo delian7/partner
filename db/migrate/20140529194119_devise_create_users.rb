@@ -1,16 +1,16 @@
 class DeviseCreateUsers < ActiveRecord::Migration
   def change
-    create_table(:users) do |t|
+    create_table :users, {:id => false}  do |t|
       ## Database authenticatable
-      t.string :email,              null: false, default: ""
-      t.string :encrypted_password, null: false, default: ""
-
-      ## Recoverable
-      t.string   :reset_password_token
-      t.datetime :reset_password_sent_at
-
+      t.integer  :campus_id,          null: false, default: "", :uniqueness => :true
+      t.string   :ucinetid, :uniqueness => :true
+      t.string   :uci_affiliations
+      t.string   :name, :uniqueness => :true
+      t.integer  :role,               default: 0, null: false
+      t.string   :email,              null: false, default: ""
+ t.boolean  :status, :default => 0
       ## Rememberable
-      t.datetime :remember_created_at
+      #t.datetime :remember_created_at
 
      ## Trackable
       t.integer  :sign_in_count, default: 0, null: false
@@ -18,8 +18,8 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.datetime :last_sign_in_at
       t.string   :current_sign_in_ip
       t.string   :last_sign_in_ip
-      t.boolean :status, :default => 0
-      t.string   :partner1, :default=> ""
+     # t.string   :auth_host
+      t.integer  :age_in_seconds
 
 
       ## Confirmable
@@ -35,11 +35,11 @@ class DeviseCreateUsers < ActiveRecord::Migration
 
 
       t.timestamps
+
     end
 
-    add_index :users, :email,                unique: true
-    add_index :users, :reset_password_token, unique: true
-    # add_index :users, :confirmation_token,   unique: true
-    # add_index :users, :unlock_token,         unique: true
+    # add_index :users, :ucinetid,                unique: true
+    #  add_index :users, :campus_id,   unique: true
+    #  add_index :users, :name,         unique: true
   end
 end
