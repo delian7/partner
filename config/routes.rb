@@ -11,11 +11,13 @@ devise_for :users, :controllers => {:registrations => "registrations"}
      member do
         get :flop
         get :cancel
-        get :clearall
-        get :export
+        get :confirm
         get :registrations
         get :clearpartnership
-        get :confirm
+        end
+     collection do
+       get :clearall
+       get :export
         end
     end
 
