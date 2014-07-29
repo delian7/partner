@@ -57,7 +57,6 @@ class Devise::SessionsController < DeviseController
 
       respond_to_on_destroy
     end
-  end
 
   def all_signed_out?
     users = Devise.mappings.keys.map { |s| warden.user(scope: s, run_callbacks: false) }

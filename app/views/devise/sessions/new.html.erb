@@ -1,10 +1,10 @@
 <div class="authform">
-  <%= form_for(resource, :as => resource_name, :url => user_session_path(resource_name), :html => { :role => 'form'}) do |f| %>
+  <%= form_for(resource, :as => resource_name, :url => user_session_path, :html => { :role => 'form'}) do |f| %>
     <h3>Sign in</h3>
     <%= devise_error_messages! %>
+    <%= f.hidden_field :campus_id, :value => @campus_id %> 
+    <%= f.hidden_field :ucinetid, :value => @ucinetid %> 
+
       <%= f.submit 'Sign in', :class => 'button right' %>
   <% end %>
-
-
-  <%= link_to "login", new_user_session_path %>
 </div>

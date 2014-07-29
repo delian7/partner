@@ -1,9 +1,7 @@
 Rails.application.routes.draw do
-
   get 'users/profile'
   get 'help/index'
   get 'webauth/index'
-#  get '/base/:action' => 'base'
 
 devise_for :users, :controllers => {:registrations => "registrations"}
 
@@ -13,6 +11,7 @@ devise_for :users, :controllers => {:registrations => "registrations"}
         get :cancel
         get :confirm
         get :registrations
+        get :sessions
         get :clearpartnership
         end
      collection do
@@ -21,13 +20,13 @@ devise_for :users, :controllers => {:registrations => "registrations"}
         end
     end
 
-
   root :to => "visitors#index"
 
 
 
 devise_scope :user do
-  get "sign_in", to: "devise/sessions#new"
-  get "sign_up", to: "devise/registrations#new"
-end
+    get "sign_in", to: "devise/sessions#new"
+    get "sign_up", to: "devise/registrations#new"
+    get "sign_out", to: "devise/sessions#destroy"
+  end
 end

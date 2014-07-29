@@ -4,7 +4,7 @@ Devise.setup do |config|
   # The secret key used by Devise. Devise uses this key to generate
   # random tokens. Changing this key will render invalid all existing
   # confirmation, reset password and unlock tokens in the database.
-  # config.secret_key = '1e2aa91cbce9e562b99908546fc4fec503565ad1db1b60b4dea78990d18185f0e6e7eefa6cf5686665b7168bfb48deebcd9a3619fe8d437a44c3e3de2bca9bec'
+  config.secret_key = '1e2aa91cbce9e562b99908546fc4fec503565ad1db1b60b4dea78990d18185f0e6e7eefa6cf5686665b7168bfb48deebcd9a3619fe8d437a44c3e3de2bca9bec'
 
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
@@ -214,7 +214,7 @@ Devise.setup do |config|
 
   # Set this configuration to false if you want /users/sign_out to sign out
   # only the current scope. By default, Devise signs out all scopes.
-  # config.sign_out_all_scopes = true
+  config.sign_out_all_scopes = true
 
   # ==> Navigation configuration
   # Lists the formats that should be treated as navigational. Formats like

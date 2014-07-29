@@ -3,12 +3,12 @@
     <h3>Create Account</h3>
     <%= devise_error_messages! %>
     <div class="form-group">
-      <%= f.label :ucinetid %>
-      <%= f.text_field :ucinetid, :autofocus => true, class: 'form-control' %>
+      <%= f.label :name %>
+      <%= f.text_field :name, :autofocus => true, class: 'form-control' %>
     </div>
     <div class="form-group">
-      <%= f.label :campus_id %>
-      <%= f.text_field :campus_id, class: 'form-control' %>
+      <%= f.label :email %>
+      <%= f.text_field :email, class: 'form-control' %>
     </div>
      <%= f.submit 'Sign up', :class => 'button' %>
   <% end %>

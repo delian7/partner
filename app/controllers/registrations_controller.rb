@@ -108,8 +108,7 @@ class RegistrationsController < Devise::RegistrationsController
   # The path used after sign up. You need to overwrite this method
   # in your own RegistrationsController.
   def after_sign_up_path_for(resource)
-    signed_in_root_path(resource)
-    #after_sign_in_path_for(resource)
+    
   end
 
   # The path used after sign up for inactive accounts. You need to overwrite
@@ -135,7 +134,7 @@ class RegistrationsController < Devise::RegistrationsController
   end
  
   def sign_up_params
-    params.require(:user).permit(:campus_id, :ucinetid)
+    params.require(:user).permit(:name, :email)
   end
  
   def account_update_params

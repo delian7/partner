@@ -16,29 +16,19 @@ class User < ActiveRecord::Base
   #vip = Professor
   #admin = admin
   after_initialize :set_default_role, :if => :new_record?
-     
-      def password_required?
-        false
-        #super if confirmed?
-      end
+  
+  def password_required?
+    false
+    #super if confirmed?
+  end
 
+  def password_valid?
+      true
+  end
 
   def set_default_role
     self.role ||= :user
   end
-
-def password_valid?
-    true
-end
-
-  #    #group associations?
-  # has_many :groups, :class_name => "group", :foreign_key => "user_id", :dependent => :destroy
-  # has_many :accepted_groups, -> {where 'group_status_id = ?', 2}, :class_name => "group"
-  # has_many :pending_groups, :class_name => "group"
-  # has_many :groups_initiated_by_me, :class_name => "group", :foreign_key => "user_id",  :dependent => :destroy
-  # has_many :groups_not_initiated_by_me, :class_name => "group", :foreign_key => "user_id", :dependent => :destroy
-  # has_many :occurances_as_group, :class_name => "group", :foreign_key => "group_id", :dependent => :destroy
-
 
 
 ##FOR IMAGE UPLOADING
