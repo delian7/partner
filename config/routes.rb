@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   get 'webauth/index'
 
 devise_for :users, :controllers => {:registrations => "registrations"}
-
+  root :to => "visitors#index"
   resources :users do
      member do
         get :flop
@@ -20,7 +20,7 @@ devise_for :users, :controllers => {:registrations => "registrations"}
         end
     end
 
-  root :to => "visitors#index"
+
 
 
 
@@ -28,5 +28,6 @@ devise_scope :user do
     get "sign_in", to: "devise/sessions#new"
     get "sign_up", to: "devise/registrations#new"
     get "sign_out", to: "devise/sessions#destroy"
+    get "edit", to: "devise/registrations#update"
   end
 end
