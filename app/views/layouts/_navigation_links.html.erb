@@ -12,6 +12,10 @@
 	<%end%>
 	<li><%= link_to 'Help', help_index_path %></li>
 <% else %>
-  <li><%= link_to 'Sign in', new_user_session_path %></li>
+  <li><%if user_signed_in? %>
+<%= link_to 'Edit account', edit_user_registration_path %> <br>
+<%= link_to 'Sign out', destroy_user_session_path, :method => :delete %>
+<% else %>
+<% end %></li>
   <li><%= link_to 'Create Account', new_user_registration_path %></li>
 <% end %>

@@ -13,16 +13,14 @@
 <%if @ucinetid.blank?%>
 <%= link_to 'Login', "https://login.uci.edu/" %><br>
 <%else%>
-  <%= form_for(resource, :url => user_session_path, :html => { :role => 'form'}) do |f| %>
+<%= form_for(resource, :url => user_session_path) do |f| %>
     <%= devise_error_messages! %>
     <%= f.hidden_field :campus_id, :value => @campus_id %> 
     <%= f.hidden_field :ucinetid, :value => @ucinetid %> 
-    <%= f.submit 'Sign in' %>
+    <%=link_to_submit 'Sign In'%>
   <% end %>
-
-
-
 <% end %><% end %>
+
 </div>
   <br style="clear: both;" />
 </div>

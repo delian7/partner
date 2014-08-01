@@ -1,5 +1,6 @@
 class Project < ActiveRecord::Base
-   belongs_to :course
+   has_many :groups, :through=>:evaluations
    has_many :evaluations
-   has_many :groups
+   belongs_to :group
+   belongs_to :course
 end

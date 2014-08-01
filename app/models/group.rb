@@ -1,15 +1,17 @@
 class Group < ActiveRecord::Base
 
+  has_many :courses, :through=>:projects
+  has_many :projects, :through=>:evaluations
   belongs_to :user
-  belongs_to :project
-  belongs_to :group, :class_name => "User", :foreign_key => "group_id"   
- # enum status:[ :group_status, :class_name => 'groupStatus', :foreign_key => 'group_status_id']
+  belongs_to :course
+  has_many :evaluations
+  # enum status:[ :group_status, :class_name => 'groupStatus', :foreign_key => 'group_status_id']
 
   validates_presence_of   :user
   validates_presence_of   :group
   validates_uniqueness_of :group_id, :scope => :user_id
 
-  
+
   private
   def set_pending
     group_status_id = groupStatus[:pending].id
