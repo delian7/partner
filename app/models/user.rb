@@ -2,7 +2,8 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
 #, :lockable, :timeoutable and :omniauthable   
   has_many :rosters
-  has_many :groups
+  has_many :grouprelations
+  has_many :groups, :through => :grouprelations
   has_many :courses, :through => :rosters
   # has_many :inverse_groups, :class_name => "group", :foreign_key => "campus_id"
   # has_many :inverse_groups, :through => :inverse_groups, :source => :user

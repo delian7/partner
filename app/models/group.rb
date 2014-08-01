@@ -1,10 +1,11 @@
 class Group < ActiveRecord::Base
 
-  has_many :courses, :through=>:projects
-  has_many :projects, :through=>:evaluations
-  belongs_to :user
-  belongs_to :course
-  has_many :evaluations
+  has_many :courses, :through =>:projects
+  has_many :projects
+  has_many :users, :through => :grouprelations
+  #belongs_to :course
+  has_many :grouprelations
+  has_many :projects
   # enum status:[ :group_status, :class_name => 'groupStatus', :foreign_key => 'group_status_id']
 
   validates_presence_of   :user
