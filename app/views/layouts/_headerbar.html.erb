@@ -11,7 +11,7 @@
 <%= link_to 'Sign out', destroy_user_session_path, :method => :delete %>
 <% else %>
 <%if @ucinetid.blank?%>
-<%= link_to 'Login', "https://login.uci.edu/" %><br>
+<%= link_to 'Login', request.ip == "127.0.0.1" ? user_session_path : "https://login.uci.edu/" %><br>
 <%else%>
 <%= form_for(resource, :url => user_session_path) do |f| %>
     <%= devise_error_messages! %>
