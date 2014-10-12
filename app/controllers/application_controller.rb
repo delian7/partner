@@ -17,20 +17,6 @@ class ApplicationController < ActionController::Base
   attr_reader :auth_key
 
   def startup
-      @enrolled_courses={}
-      @current_groups={}
-      @course_groups = Group.all.collect(&:id)
-
-       @groups = Group.joins(:users).where(users: { campus_id: current_user })
-          @groups.each do |t|
-           @current_groups[t.id] = t.id
-          end
-      @course_ids = Course.all.collect(&:id)
-      
-          @enrolls = Course.joins(:users).where(users: { campus_id: current_user })
-          @enrolls.each do |t|
-           @enrolled_courses[t.id] =  t.course_title
-          end
 
       @auth_key=cookies[COOKIE_NAME]
       http = Net::HTTP.new('login.uci.edu', 80)
