@@ -36,7 +36,7 @@ class User < ActiveRecord::Base
 has_attached_file :avatar, 
 :path => ":rails_root/public/system/:attachment/:id/:basename_:style.:extension",
 :url => "/system/:attachment/:id/:basename_:style.:extension",
-default_url: '/assets/missing_avatar.jpg',
+default_url: '/system/missing_avatar.jpg',
 :styles => {
   :thumb    => ['100x100#',  :jpg, :quality => 70],
   :preview  => ['480x480#',  :jpg, :quality => 70],
