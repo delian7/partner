@@ -24,7 +24,6 @@ db/*.sqlite3
 # various artifacts
 **.war
 *.rbc
-*.sassc
 .redcar/
 .sass-cache
 /config/config.yml
