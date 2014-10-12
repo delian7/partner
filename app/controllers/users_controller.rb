@@ -5,6 +5,8 @@ class UsersController < ApplicationController
 
   def index
     @users = User.all
+    @courses = Course.all
+    @groups = Group.all
     #@user = User.find(params[:id])
     authorize @users
   end
@@ -55,30 +57,6 @@ class UsersController < ApplicationController
   # If the user is partnered, it will clear the group of the current_user and the partner
   # If the user is unpartnered, it will partner them
   # Partnering sets status to 1 or true and fills the current_user (and their partner's) partner1 with the other person's name
-  def flop
-    user = User.find(params[:id])
-    authorize user
-    user.status = !user.status # flop the status
-    current_user.status = !current_user.status
-
-    if current_user.partner1 == ""
-
-      current_user.partner1 = user.name
-      user.partner1 = current_user.name
-    else
-
-      current_user.partner1 = ""
-      user.partner1 = ""
-    end
-
-      user.save
-      current_user.save
-      redirect_to users_path(current_user)
-      # Delay Mailer to reduce flop lag
-      #ChangeMailer.delay.send_change_message(user.email)
-      # Regular Mailer no delay
-  ChangeMailer.send_change_message(user.email).deliver
-  end
 
   # Cancels account and ensures groups are cleared
   def cancel
@@ -94,17 +72,6 @@ class UsersController < ApplicationController
     redirect_to registration_path(user)
     current_user.destroy
 
-  end
-
-  # Force clear group in case of database inconsistency
-  def cleargroup
-    user = User.find(params[:id])
-    authorize user
-    current_user.status = false
-    current_user.partner1 = ""
-    current_user.save
-
-    redirect_to users_path(user)
   end
 
   # Clear all users partner1 columns to "" and reset statuses to 0 or false
@@ -132,14 +99,14 @@ class UsersController < ApplicationController
     send_data(roster_csv, :type => 'text/csv', :filename => 'groups.csv')
   end
 
-  def confirm
-      time = Time.new
-      user = User.find(params[:id])
-      authorize user
-      user.confirmed_at = time.strftime("%Y-%m-%d %H:%M:%S")
-      user.save
-      redirect_to users_path(current_user), :flash => { :success => "User Confirmed" }
-  end
+  # def confirm
+  #     time = Time.new
+  #     user = User.find(params[:id])
+  #     authorize user
+  #     user.confirmed_at = time.strftime("%Y-%m-%d %H:%M:%S")
+  #     user.save
+  #     redirect_to users_path(current_user), :flash => { :success => "User Confirmed" }
+  # end
 
   def creategroup
   authorize User.all

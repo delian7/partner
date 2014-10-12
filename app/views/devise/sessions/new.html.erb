@@ -1,18 +1,14 @@
 <div class="authform">
-	
-
 	  <%= form_for(resource, :as => resource_name, :url => user_session_path, :html => { :role => 'form'}) do |f| %>
 	    <h3>Sign in</h3>
 	    <%= devise_error_messages! %>
 			
 			<% if request.ip == "127.0.0.1" %>
-				<%= f.select :campus_id, [['Student','0'],['TA/Course Manager','1'],['Professor','2']] %>
+				<%= f.select :campus_id, [['Student','0'],['TA/Course Manager','1'],['Professor','2'],['Admin','3'],['Student4','4'],['Student5','5'],['Student6','6']] %>
 		 	<% else %>
 			  <%= f.hidden_field :campus_id, :value => @campus_id %> 
 			  <%= f.hidden_field :ucinetid, :value => @ucinetid %>
 			<% end %>
-			
-			
 			<%= f.submit 'Sign in', :class => 'button right' %>
 	<% end %>
 	

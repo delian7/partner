@@ -1,9 +1,18 @@
-<h2>Welcome to Partner UP!</h2>	
+<div class="section group">
+  <div class="col span_2_of_3">
+  	<h2>Welcome to <img width="75%" src="/assets/PartnerUpLogo.png" id="non-responsive"></h2>
+  </div>
+  	<div class="col span_1_of_3" style="text-align:center;">
+      <h2>To Get Started<br><br></h2>
+      <%= link_to 'Add Course', edit_user_registration_path, {:style=>'width:75%;', :class=>"btn btn-primary"} %><br>
+  </div>
 <% if user_signed_in? %>
-	<% if current_user.role=="user"%>
-		<%= render "visitors/statusbox"%>
-		<%elsif current_user.role == "1"||"2"%><p>
-		There are currently <%= User.count %> registered users </p>
-		<%end%>
-		<%else%> <%= render "visitors/welcomemsg"%>
-<%end%>
+	<% if current_user.role==0 %>
+		<%= render "visitors/statusbox" %>
+	<% elsif current_user.role == 1||2 %><p>
+		There are currently <%= User.count %> registered users</p>
+	<% end %>
+<% else%> 
+	<%= render "visitors/welcomemsg" %>
+<% end %>
+	</div>

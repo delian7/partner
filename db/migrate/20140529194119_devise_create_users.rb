@@ -8,7 +8,6 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string     :name
       t.integer    :role,               default: 0, null: false
       t.string     :email,              null: false, default: ""
-      t.boolean    :status, :default => 0
       ## Rememberable
       #t.datetime :remember_created_at
 

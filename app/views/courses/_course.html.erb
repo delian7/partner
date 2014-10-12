@@ -1,0 +1,10 @@
+<% case @current_user.role %>
+<% when 0 %>
+        <td><%= course.id %></td>	
+				<td class="collapsable"><%= course.course_title %></td>  
+        <% if !@enrolled_courses.include? course.id %>
+				  <td><button class="btn btn-primary" style="width:75%;"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;<%=  link_to "Add Course", root_path, :style => 'color: #fff; text-size:17px;' %></button></div></td>
+        <% else %>
+          <td><button class="btn btn-primary"  disabled="disabled" style="width:75%;"><%=  link_to "Currently Enrolled", root_path, :style => 'color: #fff; text-size:17px;' %></button></div></td>
+        <% end %>  
+<% end %>
