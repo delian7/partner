@@ -1,12 +1,10 @@
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
 #, :lockable, :timeoutable and :omniauthable   
-  # has_many :rosters
-  # has_many :grouprelations
-  # has_many :groups, :through => :grouprelations
-  # has_many :courses, :through => :rosters
-  has_and_belongs_to_many :courses
-  has_and_belongs_to_many :groups
+  has_many :rosters
+  has_many :grouprelations
+  has_many :groups, :through => :grouprelations
+  has_many :courses, :through => :rosters
   # has_many :inverse_groups, :class_name => "group", :foreign_key => "campus_id"
   # has_many :inverse_groups, :through => :inverse_groups, :source => :user
 
@@ -14,8 +12,10 @@ class User < ActiveRecord::Base
   self.primary_key = "campus_id"
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable
-  #enum role: [:student, :ta, :professor, :admin]
-
+  enum role: [:user, :vip, :admin]
+  #user = student
+  #vip = Professor
+  #admin = admin
   after_initialize :set_default_role, :if => :new_record?
   
   def password_required?
