@@ -5,5 +5,6 @@ class CreateGrouprelations < ActiveRecord::Migration
 	  t.belongs_to  :user
     	t.timestamps
     end
+    add_index :grouprelations, ["group_id"],["user_id"]
   end
 end

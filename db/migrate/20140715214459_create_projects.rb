@@ -5,5 +5,6 @@ class CreateProjects < ActiveRecord::Migration
       t.references   :course, :default=> ""
       	t.timestamps
     end
+    add_index :projects, ["course_id"],["group_id"]
   end
 end
