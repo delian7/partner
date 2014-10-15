@@ -6,6 +6,6 @@ class CreateRosters < ActiveRecord::Migration
       
       t.timestamps
     end
-    add_index :rosters, ["course_id"],["user_id"]
+    #add_index :rosters, ["course_id"],["user_id"]
   end
 end

@@ -121,7 +121,28 @@ class UsersController < ApplicationController
     end
   end
 
+ def self.request(user, group)
+    unless user == group or Grouprelation.exists?(user, group)
+      transaction do
+        create(:user => user, :group => group, :status => 'pending')
+        create(:user => group, :group => user, :status => 'requested')
+      end
+    end
+  end
+    def self.accept(user, group)
+    transaction do
+      accepted_at = Time.now
+      accept_one_side(user, group, accepted_at)
+      accept_one_side(group, user, accepted_at)
+    end
+  end
 
+  def self.accept_one_side(user, group, accepted_at)
+    request = find_by_user_id_and_group_id(user, group)
+    request.status = 'accepted'
+    request.accepted_at = accepted_at
+    request.save!
+  end
 
   def group
     @group = current_user.grouprelation.build(:group_id => params[:group_id])
