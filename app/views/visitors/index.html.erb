@@ -8,7 +8,24 @@
   </div>
 <% if user_signed_in? %>
 	<% if current_user.role==0 %>
+	<div class="col span_2_of_3">
+    <h2>Courses</h2><table class = "table" style = "width:100%;">
+    <tr>
+      <td><b>Course ID</b></td>
+      <td><b>Course Title</b></td>
+      <td></td>
+    </tr>
+   
 		<%= render "visitors/statusbox" %>
+		 	</table>
+		  <div class="col span_1_of_3" style="text-align:center;">
+     <h2>To Get Started</h2>
+<h2><button class="btn btn-primary" style="width:75%;"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;<%=  link_to "Add Course", root_path, :style => 'color: #fff; text-size:17px;' %></button></h2>
+<h2><button class="btn btn-primary" style="width:75%;" margin-bottom="10px"><span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;
+ <%= link_to 'Edit Profile', edit_user_registration_path, :style => 'color: #fff; text-size:17px;' %></button></h2>
+
+      <br>
+  </div>
 	<% elsif current_user.role == 1||2 %><p>
 		There are currently <%= User.count %> registered users</p>
 	<% end %>

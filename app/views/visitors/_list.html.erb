@@ -1,0 +1,23 @@
+    <tr><div class="column" style="width:100%;">
+          <tbody>
+              <% @list.each do |list| %>
+              <tr>
+
+<% case @current_user.role %>
+<% when 0 %>
+        <td><%= course.id %></td> 
+        <td class="collapsable"><%= course.course_title %></td>  
+          <td><button class="btn btn-primary" style="width:75%;"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;<%=  link_to "Add Course", root_path, :style => 'color: #fff; text-size:17px;' %></button></div></td>
+<% end %>
+
+
+              </tr>
+              <% end %>
+          </tbody>
+        </table>
+      </div>
+    </tr></h2>
+   </table>
+
+
+
