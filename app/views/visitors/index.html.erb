@@ -3,9 +3,8 @@
   	<h2>Welcome to <img width="75%" src="/assets/PartnerUpLogo.png" id="non-responsive"></h2>
   </div>
   	<div class="col span_1_of_3" style="text-align:center;">
-      <h2>To Get Started<br><br></h2>
-      <%= link_to 'Add Course', edit_user_registration_path, {:style=>'width:75%;', :class=>"btn btn-primary"} %><br>
-  </div>
+      <%= image_tag current_user.avatar.url %>
+    </div>
 <% if user_signed_in? %>
 	<% if current_user.role==0 %>
 	<div class="col span_2_of_3">
@@ -18,11 +17,12 @@
 	    </tr>
 		<%= render "visitors/statusbox" %>
 	  </table>
-	  <div class="col span_1_of_3" style="text-align:center;">
+	</div>
+	<div class="col span_1_of_3" style="text-align:center;">
     <h2>To Get Started</h2>
 <h2><button class="btn btn-primary" style="width:75%;" margin-bottom="10px"><span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;
  <%= link_to 'Edit Profile', edit_user_registration_path, :style => 'color: #fff; text-size:17px;' %></button></h2>
-
+ <h2><button class="btn btn-primary" style="width:75%;"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;<%=  link_to "Add Course", root_path, :style => 'color: #fff; text-size:17px;' %></button></h2>
       <br>
   </div>
 	<% elsif current_user.role == 1||2 %><p>
