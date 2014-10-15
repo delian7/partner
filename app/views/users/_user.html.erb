@@ -3,9 +3,9 @@
   	<% if current_user.id != user.id && (user.role == 0) %> 
 				<td class='collapsable'><%= link_to (image_tag (user.avatar.url), :style => 'max-height: 25px; max-width: 25px;'), user %></td> 
         <td><%= link_to user.name, user %></td>
-        <td class='collapsable'><%= user.email %></td>	<%= @groups.all%>
-            <td><button class="btn btn-primary"  style="width:95%;"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;<%=  link_to "Send Request", root_path, :style => 'color: #fff; text-size:17px;' %></button></div></td>
-          <td><button class="btn btn-primary" disabled="disabled" style="width:95%;"><%=  link_to "Request Sent", root_path, :style => 'color: #fff; text-size:17px;' %></button></div></td>
+        <td class='collapsable'><%= user.email %></td>
+            <td><button class="btn btn-primary"  style="width:95%;"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;<%=  link_to "Send Request", add_to_group_user_path(user), :style => 'color: #fff; text-size:17px;' %></button></div></td>
+          <td><button class="btn btn-primary" disabled="disabled" style="width:95%;"><%=  link_to "Request Sent", groups_path, :style => 'color: #fff; text-size:17px;' %></button></div></td>
     <% end %>
   <% when 1 .. 2 %>
     <% if user.role== 0 %>

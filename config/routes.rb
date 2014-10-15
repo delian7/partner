@@ -13,6 +13,8 @@ devise_for :users, :controllers => {:registrations => "registrations"}
         get :registrations
         get :sessions
         get :clearpartnership
+        get :add_to_group
+        get :ungroup
         end
      collection do
        get :clearall

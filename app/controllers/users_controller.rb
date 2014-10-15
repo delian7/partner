@@ -144,8 +144,23 @@ class UsersController < ApplicationController
     request.save!
   end
 
-  def group
-    @group = current_user.grouprelation.build(:group_id => params[:group_id])
+  def add_to_group
+    authorize current_user
+    user = User.find(params[:id])
+    #current_group = GroupRelation.find
+    group = GroupRelation.references(:group_relation).where(:user_id => user)
+    new_relation = GroupRelation.create(:group_id=>"1", :user_id=>user.id)
+    # if group.save
+    #   flash[:notice] = "Added partner."
+    #   redirect_to root_url
+    # else
+    #   flash[:error] = "Unable to add partner."
+       redirect_to users_path
+    # end
+  end
+    def create_group
+    user = User.find(params[:id])
+    @group = Group.create(:group_id=>user.group_id, :user_id=>current_user)
     if @group.save
       flash[:notice] = "Added partner."
       redirect_to root_url
@@ -154,7 +169,6 @@ class UsersController < ApplicationController
       redirect_to root_url
     end
   end
-  
   def ungroup
     @group = current_user.groups.find(params[:id])
     @group.destroy
