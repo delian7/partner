@@ -2,10 +2,11 @@
   <div class="col span_2_of_3">
   	<h2>Welcome to <img width="75%" src="/assets/PartnerUpLogo.png" id="non-responsive"></h2>
   </div>
-  	<div class="col span_1_of_3" style="text-align:center;">
+  	<% if user_signed_in? %>
+		<div class="col span_1_of_3" style="text-align:center;">
       <%= image_tag current_user.avatar.url %>
     </div>
-<% if user_signed_in? %>
+
 	<% if current_user.role==0 %>
 	<div class="col span_2_of_3">
     <h2>Courses</h2>
