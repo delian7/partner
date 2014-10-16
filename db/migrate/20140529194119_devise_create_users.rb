@@ -34,7 +34,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       # t.datetime :locked_at
       t.timestamps
     end
-    # add_index :users, :ucinetid,                unique: true
+     add_index :users, :ucinetid,                unique: true
     #  add_index :users, :campus_id,   unique: true
     #  add_index :users, :name,         unique: true
   end

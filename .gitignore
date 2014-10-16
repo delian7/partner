@@ -24,7 +24,6 @@ db/*.sqlite3
 # various artifacts
 **.war
 *.rbc
-*.sassc
 .redcar/
 .sass-cache
 /config/config.yml
@@ -39,7 +38,6 @@ db/*.sqlite3
 /doc/specs.html
 /public/cache
 /public/stylesheets/compiled
-/public/system/*
 /spec/tmp/*
 /cache
 /capybara*
@@ -81,4 +79,4 @@ pickle-email-*.html
 db/schema.rb
 
 Gemfile.lock
-Gemfile
+

@@ -5,6 +5,8 @@ class UsersController < ApplicationController
 
   def index
     @users = User.all
+    @courses = Course.all
+    @groups = Group.all
     #@user = User.find(params[:id])
     authorize @users
   end
@@ -55,30 +57,6 @@ class UsersController < ApplicationController
   # If the user is partnered, it will clear the group of the current_user and the partner
   # If the user is unpartnered, it will partner them
   # Partnering sets status to 1 or true and fills the current_user (and their partner's) partner1 with the other person's name
-  def flop
-    user = User.find(params[:id])
-    authorize user
-    user.status = !user.status # flop the status
-    current_user.status = !current_user.status
-
-    if current_user.partner1 == ""
-
-      current_user.partner1 = user.name
-      user.partner1 = current_user.name
-    else
-
-      current_user.partner1 = ""
-      user.partner1 = ""
-    end
-
-      user.save
-      current_user.save
-      redirect_to users_path(current_user)
-      # Delay Mailer to reduce flop lag
-      #ChangeMailer.delay.send_change_message(user.email)
-      # Regular Mailer no delay
-  ChangeMailer.send_change_message(user.email).deliver
-  end
 
   # Cancels account and ensures groups are cleared
   def cancel
@@ -94,17 +72,6 @@ class UsersController < ApplicationController
     redirect_to registration_path(user)
     current_user.destroy
 
-  end
-
-  # Force clear group in case of database inconsistency
-  def cleargroup
-    user = User.find(params[:id])
-    authorize user
-    current_user.status = false
-    current_user.partner1 = ""
-    current_user.save
-
-    redirect_to users_path(user)
   end
 
   # Clear all users partner1 columns to "" and reset statuses to 0 or false
@@ -132,14 +99,14 @@ class UsersController < ApplicationController
     send_data(roster_csv, :type => 'text/csv', :filename => 'groups.csv')
   end
 
-  def confirm
-      time = Time.new
-      user = User.find(params[:id])
-      authorize user
-      user.confirmed_at = time.strftime("%Y-%m-%d %H:%M:%S")
-      user.save
-      redirect_to users_path(current_user), :flash => { :success => "User Confirmed" }
-  end
+  # def confirm
+  #     time = Time.new
+  #     user = User.find(params[:id])
+  #     authorize user
+  #     user.confirmed_at = time.strftime("%Y-%m-%d %H:%M:%S")
+  #     user.save
+  #     redirect_to users_path(current_user), :flash => { :success => "User Confirmed" }
+  # end
 
   def creategroup
   authorize User.all
@@ -154,10 +121,46 @@ class UsersController < ApplicationController
     end
   end
 
+ def self.request(user, group)
+    unless user == group or Grouprelation.exists?(user, group)
+      transaction do
+        create(:user => user, :group => group, :status => 'pending')
+        create(:user => group, :group => user, :status => 'requested')
+      end
+    end
+  end
+    def self.accept(user, group)
+    transaction do
+      accepted_at = Time.now
+      accept_one_side(user, group, accepted_at)
+      accept_one_side(group, user, accepted_at)
+    end
+  end
 
+  def self.accept_one_side(user, group, accepted_at)
+    request = find_by_user_id_and_group_id(user, group)
+    request.status = 'accepted'
+    request.accepted_at = accepted_at
+    request.save!
+  end
 
-  def group
-    @group = current_user.grouprelation.build(:group_id => params[:group_id])
+  def add_to_group
+    authorize current_user
+    user = User.find(params[:id])
+    #current_group = GroupRelation.find
+    group = GroupRelation.references(:group_relation).where(:user_id => user)
+    new_relation = GroupRelation.create(:group_id=>"1", :user_id=>user.id)
+    # if group.save
+    #   flash[:notice] = "Added partner."
+    #   redirect_to root_url
+    # else
+    #   flash[:error] = "Unable to add partner."
+       redirect_to users_path
+    # end
+  end
+    def create_group
+    user = User.find(params[:id])
+    @group = Group.create(:group_id=>user.group_id, :user_id=>current_user)
     if @group.save
       flash[:notice] = "Added partner."
       redirect_to root_url
@@ -166,7 +169,6 @@ class UsersController < ApplicationController
       redirect_to root_url
     end
   end
-  
   def ungroup
     @group = current_user.groups.find(params[:id])
     @group.destroy

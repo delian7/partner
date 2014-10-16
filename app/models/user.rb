@@ -2,17 +2,18 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
 #, :lockable, :timeoutable and :omniauthable   
   has_many :rosters
-  has_many :grouprelations
-  has_many :groups, :through => :grouprelations
+  has_many :group_relations, :source => :groups
+  has_many :groups, :through => :group_relations
   has_many :courses, :through => :rosters
-  # has_many :inverse_groups, :class_name => "group", :foreign_key => "campus_id"
-  # has_many :inverse_groups, :through => :inverse_groups, :source => :user
-
+  # has_many :pending_relations,
+  #        :through => :group_relations,
+  #        :source => :groups
 
   self.primary_key = "campus_id"
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable
-  enum role: [:user, :vip, :admin]
+         enum status: [:available,:pending, :requested, :accepted]
+  #enum role: [:user, :vip, :admin]
   #user = student
   #vip = Professor
   #admin = admin
@@ -36,7 +37,7 @@ class User < ActiveRecord::Base
 has_attached_file :avatar, 
 :path => ":rails_root/public/system/:attachment/:id/:basename_:style.:extension",
 :url => "/system/:attachment/:id/:basename_:style.:extension",
-default_url: '/assets/missing_avatar.jpg',
+default_url: 'missing_avatar.jpg',
 :styles => {
   :thumb    => ['100x100#',  :jpg, :quality => 70],
   :preview  => ['480x480#',  :jpg, :quality => 70],

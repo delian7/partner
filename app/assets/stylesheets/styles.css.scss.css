@@ -1,0 +1,142 @@
+.navbar-fixed-top {background-color:#eee}
+.navbar-default {background-color:#c3f3fa;}
+
+img#partnerup {
+margin: 0px 0px 0px 0px;
+max-width: 150px;
+}
+img#non-responsive {
+margin: 0px 0px 0px 0px;
+}
+
+.navbar .nav > li > a {
+  font-family: 'Open Sans', sans-serif; 
+  color:black;
+  font-size:17px;
+  padding-right: 15px;
+  vertical-align: middle;
+}
+.navbar-nav {
+float: none;
+}
+.navbar-nav {
+float: none;
+}
+
+.navbar .nav > li > a:hover,
+.navbar .nav > li > a:focus {
+  background-color:#006BB2;;
+  color:#ffffff;
+}
+
+
+
+.radio input[type="radio"],
+.radio-inline input[type="radio"],
+.checkbox input[type="checkbox"],
+.checkbox-inline input[type="checkbox"] {
+  float: left;
+  margin-left: 0px;
+}
+
+/*  SECTIONS  */
+.section {
+  clear: both;
+  padding: 0px;
+  margin: 0px;
+}
+
+/*  COLUMN SETUP  */
+.col {
+  display: block;
+  float:left;
+  margin: 1% 0 1% 1.6%;
+}
+.col:first-child { margin-left: 0; }
+
+
+/*  GROUPING  */
+.group:before,
+.group:after {
+  content:"";
+  display:table;
+}
+.group:after {
+  clear:both;
+}
+.group {
+    zoom:1; /* For IE 6/7 */
+}
+
+/*  GRID OF THREE  */
+.span_3_of_3 {
+  width: 100%;
+}
+.span_2_of_3 {
+  width: 64%;
+}
+.span_1_of_3 {
+  width: 32%;
+}
+
+/*  GO FULL WIDTH AT LESS THAN 480 PIXELS */
+
+@media only screen and (max-width: 500px) {
+  .col { 
+    margin: 1% 0 1% 0%;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .span_3_of_3 {
+    width: 100%; 
+  }
+  .span_2_of_3 {
+    width: 100%; 
+  }
+  .span_1_of_3 {
+    width: 100%;
+  }
+}
+/*  GRID OF TWO   ============================================================================= */
+
+
+.span_2_of_2 {
+  width: 100%;
+}
+
+.span_1_of_2 {
+  width: 49.2%;
+}
+
+/*  GO FULL WIDTH AT LESS THAN 480 PIXELS */
+
+@media only screen and (max-width: 500px) {
+  .span_2_of_2 {
+    width: 100%; 
+  }
+  .span_1_of_2 {
+    width: 100%; 
+  }
+}
+//hide cols here
+      td.collapsable {display:block; }
+
+      @media only screen and (max-width: 600px) {
+           //show cols here
+           td.collapsable {display:none; }
+      }
+
+#loading {
+    position:absolute;
+    background-color: #000000;
+    opacity: 0.8;
+    padding: 1em;
+    display: none;
+   top: 50%;
+   left: 50%;
+   width: 199px;
+   height: 199px;
+   margin-top: -100px; /* Half the height */
+   margin-left: -100px;
+}

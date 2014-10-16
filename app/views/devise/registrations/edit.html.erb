@@ -1,5 +1,5 @@
 <div class="authform">
-  <h3>Edit <%= resource_name.to_s.humanize %></h3>
+  <h3>Edit User</h3>
   <%= form_for(resource, :as => resource_name, :url => user_registration_path, :html => { :method => :put, :role => 'form'}) do |f| %>
     <%= devise_error_messages! %>
     <div class="form-group">
@@ -28,7 +28,6 @@
 <div style= "text-align:right;"><br><br><hr>
 <h3>Cancel Account</h3>
   <%=  link_to "DELETE", cancel_user_path(current_user), :data => { :confirm => "Are you sure?" }, :class=>'deleteaccount' %>
-
 </fieldset>
  <%end%>
 </div>

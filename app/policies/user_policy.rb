@@ -12,6 +12,9 @@ class UserPolicy
 
   def profile?
     true
+  end  
+  def add_to_group?
+    true
   end
 
   def update?

@@ -1,18 +1,20 @@
 Rails.application.routes.draw do
   get 'users/profile'
   get 'help/index'
-  get 'webauth/index'
+  get 'courses/index'
 
 devise_for :users, :controllers => {:registrations => "registrations"}
   root :to => "visitors#index"
+  
   resources :users do
      member do
-        get :flop
         get :cancel
         get :confirm
         get :registrations
         get :sessions
         get :clearpartnership
+        get :add_to_group
+        get :ungroup
         end
      collection do
        get :clearall
@@ -20,9 +22,19 @@ devise_for :users, :controllers => {:registrations => "registrations"}
         end
     end
 
+  resources :courses do
+     member do
+        end
+     collection do
+        end
+    end
 
-
-
+  resources :groups do
+     member do
+        end
+     collection do
+        end
+    end
 
 devise_scope :user do
     get "sign_in", to: "devise/sessions#new"

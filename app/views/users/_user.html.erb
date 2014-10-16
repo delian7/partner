@@ -1,61 +1,17 @@
-<script text/javascript>
-
-function showLoading() {
-    // other code can be placed here 
-    $("#loading").show();
-    // other code can be placed here
-}
-function hideLoading() {
-    // other code can be placed here 
-    $("#loading").hide();
-    // other code can be placed here
-}
-
-function dosomething() {
-    showLoading();
-    // simulate a task that can take 3 seconds
-    // afterwards show hide the loading GIF
-    setTimeout("hideLoading()", 3000);
-    return false;
-}
-</script>
-
-<div id="pop1" class="popbox">
-    <h2>Success!</h2>
-    <p>This is an example popbox.</p>
-</div>
-<%case current_user.role %>
-<%when "user"%>
-  	<% if current_user.id != user.id %> 
-		<% if user.role == "user" && current_user.status == false%>
-				<td><%= link_to (image_tag (user.avatar.url), :style => 'max-height: 25xpx; max-width: 25px;'), user %></td> <td><%= link_to user.name, user %></td>     <td><%= user.email %></td>	
-				<% if user.status == false%>
-						<td>Available</td>
-						<td><%=  link_to "Partner", flop_user_path(user), :class=>"requestbutton", :onclick=>"dosomething();" %><div id="loading">
-    <img src="http://www.webdesign.org/img_articles/13053/loading-gif-animation.gif" alt="loading" />
-</div></td><td>
-</td>
-				<%else%><td>Partnered</td><td></td>
-				<% end %>
-		<%elsif current_user.partner1 == user.name %>
-					<td><%= link_to user.name, user %></td>
-					<td><%= user.email %></td>	
-					<td>You are already partnered with <%= current_user.partner1 %> </td>
-
-<td><%=  link_to "UNDO", flop_user_path(user), :class=>"button", :onclick => "dosomething();" %><div id="loading">
-    <img src="http://www.webdesign.org/img_articles/13053/loading-gif-animation.gif" alt="loading" />
-</div></td>
-		<% end %>
-	<%end%>
-<%when "vip"%>
-  <% if (user.role=="user")%>
-         <tr> <td><%= user.name %></td><td><%= user.partner1 %></td></tr>
-	<%end%>
-<%when "admin"%>
-  <% if (user.role=="user")%> 
-         <tr> <td><a href="" class="popper" data-popbox="pop1"><%= user.name %></a></td><td><%=  link_to "Confirm Email", confirm_user_path(user), :class=>"smallbluebutton" %></td><td></td>
-	<%end%>
-<%end%>
-
-
- 
+<% case current_user.role %>
+  <% when 0 %>
+  	<% if current_user.id != user.id && (user.role == 0) %> 
+				<td class='collapsable'><%= link_to (image_tag (user.avatar.url), :style => 'max-height: 25px; max-width: 25px;'), user %></td> 
+        <td><%= link_to user.name, user %></td>
+        <td class='collapsable'><%= user.email %></td>
+            <td><button class="btn btn-primary"  style="width:95%;"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;<%=  link_to "Send Request", add_to_group_user_path(user), :style => 'color: #fff; text-size:17px;' %></button></div></td>
+    <% end %>
+  <% when 1 .. 2 %>
+    <% if user.role== 0 %>
+           <tr> <td><%= user.name %></td></tr>
+  	<% end %>
+  <% when 3 %>
+    <% if user.role== 0 %> 
+           <tr> <td>><%= user.name %></a></td><td><%=  link_to "Confirm Email", confirm_user_path(user), :class=>"smallbluebutton"  %></td><td></td>
+  	<% end %>
+<% end %>
