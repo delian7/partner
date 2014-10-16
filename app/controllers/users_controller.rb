@@ -150,13 +150,13 @@ class UsersController < ApplicationController
     #current_group = GroupRelation.find
     group = GroupRelation.references(:group_relation).where(:user_id => user)
     new_relation = GroupRelation.create(:group_id=>"1", :user_id=>user.id)
-    # if group.save
-    #   flash[:notice] = "Added partner."
-    #   redirect_to root_url
-    # else
-    #   flash[:error] = "Unable to add partner."
+    if new_relation.save
+      flash[:notice] = "Added partner."
+      redirect_to root_url
+    else
+      flash[:error] = "Unable to add partner."
        redirect_to users_path
-    # end
+    end
   end
     def create_group
     user = User.find(params[:id])

@@ -4,8 +4,8 @@
           <% case @current_user.role %>
           <% when 0 %>
             <tr>
-                  <td><%= course.id %></td> 
-                  <td class="collapsable"><%= course.id %></td>  
+                  <td><%= course %></td> 
+                  <td class="collapsable"><%= course %></td>  
                     <td><button class="btn btn-primary" style="width:75%;"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;<%=  link_to "Add Course", root_path, :style => 'color: #fff; text-size:17px;' %></button></td>
              </tr>
           <% end %>

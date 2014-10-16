@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   include Pundit
 
-  before_action :startup
+  before_action :startup, :all_enrolled
 
 
   require 'net/https'
@@ -36,7 +36,25 @@ class ApplicationController < ActionController::Base
         return @results
     end
 
+  def set_course
+    authorize User.all
+    @course = Course.find(params[:id])
+    if @user.update_attributes(secure_params)
+      redirect_to courses_path, :notice => "course updated."
+    else
+      redirect_to courses_path, :alert => "Unable to update course."
+    end
 
+    if user_signed_in? && !current_user.courses.blank?
+      @curr_course = Course.find(params[:id])
+      current_user.save
+    end
+    redirect_to root_path
+  end
+
+def all_enrolled
+  @current_courses = current_user.courses.collect(&:id)
+end
 
   protect_from_forgery with: :exception
   before_action :configure_permitted_parameters, if: :devise_controller?
@@ -59,4 +77,7 @@ class ApplicationController < ActionController::Base
     redirect_to (request.referrer || root_path)
   end
 
+  def secure_params
+      params.require(:user).permit(:current_course)
+  end
 end

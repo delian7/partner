@@ -28,7 +28,9 @@ class UserPolicy
   def destroy?
     true
   end
-
+  def set_course?
+    true
+  end 
   def flop?
     # So long as both current user and the user being requested are unpartnered
     ((user.status == false && record.status == false) && 
