@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   get 'users/profile'
   get 'help/index'
   get 'courses/index'
+  
 
 devise_for :users, :controllers => {:registrations => "registrations"}
   root :to => "visitors#index"
@@ -24,6 +25,7 @@ devise_for :users, :controllers => {:registrations => "registrations"}
 
   resources :courses do
      member do
+        get :set_course
         end
      collection do
         end

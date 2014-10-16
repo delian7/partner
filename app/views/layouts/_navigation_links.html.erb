@@ -13,7 +13,14 @@
 			<li><%= link_to 'Add a Course', users_path %></li>
 		<%end%>
 		<li><%= link_to 'Help', help_index_path %></li>
-		<div style="float: right; width: 20%; text-align:right; padding-right: 15px">
+			<!-- selecting course that users will add groups to -->
+		  <%= form_for (@current_course) do |f|%>
+				<%= f.select "id", current_user.courses.collect(&:course_title) %>
+				<%= submit_tag 'Select'%>
+			<%end%>
+		<!-- END selecting course that users will add groups to -->
+		
+		<div style="float: right; width: 20%; text-align:right; padding-right: 15px">			
 			<%= link_to 'Edit account', edit_user_registration_path %><br>
 			<%= link_to 'Sign out', destroy_user_session_path, :method => :delete %>
 		</div>

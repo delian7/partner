@@ -10,4 +10,5 @@ class VisitorsController < ApplicationController
 	  #@user = User.find(params[:id])
 	  authorize @users
   end
+  
 end
