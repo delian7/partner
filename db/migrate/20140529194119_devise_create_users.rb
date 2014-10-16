@@ -18,6 +18,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.datetime   :last_sign_in_at
       t.string     :current_sign_in_ip
       t.string     :last_sign_in_ip
+      t.integer    :current_course, null: false, default: ""
      # t.string   :auth_host
       t.integer    :age_in_seconds
       t.attachment :avatar

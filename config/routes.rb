@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   get 'users/profile'
   get 'help/index'
   get 'courses/index'
+  get 'courses/set_course'
   
 
 devise_for :users, :controllers => {:registrations => "registrations"}
@@ -26,6 +27,9 @@ devise_for :users, :controllers => {:registrations => "registrations"}
   resources :courses do
      member do
         get :set_course
+        put :set_course
+        patch :set_course
+        post :set_course
         end
      collection do
         end

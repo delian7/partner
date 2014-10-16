@@ -14,10 +14,13 @@
 		<%end%>
 		<li><%= link_to 'Help', help_index_path %></li>
 			<!-- selecting course that users will add groups to -->
-		  <%= form_for (@current_course) do |f|%>
+			<li><% if !current_user.courses.first.blank? %>
+				<% @current_course = current_user.courses.first %>
+				<%= form_for (@current_course) do |f|%>
 				<%= f.select "id", current_user.courses.collect(&:course_title) %>
-				<%= submit_tag 'Select'%>
 			<%end%>
+				<% current_user.current_course = @current_course.id %>
+			<%end%></li>
 		<!-- END selecting course that users will add groups to -->
 		
 		<div style="float: right; width: 20%; text-align:right; padding-right: 15px">			

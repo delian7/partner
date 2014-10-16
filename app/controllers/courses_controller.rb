@@ -11,18 +11,11 @@ class CoursesController < ApplicationController
     authorize @users
   end
 
-  def set_course
-    authorize User.all
-    if user_signed_in?
-      @current_course = Course.find(params[:id])
-    end
-    redirect_to root_path
-  end
+
 
   def new
     @courses = Course.all
     @course = Course.create(:course_id=>400, :course_title=>"60")
-    #@course = course.find(params[:id])
     authorize @users
     # build_resource({})
     # respond_with self.resource
@@ -77,6 +70,6 @@ class CoursesController < ApplicationController
 
 private
   def secure_params
-      params.require(:course_user).permit(:user_id, :course_id)
+      params.require(:user).permit(:current_course)
   end
 end

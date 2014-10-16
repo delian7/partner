@@ -3,7 +3,7 @@ class VisitorsController < ApplicationController
   	  @users = User.all
   	  # @list = Roster.where(:user_id=>current_user.id)
   	  if user_signed_in?
-        @list = current_user.groups.all
+        @list = current_user.groups.collect(&:name)
   	    #@list = Roster.where(:user_id=>current_user.id)
       end
   	  # @enrolled = @enrolled.collect(&:id)
