@@ -8,7 +8,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string     :name
       t.integer    :role,               default: 0, null: false
       t.string     :email,              null: false, default: ""
-      t.integer    :current_course, null: false, default: ""
+      t.boolean    :status, :default => 0
       ## Rememberable
       #t.datetime :remember_created_at
 
@@ -18,7 +18,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.datetime   :last_sign_in_at
       t.string     :current_sign_in_ip
       t.string     :last_sign_in_ip
- 
+      t.integer    :current_course, null: false, default: ""
      # t.string   :auth_host
       t.integer    :age_in_seconds
       t.attachment :avatar
