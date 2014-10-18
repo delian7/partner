@@ -36,6 +36,7 @@ devise_for :users, :controllers => {:registrations => "registrations"}
 
   resources :projects do
      member do
+       post :update
         end
      collection do
         end
