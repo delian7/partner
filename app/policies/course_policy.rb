@@ -9,8 +9,6 @@ class CoursePolicy < ApplicationPolicy
     true
   end
   
-  def set_course?
-    true
-  end 
+
    
 end

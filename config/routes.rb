@@ -17,6 +17,7 @@ devise_for :users, :controllers => {:registrations => "registrations"}
         get :clearpartnership
         get :add_to_group
         get :ungroup
+        post :set_current_course
         end
      collection do
        get :clearall
@@ -26,10 +27,8 @@ devise_for :users, :controllers => {:registrations => "registrations"}
 
   resources :courses do
      member do
-        get :set_course
         put :set_course
         patch :set_course
-        post :set_course
         end
      collection do
         end

@@ -14,7 +14,13 @@
 		<%end%>
 			<!-- selecting course that users will add groups to -->
 			<li><% if user_signed_in? && !current_user.courses.first.blank? %>
-				<%= select_tag(:id, options_for_select(current_user.courses.collect(&:course_title))) %>
+				
+				
+				
+				<%= form_for :user, :url => set_current_course_user_path(current_user.id) do |f| %>
+					 <%= f.select :current_course, options_from_collection_for_select(current_user.courses, 'id', 'course_title'), {}, {class: "form-control"} %>
+					 <%= f.submit 'Select Course', :class => 'btn btn-primary' %>
+				<% end %>
 
 			<%end%></li>
 		<!-- END selecting course that users will add groups to -->

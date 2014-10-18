@@ -13,6 +13,7 @@ class UserPolicy
   def profile?
     true
   end  
+  
   def add_to_group?
     true
   end
@@ -28,7 +29,8 @@ class UserPolicy
   def destroy?
     true
   end
-  def set_course?
+  
+  def set_current_course?
     true
   end 
   def flop?
