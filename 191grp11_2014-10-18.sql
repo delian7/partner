@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.5.37)
 # Database: 191grp11
-# Generation Time: 2014-10-18 00:24:04 +0000
+# Generation Time: 2014-10-18 21:34:15 +0000
 # ************************************************************
 
 
@@ -172,7 +172,9 @@ VALUES
 	(1,36520,0,NULL,NULL),
 	(2,36520,4,NULL,NULL),
 	(3,36520,5,NULL,NULL),
-	(4,36520,6,NULL,NULL);
+	(4,36520,6,NULL,NULL),
+	(5,36520,2,NULL,NULL),
+	(6,36520,3,NULL,NULL);
 
 /*!40000 ALTER TABLE `rosters` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -239,13 +241,13 @@ LOCK TABLES `users` WRITE;
 
 INSERT INTO `users` (`campus_id`, `ucinetid`, `uci_affiliations`, `name`, `role`, `email`, `status`, `sign_in_count`, `current_sign_in_at`, `last_sign_in_at`, `current_sign_in_ip`, `last_sign_in_ip`, `current_course`, `age_in_seconds`, `avatar_file_name`, `avatar_content_type`, `avatar_file_size`, `avatar_updated_at`, `created_at`, `updated_at`)
 VALUES
-	(0,'ryderc','student','Christina Ryder',0,'ryderc@uci.edu',0,3,'2014-10-15 17:28:33','2014-10-15 02:14:43','127.0.0.1','127.0.0.1',0,NULL,'622152_10151303211381368_1975951804_o.jpg','image/jpeg',143122,'2014-10-15 17:27:01',NULL,'2014-10-15 17:28:33'),
-	(1,'msilberm','student, staff','Michael Silberman',1,'msilberm@uci.edu',0,2,'2014-10-11 01:11:45','2014-10-11 01:01:27','127.0.0.1','127.0.0.1',0,NULL,NULL,NULL,NULL,NULL,NULL,'2014-10-11 01:11:45'),
-	(2,'kay','staff,faculty,employee','David G Kay',2,'kay@uci.edu',0,1,'2014-10-11 01:01:38','2014-10-11 01:01:38','127.0.0.1','127.0.0.1',0,NULL,NULL,NULL,NULL,NULL,NULL,'2014-10-11 01:01:38'),
-	(6,'petrovd','student','Delian Petrov',0,'petrovd@uci.edu',0,2,'2014-10-11 01:42:58','2014-10-11 01:21:06','127.0.0.1','127.0.0.1',0,NULL,'10525581_10204567467375380_3907820298695189766_n.jpg','image/jpeg',68194,'2014-10-11 01:43:06',NULL,'2014-10-11 01:43:07'),
-	(4,'imcnicol','student','Ian Mcnicol',0,'imcnicol@uci.edu',0,1,'2014-10-11 01:21:13','2014-10-11 01:21:13','127.0.0.1','127.0.0.1',0,NULL,'1382955_10202520222632714_437838427_n.jpg','image/jpeg',60296,'2014-10-11 01:37:45',NULL,'2014-10-11 01:37:45'),
-	(5,'vdhingrej','student','Vinayak Dhingreja',0,'vdhingrej@uci.edu',0,2,'2014-10-11 01:38:08','2014-10-11 01:37:53','127.0.0.1','127.0.0.1',0,NULL,'10641277_10152392094266235_7300912786488460398_n.jpg','image/jpeg',55627,'2014-10-11 01:38:02',NULL,'2014-10-11 01:38:08'),
-	(3,'ziv','student,staff,faculty,employee','Hadar Ziv',3,'ziv@uci.edu',0,0,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+	(0,'ryderc','student','Christina Ryder',0,'ryderc@uci.edu',0,7,'2014-10-18 21:23:27','2014-10-18 01:36:53','127.0.0.1','127.0.0.1',36520,NULL,'622152_10151303211381368_1975951804_o.jpg','image/jpeg',143122,'2014-10-15 17:27:01',NULL,'2014-10-18 21:23:27'),
+	(1,'msilberm','student, staff','Michael Silberman',1,'msilberm@uci.edu',0,6,'2014-10-18 02:19:27','2014-10-18 01:25:59','127.0.0.1','127.0.0.1',36520,NULL,NULL,NULL,NULL,NULL,NULL,'2014-10-18 02:19:27'),
+	(2,'kay','staff,faculty,employee','David G Kay',2,'kay@uci.edu',0,1,'2014-10-11 01:01:38','2014-10-11 01:01:38','127.0.0.1','127.0.0.1',36520,NULL,NULL,NULL,NULL,NULL,NULL,'2014-10-11 01:01:38'),
+	(6,'petrovd','student','Delian Petrov',0,'petrovd@uci.edu',0,2,'2014-10-11 01:42:58','2014-10-11 01:21:06','127.0.0.1','127.0.0.1',36520,NULL,'10525581_10204567467375380_3907820298695189766_n.jpg','image/jpeg',68194,'2014-10-11 01:43:06',NULL,'2014-10-11 01:43:07'),
+	(4,'imcnicol','student','Ian Mcnicol',0,'imcnicol@uci.edu',0,1,'2014-10-11 01:21:13','2014-10-11 01:21:13','127.0.0.1','127.0.0.1',36520,NULL,'1382955_10202520222632714_437838427_n.jpg','image/jpeg',60296,'2014-10-11 01:37:45',NULL,'2014-10-11 01:37:45'),
+	(5,'vdhingrej','student','Vinayak Dhingreja',0,'vdhingrej@uci.edu',0,2,'2014-10-11 01:38:08','2014-10-11 01:37:53','127.0.0.1','127.0.0.1',36520,NULL,'10641277_10152392094266235_7300912786488460398_n.jpg','image/jpeg',55627,'2014-10-11 01:38:02',NULL,'2014-10-11 01:38:08'),
+	(3,'ziv','student,staff,faculty,employee','Hadar Ziv',3,'ziv@uci.edu',0,0,NULL,NULL,NULL,NULL,36520,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;

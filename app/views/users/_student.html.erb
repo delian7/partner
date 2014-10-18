@@ -17,23 +17,19 @@
    </tr></b>
 <!-- End Table Header -->
 
-<!-- Loop through all users in database -->
 <% @users.each do |user| %>
 <!-- users_courses is an array of that users enrolled courseids from roster table -->
- <% users_courses = user.courses.collect(&:id)%>
  <!-- mycourse is signed in users course -->
+ <% users_courses = user.courses.collect(&:id)%>
  <% mycourse=current_user.current_course %>
  <!-- if array of this users's elrolled course ids includes the signed in user's selected course -->
-    <% if users_courses.include?(mycourse) && current_user.id != user.id %> 
-      <tr>
-        <!-- IMAGE - responsive column collapse -->
-        <td class='collapsable'><%= link_to (image_tag (user.avatar.url), :style => 'max-height: 25px; max-width: 25px;'), user %></td> 
-        <!-- NAME -->
-        <td><%= link_to user.name, user %></td>
-        <!-- EMAIL - responsive column collapse -->
-        <td class='collapsable'><%= user.email %></td>
-        <!-- if the current user and this user is in the same group -->
-        <% if current_user.groups == user.groups%>
+  <% if users_courses.include?(mycourse) && current_user.id != user.id %> 
+   <tr>
+    <td class='collapsable'><%= link_to (image_tag (user.avatar.url), :style => 'max-height: 25px; max-width: 25px;'), user %></td> 
+    <td><%= link_to user.name, user %></td>
+    <td class='collapsable'><%= user.email %></td>
+    <!-- if the current user and this user is in the same group -->
+        <% if current_user.groups.status == user.groups.status %>
         <!-- send request BUTTON -->
           <td><button class="btn btn-primary"  style="width:95%;"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;<%=  link_to "Send Request", add_to_group_user_path(user), :style => 'color: #fff; text-size:17px;' %></button></td>
           <!-- else -->
@@ -41,7 +37,7 @@
         <!-- already requested BUTTON -->
             <td><button class="btn btn-primary"  disabled="disabled" style="width:95%;"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;<%=  link_to "Requested", add_to_group_user_path(user), :style => 'color: #fff; text-size:17px;' %></button></td>
         <%end%>
-      </tr>
-    <% end %>
+   </tr>
+  <% end %>
 <% end %>
 
