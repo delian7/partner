@@ -53,6 +53,13 @@ class UsersController < ApplicationController
       redirect_to users_path, :notice => "Can't delete yourself."
     end
   end
+  
+  def set_current_course
+    user = User.find(params[:id])
+    authorize user
+    current_user.update_attributes(secure_params)
+    redirect_to root_path
+  end
 
   # If the user is partnered, it will clear the group of the current_user and the partner
   # If the user is unpartnered, it will partner them
@@ -181,6 +188,6 @@ class UsersController < ApplicationController
 
   private
   def secure_params
-    params.require(:user).permit(:role)
+    params.require(:user).permit(:role, :current_course)
   end
 end
