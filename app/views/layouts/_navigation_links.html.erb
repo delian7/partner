@@ -12,18 +12,7 @@
 			<li><%= link_to 'Control Panel', users_path %></li>
 			<li><%= link_to 'Add a Course', users_path %></li>
 		<%end%>
-			<!-- selecting course that users will add groups to -->
-			<li><% if user_signed_in? && !current_user.courses.first.blank? %>
-				
-				
-				
-				<%= form_for :user, :url => set_current_course_user_path(current_user.id) do |f| %>
-					 <%= f.select :current_course, options_from_collection_for_select(current_user.courses, 'id', 'course_title'), {}, {class: "form-control"} %>
-					 <%= f.submit 'Select Course', :class => 'btn btn-primary' %>
-				<% end %>
-
-			<%end%></li>
-		<!-- END selecting course that users will add groups to -->
+			
 		
 		<div style="float: right; width: 20%; text-align:right; padding-right: 15px">			
 			<%= link_to 'Edit account', edit_user_registration_path %><br>
