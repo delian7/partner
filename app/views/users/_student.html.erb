@@ -1,0 +1,25 @@
+<h3>Find a Partner</h3>
+   <tr>
+      <td class='collapsable'></td>
+      <td><b>Student Name</td>
+      <td class='collapsable'><b>Email</td></td> <td><b>Request</td>
+   </tr></b>
+    
+
+<% @users.each do |user| %>
+ <% users_courses = user.courses.collect(&:id)%>
+ <% mycourse=current_user.current_course %>
+    <% if users_courses.include?(mycourse) && current_user.id != user.id %> 
+      <tr>
+        <td class='collapsable'><%= link_to (image_tag (user.avatar.url), :style => 'max-height: 25px; max-width: 25px;'), user %></td> 
+        <td><%= link_to user.name, user %></td>
+        <td class='collapsable'><%= user.email %></td>
+        <% if current_user.groups == user.groups%>
+          <td><button class="btn btn-primary"  style="width:95%;"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;<%=  link_to "Send Request", add_to_group_user_path(user), :style => 'color: #fff; text-size:17px;' %></button></td>
+        <%else %>
+            <td><button class="btn btn-primary"  disabled="disabled" style="width:95%;"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;<%=  link_to "Requested", add_to_group_user_path(user), :style => 'color: #fff; text-size:17px;' %></button></td>
+        <%end%>
+      </tr>
+    <% end %>
+<% end %>
+

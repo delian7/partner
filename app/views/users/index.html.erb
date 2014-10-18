@@ -1,23 +1,17 @@
 <table class="table" style="width: 95%!important;">
-</div>
   <% case current_user.role %>
       <% when 0 %>
-        <h3>Find a Partner</h3>
-       <tr><td class='collapsable'></td><td><b>Student Name</td><td class='collapsable'><b>Email</td></td> <td><b>Request</td></tr></b>
+        <%= render "users/student" %>
       <% when 1 .. 2 %>
-        <h3>View Roster</h3>
-      <tr><td><b>Student Name</td><td><b>Partner</td></td></tr></b>
+        <%= render"users/professor" %>
       <% when 3 %>
       <h3>Control Panel</h3>
       <tr><td><b>Student Name</td><td><b>Action</td></td> </tr></b>
   <% end %>
-      <div class="column" style="width:95%;">
-          <tbody><% @users.each do |user| %>
-              <% render "users/table", locals: { user: user } %>
-              <%end%>
+          <tbody>
+
           </tbody>
         </table>
-      </div>
      <% if current_user.role == "1"%>
       <%= render "users/vipbuttons"%>
       <% end %>

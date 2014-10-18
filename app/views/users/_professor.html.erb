@@ -1,0 +1,29 @@
+<h3>View Roster</h3>
+      <tr>
+      	<td class='collapsable'></td>
+        <td><b>Student Name</td>
+        <td class='collapsable'><b>Email</td></td> <td><b>Groups</td>
+      </tr></b>
+<% @users.each do |user| %>
+  <% users_courses = user.courses.collect(&:id)%>
+  <% mycourse=current_user.current_course %>
+	<% if users_courses.include?(mycourse) && user.role == 0 %>
+	  <tr>
+	  <td class='collapsable'><%= link_to (image_tag (user.avatar.url), :style => 'max-height: 55px; max-width: 55px;'), user %></td> 
+	  <td><%= link_to user.name, user %></td>
+	  <td class='collapsable'><%= user.email %></td>
+	  <td><%= user.groups.all.collect(&:name) %></td>
+	</tr>
+	<% end %>
+	
+	<% end %>	
+<div style="float:right; padding-right:7%;">
+  <%=link_to 'Export Table', export_users_path(current_user), :class=>"btn btn-info" %>
+
+
+  <%=  link_to "Reset All Partnerships", clearall_users_path(current_user), :data => { :confirm => "Are you sure? 
+This will clear ALL partnerships
+
+
+--  Make sure to export table first  --" }, :class=>"btn btn-danger" %>
+</div>

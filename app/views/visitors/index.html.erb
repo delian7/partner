@@ -24,7 +24,9 @@
 <h2>
  <%= link_to 'Edit Profile', edit_user_registration_path, :class => 'btn btn-primary', :style => 'color: #fff; text-size:17px; width:75%;" margin-bottom="10px;' %>
 </h2>
- <h2><button class="btn btn-primary" style="width:75%;"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;<%=  link_to "Add Course", root_path, :style => 'color: #fff; text-size:17px;' %></button></h2>
+ <h2> <%= link_to 'Edit Profile', edit_user_registration_path, :class => 'btn btn-primary', :diabled => "disabled",:style => 'color: #fff; text-size:17px; width:75%;" margin-bottom="10px;' %>
+
+ 	<button class="btn btn-primary" style="width:75%;"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;<%=  link_to "Add Course", root_path, :style => 'color: #fff; text-size:17px;' %></button></h2>
       <br>
   </div>
 	<% elsif current_user.role == 1||2 %><p>
