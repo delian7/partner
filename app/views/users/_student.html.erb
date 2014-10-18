@@ -1,11 +1,24 @@
+<% @users.each do |user| %>
 <% case current_user.role %>
 <% when 0 %>
-<% user = local_assigns.user.id %>
+<h3>Find a Partner</h3>
+       <tr><td class='collapsable'></td><td><b>Student Name</td><td class='collapsable'><b>Email</td></td> <td><b>Request</td></tr></b>
+      <% when 1 .. 2 %>
+        <h3>View Roster</h3>
+      <tr><td><b>Student Name</td><td><b>Partner</td></td></tr></b>
+      <% when 3 %>
+      <h3>Control Panel</h3>
+      <tr><td><b>Student Name</td><td><b>Action</td></td> </tr></b>
   <% if user.courses.collect(&:id).include?(current_user.current_course)%>
     	<% if current_user.id != @user.id && (user.role == 0) %> 
-              
-              <tr><%= render user %></tr></div>
-     
+              <tr>    <td class='collapsable'><%= link_to (image_tag (user.avatar.url), :style => 'max-height: 25px; max-width: 25px;'), user %></td> 
+    <td><%= link_to user.name, user %></td>
+    <td class='collapsable'><%= user.email %></td>
+<% if current_user.groups == user.groups%>
+      <td><button class="btn btn-primary"  style="width:95%;"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;<%=  link_to "Send Request", add_to_group_user_path(user), :style => 'color: #fff; text-size:17px;' %></button></div></td>
+<%else %>
+      <td><button class="btn btn-primary"  disabled="disabled" style="width:95%;"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;<%=  link_to "Requested", add_to_group_user_path(user), :style => 'color: #fff; text-size:17px;' %></button></div></td>
+<%end%></tr></div>
       <% end %>
   <% end %>
 <% when 1 .. 2 %>
@@ -16,4 +29,4 @@
     <% if user.role== 0 %> 
            <tr> <td>><%= user.name %></a></td><td><%=  link_to "Confirm Email", confirm_user_path(user), :class=>"smallbluebutton"  %></td><td></td>
   	<% end %>
-<% end %>
+<% end %><%end%>

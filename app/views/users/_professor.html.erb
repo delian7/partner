@@ -1,12 +1,16 @@
 <% if current_user.role = 1..2 %>
+<% if user.courses.collect(&:id).include?(current_user.current_course)%>
+
+
+
+  <% end %>
        	<%= link_to 'Export Table', export_users_path(current_user), :class=>"export" %></div>
        <div style="float:right; padding-right:7%;">
-       	<%= link_to "Reset All Partnerships", clearall_users_path(current_user), :data => { :confirm => "Are you sure? 
+       	<%= link_to "Reset All Partnerships", clearall_users_path, :data => { :confirm => "Are you sure? 
         This will clear ALL partnerships
 
 
 --  Make sure to export table first  --" }, :class=>"clear" %>
 </div>
       <% end %>
-
 
