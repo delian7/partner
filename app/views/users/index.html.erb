@@ -1,4 +1,3 @@
-<div class="row">
 <table class="table" style="width: 95%!important;">
 </div>
   <% case current_user.role %>
@@ -13,14 +12,12 @@
       <tr><td><b>Student Name</td><td><b>Action</td></td> </tr></b>
   <% end %>
       <div class="column" style="width:95%;">
-          <tbody>
-              <% @users.each do |user| %>
-              <tr><%= render user %></tr></div>
-              <% end %>
+          <tbody><% @users.each do |user| %>
+              <% render "users/table", locals: { user: user } %>
+              <%end%>
           </tbody>
         </table>
       </div>
      <% if current_user.role == "1"%>
       <%= render "users/vipbuttons"%>
       <% end %>
-      </div>

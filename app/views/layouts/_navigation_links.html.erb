@@ -14,12 +14,9 @@
 		<%end%>
 		<li><%= link_to 'Help', help_index_path %></li>
 			<!-- selecting course that users will add groups to -->
-			<li><% if !current_user.courses.first.blank? %>
-				<% @current_course = current_user.courses.first %>
-				<%= form_for (@current_course) do |f|%>
-				<%= f.select "id", current_user.courses.collect(&:course_title) %>
-			<%end%>
-				<% current_user.current_course = @current_course.id %>
+			<li><% if user_signed_in? && !current_user.courses.first.blank? %>
+				<%= select_tag(:id, options_for_select(current_user.courses.collect(&:course_title))) %>
+
 			<%end%></li>
 		<!-- END selecting course that users will add groups to -->
 		

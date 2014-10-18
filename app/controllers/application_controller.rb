@@ -1,9 +1,7 @@
 class ApplicationController < ActionController::Base
   include Pundit
 
-  before_action :startup, :all_enrolled
-
-
+  before_action :startup
   require 'net/https'
   require 'xmlsimple'
   require 'uri'
@@ -52,9 +50,6 @@ class ApplicationController < ActionController::Base
     redirect_to root_path
   end
 
-def all_enrolled
-  @current_courses = current_user.courses.collect(&:id)
-end
 
   protect_from_forgery with: :exception
   before_action :configure_permitted_parameters, if: :devise_controller?

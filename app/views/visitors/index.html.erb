@@ -9,14 +9,14 @@
 
 	<% if current_user.role==0 %>
 	<div class="col span_2_of_3">
-    <h2>Courses</h2>
+    <h2>Groups</h2>
       <table class = "table" style = "width:100%;">
 	    <tr>
-	      <td><b>Course ID</b></td>
-	      <td><b>Course Title</b></td>
+	      <td><b>Group ID</b></td>
+	      <td><b>Group Name</b></td>
 	      <td></td>
 	    </tr>
-		<%= render "visitors/statusbox" %>
+		<%= render "visitors/list" %>
 	  </table>
 	</div>
 	<div class="col span_1_of_3" style="text-align:center;">
