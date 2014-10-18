@@ -12,7 +12,6 @@
 			<li><%= link_to 'Control Panel', users_path %></li>
 			<li><%= link_to 'Add a Course', users_path %></li>
 		<%end%>
-		<li><%= link_to 'Help', help_index_path %></li>
 			<!-- selecting course that users will add groups to -->
 			<li><% if user_signed_in? && !current_user.courses.first.blank? %>
 				<%= select_tag(:id, options_for_select(current_user.courses.collect(&:course_title))) %>

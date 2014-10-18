@@ -1,6 +1,5 @@
 <% case current_user.role %>
 <% when 0 %>
-
   <% if user.courses.collect(&:id).include?(current_user.current_course) %>
     	<% if current_user.id != user.id && (user.role == 0) %> 
               <tr>    <td class='collapsable'><%= link_to (image_tag (user.avatar.url), :style => 'max-height: 25px; max-width: 25px;'), user %></td> 
