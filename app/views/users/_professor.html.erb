@@ -1,11 +1,18 @@
 <h3>View Roster</h3>
+			<!-- selecting course that users will add groups to -->
+			<% if user_signed_in? && !current_user.courses.first.blank? %>
+				<%= form_for :user, :url => set_current_course_user_path(current_user.id) do |f| %>
+					 <%= f.select :current_course, options_from_collection_for_select(current_user.courses, 'id', 'course_title'), {}, {class: "form-control"} %>
+					 <%= f.submit 'Select Course', :class => 'btn btn-primary' %>
+				<% end %>
+			<%end%>
+		<!-- END selecting course that users will add groups to -->
+		
       <tr>
       	<td class='collapsable'></td>
         <td><b>Student Name</td>
         <td class='collapsable'><b>Email</td></td> <td><b>Groups</td>
       </tr></b>
-    
-	<div>
 <% @users.each do |user| %>
   <% users_courses = user.courses.collect(&:id)%>
   <% mycourse=current_user.current_course %>
@@ -17,14 +24,15 @@
 	  <td><%= user.groups.all.collect(&:name) %></td>
 	</tr>
 	<% end %>
+	
 	<% end %>	
-
-  <%=link_to 'Export Table', export_users_path(current_user), :class=>"export" %>
-
 <div style="float:right; padding-right:7%;">
+  <%=link_to 'Export Table', export_users_path(current_user), :class=>"btn btn-info" %>
+
+
   <%=  link_to "Reset All Partnerships", clearall_users_path(current_user), :data => { :confirm => "Are you sure? 
 This will clear ALL partnerships
 
 
---  Make sure to export table first  --" }, :class=>"clear" %>
-</div></div>
+--  Make sure to export table first  --" }, :class=>"btn btn-danger" %>
+</div>
