@@ -4,8 +4,6 @@
         <td><b>Student Name</td>
         <td class='collapsable'><b>Email</td></td> <td><b>Groups</td>
       </tr></b>
-    
-	<div>
 <% @users.each do |user| %>
   <% users_courses = user.courses.collect(&:id)%>
   <% mycourse=current_user.current_course %>
@@ -17,14 +15,15 @@
 	  <td><%= user.groups.all.collect(&:name) %></td>
 	</tr>
 	<% end %>
+	
 	<% end %>	
-
-  <%=link_to 'Export Table', export_users_path(current_user), :class=>"export" %>
-
 <div style="float:right; padding-right:7%;">
+  <%=link_to 'Export Table', export_users_path(current_user), :class=>"btn btn-info" %>
+
+
   <%=  link_to "Reset All Partnerships", clearall_users_path(current_user), :data => { :confirm => "Are you sure? 
 This will clear ALL partnerships
 
 
---  Make sure to export table first  --" }, :class=>"clear" %>
-</div></div>
+--  Make sure to export table first  --" }, :class=>"btn btn-danger" %>
+</div>
