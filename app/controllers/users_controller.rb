@@ -58,7 +58,7 @@ class UsersController < ApplicationController
     user = User.find(params[:id])
     authorize user
     current_user.update_attributes(secure_params)
-    redirect_to root_path
+    redirect_to users_path
   end
 
   # If the user is partnered, it will clear the group of the current_user and the partner

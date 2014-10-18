@@ -4,7 +4,7 @@
 <% if user_signed_in? && !current_user.courses.first.blank? %>
 
   <%= form_for :user, :url => set_current_course_user_path(current_user.id) do |f| %>
-     <%= f.select :current_course, options_from_collection_for_select(current_user.courses, 'id', 'course_title'), {}, {class: "form-control"} %>
+     <%= f.select :current_course, options_from_collection_for_select(current_user.courses, 'id', 'course_title', current_user.current_course), {}, {class: "form-control"} %>
      <%= f.submit 'Select Course', :class => 'btn btn-primary' %>
   <% end %>
 <%end%>
@@ -20,16 +20,18 @@
 <% @users.each do |user| %>
 <!-- users_courses is an array of that users enrolled courseids from roster table -->
  <!-- mycourse is signed in users course -->
+ <% mycourse = current_user.current_course%>
+ <% mygroup = GroupRelation.where(:course_id => mycourse, :user_id => current_user.id).limit(1).collect(&:group_id)%>
  <% users_courses = user.courses.collect(&:id)%>
- <% mycourse=current_user.current_course %>
+ <% users_groups = GroupRelation.where(:course_id => mycourse, :user_id => user.id).limit(10).collect(&:group_id)%>
  <!-- if array of this users's elrolled course ids includes the signed in user's selected course -->
-  <% if users_courses.include?(mycourse) && current_user.id != user.id %> 
+  <% if users_courses.include?(mycourse) && current_user.id != user.id && user.role ==0 %> 
    <tr>
     <td class='collapsable'><%= link_to (image_tag (user.avatar.url), :style => 'max-height: 25px; max-width: 25px;'), user %></td> 
     <td><%= link_to user.name, user %></td>
-    <td class='collapsable'><%= user.email %></td>
+    <td class='collapsable'><%= user.email %><%= users_groups %><%= mygroup %></td>
     <!-- if the current user and this user is in the same group -->
-        <% if current_user.groups.status == user.groups.status %>
+        <% if !users_groups.include?(mygroup[0]) %>
         <!-- send request BUTTON -->
           <td><button class="btn btn-primary"  style="width:95%;"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;<%=  link_to "Send Request", add_to_group_user_path(user), :style => 'color: #fff; text-size:17px;' %></button></td>
           <!-- else -->
