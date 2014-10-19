@@ -1,0 +1,8 @@
+<%= f.label 'Project Name' %>
+<%= f.text_field(:name) %><br/>
+
+<%= f.label 'Which class should the project be for?' %>
+<%= f.select :course_id, options_from_collection_for_select(current_user.courses, 'id', 'course_title'), {}, {class: "form-control"} %>
+
+<%= f.label 'Is the project Active?' %>
+<%= f.check_box :active%><br />

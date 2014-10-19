@@ -1,0 +1,20 @@
+<%= link_to("Add New Project", {:action => 'new'}, :class => 'btn btn-primary') %>
+<table class="table" style="width: 95%!important;">
+  <tr>
+  	<td class='collapsable'></td>
+    <td><b>Project Name</td>
+    <td class='collapsable'><b>Active?</td></td> <td><b>Course ID</td>
+  </tr></b>
+	<% @projects.each do |project| %>
+	  <tr>
+			<td><%= project.id %></td>
+		  <td><%= project.name %></td>
+			<td><%= project.active %></td>
+			<td><%= project.course_id %></td>
+	    <td>
+	      <%= link_to("Edit", {:action => 'edit', :id => project.id}, :class => 'btn btn-primary')%>
+				<%= link_to("Delete", remove_project_path(project.id), :data => { :confirm =>"ARE YOU SURE?!"}, :class => 'btn btn-danger')%>
+	    </td>
+		</tr>
+	<% end %>
+</table>
