@@ -3,7 +3,7 @@
 	<% case current_user.role %>
 		<% when 0 %>
 			<li><%= link_to 'Profile', users_profile_path %></li>
-			<li><%= link_to 'Find a Partner', users_path %></li>
+			<li><%= link_to 'Find a Partner', groups_path %></li>
 			<li><%= link_to 'Add a Course', courses_path %></li>
 		<% when 1 .. 2 %>
 			<li><%= link_to 'View Roster', users_path %></li>
@@ -22,7 +22,7 @@
   <li><%= link_to 'Create Account', new_user_registration_path %></li>
 	<div style="float: right; width: 20%; text-align:right; padding-right: 15px">
   		<%if @ucinetid.blank?%>
-			<%= link_to 'Login to Webauth', request.ip == "127.0.0.1" ? user_session_path : "https://login.uci.edu/" %><br>
+			<%= link_to 'Login', request.ip == "127.0.0.1" ? user_session_path : "https://login.uci.edu/" %><br>
 		<%else%>
 			<%= form_for(resource, :url => user_session_path) do |f| %>
 		    <%= devise_error_messages! %>
