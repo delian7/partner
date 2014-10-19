@@ -7,7 +7,6 @@ class GroupsController < ApplicationController
     @users = User.all
     @courses = Course.all
     @groups = Group.all
-    #@group = group.find(params[:id])
     authorize User.all
   end
 
@@ -27,7 +26,6 @@ class GroupsController < ApplicationController
   def show
     @group = group.find(params[:id])
     unless group_signed_in?
-  # unless @group == current_group
     authorize User.all
     redirect_to :back, :alert => "Access denied."
     end

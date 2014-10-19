@@ -18,6 +18,7 @@ devise_for :users, :controllers => {:registrations => "registrations"}
         get :add_to_group
         get :ungroup
         post :set_current_course
+        post :request
         end
      collection do
        get :clearall
@@ -27,8 +28,6 @@ devise_for :users, :controllers => {:registrations => "registrations"}
 
   resources :courses do
      member do
-        put :set_course
-        patch :set_course
         end
      collection do
         end

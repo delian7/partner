@@ -29,7 +29,7 @@
    <tr>
     <td class='collapsable'><%= link_to (image_tag (user.avatar.url), :style => 'max-height: 25px; max-width: 25px;'), user %></td> 
     <td><%= link_to user.name, user %></td>
-    <td class='collapsable'><%= user.email %><%= users_groups %><%= mygroup %></td>
+    <td class='collapsable'><%= user.email %></td>
     <!-- if the current user and this user is in the same group -->
         <% if !users_groups.include?(mygroup[0]) %>
         <!-- send request BUTTON -->

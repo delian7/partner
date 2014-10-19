@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_filter :authenticate_user!
-  after_action :verify_authorized, except: [:show]
+  after_action :verify_authorized, except: [:show, :index]
   require 'csv'
 
   def index
@@ -18,19 +18,19 @@ class UsersController < ApplicationController
   end
   def show
     @user = User.find(params[:id])
-    unless user_signed_in?
-  # unless @user == current_user
+    if user_signed_in?
     authorize @user
+    else
     redirect_to :back, :alert => "Access denied."
     end
   end
 
   def profile
-    #unless user_signed_in?
-  # unless @user == current_user
-    @users = current_user
-    authorize @users
-    #redirect_to :back, :alert => "Access denied."
+    if user_signed_in?
+    authorize current_user
+    else
+    redirect_to :back, :alert => "Access denied."
+    end
   end
 
   def update
@@ -138,9 +138,6 @@ class UsersController < ApplicationController
     flash[:notice] = "Removed group."
     redirect_to current_user
   end
-
-
-
 
   private
   def secure_params
