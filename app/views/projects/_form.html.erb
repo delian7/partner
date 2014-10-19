@@ -1,8 +1,14 @@
-<%= f.label 'Project Name' %>
-<%= f.text_field(:name) %><br/>
+<div style="line-height:2;">
+	<br />
+	<%= f.label 'Project Name: ' %>
+	<%= f.text_field(:name) %><br/>
 
-<%= f.label 'Which class should the project be for?' %>
-<%= f.select :course_id, options_from_collection_for_select(current_user.courses, 'id', 'course_title'), {}, {class: "form-control"} %>
+	<%= f.label 'Should the project be Active? ' %>
+	<%= f.check_box :active%><br />
 
-<%= f.label 'Is the project Active?' %>
-<%= f.check_box :active%><br />
+	<%= f.label 'Select the class for which the project should be for: ' %>
+	<%= f.select :course_id, options_from_collection_for_select(current_user.courses, 'id', 'course_title'), {}, {class: "btn btn-default dropdown-toggle"} %><br />
+
+	<%= f.label 'Group Size of Project: ' %>
+	<%= f.select :group_size, [['2 people','2'], ['3 people','3'], ['4 people','4'], ['5 people','5'], ['6 people','6']], {}, { :class => 'btn btn-default dropdown-toggle' }%><br /><br />
+</div>
