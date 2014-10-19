@@ -7,18 +7,25 @@ class GroupsController < ApplicationController
     @users = User.all
     @courses = Course.all
     @groups = Group.all
-    #@group = group.find(params[:id])
     authorize User.all
   end
-  def new
-    @groups = Group.all
-    #@group = group.find(params[:id])
-    authorize User.all
+
+   def create
+  authorize User.all
+  @group = Group.create(:course_id=>current_user.current_course, :user_id=>current_user, 
+    :course_id=>current_user.current_course, :project_id=>current_user.current_project)
+   if @group.save
+      flash[:notice] = "Added partner."
+      redirect_to root_url
+    else
+      flash[:error] = "Unable to add partner."
+      redirect_to root_url
+    end
   end
+
   def show
     @group = group.find(params[:id])
     unless group_signed_in?
-  # unless @group == current_group
     authorize User.all
     redirect_to :back, :alert => "Access denied."
     end
