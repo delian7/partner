@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   get 'help/index'
   get 'courses/index'
   get 'courses/set_course'
+  post "delete", to: "projects#destroy"
   
 
 devise_for :users, :controllers => {:registrations => "registrations"}
@@ -36,7 +37,9 @@ devise_for :users, :controllers => {:registrations => "registrations"}
 
   resources :projects do
      member do
+       get :edit
        post :update
+       get :remove
         end
      collection do
         end

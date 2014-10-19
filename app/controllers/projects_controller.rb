@@ -26,19 +26,43 @@ class ProjectsController < ApplicationController
     @project = Project.find(params[:id])
   end
   
+  def destroy
+    @project = Project.find(params[:id])
+    @project.destroy
+    @project.save
+    redirect_to(:action => 'index')
+  end
+
+  
+
+
   def update
     @project = Project.find(params[:id])
     
     if @project.update_attributes(project_params)
+      flash[:notice] = "Project updated successfullly yayy :)"
       redirect_to(:action => 'index')
     else
+      flash[:error] = "Project not updated. :("
       render('edit')
     end
   end
+
+  def remove
+    @project = Project.find(params[:id])
+    @project.destroy
+    if @project.save
+      flash[:notice] = "Project Deleted"
+    else
+      flash[:error] = "Project could not be deleted"
+    end
+    redirect_to(:action => 'index')
+  end
   
+  private 
   
   def project_params
-    params.require(:project).permit(:name, :active, :course_id)
+    params.require(:project).permit(:name, :active, :course_id, :id)
   end 
   
 end
