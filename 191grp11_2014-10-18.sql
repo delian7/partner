@@ -1,13 +1,13 @@
 # ************************************************************
 # Sequel Pro SQL dump
-# Version 4096
+# Version 4135
 #
 # http://www.sequelpro.com/
 # http://code.google.com/p/sequel-pro/
 #
-# Host: 127.0.0.1 (MySQL 5.5.37)
+# Host: 127.0.0.1 (MySQL 5.6.19)
 # Database: 191grp11
-# Generation Time: 2014-10-18 21:34:15 +0000
+# Generation Time: 2014-10-19 00:43:47 +0000
 # ************************************************************
 
 
@@ -22,17 +22,6 @@
 
 # Dump of table courses
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `courses`;
-
-CREATE TABLE `courses` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `course_title` varchar(255) COLLATE utf8_unicode_ci DEFAULT '',
-  `instructor` varchar(255) COLLATE utf8_unicode_ci DEFAULT '',
-  `created_at` datetime DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 LOCK TABLES `courses` WRITE;
 /*!40000 ALTER TABLE `courses` DISABLE KEYS */;
@@ -53,36 +42,10 @@ UNLOCK TABLES;
 # Dump of table evaluations
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `evaluations`;
-
-CREATE TABLE `evaluations` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `project_id` int(11) DEFAULT '0',
-  `user_id` int(11) DEFAULT '0',
-  `created_at` datetime DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
 
 
 # Dump of table group_relations
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `group_relations`;
-
-CREATE TABLE `group_relations` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `group_id` int(11) DEFAULT NULL,
-  `user_id` int(11) DEFAULT NULL,
-  `project_id` int(11) DEFAULT NULL,
-  `course_id` int(11) DEFAULT NULL,
-  `accepted_at` time DEFAULT NULL,
-  `status` int(11) NOT NULL DEFAULT '0',
-  `created_at` datetime DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 LOCK TABLES `group_relations` WRITE;
 /*!40000 ALTER TABLE `group_relations` DISABLE KEYS */;
@@ -99,18 +62,6 @@ UNLOCK TABLES;
 # Dump of table groups
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `groups`;
-
-CREATE TABLE `groups` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `limit` int(11) DEFAULT NULL,
-  `allow_repeat` tinyint(1) DEFAULT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
 LOCK TABLES `groups` WRITE;
 /*!40000 ALTER TABLE `groups` DISABLE KEYS */;
 
@@ -126,43 +77,10 @@ UNLOCK TABLES;
 # Dump of table projects
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `projects`;
-
-CREATE TABLE `projects` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `group_id` int(11) DEFAULT '0',
-  `course_id` int(11) DEFAULT '0',
-  `created_at` datetime DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-LOCK TABLES `projects` WRITE;
-/*!40000 ALTER TABLE `projects` DISABLE KEYS */;
-
-INSERT INTO `projects` (`id`, `group_id`, `course_id`, `created_at`, `updated_at`)
-VALUES
-	(1,1,36520,NULL,NULL),
-	(2,2,36540,NULL,NULL),
-	(3,3,36520,NULL,NULL);
-
-/*!40000 ALTER TABLE `projects` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 # Dump of table rosters
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `rosters`;
-
-CREATE TABLE `rosters` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `course_id` int(11) DEFAULT NULL,
-  `user_id` int(11) DEFAULT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 LOCK TABLES `rosters` WRITE;
 /*!40000 ALTER TABLE `rosters` DISABLE KEYS */;
@@ -174,7 +92,8 @@ VALUES
 	(3,36520,5,NULL,NULL),
 	(4,36520,6,NULL,NULL),
 	(5,36520,2,NULL,NULL),
-	(6,36520,3,NULL,NULL);
+	(6,36520,3,NULL,NULL),
+	(7,36540,2,NULL,NULL);
 
 /*!40000 ALTER TABLE `rosters` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -182,13 +101,6 @@ UNLOCK TABLES;
 
 # Dump of table schema_migrations
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `schema_migrations`;
-
-CREATE TABLE `schema_migrations` (
-  `version` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  UNIQUE KEY `unique_schema_migrations` (`version`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 LOCK TABLES `schema_migrations` WRITE;
 /*!40000 ALTER TABLE `schema_migrations` DISABLE KEYS */;
@@ -209,32 +121,6 @@ UNLOCK TABLES;
 
 # Dump of table users
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `users`;
-
-CREATE TABLE `users` (
-  `campus_id` int(11) NOT NULL DEFAULT '0',
-  `ucinetid` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `uci_affiliations` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `role` int(11) NOT NULL DEFAULT '0',
-  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `status` tinyint(1) DEFAULT '0',
-  `sign_in_count` int(11) NOT NULL DEFAULT '0',
-  `current_sign_in_at` datetime DEFAULT NULL,
-  `last_sign_in_at` datetime DEFAULT NULL,
-  `current_sign_in_ip` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `last_sign_in_ip` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `current_course` int(11) NOT NULL DEFAULT '0',
-  `age_in_seconds` int(11) DEFAULT NULL,
-  `avatar_file_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `avatar_content_type` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `avatar_file_size` int(11) DEFAULT NULL,
-  `avatar_updated_at` datetime DEFAULT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL,
-  UNIQUE KEY `index_users_on_ucinetid` (`ucinetid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
