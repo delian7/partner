@@ -11,7 +11,14 @@ class UserPolicy
   end
 
   def profile?
-    true
+    if @user == @record
+      true
+    else
+      false
+    end
+  end  
+   def show?
+     true
   end  
   
   def add_to_group?
@@ -33,6 +40,7 @@ class UserPolicy
   def set_current_course?
     true
   end 
+  
   def flop?
     # So long as both current user and the user being requested are unpartnered
     ((user.status == false && record.status == false) && 

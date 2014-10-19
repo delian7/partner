@@ -1,11 +1,9 @@
-<% if current_user.role = 3 %>
-       	<%=link_to 'Export Table', export_users_path(current_user), :class=>"export" %></div>
-       <div style="float:right; padding-right:7%;">
-       	<%=  link_to "Reset All Partnerships", clearall_users_path(current_user), :data => { :confirm => "Are you sure? 
-        This will clear ALL partnerships
+ <h3>Control Panel</h3>
+      <tr><td><b>Student Name</td><td><b>Action</td></td> </tr></b>
 
 
---  Make sure to export table first  --" }, :class=>"clear" %>
+
+       
 </div>
       <% end %>
 

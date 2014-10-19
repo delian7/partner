@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_filter :authenticate_user!
-  after_action :verify_authorized, except: [:show]
+  after_action :verify_authorized, except: [:show, :index]
   require 'csv'
 
   def index
@@ -18,19 +18,19 @@ class UsersController < ApplicationController
   end
   def show
     @user = User.find(params[:id])
-    unless user_signed_in?
-  # unless @user == current_user
+    if user_signed_in?
     authorize @user
+    else
     redirect_to :back, :alert => "Access denied."
     end
   end
 
   def profile
-    #unless user_signed_in?
-  # unless @user == current_user
-    @users = current_user
-    authorize @users
-    #redirect_to :back, :alert => "Access denied."
+    if user_signed_in?
+    authorize current_user
+    else
+    redirect_to :back, :alert => "Access denied."
+    end
   end
 
   def update
@@ -58,36 +58,14 @@ class UsersController < ApplicationController
     user = User.find(params[:id])
     authorize user
     current_user.update_attributes(secure_params)
-    redirect_to root_path
-  end
-
-  # If the user is partnered, it will clear the group of the current_user and the partner
-  # If the user is unpartnered, it will partner them
-  # Partnering sets status to 1 or true and fills the current_user (and their partner's) partner1 with the other person's name
-
-  # Cancels account and ensures groups are cleared
-  def cancel
-    user = User.find(params[:id])
-    authorize user
-    user.status = false
-    current_user.status = false
-    current_user.partner1 = ""
-    user.partner1 = ""
-
-    user.save
-    current_user.save
-    redirect_to registration_path(user)
-    current_user.destroy
-
+    redirect_to users_path
   end
 
   # Clear all users partner1 columns to "" and reset statuses to 0 or false
   def clearall
-    User.all.each do |user|
+    User.where(:course_id=> current_user.current_course).each do |user|
       user = User.find(user)
       authorize user
-      user.status = false
-      user.partner1 = ""
       user.save
   end
     redirect_to users_path(current_user), :alert => "All groups have been cleared."
@@ -106,30 +84,8 @@ class UsersController < ApplicationController
     send_data(roster_csv, :type => 'text/csv', :filename => 'groups.csv')
   end
 
-  # def confirm
-  #     time = Time.new
-  #     user = User.find(params[:id])
-  #     authorize user
-  #     user.confirmed_at = time.strftime("%Y-%m-%d %H:%M:%S")
-  #     user.save
-  #     redirect_to users_path(current_user), :flash => { :success => "User Confirmed" }
-  # end
-
-  def creategroup
-  authorize User.all
-  @group = Group.create(:course_id=>current_user.current_course, :user_id=>current_user, 
-    :course_id=>current_user.current_course, :project_id=>current_user.current_project)
-   if @group.save
-      flash[:notice] = "Added partner."
-      redirect_to root_url
-    else
-      flash[:error] = "Unable to add partner."
-      redirect_to root_url
-    end
-  end
-
  def self.request(user, group)
-    unless user == group or Grouprelation.exists?(user, group)
+    unless user == group or GroupRelation.exists?(user, group)
       transaction do
         create(:user => user, :group => group, :status => 'pending')
         create(:user => group, :group => user, :status => 'requested')
@@ -182,9 +138,6 @@ class UsersController < ApplicationController
     flash[:notice] = "Removed group."
     redirect_to current_user
   end
-
-
-
 
   private
   def secure_params

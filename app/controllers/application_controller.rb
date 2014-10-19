@@ -1,7 +1,12 @@
 class ApplicationController < ActionController::Base
   include Pundit
 
+  protect_from_forgery with: :exception
+  before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :startup
+
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+
   require 'net/https'
   require 'xmlsimple'
   require 'uri'
@@ -18,12 +23,14 @@ class ApplicationController < ActionController::Base
 
       @auth_key=cookies[COOKIE_NAME]
       http = Net::HTTP.new('login.uci.edu', 80)
-      http.use_ssl = true if 80 == 443
+      if @auth_key == nil
+        return
+      end
       @results = nil
       http.start do |http|
-        @request = Net::HTTP::Get.new('https://login.uci.edu/ucinetid/webauth_check' + '?return_xml=true&ucinetid_auth=' + (@auth_key || ""))
-        @response = http.request(@request)
-        @results=@response.body
+        request = Net::HTTP::Get.new('https://login.uci.edu/ucinetid/webauth_check' + '?return_xml=true&ucinetid_auth=' + (@auth_key || ""))
+        response = http.request(request)
+        @results = response.body
       end
       @results=XmlSimple.xml_in(@results,{'ForceArray' => false})
       @results.each do |key,value|
@@ -49,21 +56,13 @@ class ApplicationController < ActionController::Base
     end
     redirect_to root_path
   end
-
-
-  protect_from_forgery with: :exception
-  before_action :configure_permitted_parameters, if: :devise_controller?
-
+  
   protected
-
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.for(:sign_up) << :name
     devise_parameter_sanitizer.for(:account_update) << :name
   end
-
-
-  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   private
 
