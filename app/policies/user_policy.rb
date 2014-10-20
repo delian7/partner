@@ -10,6 +10,9 @@ class UserPolicy
     true
   end
 
+def csv_import?
+  true
+end
   def profile?
     if @user == @record
       true

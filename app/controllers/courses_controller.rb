@@ -87,6 +87,7 @@ end
 end
 
 def csv_import 
+  authorize User.all
   n=0
   csv_text = File.open(params[:dump][:file].tempfile, :headers=>true)
   csv = CSV.parse(csv_text)
@@ -97,35 +98,34 @@ def csv_import
   #delete all empty arrays
   csv.delete_if {|x| x.empty? } 
   #show array starting with [8] and 100 length afterwards.  Gets rid of UCI registrar text
-  csv = csv.slice!(8,100)
-      @quarter = csv[0][0] 
-      @course_code = find_first_digits(csv[1][0])  
-      @instructor = get_instructor_name(csv[3][0])
-      @permissions = TA(csv[8][0])
-      @course_title = csv[2][0]
-      @location = csv[4][0]
-     # Course.create(:id=> @course_code, :instructor=>@instructor[0], :course_title=> @course_title)
-      #gets rid of course info, shows only student data and columns
-  student_roster_data = csv.slice!(11,100)
-  send_data(student_roster_data, :type => 'text/csv', :filename => 'student_roster_data.csv')
+  cdata = csv.slice!(8,100)
+  
+      @quarter = cdata[0][0] 
+      @course_code = find_first_digits(cdata[1][0])  
+      @instructor = get_instructor_name(cdata[3][0])
+      @permissions = TA(cdata[8][0])
+      @course_title = cdata[2][0]
+      #@location = cdata[4][0]
 
-
+  studentdata = cdata.slice!(11,600)
+  emailcol = studentdata[0].index("Email")
+  namecol = studentdata[0].index("Name")
    # Course.new(id: )
-  CSV.foreach(csv_text, :headers => true)  do |row, i|
-    next if i == 5
-   if User.find(n) != nil
-    user = User.find(n)
-    #Roster.new(course_id: @course_code, user_id: user.id)
-    else 
-    user = User.new()
-    #Roster.new(course_id: @course_code, user_id: user.id)
-    end
-       if user.save
-          n+=1
-          GC.start if n%50==0
-       end
+  studentdata[1..-2].each do |i|
+    @netid = i[emailcol].downcase
+    @netid.slice! "@uci.edu"
+    @name = i[namecol].titlecase
+    @mail = i[emailcol].downcase
+  if User.find_by(:ucinetid => @netid) != nil
+    user = User.find_by(:ucinetid => @netid)
+    Roster.new(:course_id => @course_code, :user_id => user.id)
+  else 
+    user = User.new(:ucinetid => @netid, :name => @name, :email => @mail, 
+      :uci_affiliations => "student", :current_course =>  @course_code)
   end
-  flash.now[:message]="CSV Import Successful,  #{n} new records added to data base"
+  Roster.new(:course_id => @course_code, :user_id => user.id)
+  end
+  redirect_to :back, :notice => "CSV Import Successful,  #{n} new users added to PartnerUp, #{n} enrollments added to database"
 end
 
 private

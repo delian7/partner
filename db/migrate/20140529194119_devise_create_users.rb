@@ -1,11 +1,12 @@
 class DeviseCreateUsers < ActiveRecord::Migration
   def change
-    create_table :users, {:id => false}  do |t|
-      ## Database authenticatable
-      t.integer    :campus_id,          null: false, default: "", :uniqueness => :true
+    create_table :users do |t|
+      # ## Database authenticatable
+      # t.integer    :campus_id,          null: false, default: "", :unique => :true, null: false
       t.string     :ucinetid
       t.string     :uci_affiliations
-      t.string     :name
+      t.string     :first_name
+      t.string     :last_name
       t.integer    :role,               default: 0, null: false
       t.string     :email,              null: false, default: ""
       t.integer    :current_course, null: false, default: ""
@@ -35,8 +36,8 @@ class DeviseCreateUsers < ActiveRecord::Migration
       # t.datetime :locked_at
       t.timestamps
     end
-     add_index :users, :ucinetid,                unique: true
-    #  add_index :users, :campus_id,   unique: true
+     #add_index :users, :ucinetid,                unique: true
+     #add_index :users, :campus_id,   unique: true
     #  add_index :users, :name,         unique: true
   end
 end

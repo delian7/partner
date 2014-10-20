@@ -1,5 +1,9 @@
-.navbar-fixed-top {background-color:#eee}
-.navbar-default {background-color:#c3f3fa;}
+.navbar-fixed-top {
+}
+.navbar-default {
+  background-color:#edf3f3!important;
+  border-color: #dee8e9!important;
+}
 
 img#partnerup {
 margin: 0px 0px 0px 0px;

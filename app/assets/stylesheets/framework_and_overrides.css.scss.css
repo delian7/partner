@@ -31,7 +31,7 @@ img {
 // to make views framework-neutral
 main {
   @extend .container;
-  background-color: #F8F8F8;
+  background-color: #edf3f3;
   padding: 30px 10px 80px 40px;
   margin-bottom: 40px;
   margin-top: 50px;
@@ -65,7 +65,7 @@ section {
   min-height: 20px;
   padding: 20px 50px 50px 50px;
   margin-bottom: 20px;
-  background-color: whitesmoke;
+  background-color: #f9fbfb;
   border: 1px solid #d6d6d6;
   border-radius: 4px;
   -webkit-box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);
