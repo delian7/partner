@@ -1,28 +1,19 @@
-<div class="container">
-<div class="row">
-<table class="table" style="width:85%;">
-</div>
-  <% case current_user.role %>
-      <% when 0 %>
-        <h3>Find a Partner</h3>
-       <tr><td></td><td><b>Student Name</td><td><b>Email</td><td><b>Available?</td></td> <td><b>Request</td></tr></b>
-      <% when 1 .. 2 %>
-        <h3>View Roster</h3>
-      <tr><td><b>Student Name</td><td><b>Partner</td></td></tr></b>
-      <% when 3 %>
-      <h3>Control Panel</h3>
-      <tr><td><b>Student Name</td><td><b>Action</td></td> </tr></b>
+<h3>Let's Partner Up!</h3><br />
+
+<strong>1. Please select the course that you want to get a partner in?</strong>
+
+<!-- selecting course that users will add groups to -->
+<!-- if the user is signed in and their enrolled in at least one course on roster -->
+<% if user_signed_in? && !current_user.courses.first.blank? %>
+  
+	<%= form_for :user, :url => set_current_course_user_path(current_user.id) do |f| %>	
+	  <div style="max-width: 450px">
+		<%= f.select :current_course, options_from_collection_for_select(current_user.courses, 'id', 'course_title', current_user.current_course), {}, {class: "form-control"} %><br />
+		</div>	
+	  <%= f.submit 'Select Course', :class => 'btn btn-primary' %>
   <% end %>
-      <div class="column" style="width:100%;">
-          <tbody>
-              <% @users.each do |user| %>
-              <tr><%= render user %></tr></div>
-              <% end %>
-          </tbody>
-        </table>
-      </div>
-     <% if current_user.role == "1"%>
-      <%= render "users/vipbuttons"%>
-      <% end %>
-      </div>
-  </div>
+
+<%end%>
+<!-- END selecting course that users will add groups to -->
+
+<%= @projects %>
