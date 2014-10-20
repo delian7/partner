@@ -1,3 +1,10 @@
+  <%= form_for import_courses_path do %>
+  <%= file_field_tag :file_name %>
+  <%= submit_tag "Import" %> 
+ 
+<% end %>
+      <tr>
+        <%= @imports %>
 <div class="row">
 <table class="table" style="width: 95%!important; display: table;">
 </div>
@@ -11,6 +18,7 @@
       <% when 3 %>
       <h3>Control Panel</h3>
       <tr><td><b>Student Name</td><td><b>Action</td></td> </tr></b>
+
   <% end %>
       <div class="column" style="width:100%;">
           <tbody>

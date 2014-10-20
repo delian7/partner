@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   get 'help/index'
   get 'courses/index'
   get 'courses/set_course'
-  post "delete", to: "projects#destroy"
+  post 'courses/csv_import'
   
 
 devise_for :users, :controllers => {:registrations => "registrations"}
@@ -31,6 +31,8 @@ devise_for :users, :controllers => {:registrations => "registrations"}
      member do
         end
      collection do
+     get :import 
+     get :csv_import
         end
     end
 

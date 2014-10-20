@@ -1,14 +1,37 @@
-<h3>View Roster</h3>
 			<!-- selecting course that users will add groups to -->
-			<% if user_signed_in? && !current_user.courses.first.blank? %>
+			<div style="float:right; padding-right:17%;">
+				<% if user_signed_in? && !current_user.courses.first.blank? %>
 				<%= form_for :user, :url => set_current_course_user_path(current_user.id) do |f| %>
 					 <%= f.select :current_course, options_from_collection_for_select(current_user.courses, 'id', 'course_title'), {}, {class: "form-control"} %>
 					 <%= f.submit 'Select Course', :class => 'btn btn-primary' %>
 				<% end %>
 			<%end%>
+		</div>
+		<h3>View Roster</h3>
 		<!-- END selecting course that users will add groups to -->
-		
+
+ 
+ <%= form_for :dump, :url=>{:controller=>"courses", :action=>"csv_import"}, :html => { :multipart => true } do |f| -%>
+ <table>
+   <tr>
+     <td>
+      <label for="dump_file">
+        Select a CSV File :
+      </label>
+     </td>
+     <td >
+       <%= f.file_field :file -%>
+     </td>
+   </tr>
+   <tr>
+     <td colspan='2'>
+       <%= submit_tag 'Submit' -%>
+     </td>
+   </tr>
+ </table>
+<% end -%>
       <tr>
+      	<%= @imports %>
       	<td class='collapsable'></td>
         <td><b>Student Name</td>
         <td class='collapsable'><b>Email</td></td> <td><b>Groups</td>

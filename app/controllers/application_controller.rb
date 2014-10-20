@@ -10,6 +10,7 @@ class ApplicationController < ActionController::Base
   require 'net/https'
   require 'xmlsimple'
   require 'uri'
+  require 'csv'
 
   # The WebAuth module has some default configuration constants,
   # a webauth_authenticate method that can be used as a filter,
@@ -56,7 +57,9 @@ class ApplicationController < ActionController::Base
     end
     redirect_to root_path
   end
+
   
+
   protected
 
   def configure_permitted_parameters
