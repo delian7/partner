@@ -19,7 +19,7 @@
 <div class="fileupload fileupload-new" data-provides="fileupload">
   <div class="fileupload-preview thumbnail" style="width: 200px; height: 150px;"></div>
   <div>
-    <span class="btn btn-file"><%= f.file_field :avatar %>
+    <span class="btn btn-primary btn btn-file"><%= f.file_field :avatar %>
       <span class="fileupload-new">Select image</span>
       <span class="fileupload-exists">Change</span>
       <input type="file" />
@@ -31,7 +31,7 @@
 </div>
 <div style= "text-align:right;"><br><br><hr>
 <h3>Cancel Account</h3>
-  <%=  link_to "DELETE", cancel_user_path(current_user), :data => { :confirm => "Are you sure?" }, :class=>'deleteaccount' %>
+  <%=  link_to "DELETE", cancel_user_path(current_user), :data => { :confirm => "Are you sure?" }, :class=>'btn btn-danger' %>
 </fieldset>
  <%end%>
 </div>

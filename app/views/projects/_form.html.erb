@@ -3,8 +3,7 @@
 	<%= f.label 'Project Name: ' %>
 	<%= f.text_field(:name) %><br/>
 
-	<%= f.label 'Should the project be Active? ' %>
-	<%= f.check_box :active%><br />
+	
 
 	<%= f.label 'Select the class for which the project should be for: ' %>
 	<%= f.select :course_id, options_from_collection_for_select(current_user.courses, 'id', 'course_title'), {}, {class: "btn btn-default dropdown-toggle"} %><br />
