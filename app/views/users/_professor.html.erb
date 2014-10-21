@@ -1,4 +1,4 @@
-  		<div style="float:right; padding-right:7%;">
+ <div style="float:right; padding-right:7%;">
   <%=link_to 'Export Table', export_users_path(current_user), :class=>"btn btn-info" %>
 
 
@@ -8,17 +8,6 @@ This will clear ALL partnerships
 
 --  Make sure to export table first  --" }, :class=>"btn btn-danger" %>
 </div>
-<!-- selecting course that users will add groups to -->
-<!-- if the user is signed in and their enrolled in at least one course on roster -->
-<% if user_signed_in? && !current_user.courses.first.blank? %>
-<div style="max-width:450px; text-align:right;">
-  <%= form_for :user, :url => set_current_course_user_path(current_user.id) do |f| %>
-     <%= f.select :current_course, options_from_collection_for_select(current_user.courses, 'id', 'course_title', current_user.current_course), {}, {class: "form-control"} %>
-     <%= f.submit 'Select Course', :class => 'btn btn-primary' %>
-  <% end %>
-</div>
-<%end%>
-  <!-- END selecting course that users will add groups to -->
 		</div>
 		<h3>View Roster</h3>
 		<!-- END selecting course that users will add groups to -->

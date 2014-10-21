@@ -1,14 +1,4 @@
 <h3>Find a Partner</h3>
-    <!-- selecting course that users will add groups to -->
-<!-- if the user is signed in and their enrolled in at least one course on roster -->
-<% if user_signed_in? && !current_user.courses.first.blank? %>
-
-  <%= form_for :user, :url => set_current_course_user_path(current_user.id) do |f| %>
-     <%= f.select :current_course, options_from_collection_for_select(current_user.courses, 'id', 'course_title', current_user.current_course), {}, {class: "form-control"} %>
-     <%= f.submit 'Select Course', :class => 'btn btn-primary' %>
-  <% end %>
-<%end%>
-  <!-- END selecting course that users will add groups to -->
     <!-- Start Table Header -->
    <tr>
       <td class='collapsable'></td>

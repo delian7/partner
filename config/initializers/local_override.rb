@@ -10,7 +10,7 @@ require 'devise/strategies/authenticatable'
 
         def authenticate!
           if params[:user]
-          user = User.find(params[:user])
+          user = User.find_by(params[:user])
  
           if user 
             success!(user)
