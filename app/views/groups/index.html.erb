@@ -16,4 +16,25 @@
 <%end%>
 <!-- END selecting course that users will add groups to -->
 
-<%= @projects %>
+
+
+<% @course_projects.each do |project| %>
+	<% if project.active? %> <!-- we are only interested in the current project -->
+		
+		<strong>Your assigned project, <%= project.name %>, involves </strong>
+		
+		<!-- depending on the group size of the project, choose whether the group is a partnership (2 people) or group (3 or more) -->
+		<% case project.group_size %>
+			<% when 2 %>
+				<%= '2 people (partnership)' %>
+			<% when 2..(1.0/0.0) %>
+				<%= '3 or more (group)' %>
+		<% end %>
+		
+	<% end %>
+	
+<% end %>
+
+
+
+
