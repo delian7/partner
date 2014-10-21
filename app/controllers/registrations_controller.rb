@@ -113,7 +113,7 @@ class RegistrationsController < Devise::RegistrationsController
     current_user.uci_affiliations = @uci_affiliations
     current_user.save
     if request.ip != "127.0.0.1"
-      User.where(:campus_id => current_user).update_all(:campus_id => @campus_id)
+      User.where(:id => current_user).update_all(:id => @campus_id)
     end
     current_user.save
     #signed_in_root_path(resource)

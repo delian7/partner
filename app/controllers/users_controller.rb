@@ -119,7 +119,10 @@ class UsersController < ApplicationController
   end
 
   private
+  def login_params
+    params.require(:user).permit(:id)
+  end
   def secure_params
-    params.require(:user).permit(:role, :current_course)
+    params.require(:user).permit(:id, :name, :ucinetid, :role, :current_course)
   end
 end

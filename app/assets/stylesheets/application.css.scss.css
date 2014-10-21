@@ -18,17 +18,6 @@ td{  padding: 2% 2% 2% 2%;}
 th{  text-align: center;   padding: 2% 2% 2% 2%;}
 .hidden {   display: none;}
 
-.bigdiv {
-display:inline-block;
-float: left;
-border-radius:10px;
-margin: 10px 0px 10px 0px;
-}
-
-.profilediv {
-  display:inline-block;
-  float: left;
-}
 
     img#kaylogo {
         position: fixed;

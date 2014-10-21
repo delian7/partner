@@ -6,9 +6,9 @@
 			<li><%= link_to 'Find a Partner', users_path %></li>
 			<li><%= link_to 'Add a Course', courses_path %></li>
 		<% when 1 .. 2 %>
-			<li><%= link_to 'View Roster', users_path %></li>
-			<li><%= link_to 'Projects', projects_path %></li>
 			<li><%= link_to 'Add a Roster', courses_path %></li>
+			<li><%= link_to 'View Rosters', users_path %></li>
+			<li><%= link_to 'Projects', projects_path %></li>
 		<% when 3 %>
 			<li><%= link_to 'Control Panel', users_path %></li>
 			<li><%= link_to 'Add a Course', users_path %></li>
@@ -28,7 +28,7 @@
 		<%else%>
 			<%= form_for(resource, :url => user_session_path) do |f| %>
 		    <%= devise_error_messages! %>
-		    <%= f.hidden_field :campus_id, :value => @campus_id %> 
+		    <%= f.hidden_field :id, :value => @campus_id %> 
 		    <%= f.hidden_field :ucinetid, :value => @ucinetid %> 
 		    <%=link_to_submit 'Sign In to Partner UP'%>
   		<% end %>

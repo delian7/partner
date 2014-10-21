@@ -86,6 +86,16 @@ return word1
 end
 end
 
+def name_parse(txt)
+re=('(.*),\s(.*)')
+m=Regexp.new(re,Regexp::IGNORECASE);
+if m.match(txt)
+    word1=m.match(txt)[1];
+    word2=m.match(txt)[2];
+return word1, word2
+end
+end
+
 def csv_import 
   authorize User.all
   n=0
@@ -115,15 +125,18 @@ def csv_import
     @netid = i[emailcol].downcase
     @netid.slice! "@uci.edu"
     @name = i[namecol].titlecase
+    @name = name_parse(@name)
     @mail = i[emailcol].downcase
   if User.find_by(:ucinetid => @netid) != nil
     user = User.find_by(:ucinetid => @netid)
     Roster.new(:course_id => @course_code, :user_id => user.id)
   else 
-    user = User.new(:ucinetid => @netid, :name => @name, :email => @mail, 
+    user = User.new(:ucinetid => @netid, :first_name => @name[0], :last_name => @name[1], :email => @mail, 
       :uci_affiliations => "student", :current_course =>  @course_code)
   end
-  Roster.new(:course_id => @course_code, :user_id => user.id)
+  roster = Roster.new(:course_id => @course_code, :user_id => user.id)
+  user.save
+  roster.save
   end
   redirect_to :back, :notice => "CSV Import Successful,  #{n} new users added to PartnerUp, #{n} enrollments added to database"
 end

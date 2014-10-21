@@ -10,15 +10,17 @@ require 'devise/strategies/authenticatable'
 
         def authenticate!
 
-          if params['campus_id']
-            user = User.find_by_campus_id(0)
-            #_by_id(params['campus_id']['ucinetid'])
+          if params[:user]
+          user = User.find_by_id(0)
+ 
           if user
             success!(user)
           else
             fail
-          end
-        end
+          end 
+        else
+          fail
+        end 
 
       end
     end

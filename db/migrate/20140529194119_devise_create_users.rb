@@ -38,6 +38,6 @@ class DeviseCreateUsers < ActiveRecord::Migration
     end
      #add_index :users, :ucinetid,                unique: true
      #add_index :users, :campus_id,   unique: true
-    #  add_index :users, :name,         unique: true
+     #add_index :users, :name,         unique: true
   end
 end
