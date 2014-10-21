@@ -1,13 +1,15 @@
 <div class="section group">
+
   <div class="col span_2_of_3">
-  	<h2>Welcome to <img width="75%" src="/assets/PartnerUpLogo.png" id="non-responsive"></h2>
+  	<h2>Welcome to <img src="/assets/PartnerUpLogo.png" style="max-width:75%;"></h2>
   </div>
+
   	<% if user_signed_in? %>
+  	<% if current_user.role==0 %>
 		<div class="col span_1_of_3" style="text-align:center;">
-      <%= image_tag current_user.avatar.url %>
+      <%= image_tag current_user.avatar.url, :style=>"max-width:80%;" %>
     </div>
 
-	<% if current_user.role==0 %>
 	<div class="col span_2_of_3">
     <h2>Groups</h2>
       <table class = "table" style = "width:100%;">
@@ -22,17 +24,48 @@
 	<div class="col span_1_of_3" style="text-align:center;">
     <h2>To Get Started</h2>
 <h2>
- <%= link_to 'Edit Profile', edit_user_registration_path, :class => 'btn btn-primary', :style => 'color: #fff; text-size:17px; width:75%;" margin-bottom="10px;' %>
-</h2>
- <h2> <%= link_to 'Edit Profile', edit_user_registration_path, :class => 'btn btn-primary', :diabled => "disabled",:style => 'color: #fff; text-size:17px; width:75%;" margin-bottom="10px;' %>
 
- 	<button class="btn btn-primary" style="width:75%;"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;<%=  link_to "Add Course", root_path, :style => 'color: #fff; text-size:17px;' %></button></h2>
+	<button class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;<%=  link_to "Edit Profile", edit_user_registration_path, :style => 'color: #fff; text-size:17px;max-width:100px; ' %></button>
+ 
+ <h2><%= link_to '', edit_user_registration_path, :class => '', :style => 'color: #fff; font-size:17px; max-width:220px;  margin-bottom:1px; ' %>   
+
+</h2> 
+
+<button class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;<%=  link_to "Send Request", root_path, :style => 'color: #fff; text-size:17px;max-width:100px; ' %></button>
+ 	<%=  link_to '', root_path, :style => 'color: #fff; font-weight:550; font-size:17px; max-width:220px; margin-bottom:1px;',  :class=>'' %>
       <br>
   </div>
 	<% elsif current_user.role == 1||2 %><p>
-		There are currently <%= User.count %> registered users</p>
+	<div class="col span_1_of_3">
+		<p>
+		<%= link_to("Projects", projects_path, :class => 'btn btn-info', :style=>"max-width:50%; float:center;") %>
+		<p>
+		<%= link_to("Students", users_path, :class => 'btn btn-warning', :style=>"max-width:50%; float:center;") %>
+		<p>
+		<%= link_to("Upload Roster", courses_path, :class => 'btn btn-success', :style=>"max-width:50%; float:center;") %>
+	</div>
+</div>
+	<div class="col span_2_of_3">
+      There are currently <b><%= User.count %></b> registered users</p>
+    </div>
+		
 	<% end %>
 <% else%> 
 	<%= render "visitors/welcomemsg" %>
+	<div class="authform">
+	  <%= form_for(resource, :as => resource_name, :url => user_session_path, :html => { :role => 'form'}) do |f| %>
+	    <h3>Sign in As...</h3>
+	    <%= devise_error_messages! %>
+			<% if request.ip == "127.0.0.1" %>
+				<%= f.select :id, [['Christina Ryder','0'], ['Delian Petrov','6'], ['TA/Course Manager','1'],['Professor Kay','2'],['Admin','3'],['Ian McNicol','4'],['Vinayak Dhingreja','5']], {}, {class: "form-control"} %>
+		 	<% else %>
+			  <%= f.hidden_field :id, :value => @campus_id %> 
+			  <%= f.hidden_field :ucinetid, :value => @ucinetid %>
+			<% end %>
+			<%= f.submit 'Sign in', :class => 'btn btn-primary' %>
+	<% end %>
 <% end %>
 	</div>
+
+	
+</div>

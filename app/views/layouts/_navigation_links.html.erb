@@ -4,10 +4,9 @@
 		<% when 0 %>
 			<li><%= link_to 'Profile', users_profile_path %></li>
 			<li><%= link_to 'Find a Partner', users_path %></li>
-			<li><%= link_to 'Add a Course', courses_path %></li>
 		<% when 1 .. 2 %>
 			<li><%= link_to 'Add a Roster', courses_path %></li>
-			<li><%= link_to 'View Rosters', users_path %></li>
+			<li><%= link_to 'Students', users_path %></li>
 			<li><%= link_to 'Projects', projects_path %></li>
 		<% when 3 %>
 			<li><%= link_to 'Control Panel', users_path %></li>

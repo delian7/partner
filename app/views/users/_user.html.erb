@@ -6,9 +6,9 @@
     <td><%= link_to user.name, user %></td>
     <td class='collapsable'><%= user.email %></td>
 <% if current_user.groups == user.groups%>
-      <td><button class="btn btn-primary"  style="width:95%;"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;<%=  link_to "Send Request", add_to_group_user_path(user), :style => 'color: #fff; text-size:17px;' %></button></div></td>
+      <td><button class="btn btn-primary"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;<%=  link_to "Send Request", add_to_group_user_path(user), :style => 'color: #fff; text-size:17px;max-width:100px; ' %></button></div></td>
 <%else %>
-      <td><button class="btn btn-primary"  disabled="disabled" style="width:95%;"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;<%=  link_to "Requested", add_to_group_user_path(user), :style => 'color: #fff; text-size:17px;' %></button></div></td>
+      <td><button class="btn btn-primary"  disabled="disabled" style="max-width:100px; "><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;<%=  link_to "Requested", add_to_group_user_path(user), :style => 'color: #fff; text-size:17px;max-width:100px; ' %></button></div></td>
 <%end%></tr></div>
       <% end %>
   <% end %>
