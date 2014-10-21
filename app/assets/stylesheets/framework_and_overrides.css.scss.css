@@ -33,6 +33,7 @@ main {
   @extend .container;
   background-color: #edf3f3;
   width: 100%;
+	padding: 2% 2% 2% 2%;
   display:inline-block;
   float: left;
   font-family: 'Open Sans', sans-serif;color:black;font-size:14px;
