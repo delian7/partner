@@ -9,7 +9,9 @@ class GroupsController < ApplicationController
     @groups = Group.all
     authorize User.all
     @course = Course.find(current_user.current_course)
-    @projects = @course.projects
+    
+    # there should be only one current project active at a time... TODO error checking!
+    @course_projects = @course.projects
   end
 
   private
