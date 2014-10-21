@@ -99,6 +99,7 @@ end
 def csv_import 
   authorize User.all
   n=0
+  j=0
   csv_text = File.open(params[:dump][:file].tempfile, :headers=>true)
   csv = CSV.parse(csv_text)
   # remove all nils from array of arrays
@@ -121,8 +122,12 @@ def csv_import
   emailcol = studentdata[0].index("Email")
   namecol = studentdata[0].index("Name")
    # Course.new(id: )
-   course = Course.new(:id => @course_code, :course_title=>@course_title, :instructor => @instructor[0])
-   course.save
+   
+  @newproj = Project.new(:course_id => @course_code, :name=>@course_code + "New Project")
+  @newproj.name=@newproj.id
+  @newproj.save
+  course = Course.new(:id => @course_code, :active_proj=>@newproj.id,:course_title=>@course_title, :instructor => @instructor[0])
+  course.save
   studentdata[1..-2].each do |i|
     @netid = i[emailcol].downcase
     @netid.slice! "@uci.edu"
@@ -130,18 +135,19 @@ def csv_import
     @name = name_parse(@name)
     @mail = i[emailcol].downcase
   if User.find_by(:ucinetid => @netid) != nil
-    user = User.find_by(:ucinetid => @netid)
-    Roster.new(:course_id => @course_code, :user_id => user.id)
+    @newuser = User.find_by(:ucinetid => @netid)
+    Roster.new(:course_id => @course_code, :user_id => @newuser.id)
   else 
-    user = User.new(:ucinetid => @netid, :first_name => @name[0], :last_name => @name[1], :email => @mail, 
+    @newuser = User.new(:ucinetid => @netid, :first_name => @name[0], :last_name => @name[1], :email => @mail, 
       :uci_affiliations => "student", :current_course =>  @course_code)
+    j=+1
   end
-  roster = Roster.new(:course_id => @course_code, :user_id => user.id)
+  @newuser.save
+  roster = Roster.new(:course_id => @course_code, :user_id => @newuser.id)
   roster.save
-  user.save
-  
+  n+=1
   end
-  redirect_to :back, :notice => "CSV Import Successful,  #{n} new users added to PartnerUp, #{n} enrollments added to database"
+  redirect_to :back, :notice => "CSV Import Successful,  #{j} new users added to PartnerUp, #{n} enrollments added to database"
 end
 
 private

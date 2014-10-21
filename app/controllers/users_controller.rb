@@ -94,21 +94,21 @@ class UsersController < ApplicationController
     new_relation = GroupRelation.create(:group_id=>"1", :user_id=>user.id)
     if new_relation.save
       flash[:notice] = "Added partner."
-      redirect_to root_url
+      redirect_to :back
     else
       flash[:error] = "Unable to add partner."
-       redirect_to users_path
+      redirect_to :back
     end
   end
     def create_group
     user = User.find(params[:id])
-    @group = Group.create(:group_id=>user.group_id, :user_id=>current_user)
+    @group = Group.create(:group_id=>user.group_id, :user_id=>current_user.id)
     if @group.save
       flash[:notice] = "Added partner."
-      redirect_to root_url
+      redirect_to :back
     else
       flash[:error] = "Unable to add partner."
-      redirect_to root_url
+      redirect_to :back
     end
   end
   def ungroup
