@@ -19,7 +19,7 @@
 <div class="fileupload fileupload-new" data-provides="fileupload">
   <div class="fileupload-preview thumbnail" style="width: 75px; height:75px;"></div>
   <div>
-    <span class="btn btn-primary btn btn-file"><%= f.file_field :avatar %>
+    <span class="btn btn-info btn btn-file"><%= f.file_field :avatar %>
       <span class="fileupload-new", style="max-width: 200px;">Select image</span>
       <span class="fileupload-exists">Change</span>
       <input type="file" />
@@ -27,11 +27,9 @@
     <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
   </div>
 </div></fieldset>
-    <%= f.submit 'Update', :class => 'btn btn-primary', :style => 'max-width: 200px; height:55px; float:center;' %>
-</div>
-<div style= "text-align:right;"><br><br><hr>
-<h3>Cancel Account</h3>
-  <%=  link_to "DELETE", cancel_user_path(current_user), :data => { :confirm => "Are you sure?" }, :class=>'btn btn-danger' %>
+<div style=" text-align:center;">
+    <%= f.submit 'Update', :class => 'btn btn-primary', :style => 'width:50%; max-width: 500px; height:55px; float:center;' %>
+</div></div>
 </fieldset>
  <%end%>
 </div>
