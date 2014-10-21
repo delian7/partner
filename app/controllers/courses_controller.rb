@@ -121,6 +121,8 @@ def csv_import
   emailcol = studentdata[0].index("Email")
   namecol = studentdata[0].index("Name")
    # Course.new(id: )
+   course = Course.new(:id => @course_code, :course_title=>@course_title, :instructor => @instructor[0])
+   course.save
   studentdata[1..-2].each do |i|
     @netid = i[emailcol].downcase
     @netid.slice! "@uci.edu"
@@ -135,8 +137,9 @@ def csv_import
       :uci_affiliations => "student", :current_course =>  @course_code)
   end
   roster = Roster.new(:course_id => @course_code, :user_id => user.id)
-  user.save
   roster.save
+  user.save
+  
   end
   redirect_to :back, :notice => "CSV Import Successful,  #{n} new users added to PartnerUp, #{n} enrollments added to database"
 end
