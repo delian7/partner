@@ -7,21 +7,7 @@
 <% case current_user.role %>
     <% when 0 %>
 	<div class="col span_1_of_3" style="text-align:center;">
-      <%= image_tag current_user.avatar.url, :style=>"max-width:80%;" %>
-    </div>
-
-	<div class="col span_2_of_3">
-    <h2>Groups</h2>
-      <table class = "table" style = "width:100%;">
-	    <tr>
-	      <td><b>Group ID</b></td>
-	      <td><b>Group Name</b></td>
-	      <td></td>
-	    </tr>
-		<%= render "visitors/current_groups" %>
-	  </table>
-	</div>
-	<div class="col span_1_of_3" style="text-align:center;">
+      <%= image_tag current_user.avatar.url, :style=>"max-width:50%;" %>
     <h2>To Get Started</h2>
 <h2>
 
@@ -45,7 +31,18 @@
 	<div class="col span_2_of_3">
       There are currently <b><%= User.count %></b> registered users</p>
     </div>
-
+<% when 5 %>
+	<div class="col span_2_of_3">
+    <h2>Groups</h2>
+      <table class = "table" style = "width:100%;">
+	    <tr>
+	      <td><b>Group ID</b></td>
+	      <td><b>Group Name</b></td>
+	      <td></td>
+	    </tr>
+		<%= render "visitors/current_groups" %>
+	  </table>
+	</div>
 	<% end %>
 <% else%> 
 	<div class="col span_1_of_3">
