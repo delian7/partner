@@ -1,0 +1,18 @@
+<!-- selecting course that users will add groups to -->
+<!-- if the user is signed in and their enrolled in at least one course on roster -->
+<%= render 'layouts/course_select' %>
+  <!-- END selecting course that users will add groups to -->
+
+
+  <table class="table" style="width: 95%!important;">
+  <% case current_user.role %>
+      <% when 0 %>
+        <%= render "users/student" %>
+      <% when 1 .. 2 %>
+        <%= render"users/professor" %>
+      <% when 3 %>
+     <% end %>
+        </table>
+     <% if current_user.role == "1"%>
+      <%= render "users/vip_buttons"%>
+      <% end %>
