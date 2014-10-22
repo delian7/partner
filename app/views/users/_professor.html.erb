@@ -1,37 +1,8 @@
  <div style="float:right; padding-right:7%;">
-  <%=link_to 'Export Table', export_users_path(current_user), :class=>"btn btn-info" %>
-
-
-  <%=  link_to "Reset All Partnerships", clearall_users_path(current_user), :data => { :confirm => "Are you sure? 
-This will clear ALL partnerships
-
-
---  Make sure to export table first  --" }, :class=>"btn btn-danger" %>
+  <%=link_to 'Export Table', export_users_path(current_user), :class=>"btn btn-warning" %>
 </div>
 		</div>
 		<h3>View Roster</h3>
-		<!-- END selecting course that users will add groups to -->
-
- 
- <!-- <%= form_for :dump, :url=>{:controller=>"courses", :action=>"csv_import"}, :html => { :multipart => true } do |f| -%>
- <table>
-   <tr>
-     <td>
-      <label for="dump_file">
-        Select a CSV File :
-      </label>
-     </td>
-     <td >
-       <%= f.file_field :file -%>
-     </td>
-   </tr>
-   <tr>
-     <td colspan='2'>
-       <%= submit_tag 'Submit' -%>
-     </td>
-   </tr>
- </table>
-<% end %> -->
       <tr>
       	<%= @imports %>
       	<td class='collapsable'></td>

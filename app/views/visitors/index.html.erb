@@ -6,7 +6,7 @@
 
   	<% if user_signed_in? %>
   	<% if current_user.role==0 %>
-		<div class="col span_1_of_3" style="text-align:center;">
+	<div class="col span_1_of_3" style="text-align:center;">
       <%= image_tag current_user.avatar.url, :style=>"max-width:80%;" %>
     </div>
 
@@ -18,7 +18,7 @@
 	      <td><b>Group Name</b></td>
 	      <td></td>
 	    </tr>
-		<%= render "visitors/list" %>
+		<%= render "visitors/current_groups" %>
 	  </table>
 	</div>
 	<div class="col span_1_of_3" style="text-align:center;">
@@ -26,12 +26,9 @@
 <h2>
 
 	<button class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;<%=  link_to "Edit Profile", edit_user_registration_path, :style => 'color: #fff; text-size:17px;max-width:100px; ' %></button>
- 
- <h2><%= link_to '', edit_user_registration_path, :class => '', :style => 'color: #fff; font-size:17px; max-width:220px;  margin-bottom:1px; ' %>   
-
 </h2> 
 
-<button class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;<%=  link_to "Send Request", root_path, :style => 'color: #fff; text-size:17px;max-width:100px; ' %></button>
+<button class="btn btn-primary"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;<%=  link_to "Find a Partner", root_path, :style => 'color: #fff; text-size:17px;max-width:100px; ' %></button>
  	<%=  link_to '', root_path, :style => 'color: #fff; font-weight:550; font-size:17px; max-width:220px; margin-bottom:1px;',  :class=>'' %>
       <br>
   </div>
@@ -44,28 +41,18 @@
 		<p>
 		<%= link_to("Upload Roster", courses_path, :class => 'btn btn-success', :style=>"max-width:50%; float:center;") %>
 	</div>
-</div>
+
 	<div class="col span_2_of_3">
       There are currently <b><%= User.count %></b> registered users</p>
     </div>
 		
 	<% end %>
 <% else%> 
-	<%= render "visitors/welcomemsg" %>
-	<div class="authform">
-	  <%= form_for(resource, :as => resource_name, :url => user_session_path, :html => { :role => 'form'}) do |f| %>
-	    <h3>Sign in As...</h3>
-	    <%= devise_error_messages! %>
-			<% if request.ip == "127.0.0.1" %>
-				<%= f.select :id, [['Christina Ryder','0'], ['Delian Petrov','6'], ['TA/Course Manager','1'],['Professor Kay','2'],['Admin','3'],['Ian McNicol','4'],['Vinayak Dhingreja','5']], {}, {class: "form-control"} %>
-		 	<% else %>
-			  <%= f.hidden_field :id, :value => @campus_id %> 
-			  <%= f.hidden_field :ucinetid, :value => @ucinetid %>
-			<% end %>
-			<%= f.submit 'Sign in', :class => 'btn btn-primary' %>
-	<% end %>
-<% end %>
+	<div class="col span_1_of_3" style="text-align:center;">
+		<%= render "visitors/welcomemsg" %>
 	</div>
+<% end %>
+	
 
 	
 </div>

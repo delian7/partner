@@ -1,4 +1,9 @@
-<h2>Projects</h2>
+<!-- selecting course that users will add groups to -->
+<!-- if the user is signed in and their enrolled in at least one course on roster -->
+<%= render 'layouts/course_select' %>
+  <!-- END selecting course that users will add groups to -->
+
+  <h2>Projects</h2>
 <%= link_to("Add New Project", {:action => 'new'}, :class => 'btn btn-primary', :style=>"float:right;") %>
 <table class="table" style="width: 95%!important;">
   <tr>
