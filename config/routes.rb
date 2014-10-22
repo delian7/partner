@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   post 'courses/csv_import'
   
 
-devise_for :users, controllers: { sessions: "users/sessions" }
+devise_for :users, controllers: { sessions: "users/registrations"}
 
 
 
