@@ -35,7 +35,18 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # def cancel
   #   super
   # end
-
+  def after_sign_up_path_for(resource)
+    if (request.ip != "127.0.0.1" || @authkey == nil) && @campus_id!=current_user.id
+    current_user.age_in_seconds = @age_in_seconds
+    current_user.ucinetid = @ucinetid
+    current_user.uci_affiliations = @uci_affiliations
+    current_user.save
+    User.where(:id => current_user).update_all(:id => @campus_id)
+    end
+    current_user.save
+    #signed_in_root_path(resource)
+    after_sign_in_path_for(resource)
+  end
   # protected
 
   # You can put the params you want to permit in the empty array.
