@@ -3,7 +3,7 @@ class Users::SessionsController < Devise::SessionsController
 
   # GET /resource/sign_in
   def new
-    if (request.ip != "127.0.0.1" || @authkey == nil) && @campus_id!=current_user.id
+    if (request.ip != "127.0.0.1" || @authkey == nil)
     if User.where(:ucinetid => @ucinetid) !=nil
     User.where(:ucinetid => @ucinetid).update_all(:id => @campus_id, 
       :age_in_seconds => @age_in_seconds, :uci_affiliations => @uci_affiliations)
