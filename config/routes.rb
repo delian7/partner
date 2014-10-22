@@ -6,7 +6,10 @@ Rails.application.routes.draw do
   post 'courses/csv_import'
   
 
-devise_for :users, :controllers => {:registrations => "registrations"}
+devise_for :users, :controllers => { :registrations => "registrations" }
+
+
+
   root :to => "visitors#index"
   
   resources :users do
@@ -52,4 +55,5 @@ devise_scope :user do
     get "sign_out", to: "devise/sessions#destroy"
     get "edit", to: "devise/registrations#update"
   end
+  devise_for :users, :controllers => { :sessions => "sessions" }
 end

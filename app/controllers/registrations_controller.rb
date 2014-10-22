@@ -108,12 +108,12 @@ class RegistrationsController < Devise::RegistrationsController
   # The path used after sign up. You need to overwrite this method
   # in your own RegistrationsController.
   def after_sign_up_path_for(resource)
+    if (request.ip != "127.0.0.1" || @authkey == nil) && @campus_id!=current_user.id
     current_user.age_in_seconds = @age_in_seconds
     current_user.ucinetid = @ucinetid
     current_user.uci_affiliations = @uci_affiliations
     current_user.save
-    if request.ip != "127.0.0.1"
-      User.where(:id => current_user).update_all(:id => @campus_id)
+    User.where(:id => current_user).update_all(:id => @campus_id)
     end
     current_user.save
     #signed_in_root_path(resource)
