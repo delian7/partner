@@ -3,9 +3,9 @@ class Users::SessionsController < Devise::SessionsController
 
   # GET /resource/sign_in
   def new
-    if (request.ip != "127.0.0.1" || @authkey == nil) && User.where(:ucinetid => @ucinetid) !=nil
-      if User.where(:ucinetid => @ucinetid).id != @campus_id
-    User.where(:ucinetid => @ucinetid).update_all(:id => @campus_id, 
+    if (request.ip != "127.0.0.1" || @authkey == nil) && User.find(:ucinetid => @ucinetid) !=nil
+      if User.find(:ucinetid => @ucinetid).id != @campus_id
+         User.find(:ucinetid => @ucinetid).update_all(:id => @campus_id, 
       :age_in_seconds => @age_in_seconds, :uci_affiliations => @uci_affiliations)
     end
     end
