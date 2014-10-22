@@ -1,11 +1,11 @@
 <div class="section group">
-
   <div class="col span_2_of_3">
   	<h2>Welcome to <img src="/assets/PartnerUpLogo.png" style="max-width:75%;"></h2>
   </div>
 
-  	<% if user_signed_in? %>
-  	<% if current_user.role==0 %>
+<% if user_signed_in? %>
+<% case current_user.role %>
+    <% when 0 %>
 	<div class="col span_1_of_3" style="text-align:center;">
       <%= image_tag current_user.avatar.url, :style=>"max-width:80%;" %>
     </div>
@@ -25,14 +25,14 @@
     <h2>To Get Started</h2>
 <h2>
 
-	<button class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;<%=  link_to "Edit Profile", edit_user_registration_path, :style => 'color: #fff; text-size:17px;max-width:100px; ' %></button>
+	<button class="btn btn-success"><span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;<%=  link_to "Edit Profile", edit_user_registration_path, :style => 'color: #fff; text-size:17px;max-width:100px; ' %></button>
 </h2> 
 
 <button class="btn btn-primary"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;<%=  link_to "Find a Partner", root_path, :style => 'color: #fff; text-size:17px;max-width:100px; ' %></button>
  	<%=  link_to '', root_path, :style => 'color: #fff; font-weight:550; font-size:17px; max-width:220px; margin-bottom:1px;',  :class=>'' %>
       <br>
   </div>
-	<% elsif current_user.role == 1||2 %><p>
+	<% when 1..2 %><p>
 	<div class="col span_1_of_3">
 		<p>
 		<%= link_to("Projects", projects_path, :class => 'btn btn-info', :style=>"max-width:50%; float:center;") %>
@@ -45,14 +45,12 @@
 	<div class="col span_2_of_3">
       There are currently <b><%= User.count %></b> registered users</p>
     </div>
-		
+
 	<% end %>
 <% else%> 
-	<div class="col span_1_of_3" style="text-align:center;">
+	<div class="col span_1_of_3">
 		<%= render "visitors/welcomemsg" %>
 	</div>
 <% end %>
-	
 
-	
 </div>

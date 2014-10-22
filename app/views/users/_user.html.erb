@@ -14,10 +14,10 @@
   <% end %>
 <% when 1 .. 2 %>
     <% if user.role== 0 %>
-           <tr> <td><%= user.name %></td></tr>
+           <tr> <td><%= user.first_name %><%= user.last_name %></td></tr>
   	<% end %>
 <% when 3 %>
     <% if user.role== 0 %> 
-           <tr> <td>><%= user.name %></a></td><td><%=  link_to "Confirm Email", confirm_user_path(user), :class=>"smallbluebutton"  %></td><td></td>
+           <tr> <td>><%= user.first_name %><%= user.last_name %></a></td><td><%=  link_to "Confirm Email", confirm_user_path(user), :class=>"smallbluebutton"  %></td><td></td>
   	<% end %>
 <% end %>

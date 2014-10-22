@@ -1,19 +1,13 @@
-<!-- selecting course that users will add groups to -->
-<!-- if the user is signed in and their enrolled in at least one course on roster -->
-<%= render 'layouts/course_select' %>
-  <!-- END selecting course that users will add groups to -->
-
   <h2>Projects</h2>
 <%= link_to("Add New Project", {:action => 'new'}, :class => 'btn btn-primary', :style=>"float:right;") %>
 <table class="table" style="width: 95%!important;">
   <tr>
   	<td class='collapsable'></td>
     <td><b>Project Name</td>
-    <td class='collapsable'><b>Active?</td></td> <td><b>Course Name</td><td><strong>Group Size</strong></td>
+    </td> <td><b>Course Name</td><td><strong>Group Size</strong></td><td></td>
   </tr></b>
 	<% @projects.each do |project| %>
 	  <tr>
-			<td class='collapsable'><%= project.id %></td>
 		  <td><%= project.name %></td>
 			<td><%= Course.find(project.course_id).course_title %> (<%= project.course_id %>)</td>
 			<td class='collabsable'><%= project.group_size %>

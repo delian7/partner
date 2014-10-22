@@ -15,7 +15,7 @@
 	<% if users_courses.include?(mycourse) && user.role == 0 %>
 	  <tr>
 	  <td class='collapsable'><%= link_to (image_tag (user.avatar.url), :style => 'max-height: 55px; max-width: 55px;'), user %></td> 
-	  <td><%= link_to user.first_name, user %> <%= link_to user.last_name, user %></td>
+	  <td><%= link_to "#{user.first_name} #{user.last_name}", user %></td>
 	  <td class='collapsable'><%= user.email %></td>
 	  <td><%= user.groups.all.collect(&:name).to_sentence %></td>
 	</tr>

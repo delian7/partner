@@ -18,7 +18,7 @@
   <% if users_courses.include?(mycourse) && current_user.id != user.id && user.role ==0 %> 
    <tr>
     <td class='collapsable'><%= link_to (image_tag (user.avatar.url), :style => 'max-width: 45px;'), user %></td> 
-    <td><%= link_to user.first_name, user %> <%= link_to user.last_name, user %></td>
+    <td><%= link_to "#{user.first_name} #{user.last_name}", user %> </td>
     <td class='collapsable'><%= user.email %></td>
     <!-- if the current user and this user is in the same group -->
         <% if !users_groups.include?(mygroup[0]) %>
