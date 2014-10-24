@@ -13,16 +13,8 @@ Partner Up 1.2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;10/15/14
 Documentation and Support
 -------------------------
 
-###1. Models
-#### Users
-######Roles
-| "Roles" | Types of User                 | Enum DB Value |
-|---------|-------------------------------|---------------|
-| User    | Student                       | 0             |
-|  TA     | TA, Course Manager            | 1             |
-|Professor| Professor, Course Manager     | 2             |
-| Admin   | Webmaster, Professor Kay      | 3             |
-
+### Models
+####Has many through relations added everywhere
 ###Groups
 + Group model added
 
@@ -38,10 +30,9 @@ Documentation and Support
 ###Courses
 + Courses have all the course info parsed from the Webroster CSV
 
-###2. Controllers
+### Controllers
 ####Users_controller
 + set_course - sets current_course in database so that the user will go back to the same course they left last session
-
 
 ####Courses_controller
 + import_csv - Opens and parses csv file and gets the name, ucinetid, email, course code, course title, instructor and TA's authorized to access the roster.  Regex is used to get them.
