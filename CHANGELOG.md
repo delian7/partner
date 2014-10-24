@@ -1,19 +1,18 @@
 Partner Up 1.2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;10/15/14
 =========
 
-######Change Current Course
+-------------------------
+###Change Current Course
 + Students can change which course they are adding partners for
 
-######View Roster
-+ Professors and TAs can view a list of all students who have registered an account and what groups they are in
+###Webauth startup
++ In Application controller, gets webauth cookie and signs in 
 
-######Upload CSV
+###Upload CSV
 + Professors and TAs have the ability to upload students, course code, course title, ta's with access, and instructor name.
 
-Documentation and Support
+Models
 -------------------------
-
-### Models
 ####Has many through relations added everywhere
 ###Groups
 + Group model added
@@ -30,7 +29,8 @@ Documentation and Support
 ###Courses
 + Courses have all the course info parsed from the Webroster CSV
 
-### Controllers
+Controllers
+-------------------------
 ####Users_controller
 + set_course - sets current_course in database so that the user will go back to the same course they left last session
 
@@ -42,7 +42,6 @@ Documentation and Support
 
 
 ### Issues
-
 + Report bug not working at the moment
 + Partnerships down for database updates
 + Email updates down for now
