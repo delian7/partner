@@ -61,24 +61,14 @@ class UsersController < ApplicationController
     redirect_to users_path
   end
 
-  # Clear all users partner1 columns to "" and reset statuses to 0 or false
-  def clearall
-    User.where(:course_id=> current_user.current_course).each do |user|
-      user = User.find(user)
-      authorize user
-      user.save
-  end
-    redirect_to users_path(current_user), :alert => "All groups have been cleared."
-  end
-
   # Start download of csv file of partner data
   def export
       authorize User.all
       @roster = User.all
       roster_csv = CSV.generate do |csv|
-      csv << ["Name", "Partner"]
+      csv << ["First Name", "Last Name", "Email"]
       User.where(role: 0).each do |user|
-        csv << [user.name, user.partner1]     
+        csv << [user.first_name, user.last_name, user.email]     
       end 
       end    
     send_data(roster_csv, :type => 'text/csv', :filename => 'groups.csv')
@@ -94,21 +84,21 @@ class UsersController < ApplicationController
     new_relation = GroupRelation.create(:group_id=>"1", :user_id=>user.id)
     if new_relation.save
       flash[:notice] = "Added partner."
-      redirect_to root_url
+      redirect_to :back
     else
       flash[:error] = "Unable to add partner."
-       redirect_to users_path
+      redirect_to :back
     end
   end
     def create_group
     user = User.find(params[:id])
-    @group = Group.create(:group_id=>user.group_id, :user_id=>current_user)
+    @group = Group.create(:group_id=>user.group_id, :user_id=>current_user.id)
     if @group.save
       flash[:notice] = "Added partner."
-      redirect_to root_url
+      redirect_to :back
     else
       flash[:error] = "Unable to add partner."
-      redirect_to root_url
+      redirect_to :back
     end
   end
   def ungroup

@@ -1,10 +1,11 @@
 <h2>Help</h2>	
 <% if user_signed_in? %>
-	<% if current_user.role=="user"%>
-	<%= render "help/userwelcomemsg"%>
-	<%elsif current_user.role == "1"||"2"%>
-		<%= render "help/adminwelcomemsg"%>
-	<%end%>
-	<%else%> 
+	<% case current_user.role %>
+		<% when 0 %>
+			<%= render "help/userwelcomemsg"%>
+		<% when 1||2 %>
+			<%= render "help/adminwelcomemsg"%>
+		<% end %>
+	<% else %>
 	<%= render "help/welcomemsg"%>
-<%end%>
+<% end %>

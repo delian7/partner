@@ -67,6 +67,8 @@ def find_first_digits(txt)
         return m.match(txt)[1];
     end
 end
+#gets instructors name from cell and returns both last name with spaces 
+#accounted for and first initial
 def get_instructor_name(txt)
 re=('Instructor:\s(.*?){1},\s(.*).')
 m=Regexp.new(re,Regexp::IGNORECASE);
@@ -77,6 +79,7 @@ return word1, c1
 end
 end
 
+#gets TA from box by getting the last thing after 'ID:' 
 def TA(txt)
 re=('ID:\s(.*)')
 m=Regexp.new(re,Regexp::IGNORECASE);
@@ -86,6 +89,7 @@ return word1
 end
 end
 
+#parses first name last name with commas
 def name_parse(txt)
 re=('(.*),\s(.*)')
 m=Regexp.new(re,Regexp::IGNORECASE);
@@ -96,9 +100,11 @@ return word1, word2
 end
 end
 
-def csv_import 
+def csv_import
   authorize User.all
-  n=0
+  # variables for counting how many users were added and how many roster relations made
+  newc=0
+  newr=0
   csv_text = File.open(params[:dump][:file].tempfile, :headers=>true)
   csv = CSV.parse(csv_text)
   # remove all nils from array of arrays
@@ -115,30 +121,52 @@ def csv_import
       @instructor = get_instructor_name(cdata[3][0])
       @permissions = TA(cdata[8][0])
       @course_title = cdata[2][0]
-      #@location = cdata[4][0]
+      #@location = cdata[4][0]  if location is needed later
+
 
   studentdata = cdata.slice!(11,600)
+  #finding the email and name columns
   emailcol = studentdata[0].index("Email")
   namecol = studentdata[0].index("Name")
-   # Course.new(id: )
+   
+  # makes new project for default 
+  @newproj = Project.new(:course_id => @course_code, :name=>@course_code + "New Project")
+  @newproj.name=@newproj.id
+  @newproj.save
+  #makes new course
+  course = Course.new(:id => @course_code, :active_proj=>@newproj.id,:course_title=>@course_title, :instructor => @instructor[0])
+  course.save
+  # for every 'row' or array in studentdata array, excluding row 1 and the last two
   studentdata[1..-2].each do |i|
+    #@netid will be jjones@uci.edu
     @netid = i[emailcol].downcase
+    #@netid will be jjones
     @netid.slice! "@uci.edu"
     @name = i[namecol].titlecase
     @name = name_parse(@name)
+    #@mail was jjones@uci.edu
     @mail = i[emailcol].downcase
+    #if the ucinet id is found in the database
   if User.find_by(:ucinetid => @netid) != nil
-    user = User.find_by(:ucinetid => @netid)
-    Roster.new(:course_id => @course_code, :user_id => user.id)
+    #set that ucinetid to @newuser, and add that corresponding
+    #id with courseID in a new roster row
+    @newuser = User.find_by(:ucinetid => @netid)
   else 
-    user = User.new(:ucinetid => @netid, :first_name => @name[0], :last_name => @name[1], :email => @mail, 
+    #make a new user with the info we got from studentdata array
+    @newuser = User.new(:ucinetid => @netid, :first_name => @name[0], :last_name => @name[1], :email => @mail, 
       :uci_affiliations => "student", :current_course =>  @course_code)
+    if @newuser.save
+      newc=+1
+    end
+
   end
-  roster = Roster.new(:course_id => @course_code, :user_id => user.id)
-  user.save
-  roster.save
+  
+  roster = Roster.new(:course_id => @course_code, :user_id => @newuser.id)
+  if roster.save
+    newr+=1
   end
-  redirect_to :back, :notice => "CSV Import Successful,  #{n} new users added to PartnerUp, #{n} enrollments added to database"
+  end
+  redirect_to :back, :notice => "CSV Import Successful,  #{newc} new users added to PartnerUp, #{newr} enrollments added to database"
 end
 
 private

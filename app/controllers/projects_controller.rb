@@ -9,7 +9,7 @@ class ProjectsController < ApplicationController
   end
   
   def new
-    @project = Project.new(:active => true)
+    #@project = Project.new(:active => true)
   end
   
   def create
@@ -40,10 +40,10 @@ class ProjectsController < ApplicationController
     @project = Project.find(params[:id])
     
     if @project.update_attributes(project_params)
-      flash[:notice] = "Project updated successfullly yayy :)"
+      flash[:notice] = "Project updated successfully"
       redirect_to(:action => 'index')
     else
-      flash[:error] = "Project not updated. :("
+      flash[:error] = "Project could not be updated"
       render('edit')
     end
   end
