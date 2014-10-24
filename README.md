@@ -1,6 +1,6 @@
-Partner Up 1.0
+Partner Up 1.0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6/26/14
 =========
-<img src="http://i62.tinypic.com/eg5veu.png">
+<img src="http://i62.tinypic.com/eg5veu.png" style="max-width:550px;">
 Partner up 1.0 is a partner management website that will update the current methods of class partner management which are tedious and cumbersome. Partner up is a fast and easy way for students to find partners and provides an effortless way for professors to oversee student progress. 
 
 Description of MVP
