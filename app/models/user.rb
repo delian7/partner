@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
-#, :lockable, :timeoutable and :omniauthable
+#, :lockable, :timeoutable and :omniauthable, :recoverable, :rememberable, :trackable, , :registerable
   has_many :evaluations   
   has_many :rosters
   has_many :group_relations, :source => :groups
@@ -12,8 +12,7 @@ class User < ActiveRecord::Base
   #        :source => :groups
 
   # self.primary_key = "campus_id"
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable
+  devise :database_authenticatable
          enum status: [:available, :pending, :requested, :accepted]
   #enum role: [:user, :vip, :admin]
   #user = student

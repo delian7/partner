@@ -4,8 +4,5 @@
 	<%= form_for(:project, :url => {:action => 'update', :id => @project.id}) do |f| %>
 		<h2>Change Project</h2>
 		<%= render(:partial => 'form', :locals => {:f => f}) %>
-
-		
-
 	<% end %>
 </div>

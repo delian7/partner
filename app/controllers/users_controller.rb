@@ -118,6 +118,7 @@ class UsersController < ApplicationController
       redirect_to :back
     end
   end
+  
   def ungroup
     @group = current_user.groups.find(params[:id])
     @group.destroy
