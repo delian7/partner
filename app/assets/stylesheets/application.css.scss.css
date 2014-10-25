@@ -13,7 +13,7 @@
  *= require_tree .
  *= require_self
  */
-body {  border-radius:10px;  padding:7% 5% 5% 5%!important;}
+body {  border-radius:10px;  padding:70px 5% 5% 5%!important;}
 td{  padding: 2% 2% 2% 2%;}
 th{  text-align: center;   padding: 2% 2% 2% 2%;}
 .hidden {   display: none;}
@@ -22,7 +22,7 @@ th{  text-align: center;   padding: 2% 2% 2% 2%;}
     img#kaylogo {
         position: fixed;
         bottom: 0px;
-        right: 20%; 
+        right: 50%; 
         -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=00)";
     filter: alpha(opacity=00);
     -moz-opacity: 0;
