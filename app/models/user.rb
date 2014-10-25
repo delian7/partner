@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
   has_many :group_relations, :source => :groups
   has_many :groups, :through => :group_relations
   has_many :courses, :through => :rosters
+  has_many :projects, :through => :group_relations
   # has_many :pending_relations,
   #        :through => :group_relations,
   #        :source => :groups

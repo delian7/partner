@@ -1,11 +1,7 @@
-<%= link_to("<< Back to List", {:action => 'index'}) %><br>
+<%= link_to("<< Back to List", {:action => 'index'}) %>
 <div class="authform form", style="max-width: 5000px; line-height:3; padding: 1% 1% 1% 1%!important;margin:auto;">
-
-	<%= form_for(:project, :url => {:action => 'update', :id => @project.id}) do |f| %>
-		<h2>Change Project</h2>
+	<%= form_for(:course, :url => {:action => 'create'}) do |f| %>
+		<h2>Create a Project</h2>
 		<%= render(:partial => 'form', :locals => {:f => f}) %>
-
-		
-
 	<% end %>
-</div>
+	</div>
