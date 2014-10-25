@@ -1,0 +1,9 @@
+<%= link_to("<< Back to List", {:action => 'index'}) %><br>
+<div class="authform", style="max-width: 500px; line-height:3; padding: 1% 1% 1% 1%!important;margin:auto;">
+
+	<%= form_for(:course, :url => {:action => 'update', :id => params[:id]}) do |f| %>
+	<h2>Edit Course</h2>
+		<%= render(:partial => 'form', :locals => {:f => f}) %>
+
+	<% end %>
+</div>

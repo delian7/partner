@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
+
+  get 'roster/index'
   get 'users/profile'
-  get 'help/index'
-  get 'courses/index'
+  get 'help', to: 'help#index'
+  get 'courses', to: 'courses#index'
+  get 'roster', to: 'roster#index'
   get 'courses/set_course'
   post 'courses/csv_import'
   
@@ -18,6 +21,7 @@ devise_for :users, :controllers => {:registrations => "registrations"}
         get :clearpartnership
         get :add_to_group
         get :ungroup
+        get :add_partnership
         post :set_current_course
         post :request
         end
@@ -29,6 +33,9 @@ devise_for :users, :controllers => {:registrations => "registrations"}
 
   resources :courses do
      member do
+       get :edit
+       post :update
+       get :remove
         end
      collection do
      get :import 
