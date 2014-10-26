@@ -8,10 +8,11 @@ class RegistrationsController < Devise::RegistrationsController
     build_resource({})
     respond_with self.resource
   end
-  
+
   # POST /resource
   def create
     build_resource(sign_up_params)
+
     resource_saved = resource.save
     yield resource if block_given?
     if resource_saved
@@ -30,10 +31,12 @@ class RegistrationsController < Devise::RegistrationsController
       respond_with resource
     end
   end
+
   # GET /resource/edit
   def edit
     render :edit
   end
+
   # PUT /resource
   # We need to use a copy of the resource because we don't want to change
   # the current user in place.

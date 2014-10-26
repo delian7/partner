@@ -1,21 +1,38 @@
 class User < ActiveRecord::Base
-  has_many :evaluations
+  # Include default devise modules. Others available are:
+#, :lockable, :timeoutable and :omniauthable, :recoverable, :rememberable, :trackable, , :registerable
+  has_many :evaluations   
   has_many :rosters
-  has_many :group_relations, source: :groups
-  has_many :groups, through: :group_relations
-  has_many :courses, through: :rosters
-  has_many :projects, through: :group_relations
+  has_many :group_relations, :source => :groups
+  has_many :groups, :through => :group_relations
+  has_many :courses, :through => :rosters
+  has_many :projects, :through => :group_relations
+  # has_many :pending_relations,
+  #        :through => :group_relations,
+  #        :source => :groups
 
+  # self.primary_key = "campus_id"
   devise :database_authenticatable
          enum status: [:available, :pending, :requested, :accepted]
-
+  #enum role: [:user, :vip, :admin]
+  #user = student
+  #vip = Professor
+  #admin = admin
+  after_initialize :set_default_role, :if => :new_record?
+  
   def password_required?
     false
+    #super if confirmed?
   end
 
   def password_valid?
-    true
+      true
   end
+
+  def set_default_role
+    self.role ||= :user
+  end
+
 
 ##FOR IMAGE UPLOADING
 has_attached_file :avatar, 

@@ -12,29 +12,35 @@ class ApplicationController < ActionController::Base
   require 'uri'
   require 'csv'
 
+  # The WebAuth module has some default configuration constants,
+  # a webauth_authenticate method that can be used as a filter,
+  # some methods for processing the data, and a WebAuth::Check class
+  # that is used for making the webauth_check call
+
   COOKIE_NAME  = "ucinetid_auth"
   attr_reader :auth_key
 
   def startup
-    @auth_key=cookies[COOKIE_NAME]
-    http = Net::HTTP.new('login.uci.edu', 80)
-    if @auth_key == nil
-      return
+
+      @auth_key=cookies[COOKIE_NAME]
+      http = Net::HTTP.new('login.uci.edu', 80)
+      if @auth_key == nil
+        return
+      end
+      @results = nil
+      http.start do |http|
+        request = Net::HTTP::Get.new('https://login.uci.edu/ucinetid/webauth_check' + '?return_xml=true&ucinetid_auth=' + (@auth_key || ""))
+        response = http.request(request)
+        @results = response.body
+      end
+      @results=XmlSimple.xml_in(@results,{'ForceArray' => false})
+      @results.each do |key,value|
+        next unless !value.blank?
+          value.chomp!
+          instance_variable_set('@'+key,value)
+      end
+        return @results
     end
-    @results = nil
-    http.start do |http|
-      request = Net::HTTP::Get.new('https://login.uci.edu/ucinetid/webauth_check' + '?return_xml=true&ucinetid_auth=' + (@auth_key || ""))
-      response = http.request(request)
-      @results = response.body
-    end
-    @results=XmlSimple.xml_in(@results,{'ForceArray' => false})
-    @results.each do |key,value|
-      next unless !value.blank?
-        value.chomp!
-        instance_variable_set('@'+key,value)
-    end
-      return @results
-  end
 
   def set_course
     authorize User.all
@@ -51,6 +57,8 @@ class ApplicationController < ActionController::Base
     end
     redirect_to root_path
   end
+
+  
 
   protected
 

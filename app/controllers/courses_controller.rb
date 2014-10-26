@@ -16,6 +16,19 @@ def new
   authorize @users
 end
 
+def show
+  @course = Course.find(params[:id])
+  unless user_signed_in?
+  authorize @user
+  redirect_to :back, :alert => "Access denied."
+  end
+end
+
+def profile
+  @courses = current_course
+  authorize @users
+end
+
 def destroy
   course = Course.find(params[:id])
   authorize User.all
@@ -25,6 +38,13 @@ def destroy
   else
     redirect_to courses_path, :notice => "Can't delete yourself."
   end
+end
+
+# If the course is partnered, it will clear the group of the current_course and the partner
+# If the course is unpartnered, it will partner them
+# Partnering sets status to 1 or true and fills the current_course (and their partner's) partner1 with the other person's name
+def mailer
+  ChangeMailer.send_change_message(course.email).deliver
 end
 
 def find_first_digits(txt)
@@ -67,17 +87,6 @@ def name_parse(txt)
   end
 end
 
-def clean_nils(csv)
-  # remove all nils from array of arrays
-  csv.each  do |nils|
-   nils.compact!
-  end
-  #delete all empty arrays
-  csv.delete_if {|x| x.empty? } 
-  return csv
-end
-
-
 def csv_import
   authorize User.all
   # variables for counting how many users were added and how many roster relations made
@@ -85,15 +94,22 @@ def csv_import
   newr=0
   csv_text = File.open(params[:dump][:file].tempfile, :headers=>true)
   csv = CSV.parse(csv_text)
-  csv = clean_nils(csv)
+  # remove all nils from array of arrays
+  csv.each  do |nils|
+   nils.compact!
+  end
+  #delete all empty arrays
+  csv.delete_if {|x| x.empty? } 
   #show array starting with [8] and 100 length afterwards.  Gets rid of UCI registrar text
   cdata = csv.slice!(8,100)
+  
       @quarter = cdata[0][0] 
       @course_code = find_first_digits(cdata[1][0])  
       @instructor = get_instructor_name(cdata[3][0])
       @permissions = TA(cdata[8][0])
       @course_title = cdata[2][0]
       #@location = cdata[4][0]  if location is needed later
+
 
   studentdata = cdata.slice!(11,600)
   #finding the email and name columns
@@ -129,7 +145,9 @@ def csv_import
     if @newuser.save
       newc=+1
     end
+
   end
+  
   roster = Roster.new(:course_id => @course_code, :user_id => @newuser.id)
     if roster.save
       newr+=1
@@ -138,9 +156,12 @@ def csv_import
   redirect_to :back, :notice => "CSV Import Successful,  #{newc} new users added to PartnerUp, #{newr} enrollments added to database"
   end
 
+
+
   def update
     authorize User.all
     @course = Course.find(params[:id])
+    
     if @course.update_attributes(course_params)
       flash[:notice] = "Course updated successfully"
       redirect_to(:action => 'index')
