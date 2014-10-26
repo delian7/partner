@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
   #        :source => :groups
 
   # self.primary_key = "campus_id"
-  devise :database_authenticatable, :registerable
+  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable
          enum status: [:available, :pending, :requested, :accepted]
   #enum role: [:user, :vip, :admin]
   #user = student
