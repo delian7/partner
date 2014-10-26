@@ -19,6 +19,16 @@ end
    def show?
      true
   end  
+    def remove?
+    true
+  end
+
+  def update?
+    true
+  end
+   def add_partnership?
+     true
+  end  
   
   def add_to_group?
     true

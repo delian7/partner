@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="UTF-8">
+
+<title>demodb.sql - RDoc Documentation</title>
+
+<link href="./fonts.css" rel="stylesheet">
+<link href="./rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "./";
+</script>
+
+<script src="./js/jquery.js"></script>
+<script src="./js/navigation.js"></script>
+<script src="./js/search_index.js"></script>
+<script src="./js/search.js"></script>
+<script src="./js/searcher.js"></script>
+<script src="./js/darkfish.js"></script>
+
+
+<body id="top" role="document" class="file">
+<nav role="navigation">
+  <div id="project-navigation">
+    <div id="home-section" role="region" title="Quick navigation" class="nav-section">
+  <h2>
+    <a href="./index.html" rel="home">Home</a>
+  </h2>
+
+  <div id="table-of-contents-navigation">
+    <a href="./table_of_contents.html#pages">Pages</a>
+    <a href="./table_of_contents.html#classes">Classes</a>
+    <a href="./table_of_contents.html#methods">Methods</a>
+  </div>
+</div>
+
+    <div id="search-section" role="search" class="project-section initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <div id="search-field-wrapper">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results"
+             type="text" name="search" placeholder="Search" spellcheck="false"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </div>
+
+    <ul id="search-results" aria-label="Search Results"
+        aria-busy="false" aria-expanded="false"
+        aria-atomic="false" class="initially-hidden"></ul>
+  </form>
+</div>
+
+  </div>
+
+  
+
+  <div id="project-metadata">
+    <div id="fileindex-section" class="nav-section">
+  <h3>Pages</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="./CHANGELOG_md.html">CHANGELOG</a>
+  
+    <li><a href="./Gemfile.html">Gemfile</a>
+  
+    <li><a href="./Gemfile_lock.html">Gemfile.lock</a>
+  
+    <li><a href="./README_md.html">README</a>
+  
+    <li><a href="./Rakefile.html">Rakefile</a>
+  
+    <li><a href="./app/assets/javascripts/application_js.html">application.js</a>
+  
+    <li><a href="./app/assets/javascripts/rails_js.html">rails.js</a>
+  
+    <li><a href="./app/assets/stylesheets/application_scss_css.html">application.scss.css</a>
+  
+    <li><a href="./app/assets/stylesheets/framework_and_overrides_scss_css.html">framework_and_overrides.scss.css</a>
+  
+    <li><a href="./app/assets/stylesheets/styles_scss_css.html">styles.scss.css</a>
+  
+    <li><a href="./config_ru.html">config.ru</a>
+  
+    <li><a href="./demodb_sql.html">demodb.sql</a>
+  
+    <li><a href="./exampleroster_csv.html">exampleroster.csv</a>
+  
+    <li><a href="./lib/generators/templates/README.html">README</a>
+  
+    <li><a href="./log/development_log.html">development.log</a>
+  
+    <li><a href="./public/404_html.html">404.html</a>
+  
+    <li><a href="./public/422_html.html">422.html</a>
+  
+    <li><a href="./public/500_html.html">500.html</a>
+  
+    <li><a href="./public/favicon_ico.html">favicon.ico</a>
+  
+    <li><a href="./public/humans_txt.html">humans</a>
+  
+    <li><a href="./public/robots_txt.html">robots</a>
+  
+    <li><a href="./vendor/README.html">README</a>
+  
+  </ul>
+</div>
+
+  </div>
+</nav>
+
+<main role="main" aria-label="Page demodb.sql">
+
+<p># ************************************************************ # Sequel Pro
+SQL dump # Version 4096 # # <a
+href="http://www.sequelpro.com">www.sequelpro.com</a>/ # <a
+href="http://code.google.com/p/sequel-pro">code.google.com/p/sequel-pro</a>/
+# # Host: 127.0.0.1 (MySQL 5.5.37) # Database: 191grp11 # Generation Time:
+2014-10-23 02:05:38 +0000 #
+************************************************************</p>
+
+<pre>!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT   ;
+!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS   ;</pre>
+
+<p>/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */; /*!40101
+SET NAMES utf8 */; /*!40014 SET
+@OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE,
+SQL_MODE=&#39;NO_AUTO_VALUE_ON_ZERO&#39; */; /*!40111 SET
+@OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;</p>
+
+<p># Dump of table courses # ————————————————————</p>
+
+<p>LOCK TABLES `courses` WRITE; /*!40000 ALTER TABLE `courses` DISABLE KEYS
+*/;</p>
+
+<p>INSERT INTO `courses` (`id`, `course_title`, `instructor`, `active_proj`,
+`created_at`, `updated_at`) VALUES</p>
+
+<pre>(36601,&#39;Information &amp; Comp Sci 31: Lab 1&#39;,&#39;&#39;,NULL,NULL,NULL),
+(36602,&#39;Information &amp; Comp Sci 31: Lab 2&#39;,&#39;&#39;,NULL,NULL,NULL),
+(36603,&#39;Information &amp; Comp Sci 31: Lab 3&#39;,&#39;&#39;,NULL,NULL,NULL),
+(36604,&#39;Information &amp; Comp Sci 31: Lab 4&#39;,&#39;&#39;,NULL,NULL,NULL),
+(36605,&#39;Information &amp; Comp Sci 31: Lab 5&#39;,&#39;&#39;,NULL,NULL,NULL),
+(36606,&#39;Information &amp; Comp Sci 31: Lab 6&#39;,&#39;&#39;,NULL,NULL,NULL),
+(36607,&#39;Information &amp; Comp Sci 31: Lab 7&#39;,&#39;&#39;,NULL,NULL,NULL),
+(36608,&#39;Information &amp; Comp Sci 31: Lab 8&#39;,&#39;&#39;,NULL,NULL,NULL),
+(36609,&#39;Information &amp; Comp Sci 31: Lab 9&#39;,&#39;&#39;,NULL,NULL,NULL),
+(36610,&#39;Information &amp; Comp Sci 31: Lab 10&#39;,&#39;&#39;,NULL,NULL,NULL),
+(36611,&#39;Information &amp; Comp Sci 31: Lab 11&#39;,&#39;&#39;,NULL,NULL,NULL),
+(36612,&#39;Information &amp; Comp Sci 31: Lab 12&#39;,&#39;&#39;,NULL,NULL,NULL),
+(36619,&#39;Information &amp; Comp Sci 32: Lab 1&#39;,&#39;&#39;,NULL,NULL,NULL),
+(36621,&#39;Information &amp; Comp Sci 32: Lab 2&#39;,&#39;&#39;,NULL,NULL,NULL),
+(36622,&#39;Information &amp; Comp Sci 32: Lab 3&#39;,&#39;&#39;,NULL,NULL,NULL),
+(36623,&#39;Information &amp; Comp Sci 32: Lab 4&#39;,&#39;&#39;,NULL,NULL,NULL),
+(36624,&#39;Information &amp; Comp Sci 32: Lab 5&#39;,&#39;&#39;,NULL,NULL,NULL),
+(36626,&#39;Information &amp; Comp Sci 32: Lab 7&#39;,&#39;&#39;,NULL,NULL,NULL),
+(36681,&#39;Information &amp; Comp Sci 45J: Lab 1&#39;,&#39;&#39;,NULL,NULL,NULL),
+(36682,&#39;Information &amp; Comp Sci 45J: Lab 2&#39;,&#39;&#39;,NULL,NULL,NULL),
+(36683,&#39;Information &amp; Comp Sci 45J: Lab 3&#39;,&#39;&#39;,NULL,NULL,NULL),
+(36684,&#39;Information &amp; Comp Sci 45J: Lab 4&#39;,&#39;&#39;,NULL,NULL,NULL),
+(37050,&#39;In4matx 121, Sec. A, 4-unit Lecture&#39;,&#39;&#39;,NULL,NULL,NULL);</pre>
+
+<p>/*!40000 ALTER TABLE `courses` ENABLE KEYS */; UNLOCK TABLES;</p>
+
+<p># Dump of table evaluations # ————————————————————</p>
+
+<p># Dump of table group_relations # ————————————————————</p>
+
+<p>LOCK TABLES `group_relations` WRITE; /*!40000 ALTER TABLE `group_relations`
+DISABLE KEYS */;</p>
+
+<p>INSERT INTO `group_relations` (`id`, `group_id`, `user_id`, `project_id`,
+`course_id`, `accepted_at`, `status`, `created_at`, `updated_at`) VALUES</p>
+
+<pre>(1,1,6,1,36601,NULL,0,&#39;2014-10-17 23:27:17&#39;,&#39;2014-10-17 23:27:17&#39;),
+(2,1,4,1,36601,NULL,0,&#39;2014-10-17 23:28:34&#39;,&#39;2014-10-17 23:28:34&#39;),
+(4,1,0,1,36601,NULL,0,NULL,NULL),
+(5,2,4,2,37050,NULL,0,NULL,NULL),
+(6,1,5,1,37050,NULL,0,&#39;2014-10-21 22:36:50&#39;,&#39;2014-10-21 22:36:50&#39;),
+(7,3,5,3,37050,NULL,0,&#39;2014-10-21 22:36:50&#39;,&#39;2014-10-21 22:36:50&#39;),
+(8,3,0,3,37050,NULL,0,&#39;2014-10-21 22:36:50&#39;,&#39;2014-10-21 22:36:50&#39;),
+(9,2,6,4,37050,NULL,0,NULL,NULL),
+(11,2,0,2,37050,NULL,0,NULL,NULL),
+(12,3,4,3,37050,NULL,0,&#39;2014-10-21 22:36:50&#39;,&#39;2014-10-21 22:36:50&#39;);</pre>
+
+<p>/*!40000 ALTER TABLE `group_relations` ENABLE KEYS */; UNLOCK TABLES;</p>
+
+<p># Dump of table groups # ————————————————————</p>
+
+<p>LOCK TABLES `groups` WRITE; /*!40000 ALTER TABLE `groups` DISABLE KEYS */;</p>
+
+<p>INSERT INTO `groups` (`id`, `name`, `limit`, `allow_repeat`, `created_at`,
+`updated_at`) VALUES</p>
+
+<pre>(1,&#39;Kay\&#39;s Legion&#39;,2,0,NULL,NULL),
+(2,&#39;UBO&#39;,2,0,NULL,NULL),
+(3,&#39;Battle Toads&#39;,4,1,NULL,NULL);</pre>
+
+<p>/*!40000 ALTER TABLE `groups` ENABLE KEYS */; UNLOCK TABLES;</p>
+
+<p># Dump of table projects # ————————————————————</p>
+
+<p>LOCK TABLES `projects` WRITE; /*!40000 ALTER TABLE `projects` DISABLE KEYS
+*/;</p>
+
+<p>INSERT INTO `projects` (`id`, `name`, `course_id`, `group_size`,
+`created_at`, `updated_at`) VALUES</p>
+
+<pre>(1,&#39;Smiley Faces&#39;,36601,2,&#39;2014-10-21 03:45:50&#39;,&#39;2014-10-23 00:31:52&#39;),
+(2,&#39;Linked Lists&#39;,36684,2,&#39;2014-10-21 03:52:36&#39;,&#39;2014-10-23 00:37:21&#39;),
+(3,&#39;Database Parsing&#39;,36624,2,&#39;2014-10-22 06:54:02&#39;,&#39;2014-10-23 00:37:28&#39;),
+(4,&#39;Traffic Signal Simulator&#39;,37050,4,&#39;2014-10-22 06:54:26&#39;,&#39;2014-10-23 00:37:00&#39;),
+(5,&#39;Interactive Teddy Bear Creation&#39;,37050,4,&#39;2014-10-22 06:55:05&#39;,&#39;2014-10-22 06:55:05&#39;),
+(6,&#39;Social Restaurant Tables&#39;,37050,4,&#39;2014-10-22 06:55:32&#39;,&#39;2014-10-22 06:55:32&#39;);</pre>
+
+<p>/*!40000 ALTER TABLE `projects` ENABLE KEYS */; UNLOCK TABLES;</p>
+
+<p># Dump of table rosters # ————————————————————</p>
+
+<p>LOCK TABLES `rosters` WRITE; /*!40000 ALTER TABLE `rosters` DISABLE KEYS
+*/;</p>
+
+<p>INSERT INTO `rosters` (`id`, `course_id`, `user_id`, `created_at`,
+`updated_at`) VALUES</p>
+
+<pre>(1,36601,0,NULL,NULL),
+(2,36601,1,NULL,NULL),
+(3,36601,2,NULL,NULL),
+(4,36601,3,NULL,NULL),
+(5,36601,6,NULL,NULL),
+(6,36624,2,NULL,NULL),
+(7,36624,4,NULL,NULL),
+(8,36624,0,NULL,NULL),
+(9,36624,3,NULL,NULL),
+(10,36624,1,NULL,NULL),
+(11,36684,6,NULL,NULL),
+(12,36684,3,NULL,NULL),
+(13,36684,5,NULL,NULL),
+(14,36684,0,NULL,NULL),
+(15,36684,1,NULL,NULL),
+(16,36684,2,NULL,NULL),
+(17,37050,0,NULL,NULL),
+(18,37050,2,NULL,NULL),
+(19,37050,6,NULL,NULL),
+(20,37050,5,NULL,NULL),
+(21,37050,3,NULL,NULL),
+(22,37050,4,NULL,NULL),
+(23,37050,1,NULL,NULL);</pre>
+
+<p>/*!40000 ALTER TABLE `rosters` ENABLE KEYS */; UNLOCK TABLES;</p>
+
+<p># Dump of table users # ————————————————————</p>
+
+<p>LOCK TABLES `users` WRITE; /*!40000 ALTER TABLE `users` DISABLE KEYS */;</p>
+
+<p>INSERT INTO `users` (`id`, `ucinetid`, `uci_affiliations`, `first_name`,
+`last_name`, `role`, `email`, `current_course`, `sign_in_count`,
+`current_sign_in_at`, `last_sign_in_at`, `current_sign_in_ip`,
+`last_sign_in_ip`, `age_in_seconds`, `avatar_file_name`,
+`avatar_content_type`, `avatar_file_size`, `avatar_updated_at`,
+`created_at`, `updated_at`) VALUES</p>
+
+<pre>(0,&#39;ryderc&#39;,&#39;student&#39;,&#39;Christina&#39;,&#39;Ryder&#39;,0,&#39;ryderc@uci.edu&#39;,37050,44,&#39;2014-10-23 00:46:03&#39;,&#39;2014-10-23 00:06:39&#39;,&#39;127.0.0.1&#39;,&#39;127.0.0.1&#39;,NULL,&#39;622152_10151303211381368_1975951804_o.jpg&#39;,&#39;image/jpeg&#39;,143122,&#39;2014-10-23 00:29:54&#39;,NULL,&#39;2014-10-23 02:01:09&#39;),
+(1,&#39;msilberm&#39;,&#39;student, staff&#39;,&#39;Michael&#39;,&#39;Silberman&#39;,1,&#39;msilberm@uci.edu&#39;,37050,12,&#39;2014-10-23 00:30:09&#39;,&#39;2014-10-22 23:55:41&#39;,&#39;127.0.0.1&#39;,&#39;127.0.0.1&#39;,NULL,NULL,NULL,NULL,NULL,NULL,&#39;2014-10-23 00:42:38&#39;),
+(2,&#39;kay&#39;,&#39;staff,faculty,employee&#39;,&#39;David G&#39;,&#39;Kay&#39;,2,&#39;kay@uci.edu&#39;,36624,10,&#39;2014-10-23 02:03:39&#39;,&#39;2014-10-22 19:43:23&#39;,&#39;127.0.0.1&#39;,&#39;127.0.0.1&#39;,NULL,NULL,NULL,NULL,NULL,NULL,&#39;2014-10-23 02:04:30&#39;),
+(3,&#39;ziv&#39;,&#39;student,staff,faculty,employee&#39;,&#39;Hadar&#39;,&#39;Ziv&#39;,3,&#39;ziv@uci.edu&#39;,36601,1,&#39;2014-10-22 17:59:26&#39;,&#39;2014-10-22 17:59:26&#39;,&#39;127.0.0.1&#39;,&#39;127.0.0.1&#39;,NULL,NULL,NULL,NULL,NULL,NULL,&#39;2014-10-22 17:59:26&#39;),
+(4,&#39;imcnicol&#39;,&#39;student&#39;,&#39;Ian&#39;,&#39;Mcnicol&#39;,0,&#39;imcnicol@uci.edu&#39;,36601,1,&#39;2014-10-11 01:21:13&#39;,&#39;2014-10-11 01:21:13&#39;,&#39;127.0.0.1&#39;,&#39;127.0.0.1&#39;,NULL,&#39;1382955_10202520222632714_437838427_n.jpg&#39;,&#39;image/jpeg&#39;,60296,&#39;2014-10-11 01:37:45&#39;,NULL,&#39;2014-10-11 01:37:45&#39;),
+(5,&#39;vdhingrej&#39;,&#39;student&#39;,&#39;Vinayak&#39;,&#39;Dhingreja&#39;,0,&#39;vdhingrej@uci.edu&#39;,36601,2,&#39;2014-10-11 01:38:08&#39;,&#39;2014-10-11 01:37:53&#39;,&#39;127.0.0.1&#39;,&#39;127.0.0.1&#39;,NULL,&#39;10641277_10152392094266235_7300912786488460398_n.jpg&#39;,&#39;image/jpeg&#39;,55627,&#39;2014-10-11 01:38:02&#39;,NULL,&#39;2014-10-11 01:38:08&#39;),
+(6,&#39;petrovd&#39;,&#39;student&#39;,&#39;Delian&#39;,&#39;Petrov&#39;,0,&#39;petrovd@uci.edu&#39;,36601,4,&#39;2014-10-22 07:01:55&#39;,&#39;2014-10-21 06:15:51&#39;,&#39;127.0.0.1&#39;,&#39;127.0.0.1&#39;,NULL,&#39;10525581_10204567467375380_3907820298695189766_n.jpg&#39;,&#39;image/jpeg&#39;,68194,&#39;2014-10-11 01:43:06&#39;,NULL,&#39;2014-10-22 07:01:55&#39;);</pre>
+
+<p>/*!40000 ALTER TABLE `users` ENABLE KEYS */; UNLOCK TABLES;</p>
+
+<p>/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */; /*!40101 SET
+SQL_MODE=@OLD_SQL_MODE */; /*!40014 SET
+FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */; /*!40101 SET
+CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */; /*!40101 SET
+CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */; /*!40101 SET
+COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;</p>
+</main>
+
+
+
+<footer id="validator-badges" role="contentinfo">
+  <p><a href="http://validator.w3.org/check/referer">Validate</a>
+  <p>Generated by <a href="http://rdoc.rubyforge.org">RDoc</a> 4.1.2.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
+</footer>
+

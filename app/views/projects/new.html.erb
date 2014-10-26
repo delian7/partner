@@ -1,14 +1,7 @@
-<%= link_to("<< Back to List", {:action => 'index'}) %>
-
-<div class="project new">
-	<h2>Create a Project</h2>
-
+<%= link_to("<< Back to List", {:action => 'index'}) %><br>
+<div class="authform form", style="max-width: 5000px; line-height:3; padding: 1% 1% 1% 1%!important;margin:auto;">
 	<%= form_for(:project, :url => {:action => 'create'}) do |f| %>
-		
+		<h2>Create a Project</h2>
 		<%= render(:partial => 'form', :locals => {:f => f}) %>
-
-		<%= submit_tag("Create Project", :class => 'btn btn-primary') %>
-
 	<% end %>
-
 </div>
