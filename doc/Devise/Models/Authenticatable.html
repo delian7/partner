@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="UTF-8">
+
+<title>module Devise::Models::Authenticatable - RDoc Documentation</title>
+
+<link href="../../fonts.css" rel="stylesheet">
+<link href="../../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../../";
+</script>
+
+<script src="../../js/jquery.js"></script>
+<script src="../../js/navigation.js"></script>
+<script src="../../js/search_index.js"></script>
+<script src="../../js/search.js"></script>
+<script src="../../js/searcher.js"></script>
+<script src="../../js/darkfish.js"></script>
+
+
+<body id="top" role="document" class="module">
+<nav role="navigation">
+  <div id="project-navigation">
+    <div id="home-section" role="region" title="Quick navigation" class="nav-section">
+  <h2>
+    <a href="../../index.html" rel="home">Home</a>
+  </h2>
+
+  <div id="table-of-contents-navigation">
+    <a href="../../table_of_contents.html#pages">Pages</a>
+    <a href="../../table_of_contents.html#classes">Classes</a>
+    <a href="../../table_of_contents.html#methods">Methods</a>
+  </div>
+</div>
+
+    <div id="search-section" role="search" class="project-section initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <div id="search-field-wrapper">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results"
+             type="text" name="search" placeholder="Search" spellcheck="false"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </div>
+
+    <ul id="search-results" aria-label="Search Results"
+        aria-busy="false" aria-expanded="false"
+        aria-atomic="false" class="initially-hidden"></ul>
+  </form>
+</div>
+
+  </div>
+
+  
+<div class="nav-section">
+  <h3>Table of Contents</h3>
+
+  <ul class="link-list" role="directory">
+    <li><a href="#module-Devise::Models::Authenticatable-label-Options">Options</a>
+    <li><a href="#module-Devise::Models::Authenticatable-label-active_for_authentication%3F">active_for_authentication?</a>
+  </ul>
+</div>
+
+
+  <div id="class-metadata">
+    
+    
+    
+    <div id="extends-section" class="nav-section">
+  <h3>Extended With Modules</h3>
+
+  <ul class="link-list">
+    
+  
+    <li><span class="extend">ActiveSupport::Concern</span>
+  
+  
+  </ul>
+</div>
+
+    <!-- Method Quickref -->
+<div id="method-list-section" class="nav-section">
+  <h3>Methods</h3>
+
+  <ul class="link-list" role="directory">
+    
+    <li ><a href="#method-c-required_fields">::required_fields</a>
+    
+    <li ><a href="#method-i-active_for_authentication-3F">#active_for_authentication?</a>
+    
+    <li ><a href="#method-i-apply_to_attribute_or_variable">#apply_to_attribute_or_variable</a>
+    
+    <li ><a href="#method-i-authenticatable_salt">#authenticatable_salt</a>
+    
+    <li ><a href="#method-i-devise_mailer">#devise_mailer</a>
+    
+    <li ><a href="#method-i-downcase_keys">#downcase_keys</a>
+    
+    <li ><a href="#method-i-inactive_message">#inactive_message</a>
+    
+    <li ><a href="#method-i-send_devise_notification">#send_devise_notification</a>
+    
+    <li ><a href="#method-i-strip_whitespace">#strip_whitespace</a>
+    
+    <li ><a href="#method-i-unauthenticated_message">#unauthenticated_message</a>
+    
+    <li ><a href="#method-i-valid_for_authentication-3F">#valid_for_authentication?</a>
+    
+  </ul>
+</div>
+
+  </div>
+</nav>
+
+<main role="main" aria-labelledby="module-Devise::Models::Authenticatable">
+  <h1 id="module-Devise::Models::Authenticatable" class="module">
+    module Devise::Models::Authenticatable
+  </h1>
+
+  <section class="description">
+    
+<p><a href="Authenticatable.html">Authenticatable</a> module. Holds common
+settings for authentication.</p>
+
+<h2 id="module-Devise::Models::Authenticatable-label-Options">Options<span><a href="#module-Devise::Models::Authenticatable-label-Options">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
+
+<p><a href="Authenticatable.html">Authenticatable</a> adds the following
+options to devise_for:</p>
+
+<pre>* +authentication_keys+: parameters used for authentication. By default [:email].
+
+* +http_authentication_key+: map the username passed via HTTP Auth to this parameter. Defaults to
+  the first element in +authentication_keys+.
+
+* +request_keys+: parameters from the request object used for authentication.
+  By specifying a symbol (which should be a request method), it will automatically be
+  passed to find_for_authentication method and considered in your model lookup.
+
+  For instance, if you set :request_keys to [:subdomain], :subdomain will be considered
+  as key on authentication. This can also be a hash where the value is a boolean specifying
+  if the value is required or not.
+
+* +http_authenticatable+: if this model allows http authentication. By default false.
+  It also accepts an array specifying the strategies that should allow http.
+
+* +params_authenticatable+: if this model allows authentication through request params. By default true.
+  It also accepts an array specifying the strategies that should allow params authentication.
+
+* +skip_session_storage+: By default Devise will store the user in session.
+  By default is set to skip_session_storage: [:http_auth].</pre>
+
+<h2 id="module-Devise::Models::Authenticatable-label-active_for_authentication%3F">active_for_authentication?<span><a href="#module-Devise::Models::Authenticatable-label-active_for_authentication%3F">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
+
+<p>After authenticating a user and in each request, Devise checks if your
+model is active by calling model.active_for_authentication?. This method is
+overwritten by other devise modules. For instance, :confirmable overwrites
+.active_for_authentication? to only return true if your model was
+confirmed.</p>
+
+<p>You overwrite this method yourself, but if you do, don&#39;t forget to call
+super:</p>
+
+<pre class="ruby"><span class="ruby-keyword">def</span> <span class="ruby-identifier">active_for_authentication?</span>
+  <span class="ruby-keyword">super</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">special_condition_is_valid?</span>
+<span class="ruby-keyword">end</span>
+</pre>
+
+<p>Whenever active_for_authentication? returns false, Devise asks the reason
+why your model is inactive using the <a
+href="Authenticatable.html#method-i-inactive_message">#inactive_message</a>
+method. You can overwrite it as well:</p>
+
+<pre class="ruby"><span class="ruby-keyword">def</span> <span class="ruby-identifier">inactive_message</span>
+  <span class="ruby-identifier">special_condition_is_valid?</span> <span class="ruby-operator">?</span> <span class="ruby-keyword">super</span> <span class="ruby-operator">:</span> :<span class="ruby-identifier">special_condition_is_not_valid</span>
+<span class="ruby-keyword">end</span>
+</pre>
+
+  </section>
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+    <section class="constants-list">
+      <header>
+        <h3>Constants</h3>
+      </header>
+      <dl>
+      
+        <dt id="BLACKLIST_FOR_SERIALIZATION">BLACKLIST_FOR_SERIALIZATION
+        
+        <dd>
+        
+      
+      </dl>
+    </section>
+    
+
+    
+
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Class Methods</h3>
+       </header>
+
+    
+      <div id="method-c-required_fields" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">required_fields</span><span
+            class="method-args">(klass)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="required_fields-source">
+            <pre><span class="ruby-comment"># File lib/devise/models/authenticatable.rb, line 69</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">required_fields</span>(<span class="ruby-identifier">klass</span>)
+  []
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+    </section>
+  
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Instance Methods</h3>
+       </header>
+
+    
+      <div id="method-i-active_for_authentication-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">active_for_authentication?</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="active_for_authentication-3F-source">
+            <pre><span class="ruby-comment"># File lib/devise/models/authenticatable.rb, line 87</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">active_for_authentication?</span>
+  <span class="ruby-keyword">true</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-authenticatable_salt" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">authenticatable_salt</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="authenticatable_salt-source">
+            <pre><span class="ruby-comment"># File lib/devise/models/authenticatable.rb, line 95</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">authenticatable_salt</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-inactive_message" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">inactive_message</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="inactive_message-source">
+            <pre><span class="ruby-comment"># File lib/devise/models/authenticatable.rb, line 91</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">inactive_message</span>
+  <span class="ruby-value">:inactive</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-unauthenticated_message" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">unauthenticated_message</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="unauthenticated_message-source">
+            <pre><span class="ruby-comment"># File lib/devise/models/authenticatable.rb, line 83</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">unauthenticated_message</span>
+  <span class="ruby-value">:invalid</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-valid_for_authentication-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">valid_for_authentication?</span><span
+            class="method-args">() { |: true| ... }</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Check if the current object is valid for authentication. This method and
+find_for_authentication are the methods used in a Warden::Strategy to check
+if a model should be signed in or not.</p>
+
+<p>However, you should not overwrite this method, you should overwrite
+active_for_authentication? and <a
+href="Authenticatable.html#method-i-inactive_message">#inactive_message</a>
+instead.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="valid_for_authentication-3F-source">
+            <pre><span class="ruby-comment"># File lib/devise/models/authenticatable.rb, line 79</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">valid_for_authentication?</span>
+  <span class="ruby-identifier">block_given?</span> <span class="ruby-operator">?</span> <span class="ruby-keyword">yield</span> <span class="ruby-operator">:</span> <span class="ruby-keyword">true</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+    </section>
+  
+     <section id="protected-instance-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Protected Instance Methods</h3>
+       </header>
+
+    
+      <div id="method-i-apply_to_attribute_or_variable" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">apply_to_attribute_or_variable</span><span
+            class="method-args">(attr, method)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="apply_to_attribute_or_variable-source">
+            <pre><span class="ruby-comment"># File lib/devise/models/authenticatable.rb, line 184</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">apply_to_attribute_or_variable</span>(<span class="ruby-identifier">attr</span>, <span class="ruby-identifier">method</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-keyword">self</span>[<span class="ruby-identifier">attr</span>]
+    <span class="ruby-keyword">self</span>[<span class="ruby-identifier">attr</span>] = <span class="ruby-keyword">self</span>[<span class="ruby-identifier">attr</span>].<span class="ruby-identifier">try</span>(<span class="ruby-identifier">method</span>)
+
+  <span class="ruby-comment"># Use respond_to? here to avoid a regression where globally</span>
+  <span class="ruby-comment"># configured strip_whitespace_keys or case_insensitive_keys were</span>
+  <span class="ruby-comment"># attempting to strip or downcase when a model didn&#39;t have the</span>
+  <span class="ruby-comment"># globally configured key.</span>
+  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">attr</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">respond_to?</span>(<span class="ruby-node">&quot;#{attr}=&quot;</span>)
+    <span class="ruby-identifier">new_value</span> = <span class="ruby-identifier">send</span>(<span class="ruby-identifier">attr</span>).<span class="ruby-identifier">try</span>(<span class="ruby-identifier">method</span>)
+    <span class="ruby-identifier">send</span>(<span class="ruby-node">&quot;#{attr}=&quot;</span>, <span class="ruby-identifier">new_value</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-devise_mailer" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">devise_mailer</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="devise_mailer-source">
+            <pre><span class="ruby-comment"># File lib/devise/models/authenticatable.rb, line 125</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">devise_mailer</span>
+  <span class="ruby-constant">Devise</span>.<span class="ruby-identifier">mailer</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-downcase_keys" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">downcase_keys</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="downcase_keys-source">
+            <pre><span class="ruby-comment"># File lib/devise/models/authenticatable.rb, line 176</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">downcase_keys</span>
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">case_insensitive_keys</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">k</span><span class="ruby-operator">|</span> <span class="ruby-identifier">apply_to_attribute_or_variable</span>(<span class="ruby-identifier">k</span>, <span class="ruby-value">:downcase</span>) }
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-send_devise_notification" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">send_devise_notification</span><span
+            class="method-args">(notification, *args)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This is an internal method called every time Devise needs to send a
+notification/mail. This can be overridden if you need to customize the
+e-mail delivery logic. For instance, if you are using a queue to deliver
+e-mails (delayed job, sidekiq, resque, etc), you must add the delivery to
+the queue just after the transaction was committed. To achieve this, you
+can override <a
+href="Authenticatable.html#method-i-send_devise_notification">#send_devise_notification</a>
+to store the deliveries until the after_commit callback is triggered:</p>
+
+<pre class="ruby"><span class="ruby-keyword">class</span> <span class="ruby-constant">User</span>
+  <span class="ruby-identifier">devise</span> :<span class="ruby-identifier">database_authenticatable</span>, :<span class="ruby-identifier">confirmable</span>
+
+  <span class="ruby-identifier">after_commit</span> :<span class="ruby-identifier">send_pending_notifications</span>
+
+  <span class="ruby-identifier">protected</span>
+
+  <span class="ruby-keyword">def</span> <span class="ruby-identifier">send_devise_notification</span>(<span class="ruby-identifier">notification</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+    <span class="ruby-comment"># If the record is new or changed then delay the</span>
+    <span class="ruby-comment"># delivery until the after_commit callback otherwise</span>
+    <span class="ruby-comment"># send now because after_commit will not be called.</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">new_record?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">changed?</span>
+      <span class="ruby-identifier">pending_notifications</span> <span class="ruby-operator">&lt;&lt;</span> [<span class="ruby-identifier">notification</span>, <span class="ruby-identifier">args</span>]
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">devise_mailer</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">notification</span>, <span class="ruby-keyword">self</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>).<span class="ruby-identifier">deliver</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">def</span> <span class="ruby-identifier">send_pending_notifications</span>
+    <span class="ruby-identifier">pending_notifications</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">notification</span>, <span class="ruby-identifier">args</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">devise_mailer</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">notification</span>, <span class="ruby-keyword">self</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>).<span class="ruby-identifier">deliver</span>
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-comment"># Empty the pending notifications array because the</span>
+    <span class="ruby-comment"># after_commit hook can be called multiple times which</span>
+    <span class="ruby-comment"># could cause multiple emails to be sent.</span>
+    <span class="ruby-identifier">pending_notifications</span>.<span class="ruby-identifier">clear</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">def</span> <span class="ruby-identifier">pending_notifications</span>
+    <span class="ruby-ivar">@pending_notifications</span> <span class="ruby-operator">||=</span> []
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span>
+</pre>
+          
+          
+
+          
+          <div class="method-source-code" id="send_devise_notification-source">
+            <pre><span class="ruby-comment"># File lib/devise/models/authenticatable.rb, line 172</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">send_devise_notification</span>(<span class="ruby-identifier">notification</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+  <span class="ruby-identifier">devise_mailer</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">notification</span>, <span class="ruby-keyword">self</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>).<span class="ruby-identifier">deliver</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-strip_whitespace" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">strip_whitespace</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="strip_whitespace-source">
+            <pre><span class="ruby-comment"># File lib/devise/models/authenticatable.rb, line 180</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">strip_whitespace</span>
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">strip_whitespace_keys</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">k</span><span class="ruby-operator">|</span> <span class="ruby-identifier">apply_to_attribute_or_variable</span>(<span class="ruby-identifier">k</span>, <span class="ruby-value">:strip</span>) }
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+    </section>
+  
+  </section>
+</main>
+
+
+<footer id="validator-badges" role="contentinfo">
+  <p><a href="http://validator.w3.org/check/referer">Validate</a>
+  <p>Generated by <a href="http://rdoc.rubyforge.org">RDoc</a> 4.1.2.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
+</footer>
+

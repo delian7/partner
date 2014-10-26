@@ -1,13 +1,11 @@
 <%= link_to("<< Back to List", {:action => 'index'}) %>
 
 <div class="project delete">
-	<h2>Delete Project</h2>
 
 	<%= form_for(:project, :url => {:controller => 'projects', :action => 'destroy', :id => @project.id}) do |f| %>
-		
-		<p style="color:red;">Are you sure you want to delete: <strong>"<%= @project.name %>"</strong>?</p>
-		
-		<%= submit_tag("Delete Project", :class => 'btn btn-danger') %>
+		<h2>Delete Project</h2>
+		Are you sure you want to delete: <strong>"<%= @project.name %>"</strong>?
+		<%= f.submit("Delete Project", :class => 'btn btn-danger') %>
 		</div>
 
 	<% end %>

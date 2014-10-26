@@ -5,18 +5,27 @@
 			<li><%= link_to 'Profile', users_profile_path %></li>
 			<li><%= link_to 'Find a Partner', users_path %></li>
 		<% when 1 .. 2 %>
-			<li><%= link_to 'Add a Roster', courses_path %></li>
+			<li><%= link_to 'Add a Roster', roster_path %></li>
 			<li><%= link_to 'Students', users_path %></li>
 			<li><%= link_to 'Projects', projects_path %></li>
+			<li><%= link_to 'Courses', courses_path %></li>
 		<% when 3 %>
 			<li><%= link_to 'Control Panel', users_path %></li>
 			<li><%= link_to 'Add a Course', users_path %></li>
-			<li><%= link_to 'Add a Roster', courses_path %></li>
+			<li><%= link_to 'Add a Roster', roster_path %></li>
 		<%end%>
-		<div style="float: right; max-width:90px; text-align:right; padding-right: 5px">			
-			<%= link_to 'Edit account', edit_user_registration_path %><br>
-			<%= link_to 'Sign out', destroy_user_session_path, :method => :delete %>
-		</div>
+<div class="dropdown pull-right">
+  <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="background-color:transparent;background-image: none;border: 1px solid transparent; text-shadow: 0 0px; box-shadow: 0 0px;">
+    <span class="glyphicon glyphicon-cog" style="font-size:21px;"></span>
+    <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu pull-right" role="menu">
+    <li role="presentation"><%= link_to 'Edit account', edit_user_registration_path %></li>
+    <li role="presentation" class="divider"></li>
+    <li role="presentation"><%= link_to 'Sign out', destroy_user_session_path, :method => :delete %></li>
+  </ul>
+</div>
+
 <% else %>
   <li><%= render 'layouts/signin_link'%>
   	
