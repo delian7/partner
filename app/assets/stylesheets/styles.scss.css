@@ -130,10 +130,9 @@ float: none;
     width: 100%; 
   }
 }
-//hide cols here
-      td.collapsable {display:block; }
 
-      @media only screen and (max-width: 600px) {
-           //show cols here
-           td.collapsable {display:none; }
-      }
+
+
+@media only screen and (max-width: 600px) {
+     .collapsable {display:none; }
+}

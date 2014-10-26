@@ -1,9 +1,9 @@
 <div class="section group">
   <div class="col span_1_of_3">
-  		<%= image_tag current_user.avatar.url %><br><br>
+  		<%= image_tag current_user.avatar.url, :style => "width:100%;"%><br><br>
   </div>
   <div class="col span_2_of_3">
-	<h3>Profile Page of <b><%= current_user.first_name%></h3></b>
+	<h2>Profile Page of <b><%= current_user.first_name%> <%=current_user.last_name %></h2></b>
 	<p>Name: <%= current_user.first_name%> <%=current_user.last_name %></p>
 	<p>Email: <%= current_user.email if current_user.email %></p>
 	<p>Last Sign In: <%= current_user.last_sign_in_at if current_user.last_sign_in_at %></p>
