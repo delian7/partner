@@ -7,7 +7,7 @@ margin: 0px 0px 0px 0px;
 }
 
 .navbar .nav > li > a {
-  font-family: 'Open Sans', sans-serif; 
+  font-family: 'Helvetica', sans-serif;
   color:black;
   font-size:17px;
   padding-right: 15px;
@@ -16,15 +16,29 @@ margin: 0px 0px 0px 0px;
 .navbar-nav {
 float: none;
 }
-.navbar-nav {
-float: none;
-}
 
-.navbar .nav > li > a:hover,
-.navbar .nav > li > a:focus {
-  background-color:#006BB2;;
-  color:#ffffff;
-}
+.navbar-custom { background-color: #3E97DB}
+.navbar-custom .navbar-nav>.active>a:hover,.navbar-custom .navbar-nav>li>a:hover, .navbar-custom .navbar-nav>li>a:focus { background-color: #05004D}
+.navbar-custom .navbar-nav>.active>a,.navbar-custom .navbar-nav>.open>a,.navbar-custom .navbar-nav>.open>a, .navbar-custom .navbar-nav>.open>a:hover,.navbar-custom .navbar-nav>.open>a, .navbar-custom .navbar-nav>.open>a:hover, .navbar-custom .navbar-nav>.open>a:focus { background-color: #080808}
+.dropdown-menu { background-color: #FFFFFF}
+.dropdown-menu>li>a:hover, .dropdown-menu>li>a:focus { background-color: #328CC7}
+.navbar-custom { background-image: none; }
+.dropdown-menu>li>a:hover, .dropdown-menu>li>a:focus { background-image: none; }
+.navbar-custom { border-color: #328CC7}
+.navbar-custom .navbar-brand { color: #FFFFFF}
+.navbar-custom .navbar-brand:hover { color: #FFFFFF}
+.navbar-custom .navbar-nav>li>a { color: #FFFFFF}
+.navbar-custom .navbar-nav>li>a:hover, .navbar-custom .navbar-nav>li>a:focus { color: #FFFFFF}
+.navbar-custom .navbar-nav>.active>a,.navbar-custom .navbar-nav>.open>a, .navbar-custom .navbar-nav>.open>a:hover, .navbar-custom .navbar-nav>.open>a:focus { color: #FFFFFF}
+.navbar-custom .navbar-nav>.active>a:hover, .navbar-custom .navbar-nav>.active>a:focus { color: #FFFFFF}
+.dropdown-menu>li>a { color: #333333}
+.dropdown-menu>li>a:hover, .dropdown-menu>li>a:focus { color: #FFFFFF}
+.navbar-custom .navbar-nav>.dropdown>a .caret { border-top-color: #F7FCFF}
+.navbar-custom .navbar-nav>.dropdown>a:hover .caret { border-top-color: #FFFCFF}
+.navbar-custom .navbar-nav>.dropdown>a .caret { border-bottom-color: #F7FCFF}
+.navbar-custom .navbar-nav>.dropdown>a:hover .caret { border-bottom-color: #FFFCFF}
+
+
 
 
 
@@ -123,17 +137,3 @@ float: none;
            //show cols here
            td.collapsable {display:none; }
       }
-
-#loading {
-    position:absolute;
-    background-color: #000000;
-    opacity: 0.8;
-    padding: 1em;
-    display: none;
-   top: 50%;
-   left: 50%;
-   width: 199px;
-   height: 199px;
-   margin-top: -100px; /* Half the height */
-   margin-left: -100px;
-}

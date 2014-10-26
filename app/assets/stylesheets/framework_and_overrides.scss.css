@@ -1,7 +1,6 @@
 // import the CSS frameworkopen
 @import "bootstrap";
 
-
 // make all images responsive by default
 img {
   @extend .img-responsive;
@@ -36,7 +35,7 @@ main {
 	padding: 2% 2% 2% 2%;
   display:inline-block;
   float: left;
-  font-family: 'Open Sans', sans-serif;color:black;font-size:14px;
+  font-family: 'Helvetica', sans-serif;color:black;font-size:14px;
   border:1px solid #8EA2B2;
   }
 
@@ -70,8 +69,6 @@ section {
   box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);
 }
 
-
-
 .authform .right {
   float: right !important;
 }
@@ -94,7 +91,6 @@ section {
   @extend .btn-primary;
   @extend .btn-xs;
 }
-
 
 .clearfix {
   *zoom: 1;

@@ -1,7 +1,6 @@
  <div style="float:right; padding-right:7%;">
   <%=link_to 'Export Table', export_users_path(current_user), :class=>"btn btn-warning" %>
 </div>
-		</div>
 		<h3>View Roster</h3>
       <tr>
       	<%= @imports %>
@@ -20,5 +19,4 @@
 	  <td><%= user.groups.all.collect(&:name).to_sentence %></td>
 	</tr>
 	<% end %>
-	
-	<% end %>	
+<% end %>	
