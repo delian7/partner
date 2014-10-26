@@ -1,7 +1,7 @@
 <% case @current_user.role %>
 <% when 0..3 %>
 <tr>
-	  <td><%= course.id %></td>
+	  <td class='collapsable'><%= course.id %></td>
       <td><%= course.course_title %></td>
       <td class='collapsable'><%= course.active_proj %></td>
       <td>

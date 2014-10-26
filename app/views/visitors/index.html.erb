@@ -1,6 +1,8 @@
 <div class="section group">
   <div class="col span_2_of_3">
-  	<h2>Welcome to <br><img src="/assets/PartnerUpLogo.png" style="max-width:75%;"></h2>
+  	<center><h2>Welcome to <br><img src="/assets/PartnerUpLogo.png" style="max-width:75%;"></h2>
+  	<%= render "visitors/welcomemsg" %>
+  </center>
   </div>
 
 <% if user_signed_in? %>
@@ -9,28 +11,22 @@
 	<div class="col span_1_of_3" style="text-align:center;">
       <%= image_tag current_user.avatar.url, :style=>"max-width:50%;" %>
     <h2>To Get Started</h2>
-<h2>
-
-	<button class="btn btn-success"><span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;<%=  link_to "Edit Profile", edit_user_registration_path, :style => 'color: #fff; text-size:17px;max-width:100px; ' %></button>
-</h2> 
-
-<button class="btn btn-primary"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;<%=  link_to "Find a Partner", root_path, :style => 'color: #fff; text-size:17px;max-width:100px; ' %></button>
- 	<%=  link_to '', root_path, :style => 'color: #fff; font-weight:550; font-size:17px; max-width:220px; margin-bottom:1px;',  :class=>'' %>
+<p><button class="btn btn-success" style = "width:75%;"><span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;<%=  link_to "Edit Profile", edit_user_registration_path, :style => 'color: #fff;' %></button>
+</p><p>
+<button class="btn btn-primary" style = "width:75%;"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;<%=  link_to "Find a Partner", root_path, :style => 'color: #fff;' %></button>
       <br>
   </div>
 	<% when 1..2 %><p>
-	<div class="col span_1_of_3">
+	<div class="col span_1_of_3"><center>
 		<p>
 		<%= link_to("Upload Roster", roster_path, :class => 'btn btn-info', :style=>"width:50%; float:center;") %>
 		<p>
 		<%= link_to("Students", users_path, :class => 'btn btn-warning', :style=>"width:50%; float:center;") %>
 		<p>
 		<%= link_to("Projects", projects_path, :class => 'btn btn-success', :style=>"width:50%; float:center;") %>
-	</div>
-
-	<div class="col span_2_of_3">
-      There are currently <b><%= User.count %></b> registered users</p>
-    </div>
+	<h4>
+      There are currently <b><%= User.count %></b> registered users</h4>
+      </center></div>
 <% when 5 %>
 	<div class="col span_2_of_3">
     <h2>Groups</h2>
@@ -46,7 +42,7 @@
 	<% end %>
 <% else%> 
 	<div class="col span_1_of_3">
-		<%= render "visitors/welcomemsg" %>
+		<%= render 'layouts/signin_form'%>
 	</div>
 <% end %>
 
