@@ -1,8 +1,14 @@
-<%= link_to("<< Back to List", {:action => 'index'}) %><br>
-<div class="authform form", style="max-width: 5000px; line-height:3; padding: 1% 1% 1% 1%!important;margin:auto;">
+<%= link_to("<< Back to List", {:action => 'index'}) %>
+
+<div class="project edit">
+	<h2>Change Project</h2>
 
 	<%= form_for(:project, :url => {:action => 'update', :id => @project.id}) do |f| %>
-		<h2>Change Project</h2>
+		
 		<%= render(:partial => 'form', :locals => {:f => f}) %>
+
+		<%= submit_tag("Update Project", :class => 'btn btn-primary') %>
+
 	<% end %>
+
 </div>

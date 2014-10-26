@@ -1,8 +1,0 @@
-<div style="line-height:2; max-width:400px;">
-	<%= f.label 'Course Name: ' %>
-	<%= f.text_field(:course_title, class: "form-control") %><br/>
-
-	<%= f.label 'Active Project: ' %>
-	<%= f.select :active_proj, options_from_collection_for_select(Project.all, 'id', 'name'), {}, {class: "form-control"} %></div><br /><br />
-	<%= f.submit("Save Course", :class => 'btn btn-primary') %>
-</div>

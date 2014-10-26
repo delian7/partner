@@ -1,6 +1,6 @@
 class CoursesController < ApplicationController
   before_filter :authenticate_user!
-  after_action :verify_authorized, except: [:show, :edit]
+  after_action :verify_authorized, except: [:show]
 
 require 'csv'
 
@@ -13,7 +13,10 @@ end
 
 def new
   @courses = Course.all
+  @course = Course.create(:course_id=>400, :course_title=>"60")
   authorize @users
+  # build_resource({})
+  # respond_with self.resource
 end
 
 def show
@@ -27,6 +30,16 @@ end
 def profile
   @courses = current_course
   authorize @users
+end
+
+def update
+  @course = Course.find(params[:id])
+  authorize @user
+  if @course.update_attributes(secure_params)
+    redirect_to courses_path, :notice => "course updated."
+  else
+    redirect_to courses_path, :alert => "Unable to update course."
+  end
 end
 
 def destroy
@@ -57,34 +70,34 @@ end
 #gets instructors name from cell and returns both last name with spaces 
 #accounted for and first initial
 def get_instructor_name(txt)
-  re=('Instructor:\s(.*?){1},\s(.*).')
-  m=Regexp.new(re,Regexp::IGNORECASE);
-  if m.match(txt)
-      word1=m.match(txt)[1];
-      c1=m.match(txt)[2];
-  return word1, c1
-  end
+re=('Instructor:\s(.*?){1},\s(.*).')
+m=Regexp.new(re,Regexp::IGNORECASE);
+if m.match(txt)
+    word1=m.match(txt)[1];
+    c1=m.match(txt)[2];
+return word1, c1
+end
 end
 
 #gets TA from box by getting the last thing after 'ID:' 
 def TA(txt)
-  re=('ID:\s(.*)')
-  m=Regexp.new(re,Regexp::IGNORECASE);
-  if m.match(txt)
-      word1=m.match(txt)[1];
-  return word1
-  end
+re=('ID:\s(.*)')
+m=Regexp.new(re,Regexp::IGNORECASE);
+if m.match(txt)
+    word1=m.match(txt)[1];
+return word1
+end
 end
 
 #parses first name last name with commas
 def name_parse(txt)
-  re=('(.*),\s(.*)')
-  m=Regexp.new(re,Regexp::IGNORECASE);
-  if m.match(txt)
-      word1=m.match(txt)[1];
-      word2=m.match(txt)[2];
-  return word1, word2
-  end
+re=('(.*),\s(.*)')
+m=Regexp.new(re,Regexp::IGNORECASE);
+if m.match(txt)
+    word1=m.match(txt)[1];
+    word2=m.match(txt)[2];
+return word1, word2
+end
 end
 
 def csv_import
@@ -149,53 +162,16 @@ def csv_import
   end
   
   roster = Roster.new(:course_id => @course_code, :user_id => @newuser.id)
-    if roster.save
-      newr+=1
-    end
+  if roster.save
+    newr+=1
+  end
   end
   redirect_to :back, :notice => "CSV Import Successful,  #{newc} new users added to PartnerUp, #{newr} enrollments added to database"
-  end
+end
 
-
-
-  def update
-    authorize User.all
-    @course = Course.find(params[:id])
-    
-    if @course.update_attributes(course_params)
-      flash[:notice] = "Course updated successfully"
-      redirect_to(:action => 'index')
-    else
-      flash[:error] = "Course could not be updated"
-      render('edit')
-    end
-  end
-
-
-  def edit
-    @course = Course.find(params[:id])
-  end
-
-  def remove
-    authorize User.all
-    @course = Course.find(params[:id])
-    @course.destroy
-    if @course.save
-      flash[:notice] = "Course Deleted"
-    else
-      flash[:error] = "Course could not be deleted"
-    end
-    redirect_to(:action => 'index')
-  end
-  
-private 
-  
-  def course_params
-    params.require(:course).permit(:course_title, :active_proj, :instructor, :id)
-  end 
-
-  def secure_params
-    params.require(:user).permit(:current_course)
-  end
+private
+def secure_params
+  params.require(:user).permit(:current_course)
+end
 
 end

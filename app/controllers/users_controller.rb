@@ -61,24 +61,6 @@ class UsersController < ApplicationController
     redirect_to users_path
   end
 
-  def add_partnership
-    authorize current_user
-    user = User.find(params[:id])
-    #current_group = GroupRelation.find
-    
-    group = GroupRelation.references(:group_relation).where(:user_id => user)
-
-    relation1 = GroupRelation.create(:user_id=>user.id)
-    relation2 = GroupRelation.create(:user_id=>current_user.id)
-    if relation1.save && relation2.save
-      flash[:notice] = "Added partner."
-      redirect_to :back
-    else
-      flash[:error] = "Unable to add partner."
-      redirect_to :back
-    end
-  end
-
   # Start download of csv file of partner data
   def export
       authorize User.all
@@ -91,6 +73,8 @@ class UsersController < ApplicationController
       end    
     send_data(roster_csv, :type => 'text/csv', :filename => 'groups.csv')
   end
+
+
 
   def add_to_group
     authorize current_user
@@ -106,7 +90,6 @@ class UsersController < ApplicationController
       redirect_to :back
     end
   end
-
     def create_group
     user = User.find(params[:id])
     @group = Group.create(:group_id=>user.group_id, :user_id=>current_user.id)
@@ -118,7 +101,6 @@ class UsersController < ApplicationController
       redirect_to :back
     end
   end
-  
   def ungroup
     @group = current_user.groups.find(params[:id])
     @group.destroy

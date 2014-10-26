@@ -1,6 +1,6 @@
-Partner Up 1.0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6/26/14
+Partner Up 1.0
 =========
-<img src="http://i62.tinypic.com/eg5veu.png" style="max-width:550px;">
+<img src="http://i62.tinypic.com/eg5veu.png">
 Partner up 1.0 is a partner management website that will update the current methods of class partner management which are tedious and cumbersome. Partner up is a fast and easy way for students to find partners and provides an effortless way for professors to oversee student progress. 
 
 Description of MVP
@@ -39,7 +39,7 @@ Diagnostics
     <th>Preferences</th>
   </tr>
   <tr>
-    <td><ul><li>authentication: devise</li><li>authorization: pundit</li><li>dev_webserver: webrick</li><li>prod_webserver: same</li><li>templates: erb</li><li>tests: </li><li>frontend: bootstrap3</li><li>email: gmail</li><li>devise_modules: confirmable</li><li>form_builder: simple_form</li></ul></td>
+    <td><ul><li>git: true</li><li>apps4: rails-devise-pundit</li><li>authentication: devise</li><li>authorization: pundit</li><li>dev_webserver: webrick</li><li>prod_webserver: same</li><li>templates: erb</li><li>tests: none</li><li>frontend: bootstrap3</li><li>email: gmail</li><li>devise_modules: confirmable</li><li>form_builder: simple_form</li></ul></td>
   </tr>
 </table>
 

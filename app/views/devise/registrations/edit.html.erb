@@ -1,7 +1,7 @@
 <div class="authform", style="max-width: 500px;">
+  <h3>Edit Profile</h3>
   <%= form_for(resource, :as => resource_name, :url => user_registration_path, :html => { :method => :put, :role => 'form'}) do |f| %>
     <%= devise_error_messages! %>
-      <h2>Edit Profile</h2>
     <div class="form-group">
       <%= f.label :first_name %>
       <%= f.text_field :first_name, :autofocus => true, class: 'form-control' %>
