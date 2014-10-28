@@ -3,6 +3,10 @@ class Course < ActiveRecord::Base
 	has_many :groups, :through => :group_relations
 	has_many :rosters
 	has_many :group_relations
+<<<<<<< HEAD
 	has_many :projects, :through => :group_relations
+=======
+	has_many :projects, :through => :group_relations, :source => :project
+>>>>>>> adding-groups
   
 end
