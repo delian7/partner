@@ -120,16 +120,21 @@ end
 
   def confirm
       authorize User.all
-       mygroup = GroupRelation.where(:course_id =>current_user.current_course, 
-        :user_id=>current_user.id, :project_id=> current_project )
-       theirgroup = GroupRelation.where(:course_id =>current_user.current_course, 
-        :user_id=>user.id, :project_id=> current_project )
+       user =User.find(params[:id])
+    @mycourse = current_user.current_course
+    @myproject = Course.find_by(:id=>current_user.current_course).active_proj 
+      if GroupRelation.where(:group_id=>@mygroup).collect(&:id).size <= 2
+       @mygroup = GroupRelation.where(:course_id =>current_user.current_course, 
+        :user_id=>current_user.id, :project_id=> @current_project )
+       @theirgroup = GroupRelation.where(:course_id =>current_user.current_course, 
+        :user_id=>user.id, :project_id=> @current_project )
 
-     mygroup.update(status: '2')
-     theirgroup.update(status: '2')
+     @mygroup.update(status: '2')
+     @theirgroup.update(status: '2')
 
       group.save
-      redirect_to groups_path(current_group), :flash => { :success => "Group Confirmed" }
+      redirect_to groups_path(@current_group), :flash => { :success => "Group Confirmed" }
+  end
   end
 
   def partnerup
