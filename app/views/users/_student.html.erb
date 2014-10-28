@@ -4,32 +4,44 @@
    <tr>
       <td class='collapsable'></td>
       <td><b>Student Name</td>
-      <td class='collapsable'><b>Email</td></td> <td><b>Request</td>
+      <td class='collapsable'><b>Email</td></td> <td colspan="2" style="max-width:100px;"><b>Request</td>
    </tr></b>
 <!-- End Table Header -->
 
 <% @users.each do |user| %>
-<!-- users_courses is an array of that users enrolled courseids from roster table -->
- <!-- mycourse is signed in users course -->
- <% mycourse = current_user.current_course%>
- <% mygroup = GroupRelation.where(:course_id => mycourse, :user_id => current_user.id).limit(1).collect(&:group_id)%>
+  <!-- if the user is in another group -->
+<%if GroupRelation.where(:project_id => @myproject, :user_id => user.id, :status=>'2')==nil%>
+<%else%>
+<%@mycourse = current_user.current_course%>
+<%@myproject = Course.find_by(:id=>current_user.current_course).active_proj %>
+<%@mygroup = GroupRelation.where(:course_id => @mycourse, :project_id => @myproject, 
+ :user_id => current_user.id).limit(1).collect(&:group_id)%>
  <% users_courses = user.courses.collect(&:id)%>
- <% users_groups = GroupRelation.where(:course_id => mycourse, :user_id => user.id).limit(10).collect(&:group_id)%>
+ <% users_groups = GroupRelation.where(:course_id => @mycourse, :project_id => @myproject, :user_id => user.id).limit(10).collect(&:group_id)%>
  <!-- if array of this users's elrolled course ids includes the signed in user's selected course -->
-  <% if users_courses.include?(mycourse) && current_user.id != user.id && user.role ==0 %> 
+  <% if users_courses.include?(@mycourse) && current_user.id != user.id && user.role ==0 %> 
    <tr>
     <td class='collapsable'><%= link_to (image_tag (user.avatar.url), :style => 'max-width: 45px;'), user %></td> 
     <td><%= link_to "#{user.first_name} #{user.last_name}", user %> </td>
     <td class='collapsable'><%= user.email %></td>
-    <!-- if the current user and this user is in the same group -->
-        <% if !users_groups.include?(mygroup[0]) %>
-        <!-- send request BUTTON -->
-          <td><button class="btn btn-primary", style="max-width:150px;"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;<%=  link_to "Send Request", add_to_group_user_path(user), :style => 'color: #fff; text-size:17px;' %></button></td>
-          <!-- else -->
-        <%else %>
-        <!-- already requested BUTTON -->
-            <td><button class="btn btn-primary"  disabled="disabled" style="max-width:150px;"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;&nbsp;&nbsp;<%=  link_to "Requested", add_to_group_user_path(user), :style => 'color: #fff; text-size:17px;' %>&nbsp;&nbsp;&nbsp;</button></td>
-        <%end%>
+    <!-- if the current user and this user are not in the same group -->
+    <!-- if the array of this user's groups doesn't include the array of current user's groups -->
+    <% if !users_groups.include?(@mygroup[0]) %>
+<!-- send request BUTTON -->
+      <td colspan="2" style="max-width:100px;"><button class="btn btn-primary" style="width:100%;"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;&nbsp;<%=  link_to "Send Request", partnerup_user_path(user), :style => 'color: #fff; text-size:17px;' %></button></td>
+      <!-- else would mean they are already partnered or requested/pending -->
+    <%else %>
+    <!-- If group relation set to pending "UNDO REQUEST" -->
+      <%if !GroupRelation.where(:project_id => @myproject, :user_id => current_user.id, :status=>'0', :group_id=>@mygroup[0]).empty?%>
+            <td colspan="2" style="max-width:100px;"><button class="btn btn-danger" style="max-width:500px!important;"><span class="glyphicon glyphicon-remove"></span>&nbsp;&nbsp;&nbsp;<%=  link_to "Undo Request", undo_request_user_path(user), :style => 'color: #fff; text-size:17px;' %></button></td>
+            <!-- elsif group relation set to requested "CONFIRM" -->
+      <%elsif !GroupRelation.where(:project_id => @myproject, :user_id => current_user.id, :group_id=>@mygroup[0], :status=>'1').empty?%>
+          <td style="max-width:100px;"><button class="btn btn-info" style=" width:100%!important;"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;&nbsp;<%=  link_to "Confirm", confirm_user_path(user), :style => 'color: #fff; text-size:17px;' %></button></td>
+            <!-- &IGNORE -->
+          <td style="max-width:100px"><button class="btn btn-danger" style=" width:100%!important;"><span class="glyphicon glyphicon-remove"></span>&nbsp;&nbsp;&nbsp;<%=  link_to "Ignore", confirm_user_path(user), :style => 'color: #fff; text-size:17px;' %></button></td>
+      <%end%>
+    <%end%>
+<%end%>
    </tr>
   <% end %>
 <% end %>
