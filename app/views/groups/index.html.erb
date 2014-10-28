@@ -19,19 +19,18 @@
 
 
 <% @course_projects.each do |project| %>
-	<% if project.active? %> <!-- we are only interested in the current project -->
 		
-		<strong>Your assigned project, <%= project.name %>, involves </strong>
+	<li><strong>Your assigned project, <%= project.name %>, involves </strong>
 		
 		<!-- depending on the group size of the project, choose whether the group is a partnership (2 people) or group (3 or more) -->
 		<% case project.group_size %>
 			<% when 2 %>
-				<%= '2 people (partnership)' %>
+				<%= '2 people (partnership)' %> </li>
 			<% when 2..(1.0/0.0) %>
-				<%= '3 or more (group)' %>
+				<%= '3 or more (group)' %> </li>
 		<% end %>
 		
-	<% end %>
+	
 	
 <% end %>
 
