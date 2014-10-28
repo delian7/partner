@@ -14,16 +14,15 @@ devise_for :users, :controllers => {:registrations => "registrations"}
   
   resources :users do
      member do
-        get :cancel
+        # get :cancel
         get :confirm
         get :registrations
         get :sessions
-        get :clearpartnership
-        get :add_to_group
-        get :ungroup
-        get :add_partnership
+        # get :add_to_group
+        # get :ungroup
+        get :undo_request
         post :set_current_course
-        post :request
+        get :partnerup
         end
      collection do
        get :clearall
@@ -55,6 +54,12 @@ devise_for :users, :controllers => {:registrations => "registrations"}
        get :edit
        post :update
        get :remove
+        end
+     collection do
+        end
+    end
+     resources :groups do
+     member do
         end
      collection do
         end

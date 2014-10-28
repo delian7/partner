@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
 
   # self.primary_key = "campus_id"
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable
-         enum status: [:available, :pending, :requested, :accepted]
+         enum status: [:pending, :requested, :accepted]
   #enum role: [:user, :vip, :admin]
   #user = student
   #vip = Professor

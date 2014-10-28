@@ -7,15 +7,17 @@ class UsersController < ApplicationController
     @users = User.all
     @courses = Course.all
     @groups = Group.all
-    #@user = User.find(params[:id])
-    authorize @users
+
+   
   end
+
   def new
     @partners = User.find(params[:id])
     @users = User.all
     #@user = User.find(params[:id])
     authorize @users
   end
+
   def show
     @user = User.find(params[:id])
     if user_signed_in?
@@ -91,40 +93,73 @@ class UsersController < ApplicationController
       end    
     send_data(roster_csv, :type => 'text/csv', :filename => 'groups.csv')
   end
-
-  def add_to_group
-    authorize current_user
-    user = User.find(params[:id])
-    #current_group = GroupRelation.find
-    group = GroupRelation.references(:group_relation).where(:user_id => user)
-    new_relation = GroupRelation.create(:group_id=>"1", :user_id=>user.id)
-    if new_relation.save
-      flash[:notice] = "Added partner."
-      redirect_to :back
-    else
-      flash[:error] = "Unable to add partner."
-      redirect_to :back
-    end
-  end
-
-    def create_group
-    user = User.find(params[:id])
-    @group = Group.create(:group_id=>user.group_id, :user_id=>current_user.id)
-    if @group.save
-      flash[:notice] = "Added partner."
-      redirect_to :back
-    else
-      flash[:error] = "Unable to add partner."
-      redirect_to :back
-    end
-  end
   
-  def ungroup
-    @group = current_user.groups.find(params[:id])
-    @group.destroy
-    flash[:notice] = "Removed group."
-    redirect_to current_user
+  def undo_request
+    authorize User.all
+    user =User.find(params[:id])
+    @mycourse = current_user.current_course
+    @myproject = Course.find_by(:id=>current_user.current_course).active_proj 
+    @mygroup = GroupRelation.where(:course_id => @mycourse, :project_id => @myproject, 
+      :user_id => current_user.id).limit(1).collect(&:group_id)
+    @theirgroup = GroupRelation.where(:course_id => @mycourse, :project_id => @myproject, 
+      :user_id => user.id).limit(1).collect(&:group_id)
+      if GroupRelation.where(:group_id=>@mygroup).collect(&:id).size <= 2
+    # Delete the group
+    Group.find_by_id(@mygroup).destroy
+    # Delete relation for current user
+    GroupRelation.find_by_group_id(@mygroup).destroy
+    # Delete relation for user
+    GroupRelation.find_by_group_id(@theirgroup).destroy
+    flash[:notice] = "Removed request."
+    else 
+    flash[:error] = "Unable to remove request."
+    end
+  redirect_to users_path
+end
+
+
+  def confirm
+      authorize User.all
+       user =User.find(params[:id])
+    @mycourse = current_user.current_course
+    @myproject = Course.find_by(:id=>current_user.current_course).active_proj 
+      if GroupRelation.where(:group_id=>@mygroup).collect(&:id).size <= 2
+       @mygroup = GroupRelation.where(:course_id =>current_user.current_course, 
+        :user_id=>current_user.id, :project_id=> @current_project )
+       @theirgroup = GroupRelation.where(:course_id =>current_user.current_course, 
+        :user_id=>user.id, :project_id=> @current_project )
+
+     @mygroup.update(status: '2')
+     @theirgroup.update(status: '2')
+
+      group.save
+      redirect_to groups_path(@current_group), :flash => { :success => "Group Confirmed" }
   end
+  end
+
+  def partnerup
+  authorize User.all
+  user = User.find(params[:id])
+  current_project = Course.find(current_user.current_course).active_proj
+  #if 
+    if GroupRelation.where(:course_id =>current_user.current_course, 
+       :user_id=>current_user.id, :project_id=> current_project).size > 0
+        flash[:error] = "Unable to add partner."
+        redirect_to users_path
+    else
+    newgroup = Group.create()
+    #create relation for current user which is always the requester
+    GroupRelation.create(:course_id => current_user.current_course, 
+          :user_id=> current_user.id, :project_id=> current_project, :status=>0, group_id: newgroup.id)
+    # create relation for user who is being requested.
+    GroupRelation.create(:course_id => current_user.current_course, 
+          :user_id=> user.id, :project_id=> current_project, :status=>1, group_id: newgroup.id)
+    flash[:notice] = "Requested partner."
+        redirect_to users_path
+    end
+  end
+
+
 
   private
   def login_params

@@ -3,6 +3,7 @@ class GroupsController < ApplicationController
   after_action :verify_authorized, except: [:show]
   require 'csv'
 
+<<<<<<< HEAD
   def index
     @users = User.all
     @courses = Course.all
@@ -13,9 +14,11 @@ class GroupsController < ApplicationController
     # there should be only one current project active at a time... TODO error checking!
     @course_projects = @course.projects
   end
+=======
+>>>>>>> cleanup
 
   private
   def secure_params
-    params.require(:group).permit(:role)
+    params.require(:group).permit(:name)
   end
 end

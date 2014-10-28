@@ -21,7 +21,6 @@ class ApplicationController < ActionController::Base
   attr_reader :auth_key
 
   def startup
-
       @auth_key=cookies[COOKIE_NAME]
       http = Net::HTTP.new('login.uci.edu', 80)
       if @auth_key == nil

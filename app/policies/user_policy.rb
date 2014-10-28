@@ -13,6 +13,9 @@ class UserPolicy
 def csv_import?
   true
 end
+def partnerup?
+  true
+end
   def profile?
     true
   end  
@@ -47,6 +50,9 @@ end
   end
   
   def set_current_course?
+    true
+  end 
+    def undo_request?
     true
   end 
   
