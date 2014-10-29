@@ -2,48 +2,51 @@
   <div class="col span_2_of_3">
   	<center><h2>Welcome to <br><img src="/assets/PartnerUpLogo.png" style="max-width:75%;"></h2>
   	<%= render "visitors/welcomemsg" %>
-  </center>
+  	</center>
   </div>
 
 <% if user_signed_in? %>
-<% case current_user.role %>
-    <% when 0 %>
-	<div class="col span_1_of_3" style="text-align:center;">
-      <%= image_tag current_user.avatar.url, :style=>"max-width:50%;" %>
-    <h2>To Get Started</h2>
-<p><button class="btn btn-success" style = "width:75%;"><span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;<%=  link_to "Edit Profile", edit_user_registration_path, :style => 'color: #fff;' %></button>
-</p><p>
-<button class="btn btn-primary" style = "width:75%;"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;<%=  link_to "Find a Partner", root_path, :style => 'color: #fff;' %></button>
-      <br>
-  </div>
-	<% when 1..2 %><p>
-	<div class="col span_1_of_3"><center>
-		<p>
-		<%= link_to("Upload Roster", roster_path, :class => 'btn btn-info', :style=>"width:50%; float:center;") %>
-		<p>
-		<%= link_to("Students", users_path, :class => 'btn btn-warning', :style=>"width:50%; float:center;") %>
-		<p>
-		<%= link_to("Projects", projects_path, :class => 'btn btn-success', :style=>"width:50%; float:center;") %>
-	<h4>
-      There are currently <b><%= User.count %></b> registered users</h4>
-      </center></div>
-<% when 5 %>
-	<div class="col span_2_of_3">
-    <h2>Groups</h2>
-      <table class = "table" style = "width:100%;">
-	    <tr>
-	      <td><b>Group ID</b></td>
-	      <td><b>Group Name</b></td>
-	      <td></td>
-	    </tr>
-		<%= render "visitors/current_groups" %>
-	  </table>
-	</div>
+	<% case current_user.role %>
+		<!-- if the user is a student -->
+	  <% when 0 %>
+			<div class="col span_1_of_3" style="text-align:center;">
+					<%= image_tag current_user.avatar.url, :style=>"max-width:50%;" %>
+			    <h2>To Get Started</h2>
+					<p><button class="btn btn-success" style = "width:75%;"><span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;<%=  link_to "Edit Profile", edit_user_registration_path, :style => 'color: #fff;' %></button></p>
+					<p><button class="btn btn-primary" style = "width:75%;"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;<%=  link_to "Find a Partner", users_path, :style => 'color: #fff;' %></button></p>
+			      <br>
+				</div>
+					
+		<!-- if the user is a Professor or a T/A -->
+		<% when 1..2 %><p>
+			<div class="col span_1_of_3">
+				<center>
+					<p><%= link_to("Upload Roster", roster_path, :class => 'btn btn-info', :style=>"width:50%; float:center;") %></p>
+					<p><%= link_to("Students", users_path, :class => 'btn btn-warning', :style=>"width:50%; float:center;") %></p>
+					<p><%= link_to("Projects", projects_path, :class => 'btn btn-success', :style=>"width:50%; float:center;") %></p>
+					<h4>There are currently <strong><%= User.count %></strong> registered users</h4>
+		    </center>
+			</div>
+			
+		<!-- if the user is an admin -->
+		<% when 5 %>
+			<div class="col span_2_of_3">
+		  	<h2>Groups</h2>
+	    	<table class = "table" style = "width:100%;">
+			    <tr>
+			      <td><b>Group ID</b></td>
+			      <td><b>Group Name</b></td>
+			      <td></td>
+			    </tr>
+					<%= render "visitors/current_groups" %>
+		  	</table>
+			</div>
+		
 	<% end %>
-<% else%> 
-	<div class="col span_1_of_3">
-		<%= render 'layouts/signin_form'%>
-	</div>
+	<% else%> 
+		<div class="col span_1_of_3">
+			<%= render 'layouts/signin_form'%>
+		</div>
 <% end %>
 
 </div>
