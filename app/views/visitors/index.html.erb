@@ -7,8 +7,8 @@
 
 <% if user_signed_in? %>
 	<% case current_user.role %>
-		<!-- if the user is a student -->
 	  <% when 0 %>
+		<!-- ^^ if the user is a student -->
 			<div class="col span_1_of_3" style="text-align:center;">
 					<%= image_tag current_user.avatar.url, :style=>"max-width:50%;" %>
 			    <h2>To Get Started</h2>
