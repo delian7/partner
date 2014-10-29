@@ -28,17 +28,17 @@
     <!-- if the array of this user's groups doesn't include the array of current user's groups -->
     <% if !users_groups.include?(@mygroup[0]) %>
 <!-- send request BUTTON -->
-      <td colspan="2" style="max-width:100px;"><button class="btn btn-primary">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;&nbsp;<%=  link_to "Send Request", partnerup_user_path(user), :style => 'color: #fff; text-size:17px;' %>&nbsp;&nbsp;&nbsp;</button></td>
+      <td colspan="2" style="max-width:100px;"><button class="btn btn-primary" style="width:100%;">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;&nbsp;<%=  link_to "Send Request", partnerup_user_path(user), :style => 'color: #fff; width:100%;' %>&nbsp;&nbsp;&nbsp;</button></td>
       <!-- else would mean they are already partnered or requested/pending -->
     <%else %>
     <!-- If group relation set to pending "UNDO REQUEST" -->
-      <%if !GroupRelation.where(:project_id => @myproject, :user_id => current_user.id, :status=>'0').empty?%>
-            <td colspan="2" style="max-width:100px;"><button class="btn btn-danger" style="max-width:500px!important;">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-remove"></span>&nbsp;&nbsp;&nbsp;<%=  link_to "Undo Request", undo_request_user_path(user), :style => 'color: #fff; text-size:17px;' %>&nbsp;&nbsp;&nbsp;</button></td>
+      <%if GroupRelation.where(:project_id => @myproject, :user_id =>user.id, :status=>'0').empty?%>
+            <td colspan="2" style="max-width:100px;"><button class="btn btn-danger" style="width:100%!important;">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-remove"></span>&nbsp;&nbsp;&nbsp;<%=  link_to "Undo Request", undo_request_user_path(user), :style => 'color: #fff; ' %>&nbsp;&nbsp;&nbsp;</button></td>
             <!-- elsif group relation set to requested "CONFIRM" -->
-      <%elsif !GroupRelation.where(:project_id => @myproject, :user_id => current_user.id, :status=>'1').empty?%>
-          <td style="max-width:100px;"><button class="btn btn-info" ><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;&nbsp;<%=  link_to "Confirm", confirm_user_path(user), :style => 'color: #fff; text-size:17px;' %></button></td>
+      <%elsif GroupRelation.where(:project_id => @myproject, :user_id => user.id, :status=>'1').empty?%>
+          <td style="max-width:50px;padding-right:0px;float:right;"><button class="btn btn-info" style="width:100%;" ><span class="glyphicon glyphicon-plus"></span>&nbsp;<%=  link_to "Confirm", confirm_user_path(user), :style => 'color: #fff;width:100%;' %></button></td>
             <!-- &IGNORE -->
-          <td style="max-width:100px"><button class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span>&nbsp;&nbsp;&nbsp;<%=  link_to "Ignore", confirm_user_path(user), :style => 'color: #fff; text-size:17px;' %></button></td>
+          <td style="max-width:50px;padding-left:0px;"><button class="btn btn-danger" style="width:100%;"><span class="glyphicon glyphicon-remove"></span>&nbsp;<%=  link_to "Ignore", confirm_user_path(user), :style => 'color: #fff;width:100%;' %></button></td>
       <%end%>
     <%end%>
 <%end%>
