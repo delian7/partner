@@ -99,17 +99,17 @@ class UsersController < ApplicationController
     user =User.find(params[:id])
     @mycourse = current_user.current_course
     @myproject = Course.find_by(:id=>current_user.current_course).active_proj 
-    @mygroup = GroupRelation.where(:course_id => @mycourse, :project_id => @myproject, 
+    @my_group = GroupRelation.where(:course_id => @mycourse, :project_id => @myproject, 
       :user_id => current_user.id).limit(1).collect(&:group_id)
-    @theirgroup = GroupRelation.where(:course_id => @mycourse, :project_id => @myproject, 
+    @their_group = GroupRelation.where(:course_id => @mycourse, :project_id => @myproject, 
       :user_id => user.id).limit(1).collect(&:group_id)
-      if GroupRelation.where(:group_id=>@mygroup).collect(&:id).size <= 2
+      if GroupRelation.where(:group_id=>@my_group).collect(&:id).size <= 2
     # Delete the group
-    Group.find_by_id(@mygroup).destroy
+    Group.find_by_id(@my_group).destroy
     # Delete relation for current user
-    GroupRelation.find_by_group_id(@mygroup).destroy
+    GroupRelation.find_by_group_id(@my_group).destroy
     # Delete relation for user
-    GroupRelation.find_by_group_id(@theirgroup).destroy
+    GroupRelation.find_by_group_id(@their_group).destroy
     flash[:notice] = "Removed request."
     else 
     flash[:error] = "Unable to remove request."
@@ -122,20 +122,21 @@ class UsersController < ApplicationController
       authorize User.all
       user =User.find(params[:id])
       @mycourse = current_user.current_course
-      @myproject = Course.find_by(:id=>current_user.current_course).active_proj 
+      @myproject = Course.find_by_id(@mycourse).active_proj 
       
-      if GroupRelation.where(:group_id=>@mygroup).collect(&:id).size <= 2
-        @mygroup = GroupRelation.where(:course_id =>current_user.current_course, 
-        :user_id=>current_user.id, :project_id=> @current_project )
-        @theirgroup = GroupRelation.where(:course_id =>current_user.current_course, 
-        :user_id=>user.id, :project_id=> @current_project )
-
-        @mygroup.update(status: '2')
-        @theirgroup.update(status: '2')
-
-        group.save
-        redirect_to groups_path(@current_group), :flash => { :success => "Group Confirmed" }
-      end
+      # if GroupRelation.where(:group_id=>@my_group).collect(&:id).size <= 2
+        @my_group = GroupRelation.where(:course_id =>@mycourse,
+        :user_id=>current_user.id, :project_id=> @myproject)        
+        @their_group = GroupRelation.where(:course_id =>@mycourse, 
+        :user_id=>user.id, :project_id=> @myproject )
+        
+        # sets the status of the group to accepted "status=2"
+        GroupRelation.find(@my_group.collect(&:id)[0]).update(:status=>2)
+        GroupRelation.find(@their_group.collect(&:id)[0]).update(:status=>2)
+        
+        redirect_to users_path(@current_group), :flash => { :success => "Group Confirmed" }
+      
+      # end
   
   end
 
