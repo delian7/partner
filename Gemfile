@@ -30,3 +30,4 @@ gem 'better_errors'
 gem 'binding_of_caller', :platforms=>[:mri_21]
 gem 'quiet_assets'
 gem 'rails_layout'
+gem 'jquery-turbolinks'
