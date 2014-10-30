@@ -26,31 +26,31 @@
 LOCK TABLES `courses` WRITE;
 /*!40000 ALTER TABLE `courses` DISABLE KEYS */;
 
-INSERT INTO `courses` (`id`, `course_title`, `instructor`, `active_proj`, `created_at`, `updated_at`)
+INSERT INTO `courses` (`id`, `course_title`, `instructor`, `created_at`, `updated_at`)
 VALUES
-	(36601,'Information & Comp Sci 31: Lab 1','',NULL,NULL,NULL),
-	(36602,'Information & Comp Sci 31: Lab 2','',NULL,NULL,NULL),
-	(36603,'Information & Comp Sci 31: Lab 3','',NULL,NULL,NULL),
-	(36604,'Information & Comp Sci 31: Lab 4','',NULL,NULL,NULL),
-	(36605,'Information & Comp Sci 31: Lab 5','',NULL,NULL,NULL),
-	(36606,'Information & Comp Sci 31: Lab 6','',NULL,NULL,NULL),
-	(36607,'Information & Comp Sci 31: Lab 7','',NULL,NULL,NULL),
-	(36608,'Information & Comp Sci 31: Lab 8','',NULL,NULL,NULL),
-	(36609,'Information & Comp Sci 31: Lab 9','',NULL,NULL,NULL),
-	(36610,'Information & Comp Sci 31: Lab 10','',NULL,NULL,NULL),
-	(36611,'Information & Comp Sci 31: Lab 11','',NULL,NULL,NULL),
-	(36612,'Information & Comp Sci 31: Lab 12','',NULL,NULL,NULL),
-	(36619,'Information & Comp Sci 32: Lab 1','',NULL,NULL,NULL),
-	(36621,'Information & Comp Sci 32: Lab 2','',NULL,NULL,NULL),
-	(36622,'Information & Comp Sci 32: Lab 3','',NULL,NULL,NULL),
-	(36623,'Information & Comp Sci 32: Lab 4','',NULL,NULL,NULL),
-	(36624,'Information & Comp Sci 32: Lab 5','',NULL,NULL,NULL),
-	(36626,'Information & Comp Sci 32: Lab 7','',NULL,NULL,NULL),
-	(36681,'Information & Comp Sci 45J: Lab 1','',NULL,NULL,NULL),
-	(36682,'Information & Comp Sci 45J: Lab 2','',NULL,NULL,NULL),
-	(36683,'Information & Comp Sci 45J: Lab 3','',NULL,NULL,NULL),
-	(36684,'Information & Comp Sci 45J: Lab 4','',NULL,NULL,NULL),
-	(37050,'In4matx 121, Sec. A, 4-unit Lecture','',NULL,NULL,NULL);
+	(36601,'Information & Comp Sci 31: Lab 1','',NULL,NULL),
+	(36602,'Information & Comp Sci 31: Lab 2','',NULL,NULL),
+	(36603,'Information & Comp Sci 31: Lab 3','',NULL,NULL),
+	(36604,'Information & Comp Sci 31: Lab 4','',NULL,NULL),
+	(36605,'Information & Comp Sci 31: Lab 5','',NULL,NULL),
+	(36606,'Information & Comp Sci 31: Lab 6','',NULL,NULL),
+	(36607,'Information & Comp Sci 31: Lab 7','',NULL,NULL),
+	(36608,'Information & Comp Sci 31: Lab 8','',NULL,NULL),
+	(36609,'Information & Comp Sci 31: Lab 9','',NULL,NULL),
+	(36610,'Information & Comp Sci 31: Lab 10','',NULL,NULL),
+	(36611,'Information & Comp Sci 31: Lab 11','',NULL,NULL),
+	(36612,'Information & Comp Sci 31: Lab 12','',NULL,NULL),
+	(36619,'Information & Comp Sci 32: Lab 1','',NULL,NULL),
+	(36621,'Information & Comp Sci 32: Lab 2','',NULL,NULL),
+	(36622,'Information & Comp Sci 32: Lab 3','',NULL,NULL),
+	(36623,'Information & Comp Sci 32: Lab 4','',NULL,NULL),
+	(36624,'Information & Comp Sci 32: Lab 5','',NULL,NULL),
+	(36626,'Information & Comp Sci 32: Lab 7','',NULL,NULL),
+	(36681,'Information & Comp Sci 45J: Lab 1','',NULL,NULL),
+	(36682,'Information & Comp Sci 45J: Lab 2','',NULL,NULL),
+	(36683,'Information & Comp Sci 45J: Lab 3','',NULL,NULL),
+	(36684,'Information & Comp Sci 45J: Lab 4','',NULL,NULL),
+	(37050,'In4matx 121, Sec. A, 4-unit Lecture','',NULL,NULL);
 
 /*!40000 ALTER TABLE `courses` ENABLE KEYS */;
 UNLOCK TABLES;
