@@ -121,10 +121,10 @@ class UsersController < ApplicationController
     authorize User.all
     user = User.find(params[:id])
     current_project = Course.find_by_id(current_user.current_course).active_proj
-    project_size = Project.find_by_id(current_project).nil? ? 0 : Project.find_by_id(current_project).size
+    project_size = Project.find_by_id(current_project).nil? ? 0 : Project.find_by_id(current_project).group_size
      
     if GroupRelation.where(:course_id => current_user.current_course, 
-        :user_id => current_user.id, :project_id => current_project).size > project_size
+        :user_id => current_user.id, :project_id => current_project).size >= project_size-1
         
         flash[:error] = "Unable to add partner, you might have already requested someone"
         redirect_to users_path
