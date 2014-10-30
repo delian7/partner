@@ -11,9 +11,10 @@
 <% @users.each do |user| %>
   <!-- if the user is in another group -->
 <%if GroupRelation.where(:project_id => @myproject, :user_id => user.id, :status=>'2')==nil%>
+
 <%else%>
 <%@mycourse = current_user.current_course%>
-<% @myproject = Course.find_by(:id=>current_user.current_course).active_proj %>
+<% @myprojects = Course.find_by_id(@mycourse).projects.where(active: true).pluck(:id) %>
 <% @mygroup = GroupRelation.where(:course_id => @mycourse, :project_id => @myproject, 
  :user_id => current_user.id).limit(1).collect(&:group_id) %>
 <% userrelation = GroupRelation.where(:project_id => @myproject, :user_id =>user.id) %>
