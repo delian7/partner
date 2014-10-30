@@ -4,20 +4,36 @@ class UsersController < ApplicationController
   require 'csv'
 
   def index
+    # @user = User.find(params[:id])
     @users = User.all
-    @courses = Course.all
-    @groups = Group.all
-    @currelation = GroupRelation.where(:project_id => @myproject, :user_id =>current_user.id) 
-    @currequester =currelation.where(:status=>'0') 
-    @currequested =currelation.where(:status=>'1') 
+    @mycourse = current_user.current_course 
+    @myprojects = Course.find_by_id(@mycourse).projects.where(active: true).pluck(:id) 
+    @mygroup = GroupRelation.where(:course_id => @mycourse, :project_id => @myprojects, :user_id => current_user.id).limit(1).pluck(:group_id)
+   
+    @current_user_relations = GroupRelation.where(:project_id => @myproject, :user_id =>current_user.id) 
+    @is_pending? = @current_user_relations.where(:status=>'0').nil?
+    @is_requested? = @current_user_relations.where(:status=>'1') 
+    
+
+    @userrelation = GroupRelation.where(:project_id => @myproject, :user_id =>user.id)
+    @userrequester = userrelation.where(:status=>'0')
+    @userrequested = userrelation.where(:status=>'1')
+    
+
+    @users_courses = user.courses.collect(&:id)
+    @users_groups = GroupRelation.where(:course_id => @mycourse, 
+      :project_id => @myproject, :user_id => @user.id).limit(10).collect(&:group_id)
 
    
+  end
+
+  def is_pending?(user)
+    user.
   end
 
   def new
     @partners = User.find(params[:id])
     @users = User.all
-    #@user = User.find(params[:id])
     authorize @users
   end
 
