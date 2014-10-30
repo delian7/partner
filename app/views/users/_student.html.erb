@@ -13,14 +13,13 @@
 <%if GroupRelation.where(:project_id => @myproject, :user_id => user.id, :status=>'2')==nil%>
 <%else%>
 <%@mycourse = current_user.current_course%>
-<% userrequester =GroupRelation.where(:project_id => @myproject, :user_id =>user.id, :status=>'0')%>
-<% userrequested =GroupRelation.where(:project_id => @myproject, :user_id =>user.id, :status=>'1')%>
-<% currequester = GroupRelation.where(:project_id => @myproject, :user_id =>current_user.id, :status=>'0')%>
-<% currequested =GroupRelation.where(:project_id => @myproject, :user_id =>current_user.id, :status=>'1')%>
-<%@myproject = Course.find_by(:id=>current_user.current_course).active_proj %>
-<%@mygroup = GroupRelation.where(:course_id => @mycourse, :project_id => @myproject, 
- :user_id => current_user.id).limit(1).collect(&:group_id)%>
- <% users_courses = user.courses.collect(&:id)%>
+<% @myproject = Course.find_by(:id=>current_user.current_course).active_proj %>
+<% @mygroup = GroupRelation.where(:course_id => @mycourse, :project_id => @myproject, 
+ :user_id => current_user.id).limit(1).collect(&:group_id) %>
+<% userrelation = GroupRelation.where(:project_id => @myproject, :user_id =>user.id) %>
+<% userrequester = userrelation.where(:status=>'0') %>
+<% userrequested =userrelation.where(:status=>'1') %>
+ <% users_courses = user.courses.collect(&:id) %>
  <% users_groups = GroupRelation.where(:course_id => @mycourse, :project_id => @myproject, :user_id => user.id).limit(10).collect(&:group_id)%>
  <!-- if array of this users's elrolled course ids includes the signed in user's selected course -->
   <% if users_courses.include?(@mycourse) && current_user.id != user.id && user.role ==0 %> 
@@ -42,8 +41,9 @@
       <%elsif !userrequested.empty? && !currequester.empty? %>
           <td style="max-width:50px;padding-right:0px;float:right;"><button class="btn btn-info" style="width:100%;" ><span class="glyphicon glyphicon-plus"></span>&nbsp;<%=  link_to "Confirm", confirm_user_path(user), :style => 'color: #fff;width:100%;' %></button></td>
             <!-- &IGNORE -->
-          <td style="max-width:50px;padding-left:0px;"><button class="btn btn-danger" style="width:100%;"><span class="glyphicon glyphicon-remove"></span>&nbsp;<%=  link_to "Ignore", confirm_user_path(user), :style => 'color: #fff;width:100%;' %></button></td>
+          <td style="max-width:50px;padding-left:0px;"><button class="btn btn-danger" style="width:100%;"><span class="glyphicon glyphicon-remove"></span>&nbsp;<%=  link_to "Ignore", conirm_user_path(user), :style => 'color: #fff;width:100%;' %></button></td>
       <%end%>
+    
     <%end%>
 <%end%>
    </tr>

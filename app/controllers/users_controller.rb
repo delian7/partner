@@ -7,6 +7,9 @@ class UsersController < ApplicationController
     @users = User.all
     @courses = Course.all
     @groups = Group.all
+    @currelation = GroupRelation.where(:project_id => @myproject, :user_id =>current_user.id) 
+    @currequester =currelation.where(:status=>'0') 
+    @currequested =currelation.where(:status=>'1') 
 
    
   end
