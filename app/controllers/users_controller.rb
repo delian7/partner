@@ -117,6 +117,35 @@ class UsersController < ApplicationController
   redirect_to users_path
   end
 
+  def partnerup
+    authorize User.all
+    user = User.find(params[:id])
+    current_project = Course.find_by_id(current_user.current_course).active_proj
+    project_size = Project.find_by_id(current_project).nil? ? 0 : Project.find_by_id(current_project).size
+     
+    if GroupRelation.where(:course_id => current_user.current_course, 
+        :user_id => current_user.id, :project_id => current_project).size > project_size
+        
+        flash[:error] = "Unable to add partner, you might have already requested someone"
+        redirect_to users_path
+    else
+      
+      new_group_name = current_user.first_name + "_" + user.first_name + "_partnership"
+      newgroup = Group.create(:name => new_group_name)
+    
+    #create relation for current user which is always the requester (status=0, pending)
+    GroupRelation.create(:course_id => current_user.current_course, :user_id=> current_user.id, 
+      :project_id=> current_project, :status=>0, group_id: newgroup.id)
+    
+    # create relation for user who is being requested (status=1, requested)
+    GroupRelation.create(:course_id => current_user.current_course, 
+      :user_id=> user.id, :project_id=> current_project, :status=>1, group_id: newgroup.id)
+      
+    flash[:notice] = "Requested partner."
+        redirect_to users_path
+    end
+  end
+
 
   def confirm
       authorize User.all
@@ -133,35 +162,6 @@ class UsersController < ApplicationController
       
       redirect_to users_path(@current_group), :flash => { :success => "Group Confirmed" }
   end
-
-  def partnerup
-    authorize User.all
-    user = User.find(params[:id])
-    current_project = Course.find(current_user.current_course).active_proj
-     
-    if GroupRelation.where(:course_id => current_user.current_course, 
-        :user_id => current_user.id, :project_id => current_project).size > 0
-        
-        flash[:error] = "Unable to add partner."
-        redirect_to users_path
-    else
-      
-    newgroup = Group.create()
-    
-    #create relation for current user which is always the requester
-    GroupRelation.create(:course_id => current_user.current_course, :user_id=> current_user.id, 
-      :project_id=> current_project, :status=>0, group_id: newgroup.id)
-    
-    # create relation for user who is being requested.
-    GroupRelation.create(:course_id => current_user.current_course, 
-      :user_id=> user.id, :project_id=> current_project, :status=>1, group_id: newgroup.id)
-      
-    flash[:notice] = "Requested partner."
-        redirect_to users_path
-    end
-  end
-
-
 
   private
   def login_params
