@@ -3,7 +3,9 @@
 <% if !current_user.courses.first.blank? %>
 	<div style="max-width:500px; float:right;">
 	  <%= form_for :user, :url => set_current_course_user_path(current_user.id), :html => { :style => 'display:inline;'} do |f|%>
-	     <%= f.select :current_course, options_from_collection_for_select(current_user.courses, 'id', 'course_title', current_user.current_course), {}, {class: 'form-control', style: 'display:inline; width:70%;', onchange: 'this.form.submit();' } %>
+	     <%= f.select :current_course, options_from_collection_for_select(current_user.courses, 
+			 'id', 'course_title', current_user.current_course), {}, 
+			 {class: 'form-control', style: 'display:inline; width:70%;', onchange: 'this.form.submit();' } %>
 	  <% end %>
 	</div>
 <%end%>
