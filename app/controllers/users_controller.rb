@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  
+  helper_method :course_ids
   before_filter :authenticate_user!
   after_action :verify_authorized, except: [:show, :index]
   require 'csv'
@@ -8,28 +10,33 @@ class UsersController < ApplicationController
     @users = User.all
     @mycourse = current_user.current_course 
     @myprojects = Course.find_by_id(@mycourse).projects.where(active: true).pluck(:id) 
-    @mygroup = GroupRelation.where(:course_id => @mycourse, :project_id => @myprojects, :user_id => current_user.id).limit(1).pluck(:group_id)
+    @mygroup = GroupRelation.where(:course_id => @mycourse, :project_id => @myprojects, :user_id => current_user.id).pluck(:group_id)
    
-    @current_user_relations = GroupRelation.where(:project_id => @myproject, :user_id =>current_user.id) 
-    @is_pending? = @current_user_relations.where(:status=>'0').nil?
-    @is_requested? = @current_user_relations.where(:status=>'1') 
+    @current_user_relations = GroupRelation.find_by_group_id(@mygroup) 
     
-
-    @userrelation = GroupRelation.where(:project_id => @myproject, :user_id =>user.id)
-    @userrequester = userrelation.where(:status=>'0')
-    @userrequested = userrelation.where(:status=>'1')
     
-
-    @users_courses = user.courses.collect(&:id)
-    @users_groups = GroupRelation.where(:course_id => @mycourse, 
-      :project_id => @myproject, :user_id => @user.id).limit(10).collect(&:group_id)
-
+    @is_pending = @current_user_relations.status == 0
+    @is_requested = @current_user_relations.status == 1 
+    
+    
+    # @userrequester = userrelation.where(:status=>'0')
+#     @userrequested = userrelation.where(:status=>'1')
+    
    
   end
 
-  def is_pending?(user)
-    user.
+  def user_relation(user)
+    GroupRelation.where(:project_id => @myproject, :user_id =>user.id)
   end
+
+  def course_ids(user)
+    user.courses.pluck(:id)
+  end
+  
+  def group_ids(user)
+    GroupRelation.where(:course_id => @mycourse, :project_id => @myproject, :user_id => user.id).limit(10).pluck(:group_id)
+  end
+  
 
   def new
     @partners = User.find(params[:id])

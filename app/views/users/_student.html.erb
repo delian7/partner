@@ -8,13 +8,18 @@
    </tr></b>
 <!-- End Table Header -->
 
-<% @users.each do |@user| %>
+<% @users.each do |user| %>
+
+
+	
+
+
   <!-- if the user is in another group -->
 <% if GroupRelation.where(:project_id => @myproject, :user_id => user.id, :status=>'2') == nil %>
 <% else %>
 
  <!-- if array of this users's elrolled course ids includes the signed in user's selected course -->
-  <% if users_courses.include?(@mycourse) && current_user.id != user.id && user.role == 0 %> 
+  <% if course_ids(user).include?(@mycourse) && current_user.id != user.id && user.role == 0 %> 
    <tr>
     <td class='collapsable'><%= link_to (image_tag (user.avatar.url), :style => 'max-width: 45px;'), user %></td> 
     <td><%= link_to "#{user.first_name} #{user.last_name}", user %> </td>
