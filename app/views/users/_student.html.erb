@@ -10,10 +10,6 @@
 
 <% @users.each do |user| %>
 
-
-	
-
-
   <!-- if the user is in another group -->
 <% if GroupRelation.where(:project_id => @myproject, :user_id => user.id, :status=>'2') == nil %>
 <% else %>
@@ -26,16 +22,16 @@
     <td class='collapsable'><%= user.email %></td>
     <!-- if the current user and this user are not in the same group -->
     <!-- if the array of this user's groups doesn't include the array of current user's groups -->
-    <% if !users_groups.include?(@mygroup[0]) %>
+    <% if !user.groups.include?(@mygroup[0]) %>
 <!-- send request BUTTON -->
       <td colspan="2" style="max-width:100px;"><button class="btn btn-primary" style="width:100%;">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;&nbsp;<%=  link_to "Send Request", partnerup_user_path(user), :style => 'color: #fff; width:100%;' %>&nbsp;&nbsp;&nbsp;</button></td>
       <!-- else would mean they are already partnered or requested/pending -->
     <%else %>
     <!-- If group relation set to pending "UNDO REQUEST" -->
-      <%if !userrequester.empty? && !@currequested.empty? %>
+      <%if requester?(user) && requested(current_user) %>
             <td colspan="2" style="max-width:100px;"><button class="btn btn-danger" style="width:100%!important;">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-remove"></span>&nbsp;&nbsp;&nbsp;<%=  link_to "Undo Request", undo_request_user_path(user), :style => 'color: #fff; ' %>&nbsp;&nbsp;&nbsp;</button></td>
             <!-- elsif group relation set to requested "CONFIRM" -->
-      <%elsif !userrequested.empty? && !@currequester.empty? %>
+      <%elsif requester?(current_user) && requested(current_user) %>
           <td style="max-width:50px;padding-right:0px;float:right;"><button class="btn btn-info" style="width:100%;" ><span class="glyphicon glyphicon-plus"></span>&nbsp;<%=  link_to "Confirm", confirm_user_path(user), :style => 'color: #fff;width:100%;' %></button></td>
             <!-- &IGNORE -->
           <td style="max-width:50px;padding-left:0px;"><button class="btn btn-danger" style="width:100%;"><span class="glyphicon glyphicon-remove"></span>&nbsp;<%=  link_to "Ignore", confirm_user_path(user), :style => 'color: #fff;width:100%;' %></button></td>

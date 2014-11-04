@@ -10,23 +10,19 @@ class UsersController < ApplicationController
     @users = User.all
     @mycourse = current_user.current_course 
     @myprojects = Course.find_by_id(@mycourse).projects.where(active: true).pluck(:id) 
-    @mygroup = GroupRelation.where(:course_id => @mycourse, :project_id => @myprojects, :user_id => current_user.id).pluck(:group_id)
+    @mygroup = GroupRelation.where(:project_id => @myprojects, :user_id => current_user.id).pluck(:group_id)
    
     @current_user_relations = GroupRelation.find_by_group_id(@mygroup) 
     
     
-    @is_pending = @current_user_relations.status == 0
-    @is_requested = @current_user_relations.status == 1 
+    # @is_pending = @current_user_relations.status == 0
+    # @is_requested = @current_user_relations.status == 1 
     
     
     # @userrequester = userrelation.where(:status=>'0')
 #     @userrequested = userrelation.where(:status=>'1')
     
    
-  end
-
-  def user_relation(user)
-    GroupRelation.where(:project_id => @myproject, :user_id =>user.id)
   end
 
   def course_ids(user)
@@ -36,6 +32,17 @@ class UsersController < ApplicationController
   def group_ids(user)
     GroupRelation.where(:course_id => @mycourse, :project_id => @myproject, :user_id => user.id).limit(10).pluck(:group_id)
   end
+
+  def requested?(user)
+    GroupRelation.find_by_group_id(@mygroup) 
+    user_relation(user).status == 1
+  end
+
+  def requester?(user)
+    GroupRelation.find_by_group_id(@mygroup) 
+    user_relation.where(:project_id => @myproject, :user_id =>user.id)  end
+
+
   
 
   def new
