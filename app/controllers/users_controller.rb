@@ -141,26 +141,23 @@ class UsersController < ApplicationController
     user = User.find(params[:id])
     
     # current_project only gets the first project. #TODO FIX! 
-    current_project = current_user.current_project
-    allowed_group_size = Project.find_by_id(current_project.id).group_size
-    current_group_size = GroupRelation.where(project_id: current_project.id, course_id: current_user.current_course).uniq.pluck(:user_id).size
+    allowed_group_size = Project.find_by_id(current_user.current_project).group_size
+    current_group_size = GroupRelation.where(project_id: current_user.current_project, course_id: current_user.current_course).uniq.pluck(:user_id).size
      
-    if current_group_size > allowed_group_size-1
+    if current_group_size > allowed_group_size - 1
         flash[:error] = "Unable to add partner, you might have already requested someone."
         redirect_to users_path
     else
       
-      
-      new_group_name = current_user.first_name + "_" + user.first_name + "_partnership"
-      newgroup = Group.create(:name => new_group_name)
+      newgroup = Group.create(:name => current_user.first_name + "_" + user.first_name + "_partnership")
     
     #create relation for current user which is always the requester (status=0, pending)
     GroupRelation.create(:course_id => current_user.current_course, :user_id=> current_user.id, 
-      :project_id=> current_project.id, :status=>0, group_id: newgroup.id)
+      :project_id=> current_user.current_project, :status=>0, group_id: newgroup.id)
     
     # create relation for user who is being requested (status=1, requested)
     GroupRelation.create(:course_id => current_user.current_course, 
-      :user_id=> user.id, :project_id=> current_project.id, :status=>1, group_id: newgroup.id)
+      :user_id=> user.id, :project_id=> current_user.current_project, :status=>1, group_id: newgroup.id)
         
    flash[:notice] = "Requested partner."
         redirect_to users_path
