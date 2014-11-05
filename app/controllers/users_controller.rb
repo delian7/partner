@@ -92,7 +92,7 @@ class UsersController < ApplicationController
     user = User.find(params[:id])
     authorize user
     current_user.update_attributes(secure_params)
-    redirect_to users_path
+    redirect_to groups_path
   end
 
   def add_partnership
