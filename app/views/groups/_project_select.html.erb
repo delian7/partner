@@ -1,0 +1,6 @@
+<%= form_for :user, :url => set_current_project_user_path(current_user.id) do |f| %>	
+  <div style="max-width: 450px">
+	<%= f.select :current_project, options_from_collection_for_select(current_user.courses, 'id', 'course_title', current_user.current_course), {}, {class: "form-control"} %><br />
+	</div>	
+  <%= f.submit 'Select Course', :class => 'btn btn-primary' %>
+<% end %>
