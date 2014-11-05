@@ -10,6 +10,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.integer    :role,               default: 0, null: false
       t.string     :email,              null: false, default: ""
       t.integer    :current_course, null: false, default: ""
+      t.integer    :current_project, null: false, default: ""
       ## Rememberable
       #t.datetime :remember_created_at
 
