@@ -33,9 +33,6 @@ class ProjectsController < ApplicationController
     redirect_to(:action => 'index')
   end
 
-  
-
-
   def update
     @project = Project.find(params[:id])
     
@@ -66,4 +63,3 @@ class ProjectsController < ApplicationController
   end 
   
 end
-
