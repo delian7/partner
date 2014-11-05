@@ -28,10 +28,10 @@
       <!-- else would mean they are already partnered or requested/pending -->
     <%else %>
     <!-- If group relation set to pending "UNDO REQUEST" -->
-      <%if requester?(user) && requested(current_user) %>
+      <%if requester?(user) && requested?(current_user) %>
             <td colspan="2" style="max-width:100px;"><button class="btn btn-danger" style="width:100%!important;">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-remove"></span>&nbsp;&nbsp;&nbsp;<%=  link_to "Undo Request", undo_request_user_path(user), :style => 'color: #fff; ' %>&nbsp;&nbsp;&nbsp;</button></td>
             <!-- elsif group relation set to requested "CONFIRM" -->
-      <%elsif requester?(current_user) && requested(current_user) %>
+      <%elsif requester?(current_user) && requested?(user) %>
           <td style="max-width:50px;padding-right:0px;float:right;"><button class="btn btn-info" style="width:100%;" ><span class="glyphicon glyphicon-plus"></span>&nbsp;<%=  link_to "Confirm", confirm_user_path(user), :style => 'color: #fff;width:100%;' %></button></td>
             <!-- &IGNORE -->
           <td style="max-width:50px;padding-left:0px;"><button class="btn btn-danger" style="width:100%;"><span class="glyphicon glyphicon-remove"></span>&nbsp;<%=  link_to "Ignore", confirm_user_path(user), :style => 'color: #fff;width:100%;' %></button></td>
