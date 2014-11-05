@@ -115,18 +115,22 @@ class UsersController < ApplicationController
       end    
     send_data(roster_csv, :type => 'text/csv', :filename => 'groups.csv')
   end
-    def set_current_project
+
+  def set_current_project
     user = User.find(params[:id])
     authorize user
     current_user.update_attributes(secure_params)
     redirect_to users_path
   end
-  
- 
 
   def partnerup
     authorize User.all
     user = User.find(params[:id])
+    @users = User.all
+    @mycourse = current_user.current_course 
+    @myproject = current_user.current_project
+    @mygroup = GroupRelation.where(:project_id => @myproject, :user_id => current_user.id).pluck(:group_id)
+    @current_user_relations = GroupRelation.find_by_group_id(@mygroup) 
     
     # current_project only gets the first project. #TODO FIX! 
     allowed_group_size = Project.find_by_id(current_user.current_project).group_size
