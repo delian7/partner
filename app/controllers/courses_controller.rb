@@ -161,10 +161,12 @@ def csv_import
     #set that ucinetid to @newuser, and add that corresponding
     #id with courseID in a new roster row
     @newuser = User.find_by(:ucinetid => @netid)
+    @newuser.save
   else 
     #make a new user with the info we got from studentdata array
     @newuser = User.new(:ucinetid => @netid, :first_name => @name[0], :last_name => @name[1], :email => @mail, 
       :uci_affiliations => "student", :current_course =>  @course_code)
+    @newuser.save
   end
   
   roster = Roster.new(:course_id => @course_code, :user_id => @newuser.id)
@@ -174,8 +176,6 @@ def csv_import
   end
   redirect_to :back, :notice => "CSV Import Successful,  #{newr} students added to this class"
   end
-
-
 
   def update
     authorize User.all
