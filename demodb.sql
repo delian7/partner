@@ -161,15 +161,15 @@ UNLOCK TABLES;
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 
-INSERT INTO `users` (`id`, `ucinetid`, `uci_affiliations`, `first_name`, `last_name`, `role`, `email`, `current_course`, `sign_in_count`, `current_sign_in_at`, `last_sign_in_at`, `current_sign_in_ip`, `last_sign_in_ip`, `age_in_seconds`, `avatar_file_name`, `avatar_content_type`, `avatar_file_size`, `avatar_updated_at`, `created_at`, `updated_at`)
+INSERT INTO `users` (`id`, `ucinetid`, `uci_affiliations`, `first_name`, `last_name`, `role`, `email`, `current_course`, `current_project`, `sign_in_count`, `current_sign_in_at`, `last_sign_in_at`, `current_sign_in_ip`, `last_sign_in_ip`, `age_in_seconds`, `avatar_file_name`, `avatar_content_type`, `avatar_file_size`, `avatar_updated_at`, `created_at`, `updated_at`)
 VALUES
-	(0,'ryderc','student','Christina','Ryder',0,'ryderc@uci.edu',37050,44,'2014-10-23 00:46:03','2014-10-23 00:06:39','127.0.0.1','127.0.0.1',NULL,'622152_10151303211381368_1975951804_o.jpg','image/jpeg',143122,'2014-10-23 00:29:54',NULL,'2014-10-23 02:01:09'),
-	(1,'msilberm','student, staff','Michael','Silberman',1,'msilberm@uci.edu',37050,12,'2014-10-23 00:30:09','2014-10-22 23:55:41','127.0.0.1','127.0.0.1',NULL,NULL,NULL,NULL,NULL,NULL,'2014-10-23 00:42:38'),
-	(2,'kay','staff,faculty,employee','David G','Kay',2,'kay@uci.edu',36624,10,'2014-10-23 02:03:39','2014-10-22 19:43:23','127.0.0.1','127.0.0.1',NULL,NULL,NULL,NULL,NULL,NULL,'2014-10-23 02:04:30'),
-	(3,'ziv','student,staff,faculty,employee','Hadar','Ziv',3,'ziv@uci.edu',36601,1,'2014-10-22 17:59:26','2014-10-22 17:59:26','127.0.0.1','127.0.0.1',NULL,NULL,NULL,NULL,NULL,NULL,'2014-10-22 17:59:26'),
-	(4,'imcnicol','student','Ian','Mcnicol',0,'imcnicol@uci.edu',36601,1,'2014-10-11 01:21:13','2014-10-11 01:21:13','127.0.0.1','127.0.0.1',NULL,'1382955_10202520222632714_437838427_n.jpg','image/jpeg',60296,'2014-10-11 01:37:45',NULL,'2014-10-11 01:37:45'),
-	(5,'vdhingrej','student','Vinayak','Dhingreja',0,'vdhingrej@uci.edu',36601,2,'2014-10-11 01:38:08','2014-10-11 01:37:53','127.0.0.1','127.0.0.1',NULL,'10641277_10152392094266235_7300912786488460398_n.jpg','image/jpeg',55627,'2014-10-11 01:38:02',NULL,'2014-10-11 01:38:08'),
-	(6,'petrovd','student','Delian','Petrov',0,'petrovd@uci.edu',36601,4,'2014-10-22 07:01:55','2014-10-21 06:15:51','127.0.0.1','127.0.0.1',NULL,'10525581_10204567467375380_3907820298695189766_n.jpg','image/jpeg',68194,'2014-10-11 01:43:06',NULL,'2014-10-22 07:01:55');
+	(0,'ryderc','student','Christina','Ryder',0,'ryderc@uci.edu',37050,1,44,'2014-10-23 00:46:03','2014-10-23 00:06:39','127.0.0.1','127.0.0.1',NULL,'622152_10151303211381368_1975951804_o.jpg','image/jpeg',143122,'2014-10-23 00:29:54',NULL,'2014-10-23 02:01:09'),
+	(1,'msilberm','student, staff','Michael','Silberman',1,'msilberm@uci.edu',37050,1,12,'2014-10-23 00:30:09','2014-10-22 23:55:41','127.0.0.1','127.0.0.1',NULL,NULL,NULL,NULL,NULL,NULL,'2014-10-23 00:42:38'),
+	(2,'kay','staff,faculty,employee','David G','Kay',2,'kay@uci.edu',36624,1,10,'2014-10-23 02:03:39','2014-10-22 19:43:23','127.0.0.1','127.0.0.1',NULL,NULL,NULL,NULL,NULL,NULL,'2014-10-23 02:04:30'),
+	(3,'ziv','student,staff,faculty,employee','Hadar','Ziv',3,'ziv@uci.edu',36601,1,1,'2014-10-22 17:59:26','2014-10-22 17:59:26','127.0.0.1','127.0.0.1',NULL,NULL,NULL,NULL,NULL,NULL,'2014-10-22 17:59:26'),
+	(4,'imcnicol','student','Ian','Mcnicol',0,'imcnicol@uci.edu',36601,1,1,'2014-10-11 01:21:13','2014-10-11 01:21:13','127.0.0.1','127.0.0.1',NULL,'1382955_10202520222632714_437838427_n.jpg','image/jpeg',60296,'2014-10-11 01:37:45',NULL,'2014-10-11 01:37:45'),
+	(5,'vdhingrej','student','Vinayak','Dhingreja',0,'vdhingrej@uci.edu',36601,1,2,'2014-10-11 01:38:08','2014-10-11 01:37:53','127.0.0.1','127.0.0.1',NULL,'10641277_10152392094266235_7300912786488460398_n.jpg','image/jpeg',55627,'2014-10-11 01:38:02',NULL,'2014-10-11 01:38:08'),
+	(6,'petrovd','student','Delian','Petrov',0,'petrovd@uci.edu',36601,1,4,'2014-10-22 07:01:55','2014-10-21 06:15:51','127.0.0.1','127.0.0.1',NULL,'10525581_10204567467375380_3907820298695189766_n.jpg','image/jpeg',68194,'2014-10-11 01:43:06',NULL,'2014-10-22 07:01:55');
 
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;

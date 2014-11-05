@@ -1,19 +1,23 @@
 <h3>Let's Partner Up!</h3><br />
 
-<strong>1. Please select the course that you want to get a partner in?</strong>
-
 <!-- selecting course that users will add groups to -->
 <!-- if the user is signed in and their enrolled in at least one course on roster -->
 <% if user_signed_in? && !current_user.courses.first.blank? %>
+	<strong>1. Please select the course that you want to get a partner in?</strong>
+	<%= render 'groups/course_select' %>
+<% end %>
   
-	<%= form_for :user, :url => set_current_course_user_path(current_user.id) do |f| %>	
-	  <div style="max-width: 450px">
-		<%= f.select :current_course, options_from_collection_for_select(current_user.courses, 'id', 'course_title', current_user.current_course), {}, {class: "form-control"} %><br />
-		</div>	
-	  <%= f.submit 'Select Course', :class => 'btn btn-primary' %>
-  <% end %>
+	
 
-<%end%><%aldkjfa%>
+
+<!-- dropdown menu to select current project, if more than one exist -->
+<% if @current_projects.size > 1 %>
+		
+	<strong>It looks like your class has more than one active projects...</strong> 
+	<strong>Please select your the project for which you want to pick partners for:</strong>
+	<%= render 'groups/project_select' %>
+	
+<%end%>
 
 
 <% @course_projects.each do |project| %>
@@ -26,10 +30,7 @@
 				<%= '2 people (partnership)' %> </li>
 			<% when 2..(1.0/0.0) %>
 				<%= '3 or more (group)' %> </li>
-		<% end %>
-		
-	
-	
+		<% end %>	
 <% end %>
 
 

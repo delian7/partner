@@ -22,6 +22,7 @@ devise_for :users, :controllers => {:registrations => "registrations"}
         # get :ungroup
         get :undo_request
         post :set_current_course
+        post :set_current_project
         get :partnerup
         end
      collection do
@@ -60,7 +61,7 @@ devise_for :users, :controllers => {:registrations => "registrations"}
     end
      resources :groups do
      member do
-        end
+      end
      collection do
         end
     end

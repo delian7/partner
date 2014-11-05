@@ -13,6 +13,9 @@ class UserPolicy
 def csv_import?
   true
 end
+def set_current_project?
+  true
+end
 def partnerup?
   true
 end
