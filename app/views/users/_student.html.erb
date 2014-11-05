@@ -9,36 +9,36 @@
 <!-- End Table Header -->
 
 <% @users.each do |user| %>
-  <!-- if the user is in another group -->
-<% if GroupRelation.where(:project_id => @myproject, :user_id => user.id, :status=>'2') == nil %>
-<% else %>
- <!-- if array of this users's elrolled course ids includes the signed in user's selected course -->
   <% if course_ids(user).include?(@mycourse) && current_user.id != user.id && user.role == 0 %> 
-   <tr>
-    <td class='collapsable'><%= link_to (image_tag (user.avatar.url), :style => 'max-width: 45px;'), user %></td> 
+     <!-- if current user already confirmed in a group -->
+    <% if in_group?(current_user) && teammates?(user, current_user) %>
+
+    <%else%>
+
+    <tr><td class='collapsable'><%= link_to (image_tag (user.avatar.url), :style => 'max-width: 45px;'), user %></td> 
     <td><%= link_to "#{user.first_name} #{user.last_name}", user %> </td>
     <td class='collapsable'><%= user.email %></td>
+<<<<<<< HEAD
     <!-- if the current user and this user are not in the same group -->
     <!-- if the array of this user's groups doesn't include the array of current user's groups -->
 
 
     <!-- If group relation set to pending "UNDO REQUEST" -->
       <%if requester?(user) == user %>
+=======
+    <%end%>
+        <% if requested?(user) == user %>
+>>>>>>> cleancontroller
             <td colspan="2" style="max-width:100px;">
               <button class="btn btn-danger" style="width:100%!important;">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-remove"></span>&nbsp;&nbsp;&nbsp;<%=  link_to "Undo Request", undo_request_user_path(user), :style => 'color: #fff; ' %>&nbsp;&nbsp;&nbsp;</button></td>
-            <!-- elsif group relation set to requested "CONFIRM" -->
-      <%elsif requested?(user) == user%>
+        <% elsif requester?(user) == user%>
           <td style="max-width:50px;padding-right:0px;float:right;"><button class="btn btn-info" style="width:100%;" ><span class="glyphicon glyphicon-plus"></span>&nbsp;<%=  link_to "Confirm", confirm_user_path(user), :style => 'color: #fff;width:100%;' %></button></td>
-            <!-- &IGNORE --> 
           <td style="max-width:50px;padding-left:0px;"><button class="btn btn-danger" style="width:100%;"><span class="glyphicon glyphicon-remove"></span>&nbsp;<%=  link_to "Ignore", ignore_user_path(user), :style => 'color: #fff;width:100%;' %></button></td>
-      <% else %>
-          <!-- send request BUTTON -->
+        <% else %>
       <td colspan="2" style="max-width:100px;"><button class="btn btn-primary" style="width:100%;">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;&nbsp;<%=  link_to "Send Request", partnerup_user_path(user), :style => 'color: #fff; width:100%;' %>&nbsp;&nbsp;&nbsp;</button></td>
-      <!-- else would mean they are already partnered or requested/pending -->
-      <%end%>
-<%end%>
-   
-<% end %>
+
+  <% end %>
+  <% end %>
 <% end %></tr>
 
 
