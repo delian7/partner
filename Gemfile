@@ -23,7 +23,7 @@ gem 'mysql2'
 gem 'yard'
 gem 'pundit'
 gem 'mail_form'
-gem 'rspec', '~> 2.9.0'
+gem 'rspec'
 gem 'simple_form'
 gem 'better_errors'
 gem 'binding_of_caller', :platforms=>[:mri_21]

@@ -87,45 +87,26 @@ def name_parse(txt)
   end
 end
 
-def csv_import
-  authorize User.all
-  # variables for counting how many users were added and how many roster relations made
-  newc=0
-  newr=0
-  csv_text = File.open(params[:dump][:file].tempfile, :headers=>true)
-  csv = CSV.parse(csv_text)
-  # remove all nils from array of arrays
-  csv.each  do |nils|
+def find_email_col(array)
+  array[0].index("Email")
+end
+
+def find_name_col(array)
+  array[0].index("Name")
+end
+
+def remove_nils(array)
+# remove all nils from array of arrays
+array.each  do |nils|
    nils.compact!
   end
   #delete all empty arrays
-  csv.delete_if {|x| x.empty? } 
-  #show array starting with [8] and 100 length afterwards.  Gets rid of UCI registrar text
-  cdata = csv.slice!(8,100)
-  
-      @quarter = cdata[0][0] 
-      @course_code = find_first_digits(cdata[1][0])  
-      @instructor = get_instructor_name(cdata[3][0])
-      @permissions = TA(cdata[8][0])
-      @course_title = cdata[2][0]
-      #@location = cdata[4][0]  if location is needed later
+  array.delete_if {|x| x.empty? }
+  return array
+end
 
-
-  studentdata = cdata.slice!(11,600)
-  #finding the email and name columns
-  emailcol = studentdata[0].index("Email")
-  namecol = studentdata[0].index("Name")
-   
-  # makes new project for default 
-  @newproj = Project.new(:course_id => @course_code, :name=>@course_code + "New Project")
-  @newproj.name=@newproj.id
-  @newproj.save
-  #makes new course
-  course = Course.new(:id => @course_code, :active_proj=>@newproj.id,:course_title=>@course_title, :instructor => @instructor[0])
-  course.save
-  # for every 'row' or array in studentdata array, excluding row 1 and the last two
-  studentdata[1..-2].each do |i|
-    #@netid will be jjones@uci.edu
+def get_student_data(i)
+      #@netid will be jjones@uci.edu
     @netid = i[emailcol].downcase
     #@netid will be jjones
     @netid.slice! "@uci.edu"
@@ -133,6 +114,60 @@ def csv_import
     @name = name_parse(@name)
     #@mail was jjones@uci.edu
     @mail = i[emailcol].downcase
+end
+
+def student_data_slice(array)
+  array.slice!(11,600)
+end
+
+def remove_registrar_text(array)
+  #show array starting with [8] and 100 length afterwards.  Gets rid of UCI registrar text
+  asdf = array.slice!(8,100)
+  return asdf
+end
+
+def get_course_data(array)
+  @quarter = array[0][0]
+  @course_code = find_first_digits(array[1][0])  
+  @instructor = get_instructor_name(array[3][0])
+  @permissions = TA(array[8][0])
+  @course_title = array[2][0]
+  #@location = csv[4][0]  if location is needed later
+end
+def newproj
+    # makes new project for default 
+  @newproj = Project.new(:course_id => @course_code, :name => @course_code + "New Project")
+  @newproj.name = @newproj.id
+  @newproj.save
+end
+def newcourse
+   #makes new course
+  @course = Course.new(:id => @course_code, :active_proj => @newproj.id,:course_title => @course_title, :instructor => @instructor[0])
+  @course.save
+
+end
+
+
+def csv_import
+  authorize User.all
+  # variablesfor counting how many roster relations made
+  newr=0
+  csv_text = File.open(params[:dump][:file].tempfile, :headers => true)
+  csv = CSV.parse(csv_text)
+  remove_nils(csv)
+  remove_registrar_text(csv)
+  course_data = get_course_data(csv)
+  student_data = student_data_slice(course_data)
+  #finding the email and name columns
+  emailcol = find_email_col(array)
+  namecol = find_name_col(array)
+  
+  newcourse
+  newproj
+ 
+  # for every 'row' or array in studentdata array, excluding row 1 and the last two
+  student_data[1..-2].each do |i|
+    get_student_data(i)
     #if the ucinet id is found in the database
   if User.find_by(:ucinetid => @netid) != nil
     #set that ucinetid to @newuser, and add that corresponding
@@ -142,10 +177,6 @@ def csv_import
     #make a new user with the info we got from studentdata array
     @newuser = User.new(:ucinetid => @netid, :first_name => @name[0], :last_name => @name[1], :email => @mail, 
       :uci_affiliations => "student", :current_course =>  @course_code)
-    if @newuser.save
-      newc=+1
-    end
-
   end
   
   roster = Roster.new(:course_id => @course_code, :user_id => @newuser.id)
@@ -153,7 +184,7 @@ def csv_import
       newr+=1
     end
   end
-  redirect_to :back, :notice => "CSV Import Successful,  #{newc} new users added to PartnerUp, #{newr} enrollments added to database"
+  redirect_to :back, :notice => "CSV Import Successful,  #{newr} students added to this class"
   end
 
 
