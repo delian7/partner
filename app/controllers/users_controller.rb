@@ -121,7 +121,7 @@ class UsersController < ApplicationController
     authorize User.all
     user =User.find(params[:id])
     @mycourse = current_user.current_course
-    @myproject = Course.find_by(:id=>current_user.current_course).active_proj 
+    @myproject = Course.find_by(:id=>current_user.current_course)
     @my_group = GroupRelation.where(:course_id => @mycourse, :project_id => @myproject, 
       :user_id => current_user.id).limit(1).collect(&:group_id)
     @their_group = GroupRelation.where(:course_id => @mycourse, :project_id => @myproject, 
@@ -186,6 +186,22 @@ class UsersController < ApplicationController
       GroupRelation.find(@their_group.collect(&:id)[0]).update(:status=>2)
       
       redirect_to users_path(@current_group), :flash => { :success => "Group Confirmed" }
+  end
+    def ignore
+      authorize User.all
+      user =User.find(params[:id])
+      @mycourse = current_user.current_course
+      @myproject = Course.find_by_id(@mycourse).active_proj 
+      
+      @my_group = GroupRelation.where(:course_id =>@mycourse, :user_id=>current_user.id, :project_id=> @myproject)        
+      @their_group = GroupRelation.where(:course_id =>@mycourse, :user_id=>user.id, :project_id=> @myproject )
+      
+      # sets the status of the group to accepted "status=2"
+      tt =GroupRelation.find(@my_group.collect(&:id)[0]).destroy
+      ttt= GroupRelation.find(@their_group.collect(&:id)[0]).destroy
+      tt.save
+      ttt.save
+      redirect_to users_path(@current_group), :flash => { :success => "Request Removed" }
   end
 
   private

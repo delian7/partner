@@ -22,15 +22,15 @@
     <!-- if the array of this user's groups doesn't include the array of current user's groups -->
   
 
-    <!-- If group relation set to pending "UNDO REQUEST" -->
+    <!-- If current_user sent request to this guy "UNDO REQUEST" -->
       <%if requester?(user) == user %>
             <td colspan="2" style="max-width:100px;">
               <button class="btn btn-danger" style="width:100%!important;">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-remove"></span>&nbsp;&nbsp;&nbsp;<%=  link_to "Undo Request", undo_request_user_path(user), :style => 'color: #fff; ' %>&nbsp;&nbsp;&nbsp;</button></td>
-            <!-- elsif group relation set to requested "CONFIRM" -->
+            <!-- elsif current_user recieved request from this guy "CONFIRM" -->
       <%elsif requested?(user) == user%>
           <td style="max-width:50px;padding-right:0px;float:right;"><button class="btn btn-info" style="width:100%;" ><span class="glyphicon glyphicon-plus"></span>&nbsp;<%=  link_to "Confirm", confirm_user_path(user), :style => 'color: #fff;width:100%;' %></button></td>
             <!-- &IGNORE --> 
-          <td style="max-width:50px;padding-left:0px;"><button class="btn btn-danger" style="width:100%;"><span class="glyphicon glyphicon-remove"></span>&nbsp;<%=  link_to "Ignore", confirm_user_path(user), :style => 'color: #fff;width:100%;' %></button></td>
+          <td style="max-width:50px;padding-left:0px;"><button class="btn btn-danger" style="width:100%;"><span class="glyphicon glyphicon-remove"></span>&nbsp;<%=  link_to "Ignore", ignore_user_path(user), :style => 'color: #fff;width:100%;' %></button></td>
       <% else %>
           <!-- send request BUTTON -->
       <td colspan="2" style="max-width:100px;"><button class="btn btn-primary" style="width:100%;">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;&nbsp;<%=  link_to "Send Request", partnerup_user_path(user), :style => 'color: #fff; width:100%;' %>&nbsp;&nbsp;&nbsp;</button></td>
