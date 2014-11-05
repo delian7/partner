@@ -5,7 +5,7 @@
 	  <%= form_for :user, :url => set_current_course_user_path(current_user.id), :html => { :style => 'display:inline;'} do |f|%>
 	     <%= f.select :current_course, options_from_collection_for_select(current_user.courses, 
 			 'id', 'course_title', current_user.current_course), {}, 
-			 {class: 'form-control', style: 'display:inline; width:70%;', onchange: 'this.form.submit();' } %>
+			 {class: 'form-control', style: 'display:inline; width:100%;', onchange: 'this.form.submit();' } %>
 	  <% end %>
 	</div>
 <%end%>

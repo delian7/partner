@@ -1,9 +1,10 @@
 <h3>Control Panel</h3>
 
-<%= render 'layouts/course_select' %>
-
-<tr><td><b>Student Name</td><td><b>Action</td></td> </tr></b>
-       
-
-
-
+<% if !current_user.courses.first.blank? %>
+	<div style="max-width:500px; float:right;">
+	  <%= form_for :user, :url => edit_registration_path(user.id), :html => { :style => 'display:inline;'} do |f|%>
+	     <%= f.text :current_course %>
+	     <%= f.text :current_course %>
+	  <% end %>
+	</div>
+<% end %>

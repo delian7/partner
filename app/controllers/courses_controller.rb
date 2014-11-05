@@ -150,8 +150,10 @@ def csv_import
   @newproj.save
 
   #makes new course
+  if !Course.find_by_id(@course_code).nil?
   @course = Course.new(:id => @course_code,:course_title => @course_title, :instructor => @instructor[0])
   @course.save
+  end
  
   # for every 'row' or array in studentdata array, excluding row 1 and the last two
   student_data[1..-2].each do |i|
@@ -161,19 +163,19 @@ def csv_import
     #set that ucinetid to @newuser, and add that corresponding
     #id with courseID in a new roster row
     @newuser = User.find_by(:ucinetid => @netid)
-    @newuser.save
   else 
     #make a new user with the info we got from studentdata array
     @newuser = User.new(:ucinetid => @netid, :first_name => @name[0], :last_name => @name[1], :email => @mail, 
       :uci_affiliations => "student", :current_course =>  @course_code)
     @newuser.save
   end
-  
+   if Roster.find_by(:user_id => @newuser.id, course_id: @course_code) == nil
   roster = Roster.new(:course_id => @course_code, :user_id => @newuser.id)
     if roster.save
       newr+=1
     end
   end
+end
   redirect_to :back, :notice => "CSV Import Successful,  #{newr} students added to this class"
   end
 
