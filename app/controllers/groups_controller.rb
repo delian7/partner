@@ -1,6 +1,7 @@
 class GroupsController < ApplicationController
   before_filter :authenticate_user!
   after_action :verify_authorized, except: [:show]
+  helper_method :group_or_partnership?
   require 'csv'
 
   def index
@@ -19,6 +20,9 @@ class GroupsController < ApplicationController
   end
   
 
+  def group_or_partnership?
+    Project.find_by_id(current_user.current_project).group_size > 1 ? 'group' : 'partnership'
+  end
 
   private
   def secure_params
