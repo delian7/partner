@@ -16,11 +16,20 @@ end
 def set_current_project?
   true
 end
+def teammates?
+  true
+end
+def in_group?
+  true
+end
 def partnerup?
   true
 end
  
   def profile?
+    true
+  end    
+  def ignore?
     true
   end  
    def ignore?
