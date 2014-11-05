@@ -12,15 +12,6 @@ class UsersController < ApplicationController
     @myprojects = Course.find_by_id(@mycourse).projects.where(active: true).pluck(:id) 
     @mygroup = GroupRelation.where(:project_id => @myprojects, :user_id => current_user.id).pluck(:group_id)
     @current_user_relations = GroupRelation.find_by_group_id(@mygroup) 
-    
-    
-    # @is_pending = @current_user_relations.status == 0
-    # @is_requested = @current_user_relations.status == 1 
-    
-    
-    # @userrequester = userrelation.where(:status=>'0')
-#     @userrequested = userrelation.where(:status=>'1')
-    
    
   end
 
@@ -29,20 +20,20 @@ class UsersController < ApplicationController
   end
 
   def requested?(user)
-    relation = GroupRelation.where(:project_id => @myprojects, :user_id => user.id, :group_id=>@mygroup).pluck(:id)
-    relation_of_current_user = GroupRelation.find_by_id(relation[0]).status
-    relation_of_user = GroupRelation.find_by_id(relation[1]).status
-    GroupRelation.where(:project_id => @myprojects, :user_id => user.id, :group_id=>current_group_id(user)).status == 1
+        if GroupRelation.where(:project_id => @myprojects, :user_id => current_user.id, :group_id=>@mygroup).pluck(:status)[0] == 1
+      return current_user
+        elsif GroupRelation.where(:project_id => @myprojects, :user_id => user.id, :group_id=>@mygroup).pluck(:status)[0] == 1
+      return user
+    end
   end
 
   def requester?(user)
-    relation_of_user = GroupRelation.where(:project_id => @myprojects, :user_id => user.id, :group_id=>@mygroup).pluck(:id)
-    relation_of_current_user = GroupRelation.where(:project_id => @myprojects, :user_id => current_user.id, :group_id=>@mygroup).pluck(:id)
-    GroupRelation.find_by_group_id(current_group_id(user)).status == 0
+    if GroupRelation.where(:project_id => @myprojects, :user_id => current_user.id, :group_id=>@mygroup).pluck(:status)[0] == 0
+      return current_user
+    elsif GroupRelation.where(:project_id => @myprojects, :user_id => user.id, :group_id=>@mygroup).pluck(:status)[0] == 0
+      return user
+    end
   end
-
-
-  
 
   def new
     @partners = User.find(params[:id])
