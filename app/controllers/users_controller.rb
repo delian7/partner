@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   
-  helper_method :course_ids
+  helper_method :course_ids, :requested?, :requester?
   before_filter :authenticate_user!
   after_action :verify_authorized, except: [:show, :index]
   require 'csv'
@@ -11,7 +11,6 @@ class UsersController < ApplicationController
     @mycourse = current_user.current_course 
     @myprojects = Course.find_by_id(@mycourse).projects.where(active: true).pluck(:id) 
     @mygroup = GroupRelation.where(:project_id => @myprojects, :user_id => current_user.id).pluck(:group_id)
-   
     @current_user_relations = GroupRelation.find_by_group_id(@mygroup) 
     
     
@@ -28,19 +27,19 @@ class UsersController < ApplicationController
   def course_ids(user)
     user.courses.pluck(:id)
   end
-  
-  def group_ids(user)
-    GroupRelation.where(:course_id => @mycourse, :project_id => @myproject, :user_id => user.id).limit(10).pluck(:group_id)
-  end
 
   def requested?(user)
-    GroupRelation.find_by_group_id(@mygroup) 
-    user_relation(user).status == 1
+    relation = GroupRelation.where(:project_id => @myprojects, :user_id => user.id, :group_id=>@mygroup).pluck(:id)
+    relation_of_current_user = GroupRelation.find_by_id(relation[0]).status
+    relation_of_user = GroupRelation.find_by_id(relation[1]).status
+    GroupRelation.where(:project_id => @myprojects, :user_id => user.id, :group_id=>current_group_id(user)).status == 1
   end
 
   def requester?(user)
-    GroupRelation.find_by_group_id(@mygroup) 
-    user_relation.where(:project_id => @myproject, :user_id =>user.id)  end
+    relation_of_user = GroupRelation.where(:project_id => @myprojects, :user_id => user.id, :group_id=>@mygroup).pluck(:id)
+    relation_of_current_user = GroupRelation.where(:project_id => @myprojects, :user_id => current_user.id, :group_id=>@mygroup).pluck(:id)
+    GroupRelation.find_by_group_id(current_group_id(user)).status == 0
+  end
 
 
   
@@ -153,28 +152,30 @@ class UsersController < ApplicationController
   def partnerup
     authorize User.all
     user = User.find(params[:id])
-    current_project = Course.find_by_id(current_user.current_course).active_proj
-    project_size = Project.find_by_id(current_project).nil? ? 0 : Project.find_by_id(current_project).group_size
+    
+    # current_project only gets the first project. #TODO FIX! 
+    current_project = Project.where(course_id: current_user.current_course, active: true).first
+    allowed_group_size = Project.find_by_id(current_project.id).group_size
+    current_group_size = GroupRelation.where(project_id: current_project.id, course_id: current_user.current_course).uniq.pluck(:user_id).size
      
-    if GroupRelation.where(:course_id => current_user.current_course, 
-        :user_id => current_user.id, :project_id => current_project).size >= project_size-1
-        
-        flash[:error] = "Unable to add partner, you might have already requested someone"
+    if current_group_size > allowed_group_size-1
+        flash[:error] = "Unable to add partner, you might have already requested someone."
         redirect_to users_path
     else
+      
       
       new_group_name = current_user.first_name + "_" + user.first_name + "_partnership"
       newgroup = Group.create(:name => new_group_name)
     
     #create relation for current user which is always the requester (status=0, pending)
     GroupRelation.create(:course_id => current_user.current_course, :user_id=> current_user.id, 
-      :project_id=> current_project, :status=>0, group_id: newgroup.id)
+      :project_id=> current_project.id, :status=>0, group_id: newgroup.id)
     
     # create relation for user who is being requested (status=1, requested)
     GroupRelation.create(:course_id => current_user.current_course, 
-      :user_id=> user.id, :project_id=> current_project, :status=>1, group_id: newgroup.id)
-      
-    flash[:notice] = "Requested partner."
+      :user_id=> user.id, :project_id=> current_project.id, :status=>1, group_id: newgroup.id)
+        
+   flash[:notice] = "Requested partner."
         redirect_to users_path
     end
   end
