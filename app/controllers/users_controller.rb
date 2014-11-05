@@ -180,6 +180,12 @@ class UsersController < ApplicationController
     end
   end
 
+  def set_current_project
+    user = User.find(params[:id])
+    authorize user
+    current_user.update_attributes(secure_params)
+    redirect_to groups_path
+  end
 
   def confirm
       authorize User.all
@@ -202,6 +208,6 @@ class UsersController < ApplicationController
     params.require(:user).permit(:id)
   end
   def secure_params
-    params.require(:user).permit(:id, :name, :ucinetid, :role, :current_course)
+    params.require(:user).permit(:id, :name, :ucinetid, :role, :current_course, :current_project)
   end
 end
