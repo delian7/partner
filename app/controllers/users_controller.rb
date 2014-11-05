@@ -222,6 +222,29 @@ end
     end
   redirect_to users_path
   end
+  def delete_partnership
+    authorize User.all
+    user = User.find(params[:id])
+    @users = User.all
+    @mycourse = current_user.current_course 
+    @myproject = current_user.current_project
+    @mygroup = GroupRelation.where(:project_id => @myproject, :user_id => current_user.id).pluck(:group_id)[0]
+    @current_user_relations = GroupRelation.find_by_group_id(@mygroup) 
+
+    if GroupRelation.where(:group_id=>@mygroup).collect(&:id).size <= 2
+    # Delete the group
+    Group.find_by_id(@mygroup).destroy
+    # Delete relation for current user
+    GroupRelation.where(:project_id => @myproject, :user_id => current_user.id, :group_id=>@mygroup).first.destroy
+    GroupRelation.where(:project_id => @myproject, :user_id => user.id, :group_id=>@mygroup).first.destroy
+  
+    # Delete relation for user
+    flash[:notice] = "Removed request."
+    else 
+    flash[:error] = "Unable to remove request."
+    end
+  redirect_to users_path
+  end
 
   private
   def login_params

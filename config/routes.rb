@@ -22,6 +22,7 @@ devise_for :users, :controllers => {:registrations => "registrations"}
         # get :ungroup
         get :undo_request
         get :ignore
+        get :delete_partnership
         post :set_current_course
         post :set_current_project
         get :partnerup
