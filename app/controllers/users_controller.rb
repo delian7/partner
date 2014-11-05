@@ -83,7 +83,7 @@ class UsersController < ApplicationController
     user = User.find(params[:id])
     authorize user
     current_user.update_attributes(secure_params)
-    redirect_to groups_path
+    redirect_to users_path
   end
 
   def add_partnership
@@ -162,13 +162,6 @@ class UsersController < ApplicationController
    flash[:notice] = "Requested partner."
         redirect_to users_path
     end
-  end
-
-  def set_current_project
-    user = User.find(params[:id])
-    authorize user
-    current_user.update_attributes(secure_params)
-    redirect_to users_path
   end
 
   def confirm
