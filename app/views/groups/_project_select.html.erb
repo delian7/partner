@@ -2,5 +2,5 @@
   <div style="max-width: 450px">
 	<%= f.select :current_project, options_from_collection_for_select(@current_projects, 'id', 'name', current_user.current_project), {}, {class: "form-control"} %><br />
 	</div>	
-  <%= f.submit 'Select Course', :class => 'btn btn-primary' %>
+  <%= f.submit 'Select Project', :class => 'btn btn-primary' %>
 <% end %>
