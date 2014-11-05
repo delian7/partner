@@ -152,8 +152,6 @@ class UsersController < ApplicationController
     end
   end
 
-<<<<<<< HEAD
-=======
    def undo_request
     authorize User.all
     user = User.find(params[:id])
@@ -178,7 +176,6 @@ class UsersController < ApplicationController
   redirect_to users_path
   end
 
->>>>>>> cleancontroller
   def confirm
       authorize User.all
       user =User.find(params[:id])
