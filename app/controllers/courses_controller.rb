@@ -40,9 +40,6 @@ def destroy
   end
 end
 
-# If the course is partnered, it will clear the group of the current_course and the partner
-# If the course is unpartnered, it will partner them
-# Partnering sets status to 1 or true and fills the current_course (and their partner's) partner1 with the other person's name
 def mailer
   ChangeMailer.send_change_message(course.email).deliver
 end
@@ -87,12 +84,10 @@ def name_parse(txt)
   end
 end
 
-def find_email_col(array)
-  array[0].index("Email")
-end
-
-def find_name_col(array)
-  array[0].index("Name")
+def find_cols(array)
+  @name_col = array[0].index("Name")
+  @mail_col = array[0].index("Email")
+  return @mail_col, @name_col
 end
 
 def remove_nils(array)
@@ -106,14 +101,15 @@ array.each  do |nils|
 end
 
 def get_student_data(i)
-      #@netid will be jjones@uci.edu
-    @netid = i[emailcol].downcase
+    #@netid will be jjones@uci.edu
+    @netid = i[@mail_col].downcase
     #@netid will be jjones
     @netid.slice! "@uci.edu"
-    @name = i[namecol].titlecase
+    @name = i[@name_col].titlecase
     @name = name_parse(@name)
     #@mail was jjones@uci.edu
-    @mail = i[emailcol].downcase
+    @mail = i[@mail_col].downcase
+    return @mail, @name, @netid
 end
 
 def student_data_slice(array)
@@ -122,8 +118,7 @@ end
 
 def remove_registrar_text(array)
   #show array starting with [8] and 100 length afterwards.  Gets rid of UCI registrar text
-  asdf = array.slice!(8,100)
-  return asdf
+  array.slice!(8,100)
 end
 
 def get_course_data(array)
@@ -133,37 +128,30 @@ def get_course_data(array)
   @permissions = TA(array[8][0])
   @course_title = array[2][0]
   #@location = csv[4][0]  if location is needed later
+  return @quarter, @course_code, @instructor, @permissions, @course_title
 end
-def newproj
-    # makes new project for default 
-  @newproj = Project.new(:course_id => @course_code, :name => @course_code + "New Project")
-  @newproj.name = @newproj.id
-  @newproj.save
-end
-def newcourse
-   #makes new course
-  @course = Course.new(:id => @course_code, :active_proj => @newproj.id,:course_title => @course_title, :instructor => @instructor[0])
-  @course.save
-
-end
-
 
 def csv_import
   authorize User.all
-  # variablesfor counting how many roster relations made
+  # variables for counting how many roster relations made
   newr=0
   csv_text = File.open(params[:dump][:file].tempfile, :headers => true)
   csv = CSV.parse(csv_text)
-  remove_nils(csv)
-  remove_registrar_text(csv)
+  csv = remove_nils(csv)
+  csv = remove_registrar_text(csv)
   course_data = get_course_data(csv)
-  student_data = student_data_slice(course_data)
+  student_data = student_data_slice(csv)
   #finding the email and name columns
-  emailcol = find_email_col(array)
-  namecol = find_name_col(array)
+  find_cols(student_data)
   
-  newcourse
-  newproj
+  #makes new project for default 
+  @newproj = Project.new(course_id: @course_code, active: true, name: @course_code + "New Project")
+  @newproj.name = @newproj.id
+  @newproj.save
+
+  #makes new course
+  @course = Course.new(:id => @course_code,:course_title => @course_title, :instructor => @instructor[0])
+  @course.save
  
   # for every 'row' or array in studentdata array, excluding row 1 and the last two
   student_data[1..-2].each do |i|
