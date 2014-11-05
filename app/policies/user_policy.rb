@@ -19,7 +19,11 @@ end
 def partnerup?
   true
 end
+ 
   def profile?
+    true
+  end  
+   def ignore?
     true
   end  
    def show?

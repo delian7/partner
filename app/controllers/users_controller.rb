@@ -9,7 +9,7 @@ class UsersController < ApplicationController
     # @user = User.find(params[:id])
     @users = User.all
     @mycourse = current_user.current_course 
-    @myprojects = Course.find_by_id(@mycourse).projects.where(active: true).pluck(:id) 
+    @myproject = current_user.current_project
     @mygroup = GroupRelation.where(:project_id => @myprojects, :user_id => current_user.id).pluck(:group_id)
     @current_user_relations = GroupRelation.find_by_group_id(@mygroup) 
    
@@ -120,17 +120,13 @@ class UsersController < ApplicationController
   def undo_request
     authorize User.all
     user =User.find(params[:id])
-    @mycourse = current_user.current_course
-    @myproject = Course.find_by(:id=>current_user.current_course).active_proj 
-    @my_group = GroupRelation.where(:course_id => @mycourse, :project_id => @myproject, 
-      :user_id => current_user.id).limit(1).collect(&:group_id)
     @their_group = GroupRelation.where(:course_id => @mycourse, :project_id => @myproject, 
       :user_id => user.id).limit(1).collect(&:group_id)
       if GroupRelation.where(:group_id=>@my_group).collect(&:id).size <= 2
     # Delete the group
-    Group.find_by_id(@my_group).destroy
+    Group.find_by_id(@mygroup).destroy
     # Delete relation for current user
-    GroupRelation.find_by_group_id(@my_group).destroy
+    GroupRelation.find_by_group_id(@mygroup).destroy
     # Delete relation for user
     GroupRelation.find_by_group_id(@their_group).destroy
     flash[:notice] = "Removed request."
@@ -145,7 +141,7 @@ class UsersController < ApplicationController
     user = User.find(params[:id])
     
     # current_project only gets the first project. #TODO FIX! 
-    current_project = Project.where(course_id: current_user.current_course, active: true).first
+    current_project = current_user.current_project
     allowed_group_size = Project.find_by_id(current_project.id).group_size
     current_group_size = GroupRelation.where(project_id: current_project.id, course_id: current_user.current_course).uniq.pluck(:user_id).size
      
@@ -182,8 +178,6 @@ class UsersController < ApplicationController
       authorize User.all
       user =User.find(params[:id])
       @mycourse = current_user.current_course
-      @myproject = Course.find_by_id(@mycourse).active_proj 
-      
       @my_group = GroupRelation.where(:course_id =>@mycourse, :user_id=>current_user.id, :project_id=> @myproject)        
       @their_group = GroupRelation.where(:course_id =>@mycourse, :user_id=>user.id, :project_id=> @myproject )
       
@@ -192,6 +186,26 @@ class UsersController < ApplicationController
       GroupRelation.find(@their_group.collect(&:id)[0]).update(:status=>2)
       
       redirect_to users_path(@current_group), :flash => { :success => "Group Confirmed" }
+  end
+    def ignore
+    authorize User.all
+    user =User.find(params[:id])
+    @mycourse = current_user.current_course
+    @myproject = current_user.current_project
+    @their_group = GroupRelation.where(:course_id => @mycourse, :project_id => @myproject, 
+      :user_id => user.id).limit(1).collect(&:group_id)
+      if GroupRelation.where(:group_id=>@my_group).collect(&:id).size <= 2
+    # Delete the group
+    Group.find_by_id(@mygroup).destroy
+    # Delete relation for current user
+    GroupRelation.find_by_group_id(@mygroup).destroy
+    # Delete relation for user
+    GroupRelation.find_by_group_id(@their_group).destroy
+    flash[:notice] = "Removed request."
+    else 
+    flash[:error] = "Unable to remove request."
+    end
+  redirect_to users_path
   end
 
   private
