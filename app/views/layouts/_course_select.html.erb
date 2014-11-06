@@ -1,11 +1,30 @@
 <!-- selecting course that users will add groups to -->
 <!-- if the user is signed in and their enrolled in at least one course on roster -->
+<% active_project_in_course = !@current_projects.to_a.empty? %>
+
 <% if !current_user.courses.first.blank? %>
-	<div style="max-width:500px; float:right;">
-	  <%= form_for :user, :url => set_current_course_user_path(current_user.id), :html => { :style => 'display:inline;'} do |f|%>
-	     <%= f.select :current_course, options_from_collection_for_select(current_user.courses, 
-			 'id', 'course_title', current_user.current_course), {}, 
-			 {class: 'form-control', style: 'display:inline; width:100%;', onchange: 'this.form.submit();' } %>
+	<div style="max-width:500px; float:right; font-size: 12px">
+	
+		<!-- setting current course & project (if there's only one project)-->
+	  <%= form_for :user, :url => set_current_course_user_path(current_user.id), :html => { :style => 'display:inline;'} do |f|%>		
+			<%= f.label 'Selected Course:', style: 'display:inline'%>
+			<%= f.select :current_course, options_from_collection_for_select(current_user.courses, 
+				'id', 'course_title', current_user.current_course), {}, 
+				{class: 'form-control', style: 'width:70%; display:inline', onchange: 'this.form.submit();' } %>
+		<% end %>		
+		
+			<br / ><br/>
+	
+		<!-- setting current_project (if more than one exist)	 -->
+		<% if active_project_in_course %>	
+		  <%= form_for :user, :url => set_current_project_user_path(current_user.id), :html => { :style => 'display:inline;'} do |f|%>
+				<%= f.label 'Selected Project:', style: 'display:inline'%>			
+				<%= f.select :current_project, options_from_collection_for_select(@current_projects, 
+					'id', 'name', current_user.current_project), {}, 
+					{class: "form-control", style: 'width:70%; display:inline', onchange: 'this.form.submit();'} %>
+			<% end %>
+
 	  <% end %>
 	</div>
+	
 <%end%>
