@@ -17,16 +17,15 @@ class UsersController < ApplicationController
     @current_projects = Project.where(course_id: current_user.current_course, active: true)
     @active_project_in_course = !@current_projects.to_a.empty?
     
-    if current_user.current_project != 0
+    if @active_project_in_course
       @allowed_project_size = Project.find_by_id(current_user.current_project).group_size
     else
       @allowed_project_size = 0
-      return flash[:error] => "you done goofed"
     end
     
-    
-
   end
+    
+    
 
   def course_ids(user)
     user.courses.pluck(:id)
@@ -144,6 +143,7 @@ class UsersController < ApplicationController
       flash[:notice] = "Added partner."
       redirect_to :back
     else
+      
       flash[:error] = "Unable to add partner."
       redirect_to :back
     end
