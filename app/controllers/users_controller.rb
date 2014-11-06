@@ -5,6 +5,7 @@ class UsersController < ApplicationController
   after_action :verify_authorized, except: [:show, :index]
   require 'csv'
 
+   
   def index
     # @user = User.find(params[:id])
     @users = User.all
@@ -12,7 +13,19 @@ class UsersController < ApplicationController
     @myproject = current_user.current_project
     @mygroup = GroupRelation.where(:project_id => @myproject, :user_id => current_user.id).pluck(:group_id)
     @current_user_relations = GroupRelation.find_by_group_id(@mygroup) 
-   
+
+    @current_projects = Project.where(course_id: current_user.current_course, active: true)
+    @active_project_in_course = !@current_projects.to_a.empty?
+    
+    if current_user.current_project != 0
+      @allowed_project_size = Project.find_by_id(current_user.current_project).group_size
+    else
+      @allowed_project_size = 0
+      return flash[:error] => "you done goofed"
+    end
+    
+    
+
   end
 
   def course_ids(user)
@@ -100,7 +113,42 @@ class UsersController < ApplicationController
     user = User.find(params[:id])
     authorize user
     current_user.update_attributes(secure_params)
+    
+    current_projects = Project.where(course_id: current_user.current_course, active: true)
+    active_project_in_course = !current_projects.to_a.empty?
+    
+    if active_project_in_course
+      current_user.update_attributes(:current_project => current_projects.pluck(:id)[0])
+    end
     redirect_to users_path
+      
+  end
+  
+  def set_current_project
+    user = User.find(params[:id])
+    authorize user
+    current_user.update_attributes(secure_params)
+    redirect_to users_path
+  end
+  
+  def add_partnership
+    authorize current_user
+    user = User.find(params[:id])
+    #current_group = GroupRelation.find
+    
+    group = GroupRelation.references(:group_relation).where(:user_id => user)
+
+    relation1 = GroupRelation.create(:user_id=>user.id)
+    relation2 = GroupRelation.create(:user_id=>current_user.id)
+    if relation1.save && relation2.save
+      flash[:notice] = "Added partner."
+      redirect_to :back
+    else
+      
+      flash[:error] = "Unable to add partner."
+      redirect_to :back
+    end
+
   end
 
   # Start download of csv file of partner data
@@ -156,6 +204,7 @@ class UsersController < ApplicationController
     end
   end
 
+
    def undo_request
     authorize User.all
     user = User.find(params[:id])
@@ -177,6 +226,7 @@ class UsersController < ApplicationController
     flash[:notice] = "Removed request."
   redirect_to users_path
   end
+
 
   def confirm
       authorize User.all
