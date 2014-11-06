@@ -113,9 +113,6 @@ class UsersController < ApplicationController
     user = User.find(params[:id])
     authorize user
     current_user.update_attributes(secure_params)
-<<<<<<< HEAD
-    redirect_to users_path
-=======
     
     current_projects = Project.where(course_id: current_user.current_course, active: true)
     active_project_in_course = !current_projects.to_a.empty?
@@ -150,7 +147,6 @@ class UsersController < ApplicationController
       flash[:error] = "Unable to add partner."
       redirect_to :back
     end
->>>>>>> group-view
   end
 
   # Start download of csv file of partner data
@@ -206,7 +202,6 @@ class UsersController < ApplicationController
     end
   end
 
-<<<<<<< HEAD
    def undo_request
     authorize User.all
     user = User.find(params[:id])
@@ -228,9 +223,7 @@ class UsersController < ApplicationController
     flash[:notice] = "Removed request."
   redirect_to users_path
   end
-=======
- 
->>>>>>> group-view
+
 
   def confirm
       authorize User.all
