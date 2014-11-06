@@ -15,11 +15,12 @@
 			<li><%= link_to 'Add a Roster', roster_path %></li>
 		<%end%>
 <div class="dropdown pull-right">
-  <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="background-color:transparent;background-image: none;border: 1px solid transparent; text-shadow: 0 0px; box-shadow: 0 0px;">
-    <span class="glyphicon glyphicon-cog" style="font-size:21px;"></span>
+  <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="background-color:transparent; background-image:none; border:1px solid transparent; text-shadow: 0 0px; box-shadow: 0 0px;">
+    <span class="glyphicon glyphicon-cog" style="font-size:23px;"></span>
     <span class="caret"></span>
   </button>
   <ul class="dropdown-menu pull-right" role="menu">
+  	<li role="presentation"><%= link_to "#{current_user.first_name} #{current_user.last_name}", users_profile_path %></li>
     <li role="presentation"><%= link_to 'Edit account', edit_user_registration_path %></li>
     <li role="presentation" class="divider"></li>
     <li role="presentation"><%= link_to 'Sign out', destroy_user_session_path, :method => :delete %></li>

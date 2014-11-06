@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.5.37)
 # Database: 191grp11
-# Generation Time: 2014-10-23 02:05:38 +0000
+# Generation Time: 2014-11-06 04:16:20 +0000
 # ************************************************************
 
 
@@ -69,16 +69,9 @@ LOCK TABLES `group_relations` WRITE;
 
 INSERT INTO `group_relations` (`id`, `group_id`, `user_id`, `project_id`, `course_id`, `accepted_at`, `status`, `created_at`, `updated_at`)
 VALUES
-	(1,1,6,1,36601,NULL,0,'2014-10-17 23:27:17','2014-10-17 23:27:17'),
-	(2,1,4,1,36601,NULL,0,'2014-10-17 23:28:34','2014-10-17 23:28:34'),
-	(4,1,0,1,36601,NULL,0,NULL,NULL),
-	(5,2,4,2,37050,NULL,0,NULL,NULL),
-	(6,1,5,1,37050,NULL,0,'2014-10-21 22:36:50','2014-10-21 22:36:50'),
-	(7,3,5,3,37050,NULL,0,'2014-10-21 22:36:50','2014-10-21 22:36:50'),
-	(8,3,0,3,37050,NULL,0,'2014-10-21 22:36:50','2014-10-21 22:36:50'),
-	(9,2,6,4,37050,NULL,0,NULL,NULL),
-	(11,2,0,2,37050,NULL,0,NULL,NULL),
-	(12,3,4,3,37050,NULL,0,'2014-10-21 22:36:50','2014-10-21 22:36:50');
+	(159,70,0,5,37050,NULL,0,'2014-11-06 03:44:13','2014-11-06 03:44:13'),
+	(160,70,4,5,37050,NULL,1,'2014-11-06 03:44:13','2014-11-06 03:44:13'),
+	(161,70,5,5,37050,NULL,1,'2014-11-06 03:44:14','2014-11-06 03:44:14');
 
 /*!40000 ALTER TABLE `group_relations` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -106,14 +99,14 @@ UNLOCK TABLES;
 LOCK TABLES `projects` WRITE;
 /*!40000 ALTER TABLE `projects` DISABLE KEYS */;
 
-INSERT INTO `projects` (`id`, `name`, `course_id`, `group_size`, `created_at`, `updated_at`)
+INSERT INTO `projects` (`id`, `name`, `course_id`, `active`, `group_size`, `created_at`, `updated_at`)
 VALUES
-	(1,'Smiley Faces',36601,2,'2014-10-21 03:45:50','2014-10-23 00:31:52'),
-	(2,'Linked Lists',36684,2,'2014-10-21 03:52:36','2014-10-23 00:37:21'),
-	(3,'Database Parsing',36624,2,'2014-10-22 06:54:02','2014-10-23 00:37:28'),
-	(4,'Traffic Signal Simulator',37050,4,'2014-10-22 06:54:26','2014-10-23 00:37:00'),
-	(5,'Interactive Teddy Bear Creation',37050,4,'2014-10-22 06:55:05','2014-10-22 06:55:05'),
-	(6,'Social Restaurant Tables',37050,4,'2014-10-22 06:55:32','2014-10-22 06:55:32');
+	(1,'Smiley Faces',36601,1,2,'2014-10-21 03:45:50','2014-10-23 00:31:52'),
+	(2,'Linked Lists',36684,1,2,'2014-10-21 03:52:36','2014-10-23 00:37:21'),
+	(3,'Database Parsing',36624,1,2,'2014-10-22 06:54:02','2014-10-23 00:37:28'),
+	(4,'Traffic Signal Simulator',37050,1,4,'2014-10-22 06:54:26','2014-10-23 00:37:00'),
+	(5,'Interactive Teddy Bear Creation',37050,1,3,'2014-10-22 06:55:05','2014-10-22 06:55:05'),
+	(6,'Social Restaurant Tables',37050,0,4,'2014-10-22 06:55:32','2014-10-22 06:55:32');
 
 /*!40000 ALTER TABLE `projects` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -155,6 +148,26 @@ VALUES
 UNLOCK TABLES;
 
 
+# Dump of table schema_migrations
+# ------------------------------------------------------------
+
+LOCK TABLES `schema_migrations` WRITE;
+/*!40000 ALTER TABLE `schema_migrations` DISABLE KEYS */;
+
+INSERT INTO `schema_migrations` (`version`)
+VALUES
+	('20140529148575'),
+	('20140529194119'),
+	('20140715214449'),
+	('20140715214459'),
+	('20140717232431'),
+	('20140731231530'),
+	('20140801165743');
+
+/*!40000 ALTER TABLE `schema_migrations` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
 # Dump of table users
 # ------------------------------------------------------------
 
@@ -163,13 +176,13 @@ LOCK TABLES `users` WRITE;
 
 INSERT INTO `users` (`id`, `ucinetid`, `uci_affiliations`, `first_name`, `last_name`, `role`, `email`, `current_course`, `current_project`, `sign_in_count`, `current_sign_in_at`, `last_sign_in_at`, `current_sign_in_ip`, `last_sign_in_ip`, `age_in_seconds`, `avatar_file_name`, `avatar_content_type`, `avatar_file_size`, `avatar_updated_at`, `created_at`, `updated_at`)
 VALUES
-	(0,'ryderc','student','Christina','Ryder',0,'ryderc@uci.edu',37050,1,44,'2014-10-23 00:46:03','2014-10-23 00:06:39','127.0.0.1','127.0.0.1',NULL,'622152_10151303211381368_1975951804_o.jpg','image/jpeg',143122,'2014-10-23 00:29:54',NULL,'2014-10-23 02:01:09'),
-	(1,'msilberm','student, staff','Michael','Silberman',1,'msilberm@uci.edu',37050,1,12,'2014-10-23 00:30:09','2014-10-22 23:55:41','127.0.0.1','127.0.0.1',NULL,NULL,NULL,NULL,NULL,NULL,'2014-10-23 00:42:38'),
-	(2,'kay','staff,faculty,employee','David G','Kay',2,'kay@uci.edu',36624,1,10,'2014-10-23 02:03:39','2014-10-22 19:43:23','127.0.0.1','127.0.0.1',NULL,NULL,NULL,NULL,NULL,NULL,'2014-10-23 02:04:30'),
-	(3,'ziv','student,staff,faculty,employee','Hadar','Ziv',3,'ziv@uci.edu',36601,1,1,'2014-10-22 17:59:26','2014-10-22 17:59:26','127.0.0.1','127.0.0.1',NULL,NULL,NULL,NULL,NULL,NULL,'2014-10-22 17:59:26'),
-	(4,'imcnicol','student','Ian','Mcnicol',0,'imcnicol@uci.edu',36601,1,1,'2014-10-11 01:21:13','2014-10-11 01:21:13','127.0.0.1','127.0.0.1',NULL,'1382955_10202520222632714_437838427_n.jpg','image/jpeg',60296,'2014-10-11 01:37:45',NULL,'2014-10-11 01:37:45'),
-	(5,'vdhingrej','student','Vinayak','Dhingreja',0,'vdhingrej@uci.edu',36601,1,2,'2014-10-11 01:38:08','2014-10-11 01:37:53','127.0.0.1','127.0.0.1',NULL,'10641277_10152392094266235_7300912786488460398_n.jpg','image/jpeg',55627,'2014-10-11 01:38:02',NULL,'2014-10-11 01:38:08'),
-	(6,'petrovd','student','Delian','Petrov',0,'petrovd@uci.edu',36601,1,4,'2014-10-22 07:01:55','2014-10-21 06:15:51','127.0.0.1','127.0.0.1',NULL,'10525581_10204567467375380_3907820298695189766_n.jpg','image/jpeg',68194,'2014-10-11 01:43:06',NULL,'2014-10-22 07:01:55');
+	(0,'ryderc','student','Christina','Ryder',0,'ryderc@uci.edu',37050,5,60,'2014-11-06 00:05:23','2014-11-06 00:04:30','127.0.0.1','127.0.0.1',NULL,'622152_10151303211381368_1975951804_o.jpg','image/jpeg',143122,'2014-10-23 00:29:54',NULL,'2014-11-06 03:43:37'),
+	(1,'msilberm','student, staff','Michael','Silberman',1,'msilberm@uci.edu',36684,1,12,'2014-10-23 00:30:09','2014-10-22 23:55:41','127.0.0.1','127.0.0.1',NULL,NULL,NULL,NULL,NULL,NULL,'2014-10-23 00:42:38'),
+	(2,'kay','staff,faculty,employee','David G','Kay',2,'kay@uci.edu',36684,1,12,'2014-11-05 18:22:09','2014-11-05 09:56:47','127.0.0.1','127.0.0.1',NULL,NULL,NULL,NULL,NULL,NULL,'2014-11-05 18:22:09'),
+	(3,'ziv','student,staff,faculty,employee','Hadar','Ziv',3,'ziv@uci.edu',36684,1,2,'2014-11-05 09:50:18','2014-10-22 17:59:26','127.0.0.1','127.0.0.1',NULL,NULL,NULL,NULL,NULL,NULL,'2014-11-05 09:51:45'),
+	(4,'imcnicol','student','Ian','Mcnicol',0,'imcnicol@uci.edu',37050,5,8,'2014-11-05 23:48:06','2014-11-05 22:59:49','127.0.0.1','127.0.0.1',NULL,'1382955_10202520222632714_437838427_n.jpg','image/jpeg',60296,'2014-10-11 01:37:45',NULL,'2014-11-05 23:48:06'),
+	(5,'vdhingrej','student','Vinayak','Dhingreja',0,'vdhingrej@uci.edu',36684,5,12,'2014-11-06 00:05:20','2014-11-06 00:04:56','127.0.0.1','127.0.0.1',NULL,'10641277_10152392094266235_7300912786488460398_n.jpg','image/jpeg',55627,'2014-10-11 01:38:02',NULL,'2014-11-06 00:05:20'),
+	(6,'petrovd','student','Delian','Petrov',0,'petrovd@uci.edu',36684,5,8,'2014-11-05 23:50:43','2014-11-05 21:43:54','127.0.0.1','127.0.0.1',NULL,'10525581_10204567467375380_3907820298695189766_n.jpg','image/jpeg',68194,'2014-10-11 01:43:06',NULL,'2014-11-06 00:03:23');
 
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
