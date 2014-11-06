@@ -210,13 +210,14 @@ end
     Group.find_by_id(@mygroup).destroy
     # Delete relation for current user
     GroupRelation.where(:project_id => @myproject, :user_id => requester?(user).id, :group_id=>@mygroup, status: 0).first.destroy
-    GroupRelation.where(:project_id => @myproject, :user_id => requested?(user).id, :group_id=>@mygroup, status: 1).first.destroy
+    
   
     # Delete relation for user
     flash[:notice] = "Removed request."
     else 
     flash[:error] = "Unable to remove request."
     end
+    GroupRelation.where(:project_id => @myproject, :user_id => requested?(user).id, :group_id=>@mygroup, status: 1).first.destroy
   redirect_to users_path
   end
 
