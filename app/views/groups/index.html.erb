@@ -6,33 +6,26 @@
 	<strong>1. Please select the course that you want to get a partner in?</strong>
 	<%= render 'groups/course_select' %>
 <% end %>
-  
-	
 
 
 <!-- dropdown menu to select current project, if more than one exist -->
 <% if @current_projects.size > 1 %>
 		
 	<strong>It looks like your class has more than one active projects...</strong> 
-	<strong>Please select your the project for which you want to pick partners for:</strong>
+	<strong>Please select the project:</strong>
 	<%= render 'groups/project_select' %>
 	
+<% elsif !@current_projects.empty? %>
+	<% current_user.update_attributes(:current_project => @current_projects.pluck(:id)[0]) %>
+		
+<%else%>
+	<% current_user.update_attributes(:current_project => 0) %>
+	
+	
+			
 <%end%>
 
-
-<% @course_projects.each do |project| %>
-		
-	<li><strong>Your assigned project, <%= project.name %>, involves </strong>
-		
-		<!-- depending on the group size of the project, choose whether the group is a partnership (2 people) or group (3 or more) -->
-		<% case project.group_size %>
-			<% when 2 %>
-				<%= '2 people (partnership)' %> </li>
-			<% when 2..(1.0/0.0) %>
-				<%= '3 or more (group)' %> </li>
-		<% end %>	
-<% end %>
-
+<% group_or_partnership? %>
 
 
 
