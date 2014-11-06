@@ -1,4 +1,4 @@
-<%= form_for :user, :url => set_current_project_user_path(current_user.id) do |f| %>	
+<%= form_for :user, :url => set_current_course_user_path(current_user.id) do |f| %>	
   <div style="max-width: 450px">
 	<%= f.select :current_project, options_from_collection_for_select(@current_projects, 'id', 'name', current_user.current_project), {}, {class: "form-control"} %><br />
 	</div>	
