@@ -73,12 +73,14 @@ def TA_parse(txt)
   end
 end
 
-def course_number_parse(txt)
-  re=('ID:\s(.*)')
+def course_unit_parse(txt)
+  re=('(.*),(.*),.* (.*)')
   m=Regexp.new(re,Regexp::IGNORECASE);
   if m.match(txt)
       word1=m.match(txt)[1];
-  return word1
+      word2=m.match(txt)[2];
+      word3=m.match(txt)[3];
+  return word1 + ", "+ word2 + ", "+ word3
   end
 end
 
@@ -119,13 +121,8 @@ def get_student_data(i, student_data_array)
   end
 end
 
-def student_data_slice(array)
-  array.slice!(11,600)
-end
-
-def remove_registrar_text(array)
-  #show array starting with [8] and 100 length afterwards.  Gets rid of UCI registrar text
-  array.slice!(8,100)
+def data_slice(array, x, y)
+  array.slice!(x,y)
 end
 
 def get_course_data(array)
@@ -133,17 +130,32 @@ def get_course_data(array)
   @course_code = find_first_digits(array[1][0])  
   @instructor = get_instructor_name(array[3][0])
   @permissions = TA_parse(array[8][0])
-  #@course_number = course_title_parse(array[2][0])
-  @course_title = array[2][0]
+  @course_title = course_unit_parse(array[2][0])
+  #@course_title = array[2][0]
   #@location = csv[4][0]  if location is needed later
   return @quarter, @course_code, @instructor, @permissions, @course_title
+end
+
+def set_current_project_course(user, project, course)
+  user.current_project = project.id
+  user.current_course = course.id
+  user.save
+  end
+
+def destroy_roster_relation(netid, coursecode)
+  if user_exists?(netid)
+  @newuser = User.find_by(:ucinetid => netid)
+  set_current_project_course(@newuser, Project.find(0), Course.find(0))
+  roster = Roster.where(course_id: coursecode, user_id: User.find_by(:ucinetid => netid).id).first
+  roster.destroy
+end
 end
 
 def enrolled_students(course_code)
   @enrolled_students_array = []
   array = Roster.where(course_id: course_code).pluck(:user_id)
   array.each do |i|
-    if User.find(i) != nil
+    if user_exists?(:id, i)
       user = User.find(i)
       @enrolled_students_array.push(user.ucinetid)
     end
@@ -151,17 +163,24 @@ def enrolled_students(course_code)
 return @enrolled_students_array
   end
 
-def in_new_roster?(ucinetid, student_data_array)
-  @student_netids = []
+  def model_findby(model, findby, id)
+    model.find_by(findby => id).nil?
+  end
+
+def csv_netids(student_data_array)
+    @student_netids = []
     student_data_array.each do |i|
-    get_student_data(i, student_data_array)
+    @netid = i[@mail_col].downcase
+    @netid.slice! "@uci.edu"
     @student_netids.push(@netid)
     end
     @student_netids.push(current_user.ucinetid)
+end
 
-  if User.find_by(:ucinetid => ucinetid)
+def in_new_roster?(ucinetid, student_data_array)
+  if user_exists?(:ucinetid, @netid)
     user = User.find_by(:ucinetid => ucinetid)
-
+    @student_netids = csv_netids(student_data_array)
       @student_netids.each do |enrolled_student_netid|
        if ucinetid == enrolled_student_netid
         return true
@@ -172,7 +191,7 @@ def in_new_roster?(ucinetid, student_data_array)
 end
 
 def enrolled?(ucinetid, coursecode)
-  if user_exists?(ucinetid)
+  if user_exists?(:ucinetid, @netid)
     user = User.find_by(:ucinetid => ucinetid)
     if Roster.find_by(:user_id => user.id, course_id: coursecode) != nil
       return true
@@ -181,59 +200,55 @@ def enrolled?(ucinetid, coursecode)
   return false
 end
 
-def user_exists?(ucinetid)
-  if User.find_by(:ucinetid => ucinetid) != nil
+def user_exists?(findby, id)
+  if User.find_by(findby => id) != nil
     return true
   else
     return false
   end
 end
 
-def csv_import
-  authorize User.all
-  # variables for counting how many roster relations made
-  add = 0
-  removal = 0
+def open_and_parse_csv
   csv_text = File.open(params[:dump][:file].tempfile, :headers => true)
   csv = CSV.parse(csv_text)
   csv = remove_nils(csv)
-  csv = remove_registrar_text(csv)
+  csv = data_slice(csv, 8, 100)
+  return csv
+end
+
+def csv_import
+  authorize User.all
+  # variables for counting how many roster relations made
+  add, removal = [0, 0]
+  csv = open_and_parse_csv
   course_data = get_course_data(csv)
-  student_data = student_data_slice(csv)
-  #finding the email and name columns
+  student_data = data_slice(csv, 11, 600)
   enrolls = enrolled_students(@course_code)
 
-  #makes new project for default 
-  
-
   #makes new course and project, sets prof's curcourse and curproj to new sutff
-  if Course.find_by_id(@course_code).nil?
+  if model_findby(Course, :id, @course_code).nil?
   @course = Course.new(:id => @course_code,:course_title => @course_title, :instructor => @instructor[0])
   @course.save
   @newproj = Project.new(name: "#{@course_title} New Project", course_id: @course_code, active: true, group_size: 2)
   @newproj.save
-  current_user.current_project = @newproj.id
-  current_user.current_course = @course.id
-  current_user.save
   else
   @course = Course.find_by_id(@course_code)
       if Project.where(course_id: @course_code, active: true).first
         @newproj = Project.where(course_id: @course_code, active: true).first
         @newproj.save
-      else 
+      else
         @newproj = Project.new(name: "#{@course_title} New Project", course_id: @course_code, active: true, group_size: 2)
         @newproj.save
       end
+  set_current_project_course(current_user, @newproj, @course)
   end
  
   # for every 'row' or array in studentdata array, excluding row 1 and the last two
   student_data[1..-2].each do |i|
     get_student_data(i, student_data)
-    #if the ucinet id is found in the database
-  if user_exists?(@netid)
-    #set that ucinetid to @newuser, and add that corresponding
-    #id with courseID in a new roster row
-    @newuser = User.find_by(:ucinetid => @netid)
+    # if i student exists, find them
+  if user_exists?(:ucinetid, @netid)
+    @newuser = model_findby(User, :ucinetid, @netid)
   else 
     #make a new user with the info we got from studentdata array
     @newuser = User.new(:ucinetid => @netid, :first_name => @name[0], :last_name => @name[1], :email => @mail, 
@@ -242,9 +257,7 @@ def csv_import
   end
    if !enrolled?(@netid, @course_code) && in_new_roster?(@netid, student_data)
       roster = Roster.new(:course_id => @course_code, :user_id => @newuser.id)
-      @newuser.current_project = @newproj.id
-      @newuser.current_course = @course.id
-      @newuser.save
+      set_current_project_course(@newuser, @newproj, @course)
     if roster.save
       add+=1
     end
@@ -252,17 +265,10 @@ def csv_import
 end
       enrolls.each do |enrolled_student_netid|
       if enrolled?(enrolled_student_netid, @course_code) && !in_new_roster?(enrolled_student_netid, student_data)
-        roster = Roster.where(course_id: @course_code, user_id: User.find_by(:ucinetid => enrolled_student_netid).id).first
-        @newuser = User.find_by(:ucinetid => enrolled_student_netid)
-        @newuser.current_project = 0
-        @newuser.current_course = 0
-        @newuser.save
-        roster.destroy
+        destroy_roster_relation(enrolled_student_netid, @course_code)
         removal+=1
       else
-        @newuser.current_project = @newproj.id
-        @newuser.current_course = @course.id
-        @newuser.save
+        set_current_project_course(@newuser, @newproj, @course)
       end
       end 
   redirect_to :back, :notice => "CSV Import Successful,  #{add} students added to this class, #{removal} students removed from this class"

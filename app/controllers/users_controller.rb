@@ -23,9 +23,6 @@ class UsersController < ApplicationController
       @allowed_project_size = 0
       return flash[:error] => "you done goofed"
     end
-    
-    
-
   end
 
   def course_ids(user)
@@ -33,20 +30,27 @@ class UsersController < ApplicationController
   end
 
   def requested?(user)
-        if GroupRelation.where(:project_id => @myproject, :user_id => current_user.id, :group_id=>@mygroup).pluck(:status)[0] == 1
+    @mygroup = GroupRelation.where(:project_id => @myproject, :user_id => current_user.id).pluck(:group_id)
+    current_user_status = GroupRelation.where(:project_id => current_user.current_project, :user_id => current_user.id, :group_id=>@mygroup).pluck(:status)[0]
+    user_status = GroupRelation.where(:project_id => current_user.current_project, :user_id => user.id, :group_id=>@mygroup).pluck(:status)[0]
+        if current_user_status == 1
       return current_user
-        elsif GroupRelation.where(:project_id => @myproject, :user_id => user.id, :group_id=>@mygroup).pluck(:status)[0] == 1
+        elsif user_status == 1
       return user
     end
   end
 
   def requester?(user)
-    if GroupRelation.where(:project_id => @myproject, :user_id => current_user.id, :group_id=>@mygroup).pluck(:status)[0] == 0
+    @mygroup = GroupRelation.where(:project_id => @myproject, :user_id => current_user.id).pluck(:group_id)[0]
+    user_status = GroupRelation.where(:project_id => @myproject, :user_id => user.id, :group_id=>@mygroup).pluck(:status)[0]
+    current_user_status = GroupRelation.where(:project_id => @myproject, :user_id => current_user.id, :group_id=>@mygroup).pluck(:status)[0]
+    if current_user_status == 0
       return current_user
-    elsif GroupRelation.where(:project_id => @myproject, :user_id => user.id, :group_id=>@mygroup).pluck(:status)[0] == 0
+    elsif user_status == 0
       return user
     end
   end
+
   def teammates?(user, user2)
     user2_confirmed = GroupRelation.where(:project_id => @myproject, :user_id => user2.id, :group_id=>@mygroup).pluck(:status)[0] == 2
     user_confirmed = GroupRelation.where(:project_id => @myproject, :user_id => user.id, :group_id=>@mygroup).pluck(:status)[0] == 2
@@ -175,27 +179,28 @@ class UsersController < ApplicationController
     @users = User.all
     @mycourse = current_user.current_course 
     @myproject = current_user.current_project
-    @mygroup = GroupRelation.where(:project_id => @myproject, :user_id => current_user.id).pluck(:group_id)
-   
+    if GroupRelation.where(:project_id => @myproject, :user_id => current_user.id).pluck(:group_id)
+      @mygroup = GroupRelation.where(:project_id => @myproject, :user_id => current_user.id).pluck(:group_id)
+    end
     # current_project only gets the first project. #TODO FIX! 
     allowed_group_size = Project.find_by_id(current_user.current_project).group_size
-    current_group_size = GroupRelation.where(project_id: current_user.current_project, course_id: current_user.current_course).uniq.pluck(:user_id).size
-     
-    if current_group_size >= allowed_group_size
-        flash[:error] = "Unable to add partner, you might have already requested someone."
+    my_current_group_size = GroupRelation.where(project_id: current_user.current_project, course_id: current_user.current_course, group_id: @mygroup).uniq.pluck(:user_id).size
+    
+    if my_current_group_size >= allowed_group_size
+        flash[:error] = "Unable to send request, you have too many pending requests."
         redirect_to users_path
     else
-      if !in_group?(current_user) && !requester?(current_user) && !requested?(current_user)
-        newgroup = Group.create(:name => current_user.first_name + "_" + user.first_name + "_partnership")
+      if !in_group?(current_user) && ( !requester?(current_user) && !requested?(current_user) )
+        newgroup = Group.create(name: "#{current_user.first_name} #{@mycourse}")
         #create relation for current user which is always the requester (status=0, pending)
-        GroupRelation.create(:course_id => current_user.current_course, :user_id=> current_user.id, 
-      :project_id=> current_user.current_project, :status=>0, group_id: newgroup.id)
+        GroupRelation.create(course_id: @mycourse, user_id: current_user.id, project_id: @myproject, 
+      status: 0, group_id: newgroup.id)
       else
-        newgroup = Group.find_by_id(@mygroup[0])
+        newgroup = Group.find_by_id(@mygroup)
       end
     # create relation for user who is being requested (status=1, requested)
-    GroupRelation.create(:course_id => current_user.current_course, 
-      :user_id=> user.id, :project_id=> current_user.current_project, :status=>1, group_id: newgroup.id)
+    GroupRelation.create(course_id: @mycourse, user_id: user.id, project_id: @myproject, 
+      status: 1, group_id: newgroup.id)
         
    flash[:notice] = "Requested partner."
         redirect_to users_path
@@ -211,15 +216,15 @@ class UsersController < ApplicationController
     @mygroup = GroupRelation.where(:project_id => @myproject, :user_id => current_user.id).pluck(:group_id)[0] 
 
     current_group_size = GroupRelation.where(group_id: @mygroup).size
-    
+    GroupRelation.where(:project_id => @myproject, :user_id => user.id, :group_id=>@mygroup, status: 1).first.destroy
+    # Delete relation for user
+
     if current_group_size <= 2
     # Delete the group
     Group.find_by_id(@mygroup).destroy
-    GroupRelation.where(:project_id => @myproject, :user_id => requester?(user).id, :group_id=>@mygroup, status: 0).first.destroy
-    end
     # Delete relation for current user
-    GroupRelation.where(:project_id => @myproject, :user_id => requested?(user).id, :group_id=>@mygroup, status: 1).first.destroy
-    # Delete relation for user
+    GroupRelation.where(:project_id => @myproject, :user_id => current_user.id, :group_id=>@mygroup, status: 0).first.destroy
+    end
     flash[:notice] = "Removed request."
   redirect_to users_path
   end
@@ -265,52 +270,6 @@ end
     flash[:error] = "Unable to remove request."
     end
     GroupRelation.where(:project_id => @myproject, :user_id => requested?(user).id, :group_id=>@mygroup, status: 1).first.destroy
-  redirect_to users_path
-  end
-
-  def delete_partnership
-    authorize User.all
-    user = User.find(params[:id])
-    @users = User.all
-    @mycourse = current_user.current_course 
-    @myproject = current_user.current_project
-    @mygroup = GroupRelation.where(:project_id => @myproject, :user_id => current_user.id).pluck(:group_id)[0]
-
-    if GroupRelation.where(:group_id=>@mygroup).collect(&:id).size <= 2
-    # Delete the group
-    Group.find_by_id(@mygroup).destroy
-    # Delete relation for current user
-    GroupRelation.where(:project_id => @myproject, :user_id => current_user.id, :group_id=>@mygroup).first.destroy
-    GroupRelation.where(:project_id => @myproject, :user_id => user.id, :group_id=>@mygroup).first.destroy
-  
-    # Delete relation for user
-    flash[:notice] = "Removed request."
-    else 
-    flash[:error] = "Unable to remove request."
-    end
-  redirect_to users_path
-  end
-
-  def delete_partnership
-    authorize User.all
-    user = User.find(params[:id])
-    @users = User.all
-    @mycourse = current_user.current_course 
-    @myproject = current_user.current_project
-    @mygroup = GroupRelation.where(:project_id => @myproject, :user_id => current_user.id).pluck(:group_id)[0]
-
-    if GroupRelation.where(:group_id=>@mygroup).collect(&:id).size <= 2
-    # Delete the group
-    Group.find_by_id(@mygroup).destroy
-    # Delete relation for current user
-    GroupRelation.where(:project_id => @myproject, :user_id => current_user.id, :group_id=>@mygroup).first.destroy
-    GroupRelation.where(:project_id => @myproject, :user_id => user.id, :group_id=>@mygroup).first.destroy
-  
-    # Delete relation for user
-    flash[:notice] = "Removed request."
-    else 
-    flash[:error] = "Unable to remove request."
-    end
   redirect_to users_path
   end
 
