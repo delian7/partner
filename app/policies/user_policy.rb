@@ -9,54 +9,38 @@ class UserPolicy
   def index?
     true
   end
-
-def csv_import?
-  true
-end
-def delete_partnership?
-  true
-end
-def set_current_project?
-  true
-end
-def teammates?
-  true
-end
-def in_group?
-  true
-end
-def partnerup?
-  true
-end
- 
+  def new?
+    true
+  end
+  def show?
+    true
+  end
   def profile?
     true
-  end    
+  end
+  def update?
+    true
+  end
+  def destroy?
+    true
+  end
+  def set_current_course?
+    true
+  end
+
+  def set_current_project?
+    true
+  end
+def export_csv?
+  true
+end
+def send_request?
+  true
+end
+def undo_request?
+  true
+end
   def ignore?
-    true
-  end  
-   def ignore?
-    true
-  end  
-   def show?
-     true
-  end  
-    def remove?
-    true
-  end
-
-  def update?
-    true
-  end
-   def add_partnership?
-     true
-  end  
-  
-  def add_to_group?
-    true
-  end
-
-  def update?
     true
   end
 
@@ -64,34 +48,10 @@ end
     true
   end
 
-  def destroy?
-    true
-  end
-  
-  def set_current_course?
-    true
-  end 
-    def undo_request?
-    true
-  end 
-  
-
-  def clearall?
-    # as long as the user is an admin or vip role , 1||2
-    user.admin? || user.vip?
-  end
-
-  def cancel?
-    true
-  end
-
-  def export?
-    # as long as the user is an admin or vip role , 1||2
+  def export_csv?
 true
   end
 
-  def clearpartnership?
-    true
-  end
+
 
 end

@@ -14,22 +14,21 @@ devise_for :users, :controllers => {:registrations => "registrations"}
   
   resources :users do
      member do
-        # get :cancel
-        get :confirm
-        get :registrations
-        get :sessions
-        # get :add_to_group
-        # get :ungroup
+        get :send_request
         get :undo_request
+        get :confirm
         get :ignore
         get :delete_partnership
+
+        get :registrations
+        get :sessions
+        
         post :set_current_course
         post :set_current_project
-        get :partnerup
         end
      collection do
-       get :clearall
-       get :export
+       get :clear_all
+       get :export_csv
         end
     end
 
@@ -47,7 +46,6 @@ devise_for :users, :controllers => {:registrations => "registrations"}
        get :remove
         end
      collection do
-     get :import 
      get :csv_import
         end
     end
@@ -58,12 +56,6 @@ devise_for :users, :controllers => {:registrations => "registrations"}
        post :update
        get :remove
         end
-     collection do
-        end
-    end
-     resources :groups do
-     member do
-      end
      collection do
         end
     end

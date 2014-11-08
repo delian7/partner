@@ -2,18 +2,13 @@
 	<div style="font-size:45px; font-weight:bold;">Students
 		<%= render 'layouts/course_select' %>
 			<tr>
-				<td class='collapsable'></td>
-				<td><strong>Student Name</strong></td>
-				<td class='collapsable'><strong>Email</strong></td></td> <td><strong>Groups</strong></td>
+				<%= render 'users/tableinfo/nameemail'%> <td><strong>Groups</strong></td>
 			</tr>
 		<% @users.each do |user| %>
-			<% users_courses = user.courses.collect(&:id)%>
-			<% mycourse=current_user.current_course %>
-			<% if users_courses.include?(mycourse) && user.role == 0 %>
+		<% @user = user %>
+			<% if classmates?(@user, @mycourse) && is_student?(@user) %>
 				<tr>
-					<td class='collapsable'><%= link_to (image_tag (user.avatar.url), :style => 'max-height: 55px; max-width: 55px;'), user %></td> 
-					<td><%= link_to "#{user.first_name} #{user.last_name}", user %></td>
-					<td class='collapsable'><%= user.email %></td>
+					<%= render 'users/tableinfo/userinfo', user: @user %>
 					<td><%= user.groups.all.collect(&:name).to_sentence %></td>
 				</tr>
 			<% end %>

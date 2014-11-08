@@ -2,29 +2,26 @@
 <%= render 'layouts/course_select' %>
     <!-- Start Table Header -->
    <tr>
-      <td class='collapsable'></td>
-      <td><b>Student Name</td>
-      <td class='collapsable'><b>Email</td></td> <td colspan="2" style="max-width:100px;"><b>Request</td>
+      <%= render 'users/tableinfo/nameemail'%>
+      <td colspan="2" style="max-width:100px;"><b>Request</td>
    </tr></b>
 <!-- End Table Header -->
 
 <% @users.each do |user| %>
  <% @user = user %>
- <% if course_ids(@user).include?(@mycourse) && current_user.id != @user.id && user.role == 0 && ((!in_group?(@user) && !in_group?(current_user)) || teammates?(@user, current_user) || requester?(@user) == @user || requested?(@user) == @user) %> 
+ <% if classmates?(@user, @mycourse) && !same?(current_user.id, @user.id) && is_student?(user) && (!confirmed?(@user)|| teammates?(@user, current_user) || requester?(@user) == @user || requested?(@user) == @user) %> 
     <tr>
-      <%= render 'users/userinfo', user: @user %>
+      <%= render 'users/tableinfo/userinfo', user: @user %>
               <% if requested?(@user) == @user%>
-                <%= render 'users/undo_button', user: @user %>
+                <%= render 'users/buttons/undo_button', user: @user %>
               <% elsif requester?(@user) == @user%>
-                <%= render 'users/confirm_button', user: @user %>
+                <%= render 'users/buttons/confirm_button', user: @user %>
               <% elsif teammates?(@user, current_user) %>
-                  <%= render 'users/leavegroup_button', user: @user  %>
+                  <%= render 'users/buttons/leavegroup_button', user: @user  %>
               <% elsif requester?(@user) == @user%>
               <% else %> 
-                <%= render 'users/request_button', user: @user  %>
+                <%= render 'users/buttons/request_button', user: @user  %>
               <% end %>
     </tr>
 <% end %>
 <% end %>
-
-
