@@ -1,0 +1,13 @@
+<div class="authform", style="max-width: 300px;">
+  <%= form_for(resource, :as => resource_name, :url => user_session_path, :html => { :role => 'form'}) do |f| %>
+    <h3>Sign in As...</h3>
+    <%= devise_error_messages! %>
+		<% if request.ip == "127.0.0.1" || true %>
+			<%= f.select :id, [['Christina Ryder','0'], ['Delian Petrov','6'], ['Professor Kay','2'],['Admin Ziv','3'],['Ian McNicol','4'],['Vinayak Dhingreja','5'],['Non_existent_User','555'],['50','50'],['11','11']], {}, {class: "form-control"} %>
+	 	<% else %>
+		  <%= f.hidden_field :id, :value => @campus_id %> 
+		  <%= f.hidden_field :ucinetid, :value => @ucinetid %>
+		<% end %>
+		<%= f.submit 'Sign in', :class => 'btn btn-primary' %>
+		</div>
+	<%end%>
