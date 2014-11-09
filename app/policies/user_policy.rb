@@ -15,6 +15,9 @@ class UserPolicy
   def show?
     true
   end
+   def delete_partnership?
+    true
+  end
   def profile?
     true
   end

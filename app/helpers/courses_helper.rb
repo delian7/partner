@@ -103,8 +103,8 @@ def enrolled_students(course_code)
   return @enrolled_students_array
   end
 
-def user_netid(ucinetid)
-    User.find_by(ucinetid: ucinetid)
+def user_netid(netid)
+    User.find_by(ucinetid: netid)
 end
 
 def course_id(coursecode)
@@ -120,7 +120,7 @@ def user_exists?(symbol, id)
 end
 
 def enrolled?(ucinetid, coursecode)
-    Roster.find_by(:user_id => user_netid(ucinetid).id, course_id: coursecode) != nil ? true : false
+    Roster.where(:user_id => user_netid(ucinetid).id, course_id: coursecode) != nil ? true : false
 end
 
 def in_new_roster?(ucinetid, student_data_array)

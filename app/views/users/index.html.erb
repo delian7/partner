@@ -1,15 +1,21 @@
 <table class="table" style="width: 95%!important;">
 <% case current_user.role %>
   <% when 0 %>
-		<% if @allowed_project_size > 2 %>
-			<%= render 'users/group' %>
+		<% if @myproject.group_size > 2 %>
+    <%= render 'users/student/tabnav'%>
+		<%= render 'users/student/find_group' %>
+
+
 		<%else%>
-    	<%= render 'users/student' %>
+      <%= render 'users/student/tabnav'%>
+    	<%= render 'users/student/find_partner' %>
+
+
 		<% end %>
   <% when 1 .. 2 %>
     <%= render'users/professor' %>
     <%= render 'users/buttons/vip_button' %>
   <% when 3 %>
-  <%= render'users/admin' %>
+  <%= render'users/admin/admin' %>
 <% end %>
 </table>

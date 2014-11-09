@@ -1,5 +1,5 @@
 <div style="font-size:45px; font-weight:bold;">Create Group
-<%= render 'layouts/course_select' %>
+
     <!-- Start Table Header -->
    <tr>
       <%= render 'users/tableinfo/nameemail'%>
@@ -7,9 +7,9 @@
    </tr></b>
 <!-- End Table Header -->
 
-<% @users.each do |user| %>
- <% @user = user %>
- <% if classmates?(@user, @mycourse) && !same?(current_user.id, @user.id) && is_student?(user) && (!confirmed?(@user)|| teammates?(@user, current_user) || requester?(@user) == @user || requested?(@user) == @user) %> 
+<% Groups.all.each do |group| %>
+ <% @group = group %>
+ <% if  %> 
     <tr>
       <%= render 'users/tableinfo/userinfo', user: @user %>
               <% if requested?(@user) == @user%>
