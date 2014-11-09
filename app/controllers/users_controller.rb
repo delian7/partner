@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   include UsersHelper
-  helper_method :course_ids, :requested?, :requester?, :teammates?, :in_group?, :classmates?, :same?, :is_student?, :user_netid
+  helper_method :course_ids, :requested?, :my_partner_for, :requester?, :teammates?, :in_group_for?, :classmates?, :same?, :is_student?, :user_netid
   before_filter :authenticate_user!
   # after_action :verify_authorized, except: [:show, :index]
   require 'csv'
@@ -21,9 +21,9 @@ class UsersController < ApplicationController
   end
 
   def show
-    user = User.find(params[:id])
+    @user = User.find(params[:id])
     if user_signed_in?
-      authorize user
+      authorize @user
     else
     redirect_to :back, :alert => "Access denied."
     end
@@ -112,7 +112,7 @@ class UsersController < ApplicationController
     authorize user
     set_current_users_instance_variables
     if !@mygroup.nil?
-    GroupRelation.where(project_id: @myproject.id, user_id: user.id, group_id: @mygroup.id, status: 0).first.destroy
+    GroupRelation.where(project_id: @myproject.id, user_id: user.id, group_id: @mygroup.id, status: 1).first.destroy
     # Delete relation for user
     
     if @current_group_size <= 2

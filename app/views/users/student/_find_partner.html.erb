@@ -1,27 +1,11 @@
-<div style="font-size:45px; font-weight:bold;">Find Partner
-
+<%= render 'users/tabnav/find_partner'%>
+<div><p style="font-size:45px; font-weight:bold;">Find Partner
     <!-- Start Table Header -->
    <tr>
-      <%= render 'users/tableinfo/nameemail'%>
+      <td class='collapsable'></td>
+      <td><b>Student Name</td>
+      <td class='collapsable'><b>Email</td></td> 
       <td colspan="2" style="max-width:100px;"><b>Request</td>
    </tr></b>
 <!-- End Table Header -->
-
-<% @users.each do |user| %>
- <% @user = user %>
- <% if classmates?(@user, @mycourse) && !same?(current_user.id, @user.id) && is_student?(user) && (!confirmed?(@user)|| teammates?(@user, current_user) || requester?(@user) == @user || requested?(@user) == @user) %> 
-    <tr>
-      <%= render 'users/tableinfo/userinfo', user: @user %>
-              <% if requested?(@user) == @user%>
-                <%= render 'users/buttons/undo_button', user: @user %>
-              <% elsif requester?(@user) == @user%>
-                <%= render 'users/buttons/confirm_button', user: @user %>
-              <% elsif teammates?(@user, current_user) %>
-                  <%= render 'users/buttons/leavegroup_button', user: @user  %>
-              <% elsif requester?(@user) == @user%>
-              <% else %> 
-                <%= render 'users/buttons/request_button', user: @user  %>
-              <% end %>
-    </tr>
-<% end %>
-<% end %>
+   <%= render 'users/tableinfo/user_render'%>

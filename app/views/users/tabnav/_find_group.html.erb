@@ -1,0 +1,25 @@
+<ul class="nav nav-tabs" role="tablist">
+  <%case current_user.role%>
+  <%when 0%>
+	<% if in_group_for?(current_user, current_user.current_project)%>
+		<li role="presentation" class="<%= 'active' if current_page?(groups_profile_path) %>">
+			<%= link_to 'View Group', groups_profile_path %></li>
+    	<li role="presentation" class="<%= 'active' if current_page?(users_path) %>">
+   			<%= link_to 'Find Members', users_path %></li>
+		<li role="presentation" class="<%= 'active' if current_page?(groups_path) %>">
+   			<%= link_to 'Find Group', groups_path %></li>
+    <%else%>
+    	<li role="presentation" class="<%= 'active' if current_page?(users_path) %>">
+    		<%= link_to 'New Group', users_path %></li>
+  		<li role="presentation" class="<%= 'active' if current_page?(groups_path) %>">
+  			<%= link_to 'Find Group', groups_path %></li>
+  	<%end%>
+    <%when 1..2%>
+      <li role="presentation" class="<%= 'active' if current_page?(users_path) %>">
+        <%= link_to 'Students', users_path %></li>
+    <li role="presentation" class="<%= 'active' if current_page?(groups_path) %>">
+        <%= link_to 'Groups', groups_path %></li>
+    <%when 3%>
+    <%end%>
+  <%= render 'layouts/course_select' %>
+</ul>

@@ -1,8 +1,7 @@
 <!-- selecting course that users will add groups to -->
 <!-- if the user is signed in and their enrolled in at least one course on roster -->
-<% @current_projects.to_a.empty? %>
 
-<% if !current_user.courses.first.blank? %>
+<% if !current_user.courses.first.blank? && !@current_projects.to_a.empty?%>
 	<div style="max-width:500px; float:right; font-size: 12px; line-height: 10px;">
 	
 		<!-- setting current course & project (if there's only one project)-->

@@ -1,31 +1,11 @@
-<h3>Let's Partner Up!</h3><br />
-
-<!-- selecting course that users will add groups to -->
-<!-- if the user is signed in and their enrolled in at least one course on roster -->
-<% if user_signed_in? && !current_user.courses.first.blank? %>
-	<strong>1. Please select the course that you want to get a partner in?</strong>
-	<%= render 'groups/course_select' %>
+<table class="table" style="width: 95%!important;">
+<% case current_user.role %>
+  <% when 0 %>
+    <%= render 'groups/student/find_group' %>
+  <% when 1 .. 2 %>
+    <%= render'groups/professor/find_group' %>
+    <%= render 'users/buttons/vip_button' %>
+  <% when 3 %>
+  <%= render'users/admin/admin' %>
 <% end %>
-
-
-<!-- dropdown menu to select current project, if more than one exist -->
-<% if @current_projects.size > 1 %>
-		
-	<strong>It looks like your class has more than one active projects...</strong> 
-	<strong>Please select the project:</strong>
-	<%= render 'groups/project_select' %>
-	
-<% elsif !@current_projects.empty? %>
-	<% current_user.update_attributes(:current_project => @current_projects.pluck(:id)[0]) %>
-		
-<%else%>
-	<% current_user.update_attributes(:current_project => 0) %>
-	
-	
-			
-<%end%>
-
-<% group_or_partnership? %>
-
-
-
+</table>

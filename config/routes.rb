@@ -1,12 +1,10 @@
 Rails.application.routes.draw do
 
-  get 'roster/index'
+  get 'groups/profile'
   get 'users/profile'
   get 'help', to: 'help#index'
   get 'courses', to: 'courses#index'
   get 'roster', to: 'roster#index'
-  get 'courses/set_course'
-  post 'courses/csv_import'
   
 
 devise_for :users, :controllers => {:registrations => "registrations"}

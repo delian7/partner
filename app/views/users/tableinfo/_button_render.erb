@@ -1,0 +1,10 @@
+<% if requested?(@user) == @user%>
+                <%= render 'users/buttons/undo_button', user: @user %>
+              <% elsif requester?(@user) == @user%>
+                <%= render 'users/buttons/confirm_button', user: @user %>
+              <% elsif teammates?(@user, current_user) %>
+                  <%= render 'users/buttons/leavegroup_button', user: @user  %>
+              <% elsif requester?(@user) == @user%>
+              <% else %> 
+                <%= render 'users/buttons/request_button', user: @user  %>
+              <% end %>
