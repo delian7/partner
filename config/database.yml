@@ -12,9 +12,9 @@ default: &default
   adapter: mysql2
   encoding: utf8
   pool: 5
-  database: 191grp11
+  database: partner_up_development
   password: 8JRKPGPSd7LnAzEH
-  username: 191grp11 
+  username: newtest
 
 development:
   <<: *default

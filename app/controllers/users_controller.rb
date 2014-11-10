@@ -1,46 +1,35 @@
 class UsersController < ApplicationController
-  include UsersHelper
-  helper_method :course_ids, :requested?, :my_partner_for, :requester?, :teammates?, :in_group_for?, :classmates?, :same?, :is_student?, :user_netid
   before_filter :authenticate_user!
+  before_filter :admin_only, :except => :show
+  helper_method :course_ids, :requested?, :my_partner_for, :requester?, :teammates?, :in_group_for?, :classmates?, :same?, :is_student?, :user_netid
+  include UsersHelper
   # after_action :verify_authorized, except: [:show, :index]
   require 'csv'
    
+
+
   def index
     # @user = User.find(params[:id])
+    @users = User.all
     set_current_users_instance_variables
     
     if @myproject.nil?
       set_current_project_course(current_user, Project.find(0), Course.find(0))
     end
-      # @allowed_project_size = @myproject.group_size
-  end
-
-  def new
-    user = User.find(params[:id])
-    authorize user
   end
 
   def show
     @user = User.find(params[:id])
-    if user_signed_in?
-      authorize @user
-    else
-    redirect_to :back, :alert => "Access denied."
-    end
-  end
-
-  def profile
-    if user_signed_in?
-    authorize current_user
-    else
-    redirect_to :back, :alert => "Access denied."
+    unless current_user.admin?
+      unless @user == current_user
+        redirect_to :back, :alert => "Access denied."
+      end
     end
   end
 
   def update
-    user = User.find(params[:id])
-    authorize user
-    if user.update_attributes(secure_params)
+    @user = User.find(params[:id])
+    if @user.update_attributes(secure_params)
       redirect_to users_path, :notice => "User updated."
     else
       redirect_to users_path, :alert => "Unable to update user."
@@ -49,15 +38,23 @@ class UsersController < ApplicationController
 
   def destroy
     user = User.find(params[:id])
-    authorize user
-    unless user == current_user
-      user.destroy
-      redirect_to users_path, :notice => "User deleted."
-    else
-      redirect_to users_path, :notice => "Can't delete yourself."
-    end
+    user.destroy
+    redirect_to users_path, :notice => "User deleted."
   end
-  
+
+  private
+
+  def admin_only
+  #   unless current_user.admin?
+  #     redirect_to :back, :alert => "Access denied."
+    # end
+  end
+
+  # def new
+  #   user = User.find(params[:id])
+  #   authorize user
+  # end
+
   def set_current_course
     authorize User.find(params[:id])
     set_current_users_instance_variables
@@ -184,11 +181,10 @@ class UsersController < ApplicationController
   redirect_to users_path
   end
 
-
   private
-  def login_params
-    params.require(:user).permit(:id)
-  end
+  # def login_params
+  #   params.require(:user).permit(:id)
+  # end
   def secure_params
     params.require(:user).permit(:id, :name, :ucinetid, :role, :current_course, :current_project)
   end

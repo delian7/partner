@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
+  mount Upmin::Engine => '/admin'
 
   get 'groups/profile'
   get 'users/profile'
   get 'help', to: 'help#index'
-  get 'courses', to: 'courses#index'
   get 'roster', to: 'roster#index'
   
 
@@ -67,4 +67,5 @@ devise_scope :user do
     get "sign_out", to: "devise/sessions#destroy"
     get "edit", to: "devise/registrations#update"
   end
+
 end

@@ -1,5 +1,7 @@
 class ApplicationController < ActionController::Base
-  include Pundit
+  # Prevent CSRF attacks by raising an exception.
+  # For APIs, you may want to use :null_session instead.
+include Pundit
 
   protect_from_forgery with: :exception
   before_action :configure_permitted_parameters, if: :devise_controller?
@@ -40,30 +42,16 @@ class ApplicationController < ActionController::Base
       end
         return @results
     end
-
-  def set_course
-    authorize User.all
-    @course = Course.find(params[:id])
-    if @user.update_attributes(secure_params)
-      redirect_to courses_path, :notice => "course updated."
-    else
-      redirect_to courses_path, :alert => "Unable to update course."
-    end
-
-    if user_signed_in? && !current_user.courses.blank?
-      @curr_course = Course.find(params[:id])
-      current_user.save
-    end
-    redirect_to root_path
-  end
-
   
 
   protected
 
-  def configure_permitted_parameters
-    devise_parameter_sanitizer.for(:sign_up) << :id
-    devise_parameter_sanitizer.for(:account_update) << :id
+  # def configure_permitted_parameters
+  #   devise_parameter_sanitizer.for(:sign_up) << :id
+  #   devise_parameter_sanitizer.for(:account_update) << :id
+  # end
+ def configure_permitted_parameters
+    devise_parameter_sanitizer.for(:user) { |u| u.permit(:id) }
   end
 
   private
