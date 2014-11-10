@@ -59,7 +59,7 @@ class ProjectsController < ApplicationController
   private 
   
   def project_params
-    params.require(:project).permit(:name, :active, :course_id, :group_size)
+    params.require(:project).permit(:name, :active, :course_id, :group_size, :allow_repeat, :allow_randomization)
   end 
   
 end

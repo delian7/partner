@@ -13,9 +13,12 @@
 			<li role="presentation" class="<%= 'active' if current_page?(projects_path) %>"><%= link_to 'Projects', projects_path %></li>
 			<li role="presentation" class="<%= 'active' if current_page?(courses_path) %>"><%= link_to 'Courses', courses_path %></li>
 		<% when 3 %>
-			<li><%= link_to 'Control Panel', users_path %></li>
-			<li><%= link_to 'Add a Course', users_path %></li>
-			<li><%= link_to 'Add a Roster', roster_path %></li>
+			<li><%= link_to 'Control Panel', root_path %></li>
+			<li role="presentation" class="<%= 'active' if current_page?(roster_path) %>"><%= link_to 'Add a Roster', roster_path %></li>
+			<li role="presentation" class="<%= 'active' if current_page?(users_path) %>"><%= link_to 'Students', users_path %></li>
+			<li role="presentation" class="<%= 'active' if current_page?(groups_path) %>"><%= link_to 'Groups', groups_path %></li>
+			<li role="presentation" class="<%= 'active' if current_page?(projects_path) %>"><%= link_to 'Projects', projects_path %></li>
+			<li role="presentation" class="<%= 'active' if current_page?(courses_path) %>"><%= link_to 'Courses', courses_path %></li>
 		<%end%>
 <div class="dropdown pull-right">
   <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="background-color:transparent; background-image:none; border:1px solid transparent; text-shadow: 0 0px; box-shadow: 0 0px;">

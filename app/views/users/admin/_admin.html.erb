@@ -1,10 +1,8 @@
-<h3>Control Panel</h3>
-
-<% if !current_user.courses.first.blank? %>
-	<div style="max-width:500px; float:right;">
-	  <%= form_for :user, :url => edit_registration_path(user.id), :html => { :style => 'display:inline;'} do |f|%>
-	     <%= f.text :current_course %>
-	     <%= f.text :current_course %>
-	  <% end %>
-	</div>
-<% end %>
+<div style="font-size:45px; font-weight:bold;">Groups
+    <!-- Start Table Header -->
+      <td><b>Group Name</td>
+      <td class='collapsable'><b>Students</td>
+      <td colspan="2" style="max-width:100px;"><b>Request</td></b>
+   </tr>
+<!-- End Table Header -->
+  <%= render 'users/tableinfo/user_render'%>

@@ -7,9 +7,9 @@
       <td class='collapsable'><%= link_to (image_tag (@user.avatar.url), :style => 'max-width: 45px;'), @user %></td> 
       <td><%= link_to "#{@user.first_name} #{@user.last_name}", @user %> </td>
       <td class='collapsable'><%= @user.email %></td>
-
+<%if current_user.role == 0%>
 <%=render 'users/tableinfo/button_render', user: @user%>
-
+<% end %>
 
     </tr>
 <% end %>
