@@ -32,6 +32,9 @@ devise_for :users, :controllers => {:registrations => "registrations"}
 
   resources :groups do
     member do
+       get :edit
+       post :update
+       get :remove
     end
     collection do 
     end
