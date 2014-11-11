@@ -1,12 +1,13 @@
-<% @groups.each do |group| %>
+<% Group.all.each do |group| %>
 	 <% @group = group %>
     <tr>
-     <td><%= @group.name %></td>
+     <td><%= link_to @group.name, @group %></td>
 
       <td><%member_group_ids(@group).each do |i|%>
     <%@user = User.find(i)%>
     <%= link_to "#{@user.first_name} #{@user.last_name}", @user%>, 
   		<%end%> </td>
-        <td><%= link_to "doodle",  ("http://doodle.com/create?type=date&locale=en&title=#{@group.name}&name=#{current_user.first_name}%20#{current_user.last_name}&eMailAddress=#{current_user.email}&description=Our%20first%20group%20meeting...")%>  </td><td><%=render 'users/tableinfo/button_render'%></td>
+
+
     </tr>
 <% end %>

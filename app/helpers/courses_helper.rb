@@ -24,8 +24,8 @@ end
 def course_unit_parse(txt)
   m = regexecute('(.*),(.*),.* (.*)')
   if m.match(txt)
-    word1, word2, word3 = m.match(txt)[1], m.match(txt)[2], m.match(txt)[3]
-    return word1 + ","+ word2 + ", "+ word3
+    @word1, @word2, @word3 = m.match(txt)[1], m.match(txt)[2], m.match(txt)[3]
+    return @word1 + ","+ @word2 + ", "+ @word3
   end
 end
 
@@ -69,11 +69,11 @@ def data_slice(array, x, y)
   array.slice!(x,y)
 end
 
-def make_default_project(coursetitle, coursecode)
-  if active_projects_for(coursecode).first
-    @proj = Project.where(course_id: coursecode, active: true).first
+def make_default_project(coursecode)
+  if !Project.where(course_id: coursecode, active: true).empty?
+    @proj = Project.find_by(course_id: coursecode, active: true)
   else
-    @proj = Project.create(name: "#{coursetitle} New Project", course_id: coursecode, active: true, group_size: 2)
+    @proj = Project.create(name: "#{@word1} #{@word2} - New Project", course_id: coursecode, active: true, group_size: 2)
   end
   return @proj
 end
@@ -116,11 +116,11 @@ def active_projects_for(coursecode)
 end
 
 def user_exists?(symbol, id)
-  User.find_by(symbol => id) == nil ? false : true
+  !User.find_by(symbol => id).nil?
 end
 
 def enrolled?(ucinetid, coursecode)
-    Roster.where(:user_id => user_netid(ucinetid).id, course_id: coursecode) != nil ? true : false
+    !Roster.find_by(user_id: user_netid(ucinetid).id, course_id: coursecode).nil?
 end
 
 def in_new_roster?(ucinetid, student_data_array)

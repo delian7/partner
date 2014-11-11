@@ -13,7 +13,7 @@ module AdminOnly
   private
 
   def admin_only
-    unless current_user.admin?
+    unless current_user.role == 3
       redirect_to :back, :alert => "Access denied."
     end
     rescue ActionController::RedirectBackError

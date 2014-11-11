@@ -1,4 +1,4 @@
-class UserPolicy
+class GroupPolicy
   attr_reader :user, :record
 
   def initialize(user, record)
@@ -9,21 +9,23 @@ class UserPolicy
   def index?
     true
   end
+
   def new?
     true
   end
+
   def show?
     true
   end
-  def remove?
-    true
-  end
+
    def delete_partnership?
     true
   end
+
   def profile?
-    true
+    false
   end
+
   def update?
     true
   end

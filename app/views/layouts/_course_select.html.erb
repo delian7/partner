@@ -15,7 +15,7 @@
 			<br / ><br/>
 	
 		<!-- setting current_project (if more than one exist)	 -->
-		<% if @current_projects.size > 2 %>	
+		<% if Project.where(course_id: Course.find(current_user.current_course).id).size > 2 %>	
 		  <%= form_for :user, :url => set_current_project_user_path(current_user.id), :html => { :style => 'display:inline;'} do |f|%>
 				<%= f.label 'Selected Project:', style: 'display:inline'%>			
 				<%= f.select :current_project, options_from_collection_for_select(@current_projects, 

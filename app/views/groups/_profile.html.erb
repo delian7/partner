@@ -1,7 +1,9 @@
-<table class="table" style="width: 95%!important;">
- <%= render 'users/tabnav/find_group'%>
-<div style="font-size:45px; font-weight:bold;">My Group <span style="font-size:25px; font-weight:bold;"><%=@mygroup.name%></font></div><br></span>
-<td class='collapsable'></td><td><strong>Group Member Name</td><td class='collapsable'><strong>Group Member Email</td><td><strong>Status</td></strong>
+<table class="table" style="width: 95%!important;"><div style="float:right;"><%=  link_to "Start a Doodle", "http://doodle.com/create?type=date&locale=en&title=#{@mygroup.name}%20Group%20Meeting&name=#{current_user.first_name}%20#{current_user.last_name}&eMailAddress=#{current_user.email}&description=Our%20first%20group%20meeting...", :style => 'color: #fff;width:100%;', class: "btn btn-info" %>
+
+</div>
+<span style="font-size:35px; font-weight:bold;">My Group </span><br><span style="font-size:15px; font-weight:bold;"><%=@mygroup.name%></font></div><br></span>
+
+<td class='collapsable'></td><td><strong>Name</td><td class='collapsable'><strong>Email</td><td><strong>Status</td></strong>
     <% members = members_of(@mygroup) %>
     <% members.each do |user| %>
 

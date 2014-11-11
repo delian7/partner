@@ -77,12 +77,6 @@ def set_current_project_course(user, project, course)
   user.save
  end
 
-def set_confirm_add_to_group(user)
-  requested = GroupRelation.where(user_id: requested?(user).id, group_id: @mygroup.id)
-  requested.status = 2
-  requested.save
-end
-
 def active_projects_for(coursecode)
   Project.where(course_id: coursecode, active: true)
 end
@@ -110,7 +104,7 @@ def enrolled?(ucinetid, coursecode)
 end
 
 def classmates?(user,course)
-	course_ids(user.id).include?(course.id)
+	Roster.where(user_id: user.id).collect(&:course_id).include?(course.id)
 end
 
 def teammates?(user, user2)
@@ -118,7 +112,7 @@ def teammates?(user, user2)
 end
 
 def confirmed?(user)
-	relation = GroupRelation.where(user_id: user.id, project_id: @myproject.id).first
+	relation = GroupRelation.where(user_id: user.id, project_id: Project.find(current_user.current_project).id).first
 	relation.status == 2 if !relation.nil?
 end
 
@@ -149,19 +143,15 @@ set_current_users_instance_variables
 	if @current_group_size >= 2
 	    flash[:error] = "Unable to send request, you have too many pending requests."
 	else
-	  if !requester?(current_user) && !requested?(user)
-	    newgroup = Group.create(name: "#{current_user.first_name} #{@mygroup}")
+	    newgroup = Group.create(name: "#{current_user.first_name}'s group for #{@myproject.name}")
 	    #create relation for current user which is always the requester (status=0, pending)
 	    GroupRelation.create(course_id: @mycourse.id, user_id: current_user.id, project_id: @myproject.id, 
-	  status: 2, group_id: newgroup.id)
-	  else
-	    newgroup = Group.find_by_id(@mygroup)
-	  end
+	    status: 2, group_id: newgroup.id)
 			# create relation for user who is being requested (status=1, requested)
 			GroupRelation.create(course_id: @mycourse.id, user_id: user.id, project_id: @myproject.id, 
-			  status: 2, group_id: newgroup.id)
+			  status: 1, group_id: newgroup.id)
 			username = user.first_name + " " + user.last_name
-			flash[:notice] = "Requested <b>#{username}</b>" + " as partner"
+			flash[:notice] = "Requested <b>#{username}</b>" + " as partner for <b>#{@myproject.name}</b>"
 	end
 end
 
@@ -195,16 +185,13 @@ end
 
 def confirm_group_member(user)
     # sets the status of the group to accepted "status=2"
-    if set_confirm_add_to_group(user)
-      redirect_to users_path(@current_group), flash: { :notice => "Group Confirmed" }
+      requested = GroupRelation.where(user_id: requested?(user).id, group_id: @mygroup.id)
+      requested.status = 2
+      if requested.save
+      redirect_to users_path(@current_group), flash: { :notice => "You are now in group: <b>#{newgroup.name}</b>" }
     else
       redirect_to users_path(@current_group), flash: { :error => "There was a problem, try again" }
     end
-    # if x.save && y.save
-    #   redirect_to users_path(@current_group), :flash => { :notice => "Group Confirmed" }
-    # else
-    #   redirect_to users_path(@current_group), :flash => { :error => "There was a problem, try again" }
-    # end
 end
 
   def confirm_partner(user)
@@ -214,7 +201,7 @@ end
         x.status = 2
         y.status = 2
       if x.save && y.save
-        redirect_to users_path(@current_group), flash: { :notice => "Group Confirmed" }
+        redirect_to users_path(@current_group), flash: { :notice => "You are now partnered with: <b>#{User.find(x.user_id).first_name} #{User.find(x.user_id).last_name}</b>" }
       else
         redirect_to users_path(@current_group), flash: { :error => "There was a problem, try again" }
       end
@@ -240,14 +227,9 @@ end
   def delete_self_from_group(user)
     set_current_users_instance_variables
     if !@mygroup.nil?
-      if @current_group_size <= 2
-        # Delete the group
-        @mygroup.destroy
         # Delete relation for current user and user
         GroupRelation.find_by(user_id: current_user.id, group_id: @mygroup.id).destroy
         # Delete relation for user
-      end
-      GroupRelation.find_by(user_id: user.id, group_id: @mygroup.id).destroy
       flash[:notice] = "Removed User."
     else 
       flash[:error] = "Unable to remove user."

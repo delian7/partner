@@ -2,7 +2,7 @@ class GroupsController < ApplicationController
   include UsersHelper
   helper_method :course_ids, :requested?, :requester?, :my_partner_for,:teammates?, :in_group_for?, :classmates?, :same?, :is_student?, :user_netid
   before_filter :authenticate_user!
-  # after_action :verify_authorized, except: [:show, :index]
+  # after_action :verify_authorized
   require 'csv'
    
   def index

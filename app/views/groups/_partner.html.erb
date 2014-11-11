@@ -1,7 +1,6 @@
 <table class="table" style="width: 95%!important;">
- <%= render 'users/tabnav/find_group'%>
- <%user = my_partner_for(@myproject)%>
-<div style="font-size:45px; font-weight:bold;">My Partner <span style="font-size:25px; font-weight:bold;"><%=@myproject.name%></font></div><br></span>
+ <% user = my_partner_for(@myproject) %>
+<span style="font-size:35px; font-weight:bold;">My Partner </span><span style="font-size:15px; font-weight:bold;"><%=@myproject.name%></font></div><br></span>
         <tr>
 	<td class='collapsable'><%= link_to (image_tag (user.avatar.url), :style => 'max-width: 45px;'), user %></td> 
       <td><%= link_to "#{user.first_name} #{user.last_name}", user %> </td>

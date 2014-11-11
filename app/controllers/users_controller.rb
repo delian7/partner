@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_filter :authenticate_user!
-  before_filter :admin_only, :except => :show
+  # before_filter :admin_only, :except => :show
   helper_method :course_ids, :requested?, :my_partner_for, :requester?, :teammates?, :in_group_for?, :classmates?, :same?, :is_student?, :user_netid
   include UsersHelper
   # after_action :verify_authorized, except: [:show, :index]
@@ -20,11 +20,11 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    unless current_user.admin?
-      unless @user == current_user
-        redirect_to :back, :alert => "Access denied."
-      end
-    end
+    # unless current_user.role == 3
+    #   unless @user == current_user
+    #     redirect_to :back, :alert => "Access denied."
+    #   end
+    # end
   end
 
   def update
@@ -40,14 +40,6 @@ class UsersController < ApplicationController
     user = User.find(params[:id])
     user.destroy
     redirect_to users_path, :notice => "User deleted."
-  end
-
-  private
-
-  def admin_only
-  #   unless current_user.admin?
-  #     redirect_to :back, :alert => "Access denied."
-    # end
   end
 
   # def new
@@ -182,10 +174,16 @@ class UsersController < ApplicationController
   end
 
   private
+
+  def admin_only
+    unless current_user.role == 3
+      redirect_to :back, :alert => "Access denied."
+    end
+  end
   # def login_params
   #   params.require(:user).permit(:id)
   # end
   def secure_params
-    params.require(:user).permit(:id, :name, :ucinetid, :role, :current_course, :current_project)
+    params.require(:user).permit(:id, :avatar, :name, :ucinetid, :role, :current_course, :current_project)
   end
 end

@@ -1,10 +1,9 @@
-<table class="table" style="width: 95%!important;">
 <% case current_user.role %>
   <% when 0 %>
-	   <% if @myproject.group_size > 2 %>
-        <%= render 'users/student/find_members' %>
-    <%else%>
+	   <% if Project.find(current_user.current_project).group_size == 2 %>
         <%= render 'users/student/find_partner' %>
+    <%else%>
+        <%= render 'users/student/find_members' %>
     <% end %>
   <% when 1 .. 2 %>
     <%= render'users/professor/find_members' %>
