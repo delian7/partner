@@ -8,7 +8,7 @@
 <% if allowed_size > mygroupsize%>
 <% @users.each do |user| %>
 	<% @user = user %>
-	<% if classmates?(@user, @mycourse) && !same?(current_user.id, @user.id) && is_student?(user) && (!confirmed?(@user)|| teammates?(@user, current_user) || requester?(@user) == @user || requested?(@user) == @user) %>
+	<% if (classmates?(@user, @mycourse)|| teammates?(@user, current_user)) && (!same?(current_user.id, @user.id) && is_student?(user)) && !confirmed?(@user)  %>
 	<tr>
 	<td class='collapsable'><%= link_to (image_tag (@user.avatar.url), :style => 'max-width: 45px;'), @user %></td> 
 	<td><%= link_to "#{@user.first_name} #{@user.last_name}", @user %> </td>

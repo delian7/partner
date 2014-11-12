@@ -111,8 +111,13 @@ def teammates?(user, user2)
 end
 
 def confirmed?(user)
-	relation = GroupRelation.where(user_id: user.id, project_id: Project.find(current_user.current_project).id).first
-	relation.status == 2 if !relation.nil?
+	relation = GroupRelation.where(user_id: user.id, project_id: Project.find(current_user.current_project))
+	relation.each do |grouprelation|
+  if grouprelation.status == 2
+    return true
+  end
+end
+  return false
 end
 
 def has_grouprelation_for?(user, project)

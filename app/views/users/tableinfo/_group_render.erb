@@ -1,13 +1,14 @@
+<table class="table" style="width: 95%!important;">
 <% Group.all.each do |group| %>
 	 <% @group = group %>
     <tr>
-     <td> <span style="font-size:20px; font-weight:bold;"><%= link_to @group.name, @group %></span></td>
+     <td colspan="3"> <span style="font-size:20px; font-weight:bold;"><%= link_to @group.name, @group %></span></td><td></td>
 
-<table class="table" style="width: 95%!important;">
-    <% members = members_of(@mygroup) %>
+
+    <% members = members_of(@group) %>
     <% members.each do |user| %>
 
-    <%if GroupRelation.find_by(user_id: user.id, group_id: @mygroup.id).status == 2%>
+    <%if GroupRelation.find_by(user_id: user.id, group_id: @group.id).status == 2%>
     <tr>
   	     <td class='collapsable'><%= link_to (image_tag (user.avatar.url), :style => 'max-width: 45px;'), user %></td> 
         <td><%= link_to "#{user.first_name} #{user.last_name}", user %> </td>
@@ -23,9 +24,10 @@
 
 	</tr>
     	<% end %>
-    </table>
+
 
 
 
 
       <% end %>
+    </table>

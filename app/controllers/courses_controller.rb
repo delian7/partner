@@ -52,10 +52,9 @@ require 'csv'
         destroy_roster_relation(enrolled_student_netid, @course.id)
         set_current_project_course(@user, Project.find(0), Course.find(0))
         end
-      if !Project.where(@course.id).empty?
-        Project.where(@course.id).each do |project|
+      if !Project.where(course_id: @course.id).empty?
+        Project.where(course_id: @course.id).each do |project|
         project.destroy
-        project.save
       end
     end
     @course.destroy
@@ -82,9 +81,9 @@ def destroy_roster_relation(netid, coursecode)
     roster = Roster.find_by(course_id: coursecode, user_id: User.find_by(ucinetid: netid).id)
     roster.destroy
     relations = GroupRelation.where(course_id: coursecode, user_id: User.find_by(ucinetid: netid).id)
-    relations.each do |deletions|
-    relations[deletions].destroy
-  end
+      relations.each do |deletions|
+      deletions.destroy
+      end
   end
 end
 

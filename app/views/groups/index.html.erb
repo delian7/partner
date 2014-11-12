@@ -3,7 +3,7 @@
     <%= render 'groups/student/find_group' %>
   <% when 1 .. 2 %>
     <%= render'groups/professor/find_group' %>
-    <%= render 'users/buttons/vip_button' %>
+    <%= render 'layouts/buttons/vip_button' %>
   <% when 3 %>
-  <%= render'users/admin/admin' %>
+  <%= render'groups/admin/find_group' %>
 <% end %>

@@ -49,14 +49,19 @@ class UsersController < ApplicationController
 
   def set_current_course
     authorize User.find(params[:id])
-    set_current_users_instance_variables
     current_user.update_attributes(secure_params)
+    set_current_users_instance_variables
     
+    
+    @current_projects = Project.where(course_id: @mycourse.id, active: true)
+
     if @current_projects.exists?
       current_user.update_attributes(current_project: @current_projects.first.id)
+    else
+      current_user.update_attributes(current_project: 0)
     end
     redirect_to users_path
-      
+     
   end
   
   def set_current_project
@@ -68,11 +73,26 @@ class UsersController < ApplicationController
 
   # Start download of csv file of partner data
   def export_csv
-      user = User.find(params[:id])
+      user = current_user
       authorize user
       roster_csv = CSV.generate do |csv|
-      csv << ["First Name", "Last Name", "Email"]
+      csv << ["Group", "First Name", "Last Name", "Email", "confirmed"]
       User.where(role: 0).each do |user|
+          members = members_of(@group)
+     members.each do |user| 
+
+    if GroupRelation.find_by(user_id: user.id, group_id: @group.id).status == 2
+
+        user.email 
+        Confirmed
+    else
+ 
+      user.email 
+          Request Pending
+    end 
+
+  
+       end 
         csv << [user.first_name, user.last_name, user.email]     
       end 
       end    
