@@ -120,15 +120,13 @@ class UsersController < ApplicationController
     @mygroup.destroy
     # Delete relation for current user
     GroupRelation.where(user_id: requester?(user).id, group_id: @mygroup.id, status: 2).first.destroy
-    
-  
+    end
     # Delete relation for user
-    flash[:notice] = "Removed request."
+    flash[:notice] = "Ignored Request."
     else 
-    flash[:error] = "Unable to remove request."
+    flash[:error] = "Unable to ignore request."
     end
     GroupRelation.where(user_id: requested?(user).id, group_id: @mygroup.id, status: 0).first.destroy
-  end
     redirect_to users_path
   end
 
@@ -141,13 +139,13 @@ class UsersController < ApplicationController
         # Delete the group
         @mygroup.destroy
         # Delete relation for current user and user
-        GroupRelation.find_by(user_id: current_user.id, group_id: @mygroup.id).destroy
+        GroupRelation.find_by(user_id: user.id, group_id: @mygroup.id).destroy
         # Delete relation for user
       end
-      GroupRelation.find_by(user_id: user.id, group_id: @mygroup.id).destroy
-      flash[:notice] = "Removed User."
+      GroupRelation.find_by(user_id: current_user.id, group_id: @mygroup.id).destroy
+      flash[:notice] = "Left Group."
     else 
-      flash[:error] = "Unable to remove user."
+      flash[:error] = "Unable to leave group."
     end
   redirect_to users_path
   end

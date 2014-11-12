@@ -184,7 +184,7 @@ end
 
 def confirm_group_member(user)
     # sets the status of the group to accepted "status=2"
-      requested = GroupRelation.find_by(user_id: user.id, group_id: @mygroup.id)
+      requested = GroupRelation.find_by(user_id: current_user.id, group_id: @mygroup.id)
       requested.status = 2
       if requested.save
       redirect_to users_path(@current_group), flash: { :notice => "You are now in group: <b>#{@mygroup.name}</b>" }

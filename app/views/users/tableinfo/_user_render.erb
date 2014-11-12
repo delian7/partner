@@ -1,6 +1,10 @@
-	<%= mygroupsize = GroupRelation.where(project_id: @myproject.id, user_id: current_user.id).size%>
-	<%= allowed_size = Project.find(current_user.current_project).group_size%>
+<%if !@mygroup.nil? %>
+	<%= mygroupsize = GroupRelation.where(project_id: @myproject.id, group_id: @mygroup.id).size%>
+	<%else%>
+	<%= mygroupsize = 0%>
 	<!-- Room in group-->
+	<%end%>
+		<%= allowed_size = Project.find(current_user.current_project).group_size%>
 <% if allowed_size > mygroupsize%>
 <% @users.each do |user| %>
 	<% @user = user %>
@@ -18,8 +22,6 @@
 
 <!-- No room in group-->
 	<% else  %>
-		
-	<% flash[:notice] = "#{@mygroup.name} is full.  <br>You are allowed <span style= 'font-size: 20px; font-weight:bold;'>#{allowed_size}</span> members. You have <span style= 'font-size: 20px; font-weight:bold;'>#{mygroupsize}.</span>" %>
 	<% GroupRelation.where(group_id: @mygroup).collect(&:user_id).each do |user| %>
 	<% @user = User.find(user)%>
 	<%if @user != current_user && !teammates?(@user, current_user)%>
