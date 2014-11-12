@@ -27,21 +27,19 @@ My Group
     <% members = members_of(@mygroup) %>
     <% members.each do |user| %>
 
-    <%if teammates?(user, current_user)%>
+       <%if GroupRelation.find_by(user_id: user.id, group_id: @mygroup.id).status == 2%>
     <tr>
-	<td class='collapsable'><%= link_to (image_tag (user.avatar.url), :style => 'max-width: 45px;'), user %></td> 
-      <td><%= link_to "#{user.first_name} #{user.last_name}", user %> </td>
-      <td class='collapsable'><%= user.email %></td>
-
-    	<td>Confirmed</td>
+         <td class='collapsable'><%= link_to (image_tag (user.avatar.url), :style => 'max-width: 45px;'), user %></td> 
+        <td><%= link_to "#{user.first_name} #{user.last_name}", user %> </td>
+        <td class='collapsable'><%= user.email %></td>
+        <td>Confirmed</td>
     <%else%>
-        <tr style= "background-color:eee; opacity: 0.6;">
-	<td class='collapsable'><%= link_to (image_tag (user.avatar.url), :style => 'max-width: 45px;'), user %></td> 
+    <tr style= "background-color:eee; opacity: 0.6;">
+      <td class='collapsable'><%= link_to (image_tag (user.avatar.url), :style => 'max-width: 45px;'), user %></td> 
       <td><%= link_to "#{user.first_name} #{user.last_name}", user %> </td>
       <td class='collapsable'><%= user.email %></td>
-
-        	<td>Request Pending</td>
-    <%end%>	
+          <td>Request Pending</td>
+    <%end%> 
 
 	</tr>
     	<% end %>

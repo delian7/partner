@@ -18,7 +18,7 @@ class UserPolicy
   def remove?
     true
   end
-   def delete_partnership?
+   def leave_group?
     true
   end
   def profile?

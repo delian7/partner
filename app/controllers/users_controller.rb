@@ -86,33 +86,12 @@ class UsersController < ApplicationController
    
     if @current_group_size >= @allowed_group_size
       flash[:error] = "Unable to send request, you have too many pending requests."
-    elsif @allowed_group_size == 2
-      request_partner(user)
     elsif @allowed_group_size >= 2
       request_group_member(user)
     else
       flash[:notice] = "Your Professor specified this project is an individual task. If this is incorrect, please contact your professor. "
     end
     redirect_to users_path
-  end
-
-   def undo_request
-    user = User.find(params[:id])
-    authorize user
-    set_current_users_instance_variables
-    if !@mygroup.nil?
-    GroupRelation.where(project_id: @myproject.id, user_id: user.id, group_id: @mygroup.id, status: 1).first.destroy
-    # Delete relation for user
-    
-    if @current_group_size <= 2
-    # Delete the group
-    @mygroup.destroy
-    # Delete relation for current user
-    GroupRelation.where(project_id: @myproject.id, user_id: current_user.id, group_id: @mygroup.id, status: 2).first.destroy
-    end
-    flash[:error] = "Successfully removed request"
-    end
-  redirect_to users_path
   end
 
   def confirm
@@ -153,7 +132,7 @@ class UsersController < ApplicationController
     redirect_to users_path
   end
 
-  def delete_partnership
+  def leave_group
     user = User.find(params[:id])
     authorize user
     set_current_users_instance_variables
@@ -172,6 +151,26 @@ class UsersController < ApplicationController
     end
   redirect_to users_path
   end
+
+     def undo_request
+    user = User.find(params[:id])
+    authorize user
+    set_current_users_instance_variables
+    if !@mygroup.nil?
+    GroupRelation.where(project_id: @myproject.id, user_id: user.id, group_id: @mygroup.id, status: 1).first.destroy
+    # Delete relation for user
+    
+    if @current_group_size <= 2
+    # Delete the group
+    @mygroup.destroy
+    # Delete relation for current user
+    GroupRelation.where(project_id: @myproject.id, user_id: current_user.id, group_id: @mygroup.id, status: 2).first.destroy
+    end
+    flash[:error] = "Successfully removed request"
+    end
+  redirect_to users_path
+  end
+
 
   private
 

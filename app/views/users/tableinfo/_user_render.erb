@@ -1,16 +1,40 @@
+	<%= mygroupsize = GroupRelation.where(project_id: @myproject.id, user_id: current_user.id).size%>
+	<%= allowed_size = Project.find(current_user.current_project).group_size%>
+	<!-- Room in group-->
+<% if allowed_size > mygroupsize%>
 <% @users.each do |user| %>
- <% @user = user %>
- <% if classmates?(@user, @mycourse) && !same?(current_user.id, @user.id) && is_student?(user) && (!confirmed?(@user)|| teammates?(@user, current_user) || requester?(@user) == @user || requested?(@user) == @user) %> 
-    <tr>
+	<% @user = user %>
+	<% if classmates?(@user, @mycourse) && !same?(current_user.id, @user.id) && is_student?(user) && (!confirmed?(@user)|| teammates?(@user, current_user) || requester?(@user) == @user || requested?(@user) == @user) %>
+	<tr>
+	<td class='collapsable'><%= link_to (image_tag (@user.avatar.url), :style => 'max-width: 45px;'), @user %></td> 
+	<td><%= link_to "#{@user.first_name} #{@user.last_name}", @user %> </td>
+	<td class='collapsable'><%= @user.email %></td>
+							<% if current_user.role == 0 %>
+								<%=render 'users/tableinfo/button_render', user: @user%>
+							<% end %>
+	</tr>
+	<% end %>
+	<% end %>
+
+<!-- No room in group-->
+	<% else  %>
+		
+	<% flash[:notice] = "#{@mygroup.name} is full.  <br>You are allowed <span style= 'font-size: 20px; font-weight:bold;'>#{allowed_size}</span> members. You have <span style= 'font-size: 20px; font-weight:bold;'>#{mygroupsize}.</span>" %>
+	<% GroupRelation.where(group_id: @mygroup).collect(&:user_id).each do |user| %>
+	<% @user = User.find(user)%>
+	<%if @user != current_user && !teammates?(@user, current_user)%>
+	<td class='collapsable'><%= link_to (image_tag (@user.avatar.url), :style => 'max-width: 45px;'), @user %></td> 
+	<td><%= link_to "#{@user.first_name} #{@user.last_name}", @user %> </td>
+	<td class='collapsable'><%= @user.email %></td>
+	<%if current_user.role == 0%>
 
 
-      <td class='collapsable'><%= link_to (image_tag (@user.avatar.url), :style => 'max-width: 45px;'), @user %></td> 
-      <td><%= link_to "#{@user.first_name} #{@user.last_name}", @user %> </td>
-      <td class='collapsable'><%= @user.email %></td>
-<%if current_user.role == 0%>
-<%=render 'users/tableinfo/button_render', user: @user%>
-<% end %>
 
-    </tr>
-<% end %>
-<% end %>
+	<%=render 'users/tableinfo/button_render', user: @user%>
+	<% end %>
+	<% end %>
+
+	</tr>
+
+
+<% end %>	<% end %>

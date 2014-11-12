@@ -17,7 +17,7 @@ devise_for :users, :controllers => {:registrations => "registrations"}
         get :undo_request
         get :confirm
         get :ignore
-        get :delete_partnership
+        get :leave_group
 
         get :registrations
         get :sessions

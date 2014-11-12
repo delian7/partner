@@ -1,9 +1,8 @@
 <!-- selecting course that users will add groups to -->
 <!-- if the user is signed in and their enrolled in at least one course on roster -->
 
-<% if !current_user.courses.first.blank? && !@current_projects.to_a.empty?%>
 	<div style="max-width:500px; float:right; font-size: 12px; line-height: 10px;">
-	
+	<% @current_projects = Project.where(course_id: Course.find(current_user.current_course).id, active: true)%>
 		<!-- setting current course & project (if there's only one project)-->
 	  <%= form_for :user, :url => set_current_course_user_path(current_user.id), :html => { :style => 'display:inline;'} do |f|%>		
 			<%= f.label 'Selected Course:', style: 'display:inline'%>
@@ -15,7 +14,8 @@
 			<br / ><br/>
 	
 		<!-- setting current_project (if more than one exist)	 -->
-		<% if Project.where(course_id: Course.find(current_user.current_course).id).size > 2 %>	
+		<% if Project.where(course_id: Course.find(current_user.current_course).id).size < 2 %>
+		<% else %>	
 		  <%= form_for :user, :url => set_current_project_user_path(current_user.id), :html => { :style => 'display:inline;'} do |f|%>
 				<%= f.label 'Selected Project:', style: 'display:inline'%>			
 				<%= f.select :current_project, options_from_collection_for_select(@current_projects, 
@@ -26,4 +26,3 @@
 	  <% end %>
 	</div>
 	
-<%end%>

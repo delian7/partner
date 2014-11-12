@@ -1,4 +1,3 @@
-<table class="table" style="width: 95%!important;">
 	<% case current_user.role %>
   <% when 0 %>
     <%= render 'groups/student/find_group' %>
@@ -8,4 +7,3 @@
   <% when 3 %>
   <%= render'users/admin/admin' %>
 <% end %>
-</table>

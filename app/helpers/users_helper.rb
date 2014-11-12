@@ -2,7 +2,6 @@ module UsersHelper
 
 def get_status(user)
   if !@mygroup.nil?
-    @current_user_status = GroupRelation.where(project_id: @myproject.id, user_id: current_user.id, group_id: @mygroup.id).pluck(:status)[0]
     @user_status = GroupRelation.where(project_id: @myproject.id, user_id: user.id, group_id: @mygroup.id).pluck(:status)[0]
   end
 end
@@ -185,26 +184,24 @@ end
 
 def confirm_group_member(user)
     # sets the status of the group to accepted "status=2"
-      requested = GroupRelation.where(user_id: requested?(user).id, group_id: @mygroup.id)
+      requested = GroupRelation.find_by(user_id: user.id, group_id: @mygroup.id)
       requested.status = 2
       if requested.save
-      redirect_to users_path(@current_group), flash: { :notice => "You are now in group: <b>#{newgroup.name}</b>" }
+      redirect_to users_path(@current_group), flash: { :notice => "You are now in group: <b>#{@mygroup.name}</b>" }
     else
       redirect_to users_path(@current_group), flash: { :error => "There was a problem, try again" }
     end
 end
 
   def confirm_partner(user)
-      # sets the status of the group to accepted "status=2"
-      x = GroupRelation.find_by_id(GroupRelation.where(project_id: @myproject.id, user_id: requester?(user).id, group_id: @mygroup.id).pluck(:id)[0])
-      y = GroupRelation.find_by_id(GroupRelation.where(project_id: @myproject.id, user_id: requested?(user).id, group_id: @mygroup.id).pluck(:id)[0])
-        x.status = 2
-        y.status = 2
-      if x.save && y.save
-        redirect_to users_path(@current_group), flash: { :notice => "You are now partnered with: <b>#{User.find(x.user_id).first_name} #{User.find(x.user_id).last_name}</b>" }
-      else
-        redirect_to users_path(@current_group), flash: { :error => "There was a problem, try again" }
-      end
+    # sets the status of the group to accepted "status=2"
+      requested = GroupRelation.find_by(user_id: current_user.id, group_id: @mygroup.id)
+      requested.status = 2
+      if requested.save
+      redirect_to users_path(@current_group), flash: { :notice => "You are now in group: <b>#{@mygroup.name}</b>" }
+    else
+      redirect_to users_path(@current_group), flash: { :error => "There was a problem, try again" }
+    end
   end
 
   def delete_partnership(user)
