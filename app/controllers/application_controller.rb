@@ -5,7 +5,7 @@ include Pundit
 
   protect_from_forgery with: :exception
   before_action :configure_permitted_parameters, if: :devise_controller?
-  before_action :startup
+  before_action :startup, :nil_check
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
@@ -42,7 +42,23 @@ include Pundit
       end
         return @results
     end
-  
+  def nil_check
+    if Project.where(course_id: 0).empty?
+      proj = Project.create(id: 0, course_id: 0)
+    end
+    if Project.where(id: 0).empty?
+      proj = Project.find_by(course_id: 0)
+      proj.id = 0
+      proj.save
+    end
+    if Course.where(id: 0).empty?
+      course = Course.create(course_title: "")
+      course.id = 0
+      course.course_title= ""
+      course.save
+    end
+
+  end
 
   protected
 

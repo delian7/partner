@@ -82,16 +82,12 @@ class UsersController < ApplicationController
      members.each do |user| 
 
     if GroupRelation.find_by(user_id: user.id, group_id: @group.id).status == 2
-
         user.email 
         Confirmed
     else
- 
       user.email 
           Request Pending
     end 
-
-  
        end 
         csv << [user.first_name, user.last_name, user.email]     
       end 
@@ -201,6 +197,6 @@ class UsersController < ApplicationController
   #   params.require(:user).permit(:id)
   # end
   def secure_params
-    params.require(:user).permit(:id, :avatar, :name, :ucinetid, :role, :current_course, :current_project)
+    params.require(:user).permit(:id, :avatar, :description, :availability, :role, :current_course, :current_project)
   end
 end

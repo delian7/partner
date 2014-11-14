@@ -1,14 +1,20 @@
 <div style="line-height:2; max-width:400px;">
-
-	<% random = Project.find_by(@project.id).allow_randomization %>
+<%if !@project.nil?%>
+	<% random = Project.find_by(@project.id).name_gen %>
 	<% repeat = Project.find_by(@project.id).allow_repeat %>
+	<%else%>
 
+	
+<%end%>
 	<%= f.label 'Project Name: ' %>
 	<%= f.text_field(:name, class: "form-control") %><br/>
 
 	<%= f.label 'Select the class for which the project should be for: ' %>
+	<%if !@project.nil?%>
 	<%= f.select :course_id, options_from_collection_for_select(current_user.courses, 'id', 'course_title', @project.course_id), {}, {class: "form-control"} %><br />
-
+	<%else%>
+		<%= f.select :course_id, options_from_collection_for_select(current_user.courses, 'id', 'course_title'), {}, {class: "form-control"} %><br />
+<%end%>
 	<%= f.label 'Group Size of Project: ' %>
 	<%= f.select :group_size, [['2 people','2'], ['3 people','3'], ['4 people','4'], ['5 people','5'], ['6 people','6']], {}, {class: "form-control"} %><br>
 
@@ -19,9 +25,9 @@
 	  <%= f.label 'No 0' %><br><br>
 
 	<%= f.label 'Group Name Randomization ' %><br>
-	  <%= f.radio_button :allow_randomization, false, :checked => random == false %> 
+	  <%= f.radio_button :name_gen, false, :checked => random == false %> 
 	  <%= f.label 'Default 0' %><br>
-	  <%= f.radio_button :allow_randomization, true, :checked => random == true %>
+	  <%= f.radio_button :name_gen, true, :checked => random == true %>
 	  <%= f.label 'Randomize 1' %><br><br>
 	<%= f.submit("Save Project", :class => 'btn btn-primary') %>
 

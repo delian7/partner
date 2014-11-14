@@ -63,8 +63,10 @@ def set_current_users_instance_variables
   end
   	
   if has_grouprelation_for?(current_user, @myproject)
+    if !GroupRelation.where(project_id: @myproject.id, user_id: current_user.id).first.group_id.nil?
 	 @mygroup = Group.find(GroupRelation.where(project_id: @myproject.id, user_id: current_user.id).first.group_id)
 	 @current_group_size = GroupRelation.where(group_id: @mygroup.id).size
+  end
 	else
 	 @current_group_size = 0
   end
@@ -159,6 +161,10 @@ set_current_users_instance_variables
 	end
 end
 
+def other_teams(project)
+  Group.where(project_id: project.id).size + 1
+end
+
 
 def request_group_member(user)
 set_current_users_instance_variables
@@ -167,10 +173,15 @@ set_current_users_instance_variables
 	    flash[:error] = "Unable to send request, you have too many pending requests."
 	else
 	  if !confirmed?(current_user) && ( !requester?(current_user) && !requested?(current_user) )
-	   if @myproject.allow_randomization == true
-     groupname = Faker::Hacker.ingverb.titlecase + " " + Faker::Hacker.adjective.titlecase + " " + Faker::Team.creature.titlecase
-     else
-     groupname = @current_user.first_name+ " group for " + Project.find(@myproject).name
+	   case @myproject.name_gen 
+       when 0
+        groupname = "Team #{Group.where(project_id: project.id).size + 1}"
+       when 1
+        groupname = Faker::Hacker.ingverb.titlecase + " " + Faker::Hacker.adjective.titlecase
+       when 2
+        groupname = Faker::Team.creature.titlecase
+       when 3
+        groupname = Faker::Team.color.titlecase
      end
      newgroup = Group.create(name: "#{groupname}")
       #create relation for current user which is always the requester (status=0, pending)

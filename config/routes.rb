@@ -57,6 +57,7 @@ devise_for :users, :controllers => {:registrations => "registrations"}
        get :edit
        post :update
        get :remove
+       get :autogroup
         end
      collection do
         end

@@ -4,7 +4,6 @@ class CreateGroups < ActiveRecord::Migration
       t.string :name
       t.integer :limit
       t.boolean :allow_repeat
-      
 
         t.timestamps
     end

@@ -5,11 +5,15 @@
     <div class="form-group">
       <%= f.label :email %>
       <%= f.email_field :email, class: 'form-control' %>
+      <%= f.label :availability %>
+      <%= f.text_field :availability, class: 'form-control' %>
+      <%= f.label :description %>
+      <%= f.text_area :description, class: 'form-control' %>
     </div>
 <fieldset style=" text-align:center;"><div class="form-group"><h4>Profile Picture</h4>
 <b>Image Upload</b><br>
 <div class="fileupload fileupload-new" data-provides="fileupload">
-  <div class="fileupload-preview thumbnail" style="width: 75px; height:75px;"></div>
+  <div class="fileupload-preview thumbnail" style="width: 155px; height:155px;"></div>
   <div>
     <span class="btn btn-info btn btn-file"><%= f.file_field :avatar %>
       <span class="fileupload-new", style="max-width: 200px;">Select image</span>

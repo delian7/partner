@@ -36,9 +36,10 @@ class User < ActiveRecord::Base
 
 ##FOR IMAGE UPLOADING
 has_attached_file :avatar, 
-path: ":rails_root/public/system/:attachment/:id/:basename_:style.:extension",
-url: "/system/:attachment/:id/:basename_:style.:extension",
+path: ':rails_root/public/system/:attachment/:id/:basename_:style.:extension',
+url: '/system/:attachment/:id/:basename_:style.:extension',
 default_url: 'missing_avatar.jpg',
+use_timestamp: false,
 styles: {
   thumb:  ['100x100#',  :jpg, :quality => 70],
   medium:  ['480x480#',  :jpg, :quality => 70],
