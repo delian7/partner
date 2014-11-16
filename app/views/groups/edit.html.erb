@@ -1,0 +1,8 @@
+<%= link_to("<< Back to List", {:action => 'index'}) %><br>
+<div class="authform", style="max-width: 500px; margin:auto;">
+
+	<%= form_for(:group, :url => {:action => 'update', :id => @group.id}) do |f| %>
+		<div style="font-size:45px; font-weight:bold;">Change Project<br><span style="font-size:25px; font-weight:bold;"><%=@group.name%></font></div><br></span>
+		<%= render(:partial => 'form', :locals => {:f => f, group: @group}) %>
+	<% end %>
+</div>

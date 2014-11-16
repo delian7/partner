@@ -1,4 +1,5 @@
 class ProjectsController < ApplicationController
+    include UsersHelper
   
   def index
     @projects = Project.all
@@ -57,38 +58,38 @@ class ProjectsController < ApplicationController
 
 
     for i in 1..times[0] 
-        case @project.name_gen 
-       when 0
-        groupname = "Team " + Group.where(project_id: project.id).size + 1
-       when 1
+      case @project.name_gen
+       when "numbered"
+        groupname = "Team #{Group.where(project_id: @project.id).size + 1}"
+       when "hacker"
         groupname = Faker::Hacker.ingverb.titlecase + " " + Faker::Hacker.adjective.titlecase
-       when 2
+       when "creatures"
         groupname = Faker::Team.creature.titlecase
-       when 3
-        groupname = Faker::Team.color.titlecase
+       when "colors"
+        groupname = Faker::Commerce.color.titlecase
      end
-     newgroup = Group.create(name: "#{groupname}")
+     newgroup = Group.create(name: groupname, project_id: @project.id)
       students.sample(@project.group_size).collect(&:id).each do |student|
         GroupRelation.create(course_id: @project.course_id, group_id: newgroup.id, user_id: student, project_id: @project.id)
       end
     end
     for i in 1..times[1] 
-        case @project.name_gen
-       when 0
-        groupname = "Team " + Group.where(project_id: project.id).size + 1
-       when 1
+      case @project.name_gen
+       when "numbered"
+        groupname = "Team #{Group.where(project_id: @project.id).size + 1}"
+       when "hacker"
         groupname = Faker::Hacker.ingverb.titlecase + " " + Faker::Hacker.adjective.titlecase
-       when 2
+        when "creatures"
         groupname = Faker::Team.creature.titlecase
-       when 3
-        groupname = Faker::Team.color.titlecase
+        when "colors"
+        groupname = Faker::Commerce.color.titlecase
      end
-     newgroup = Group.create(name: "#{groupname}")
+     newgroup = Group.create(name: groupname, project_id: @project.id)
       students.sample(times[1]).collect(&:id).each do |student|
         GroupRelation.create(course_id: @project.course_id, group_id: newgroup.id, user_id: student, project_id: @project.id)
     end
 end
-redirect_to(:action => 'index')
+redirect_to groups_path
 end
 
 
@@ -102,6 +103,25 @@ end
     end
     redirect_to(:action => 'index')
   end
+
+  def clear_partnerships
+    user = User.find(params[:id])
+    authorize user
+    set_current_users_instance_variables
+    if !@myproject.nil?
+    Group.where(project_id: @myproject).each do |proj|
+      proj.destroy
+    end
+    GroupRelation.where(project_id: @myproject).each do |proj|
+      proj.destroy
+    end
+      flash[:notice] = "Removed User."
+    else 
+      flash[:error] = "Unable to remove user."
+    end
+  redirect_to projects_path
+  end
+
   
   private 
   

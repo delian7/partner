@@ -206,6 +206,7 @@ def edit
   end
 
 
+
   private
   def login_params
     params.require(:user).permit(:id)

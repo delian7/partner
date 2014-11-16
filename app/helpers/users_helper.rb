@@ -172,7 +172,6 @@ set_current_users_instance_variables
 	if @current_group_size >= @allowed_group_size
 	    flash[:error] = "Unable to send request, you have too many pending requests."
 	else
-	  if !confirmed?(current_user) && ( !requester?(current_user) && !requested?(current_user) )
 	   case @myproject.name_gen 
        when 0
         groupname = "Team #{Group.where(project_id: project.id).size + 1}"
@@ -183,8 +182,9 @@ set_current_users_instance_variables
        when 3
         groupname = Faker::Team.color.titlecase
      end
-     newgroup = Group.create(name: "#{groupname}")
-      #create relation for current user which is always the requester (status=0, pending)
+     if @mygroup.nil?
+     newgroup = Group.create(name: groupname, course_id: @mycourse.id, project_id: @myproject.id)
+      #create relation for current user
 	    GroupRelation.create(course_id: @mycourse.id, user_id: current_user.id, project_id: @myproject.id, 
 	  status: 2, group_id: newgroup.id)
 	  else

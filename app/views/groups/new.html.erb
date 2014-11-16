@@ -1,0 +1,8 @@
+<%= link_to("<< Back to List", {:action => 'index'}) %><br>
+<div class="authform", style="max-width: 500px; margin:auto;">
+
+	<%= form_for(:group, :url => {:action => 'create'}) do |f| %>
+		<div style="font-size:45px; font-weight:bold;">Create Group<br></div><br>
+		<%= render(:partial => 'form', :locals => {:f => f}) %>
+	<% end %>
+</div>

@@ -26,7 +26,6 @@ devise_for :users, :controllers => {:registrations => "registrations"}
         post :set_current_project
         end
      collection do
-       get :clear_all
        get :export_csv
         end
     end
@@ -37,7 +36,7 @@ devise_for :users, :controllers => {:registrations => "registrations"}
        post :update
        get :remove
     end
-    collection do 
+    collection do
     end
   end
   
@@ -58,6 +57,7 @@ devise_for :users, :controllers => {:registrations => "registrations"}
        post :update
        get :remove
        get :autogroup
+       get :clear_partnerships
         end
      collection do
         end

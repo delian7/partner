@@ -18,6 +18,9 @@ class UserPolicy
   def remove?
     true
   end
+    def clear_partnerships?
+    true
+  end
    def leave_group?
     true
   end
