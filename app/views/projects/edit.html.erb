@@ -2,7 +2,7 @@
 <div class="authform", style="max-width: 500px; margin:auto;">
 
 	<%= form_for(:project, :url => {:action => 'update', :id => @project.id}) do |f| %>
-		<h2>Change Project</h2>
-		<%= render(:partial => 'form', :locals => {:f => f}) %>
+		<div style="font-size:45px; font-weight:bold;">Change Project<br><span style="font-size:25px; font-weight:bold;"><%=@project.name%></font></div><br></span>
+		<%= render(:partial => 'form', :locals => {:f => f, project: @project}) %>
 	<% end %>
 </div>

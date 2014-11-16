@@ -2,17 +2,16 @@ class DeviseCreateUsers < ActiveRecord::Migration
   def change
     create_table :users do |t|
       # ## Database authenticatable
-      # t.integer    :campus_id,          null: false, default: "", :unique => :true, null: false
-      t.string     :ucinetid
-      t.string     :uci_affiliations
-      t.string     :first_name
-      t.string     :last_name
-      t.integer    :role,               default: 0, null: false
+      t.string     :ucinetid, limit: 20
+      t.string     :uci_affiliations, limit: 50
+      t.string     :first_name, limit: 20
+      t.string     :last_name, limit: 20
+      t.integer    :role,               default: 0, null: false, limit: 1
       t.string     :email,              null: false, default: ""
-      t.integer    :current_course, null: false, default: ""
-      t.integer    :current_project, null: false, default: ""
-      ## Rememberable
-      #t.datetime :remember_created_at
+      t.integer    :current_course, null: false, default: "", limit: 5
+      t.integer    :current_project, null: false, default: "", limit: 5
+      t.string     :description,               default: "", limit: 500
+      t.string     :availability,               default: "", limit: 500
 
      ## Trackable
       t.integer    :sign_in_count, default: 0, null: false
@@ -24,21 +23,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
      # t.string   :auth_host
       t.integer    :age_in_seconds
       t.attachment :avatar
-
-      ## Confirmable
-      # t.string   :confirmation_token
-      # t.datetime :confirmed_at
-      # t.datetime :confirmation_sent_at
-      # t.string   :unconfirmed_email # Only if using reconfirmable
-
-      ## Lockable
-      # t.integer  :failed_attempts, default: 0, null: false # Only if lock strategy is :failed_attempts
-      # t.string   :unlock_token # Only if unlock strategy is :email or :both
-      # t.datetime :locked_at
       t.timestamps
     end
-     #add_index :users, :ucinetid,                unique: true
-     #add_index :users, :campus_id,   unique: true
-     #add_index :users, :name,         unique: true
   end
 end

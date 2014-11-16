@@ -1,3 +1,5 @@
+<%= render 'users/tabnav/find_group'%>
+<span style="font-size:45px; font-weight:bold;">My Profile</span>
 <%= link_to("<< Back to List", users_path) %>
 
 <div class="section group">
@@ -6,9 +8,18 @@
   </div>
   <div class="col span_2_of_3">
 		<h2>Profile Page of <strong><%= current_user.first_name%> <%=current_user.last_name %></h2></strong>
-		<p>Name: <%= current_user.first_name%> <%=current_user.last_name %></p>
-		<p>Email: <%= current_user.email if current_user.email %></p>
-		<p>Last Sign In: <%= current_user.last_sign_in_at if current_user.last_sign_in_at %></p>
+		<table>
+		<tr><td style = "text-align:right;padding:10px;"><span style="font-weight:bold;">Name:</span> </td>
+		<td> <%= current_user.first_name%> <%=current_user.last_name %></td></tr>
+		<tr><td style = "text-align:right;padding:10px;"><span style="font-weight:bold;">Email:</span> </td>
+		<td> <%= current_user.email if current_user.email %></td></tr>
+		<tr><td style = "text-align:right;padding:10px;"><span style="font-weight:bold;">Description:</span> </td>
+		<td> <%= current_user.description if current_user.description %></td></tr>
+		<tr><td style = "text-align:right;padding:10px;"><span style="font-weight:bold;">Availability:</span> </td>
+		 <td><%= current_user.availability if current_user.availability%></td></tr>
+		<tr><td style = "text-align:right;padding:10px;"><span style="font-weight:bold;">Last Sign In:</span> </td>
+			<td><%= current_user.last_sign_in_at if current_user.last_sign_in_at %></td></tr>
+	</table>
 		<button class="btn btn-success">
 			<span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;
 			<%= link_to 'Edit Profile', edit_user_registration_path, :style => 'color: #fff; text-size:17px; max-width:200px; ' %>

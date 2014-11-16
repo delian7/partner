@@ -1,0 +1,28 @@
+<%= render 'users/tabnav/find_group'%><% @group = Group.find(params[:id])%>
+<%= link_to("<< Back to List", :back) %><br>
+<table class="table" style="width: 95%!important;">
+<span style="font-size:45px; font-weight:bold;">Group Profile of<br></span><span style="font-size:25px; font-weight:bold;"><%=@group.name%></font></div><br></span>
+<td class='collapsable'></td><td><strong>Name</td><td class='collapsable'><strong>Email</td><td><strong>Status</td></strong>
+    <% members = members_of(@group) %>
+    <% members.each do |user| %>
+
+    <%if teammates?(user, current_user)%>
+    <tr>
+	<td class='collapsable'><%= link_to (image_tag (user.avatar.url), :style => 'max-width: 45px;'), user %></td> 
+      <td><%= link_to "#{user.first_name} #{user.last_name}", user %> </td>
+      <td class='collapsable'><%= user.email %></td>
+
+    	<td>Confirmed</td>
+    <%else%>
+        <tr style= "background-color:eee; opacity: 0.6;">
+	<td class='collapsable'><%= link_to (image_tag (user.avatar.url), :style => 'max-width: 45px;'), user %></td> 
+      <td><%= link_to "#{user.first_name} #{user.last_name}", user %> </td>
+      <td class='collapsable'><%= user.email %></td>
+
+        	<td>Request Pending</td>
+    <%end%>	
+
+	</tr>
+    	<% end %>
+    </table>
+</div>

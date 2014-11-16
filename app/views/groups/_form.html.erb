@@ -1,0 +1,22 @@
+<div style="line-height:2; max-width:400px;">
+	<%= f.label 'Group Name: ' %>
+	<%= f.text_field(:name, class: "form-control") %><br/>
+
+	<%= f.label 'Group Size for this Project: ' %>
+	<%= f.select :group_size, [['2 people','2'], ['3 people','3'], ['4 people','4'], ['5 people','5'], ['6 people','6']], {}, {class: "form-control"} %><br>
+
+	<%= f.label 'Allow partners to repeat for different projects? ' %><br>
+	  <%= f.radio_button :allow_repeat, true, :checked => Project.find(GroupRelation.find_by(group_id: @group.id).project_id).allow_repeat == true%> 
+	  <%= f.label 'Yes 1' %><br>
+	  <%= f.radio_button :allow_repeat, false, :checked => Project.find(GroupRelation.find_by(group_id: @group.id).project_id).allow_repeat == false%>
+	  <%= f.label 'No 0' %><br><br>
+
+	<%= f.label 'Group Name Randomization ' %><br>
+	  <%= f.radio_button :allow_randomization, false, :checked => Project.find(GroupRelation.find_by(group_id: @group.id).project_id).allow_randomization == false %> 
+	  <%= f.label 'Default 0' %><br>
+	  <%= f.radio_button :allow_randomization, true, :checked => Project.find(GroupRelation.find_by(group_id: @group.id).project_id).allow_randomization == true %>
+	  <%= f.label 'Randomize 1' %><br><br>
+
+	<%= f.submit("Save Project", :class => 'btn btn-primary') %>
+
+</div>

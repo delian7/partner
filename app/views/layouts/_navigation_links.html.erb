@@ -1,19 +1,30 @@
 <%# add navigation links to this file %>
 <% if user_signed_in? %>
 	<% case current_user.role %>
-		<% when 0 %>
-			<li><%= link_to 'Profile', users_profile_path %></li>
-			<li><%= link_to 'Send Requests', users_path %></li>
-			<li><%= link_to 'View Current Group', users_path %></li>
+		<% when 0 %> 
+		<% if Project.find(current_user.current_project).group_size != 2 %>
+		<li role="presentation" class="<%= 'active' if current_page?(users_profile_path) %>"><%= link_to 'Profile', users_profile_path %></li>
+			<li role="presentation" class="<%= 'active' if current_page?(groups_profile_path) %>"><%= link_to 'My Group', groups_profile_path %></li>
+			<li role="presentation" class="<%= 'active' if current_page?(users_path) %>"><%= link_to 'Classmates', users_path %></li>
+			<li role="presentation" class="<%= 'active' if current_page?(groups_path) %>"><%= link_to 'Groups', groups_path %></li>
+			<% else %>
+			<li role="presentation" class="<%= 'active' if current_page?(users_profile_path) %>"><%= link_to 'Profile', users_profile_path %></li>
+			<li role="presentation" class="<%= 'active' if current_page?(groups_profile_path) %>"><%= link_to 'My Partner', groups_profile_path %></li>
+			<li role="presentation" class="<%= 'active' if current_page?(users_path) %>"><%= link_to 'Classmates', users_path %></li>
+			<% end %>
 		<% when 1 .. 2 %>
-			<li><%= link_to 'Add a Roster', roster_path %></li>
-			<li><%= link_to 'Students', users_path %></li>
-			<li><%= link_to 'Projects', projects_path %></li>
-			<li><%= link_to 'Courses', courses_path %></li>
+			<li role="presentation" class="<%= 'active' if current_page?(roster_path) %>"><%= link_to 'Add a Roster', roster_path %></li>
+			<li role="presentation" class="<%= 'active' if current_page?(users_path) %>"><%= link_to 'Students', users_path %></li>
+			<li role="presentation" class="<%= 'active' if current_page?(groups_path) %>"><%= link_to 'Groups', groups_path %></li>
+			<li role="presentation" class="<%= 'active' if current_page?(projects_path) %>"><%= link_to 'Projects', projects_path %></li>
+			<li role="presentation" class="<%= 'active' if current_page?(courses_path) %>"><%= link_to 'Courses', courses_path %></li>
 		<% when 3 %>
-			<li><%= link_to 'Control Panel', users_path %></li>
-			<li><%= link_to 'Add a Course', users_path %></li>
-			<li><%= link_to 'Add a Roster', roster_path %></li>
+			<li><%= link_to 'Control Panel', '/kayslegion' %></li>
+			<li role="presentation" class="<%= 'active' if current_page?(roster_path) %>"><%= link_to 'Add a Roster', roster_path %></li>
+			<li role="presentation" class="<%= 'active' if current_page?(users_path) %>"><%= link_to 'Students', users_path %></li>
+			<li role="presentation" class="<%= 'active' if current_page?(groups_path) %>"><%= link_to 'Groups', groups_path %></li>
+			<li role="presentation" class="<%= 'active' if current_page?(projects_path) %>"><%= link_to 'Projects', projects_path %></li>
+			<li role="presentation" class="<%= 'active' if current_page?(courses_path) %>"><%= link_to 'Courses', courses_path %></li>
 		<%end%>
 <div class="dropdown pull-right">
   <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="background-color:transparent; background-image:none; border:1px solid transparent; text-shadow: 0 0px; box-shadow: 0 0px;">

@@ -1,11 +1,10 @@
 Rails.application.routes.draw do
+  mount Upmin::Engine => '/kayslegion'
 
-  get 'roster/index'
+  get 'groups/profile'
   get 'users/profile'
   get 'help', to: 'help#index'
-  get 'courses', to: 'courses#index'
   get 'roster', to: 'roster#index'
-  get 'courses/set_course'
   post 'courses/csv_import'
   
 
@@ -18,7 +17,7 @@ devise_for :users, :controllers => {:registrations => "registrations"}
         get :undo_request
         get :confirm
         get :ignore
-        get :delete_partnership
+        get :leave_group
 
         get :registrations
         get :sessions
@@ -27,15 +26,17 @@ devise_for :users, :controllers => {:registrations => "registrations"}
         post :set_current_project
         end
      collection do
-       get :clear_all
        get :export_csv
         end
     end
 
   resources :groups do
     member do
+       get :edit
+       post :update
+       get :remove
     end
-    collection do 
+    collection do
     end
   end
   
@@ -55,6 +56,8 @@ devise_for :users, :controllers => {:registrations => "registrations"}
        get :edit
        post :update
        get :remove
+       get :autogroup
+       get :clear_partnerships
         end
      collection do
         end
@@ -66,4 +69,5 @@ devise_scope :user do
     get "sign_out", to: "devise/sessions#destroy"
     get "edit", to: "devise/registrations#update"
   end
+
 end
