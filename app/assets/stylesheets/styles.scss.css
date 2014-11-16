@@ -170,12 +170,15 @@ float: none;
 /*  GRID OF THREE  */
 .span_3_of_3 {
   width: 100%;
+
 }
 .span_2_of_3 {
   width: 64%;
+  padding:10px;
 }
 .span_1_of_3 {
   width: 32%;
+  padding:10px;
 }
 
 /*  GO FULL WIDTH AT LESS THAN 480 PIXELS */

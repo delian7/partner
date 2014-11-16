@@ -1,3 +1,4 @@
+<%= render 'layouts/course_select'%>
 <% case current_user.role %>
   <% when 0 %>
 	  <% if Project.find(current_user.current_project).group_size == 2 %>
@@ -6,12 +7,12 @@
         <%= render 'users/student/find_members' %>
     <% end %>
   <% when 1 .. 2 %>
-    <%= render'users/professor/find_members' %>
+    <%= render'users/professor/enrolled_students' %>
 
-    <%= render 'layouts/buttons/vip_button' %>
+    <%= render 'layouts/tableinfo/buttons/vip_button' %>
   <% when 3 %>
      <%= render'users/admin/find_members' %>
 
-    <%= render 'layouts/buttons/vip_button' %>
+    <%= render 'layouts/tableinfo/buttons/vip_button' %>
 <% end %>
 </table>

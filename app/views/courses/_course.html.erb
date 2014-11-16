@@ -3,7 +3,7 @@
 <tr>
 	  <td class='collapsable'><%= course.id %></td>
       <td><%= course.course_title %></td>
-      <td class='collapsable'><%= course.projects.where(active: true).collect(&:name).uniq.to_sentence %></td>
+      <td class='collapsable' style="width:45%;"><%= course.projects.where(active: true).collect(&:name).uniq.to_sentence %></td>
       <td ><%= link_to("Edit", {:action => 'edit', :id => course.id}, :class => 'btn btn-success')%></td>
       <td><%= link_to("Delete", remove_course_path(course.id), :data => { :confirm =>"Are you sure you want to delete this course?"}, :class => 'btn btn-danger')%>
       </td>

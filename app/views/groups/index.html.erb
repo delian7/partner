@@ -1,9 +1,10 @@
+<%= render 'layouts/course_select'%>
 	<% case current_user.role %>
   <% when 0 %>
     <%= render 'groups/student/find_group' %>
   <% when 1 .. 2 %>
-    <%= render'groups/professor/find_group' %>
-    <%= render 'layouts/buttons/vip_button' %>
+    <%= render'groups/professor/groups' %>
+    <%= render 'layouts/tableinfo/buttons/vip_button' %>
   <% when 3 %>
   <%= render'groups/admin/find_group' %>
 <% end %>
