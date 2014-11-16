@@ -1,5 +1,4 @@
-<%= render 'users/tabnav/find_group'%>
-	<div class="section-group">
+<div class="section-group">
 		<div class="col span_2_of_3">
 			<table class="table" style="width: 95%!important;">
 		<span style="font-size:45px; font-weight:bold;">Find Members</span>
@@ -11,7 +10,7 @@
 	<!-- Room in group-->
 	<%end%>
 		<% allowed_size = Project.find(current_user.current_project).group_size%>
-		    <% if allowed_size < mygroupsize %>
+		    <% if allowed_size <= mygroupsize %>
 		    <% msg ="#{@mygroup.name} is full.  <br>You are allowed <span style= 'font-size: 20px; font-weight:bold;'>#{allowed_size}</span> members. You have <span style= 'font-size: 20px; font-weight:bold;'>#{mygroupsize}.</span>"%>
 	 <div class="alert alert-success">
       <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -22,7 +21,7 @@
 		      <td colspan="2" style="max-width:100px;"><b>Request</td></b>
 		   </tr>
 		<!-- End Table Header -->
-		  <%= render 'users/tableinfo/user_render'%></table>
+		  <%= render 'layouts/tableinfo/user_render'%></table>
 		</div>
 		<div class="col span_1_of_3">
 			<% if my_partner_for(@myproject).nil? %>
