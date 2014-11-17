@@ -51,53 +51,44 @@ class ProjectsController < ApplicationController
     groups=[]
     @project = Project.find(params[:id])
     relations = Roster.where(course_id: @project.course_id).collect(&:user_id)
-      relations.each do |user|
-        if User.find(user).role==0 && GroupRelation.where(user_id: user, project_id: @project).empty?
-        students.push(User.find(user))
-        end
-      end
-    times = Roster.where(course_id: @project.course_id).size.divmod @project.group_size
-    fullteams = times[0]
-    leftovers= times[1]
-
-    for i in 1..fullteams
-    case @project.name_gen
-      when "numbered"
-        groupname = "Team #{Group.where(project_id: @project.id).size + 1}"
-      when "hacker"
-        groupname = "Team #{Faker::Hacker.ingverb.titlecase} #{Faker::Hacker.adjective.titlecase}"
-      when "creatures"
-        groupname = "Team #{Faker::Team.creature.titlecase}"
-      when "colors"
-        groupname = "Team #{Faker::Commerce.color.titlecase}"
+    relations.each do |user|
+      students.push(User.find(user))
     end
-     newgroup = Group.create(name: groupname, project_id: @project.id,course_id: @project.course_id)
+    times = Roster.where(course_id: @project.course_id).size.divmod @project.group_size
+
+
+    for i in 1..times[0] 
+      case @project.name_gen
+       when "numbered"
+        groupname = "Team #{Group.where(project_id: @project.id).size + 1}"
+       when "hacker"
+        groupname = Faker::Hacker.ingverb.titlecase + " " + Faker::Hacker.adjective.titlecase
+       when "creatures"
+        groupname = Faker::Team.creature.titlecase
+       when "colors"
+        groupname = Faker::Commerce.color.titlecase
+     end
+     newgroup = Group.create(name: groupname, project_id: @project.id)
       students.sample(@project.group_size).collect(&:id).each do |student|
         GroupRelation.create(course_id: @project.course_id, group_id: newgroup.id, user_id: student, project_id: @project.id)
-        groups.push(student)
-        students.delete_if{ |student| groups.include?(student.id)}
-
       end
     end
-    for i in 1..leftovers
-    case @project.name_gen
-      when "numbered"
+    for i in 1..times[1] 
+      case @project.name_gen
+       when "numbered"
         groupname = "Team #{Group.where(project_id: @project.id).size + 1}"
-      when "hacker"
-        groupname = "Team #{Faker::Hacker.ingverb.titlecase} #{Faker::Hacker.adjective.titlecase}"
-      when "creatures"
-        groupname = "Team #{Faker::Team.creature.titlecase}"
-      when "colors"
-        groupname = "Team #{Faker::Commerce.color.titlecase}"
+       when "hacker"
+        groupname = Faker::Hacker.ingverb.titlecase + " " + Faker::Hacker.adjective.titlecase
+        when "creatures"
+        groupname = Faker::Team.creature.titlecase
+        when "colors"
+        groupname = Faker::Commerce.color.titlecase
      end
-     newgroup = Group.create(name: groupname, project_id: @project.id, course_id: @project.course_id)
+     newgroup = Group.create(name: groupname, project_id: @project.id)
       students.sample(times[1]).collect(&:id).each do |student|
         GroupRelation.create(course_id: @project.course_id, group_id: newgroup.id, user_id: student, project_id: @project.id)
-        groups.push(student)
-        students.delete_if{ |student| groups.include?(student.id)}
     end
 end
-flash[:notice] = "Groups have been randomly assigned for <b>#{@project.name}</b>"
 redirect_to groups_path
 end
 
@@ -124,11 +115,11 @@ end
     GroupRelation.where(project_id: @myproject).each do |proj|
       proj.destroy
     end
-      flash[:notice] = "All Groups and Partnerships were cleared."
+      flash[:notice] = "Removed User."
     else 
-      flash[:error] = "Unable to clear group relations."
+      flash[:error] = "Unable to remove user."
     end
-  redirect_to :back
+  redirect_to projects_path
   end
 
   

@@ -17,16 +17,11 @@ class GroupPolicy
   def show?
     true
   end
-    def new_relation?
-    true
-  end
 
    def delete_partnership?
     true
   end
-     def disband_team?
-    true
-  end
+
   def profile?
     false
   end

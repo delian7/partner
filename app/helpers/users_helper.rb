@@ -161,6 +161,11 @@ set_current_users_instance_variables
 	end
 end
 
+def other_teams(project)
+  Group.where(project_id: project.id).size + 1
+end
+
+
 def request_group_member(user)
 set_current_users_instance_variables
 # current_project only gets the first project. #TODO FIX! 

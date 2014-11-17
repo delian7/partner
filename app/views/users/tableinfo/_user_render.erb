@@ -1,10 +1,10 @@
 <%if !@mygroup.nil? %>
-	<% mygroupsize = GroupRelation.where(project_id: @myproject.id, group_id: @mygroup.id).size%>
+	<%= mygroupsize = GroupRelation.where(project_id: @myproject.id, group_id: @mygroup.id).size%>
 	<%else%>
-	<% mygroupsize = 0%>
+	<%= mygroupsize = 0%>
 	<!-- Room in group-->
 	<%end%>
-		<% allowed_size = Project.find(current_user.current_project).group_size%>
+		<%= allowed_size = Project.find(current_user.current_project).group_size%>
 <% if allowed_size > mygroupsize%>
 <% @users.each do |user| %>
 	<% @user = user %>
@@ -14,7 +14,7 @@
 	<td><%= link_to "#{@user.first_name} #{@user.last_name}", @user %> </td>
 	<td class='collapsable'><%= @user.email %></td>
 							<% if current_user.role == 0 %>
-								<%=render 'layouts/tableinfo/button_render', user: @user%>
+								<%=render 'users/tableinfo/button_render', user: @user%>
 							<% end %>
 	</tr>
 	<% end %>
@@ -32,7 +32,7 @@
 
 
 
-	<%=render 'layouts/tableinfo/button_render', user: @user%>
+	<%=render 'users/tableinfo/button_render', user: @user%>
 	<% end %>
 	<% end %>
 
