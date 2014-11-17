@@ -1,7 +1,7 @@
 <div style="line-height:2; max-width:400px;">
 <%if !@project.nil?%>
-	<% random = Project.find_by(@project.id).name_gen %>
-	<% repeat = Project.find_by(@project.id).allow_repeat %>
+	<% random = Project.find_by_id(@project.id).name_gen %>
+	<% repeat = Project.find_by_id(@project.id).allow_repeat %>
 	<%else%>
 
 	
@@ -25,10 +25,8 @@
 	  <%= f.label 'No 0' %><br><br>
 
 	<%= f.label 'Group Name Randomization ' %><br>
-	  <%= f.radio_button :name_gen, false, :checked => random == false %> 
-	  <%= f.label 'Default 0' %><br>
-	  <%= f.radio_button :name_gen, true, :checked => random == true %>
-	  <%= f.label 'Randomize 1' %><br><br>
+	  <!-- <%= f.select :name_gen, [['2 people','2'], ['3 people','3'], ['4 people','4'], ['5 people','5'], ['6 people','6']], {}, {class: "form-control"} %> -->
+	
 	<%= f.submit("Save Project", :class => 'btn btn-primary') %>
 
 </div>
