@@ -1,5 +1,5 @@
 <table class="table" style="width: 95%!important;">
-<span style="font-size:45px; font-weight:bold;display:inline"><% if @myproject.group_size == 2 %>Partnerships <%else%>Groups<%end%><span style="font-size:30px; font-weight:bold;display:inline">for<br><%=@myproject.name%></span></span>
+<span style="font-size:45px; font-weight:bold;display:inline"><% if @myproject.group_size == 2 %>Partnerships <%else%>Groups<%end%><span style="font-size:30px; font-weight:bold;display:inline"> for<br><%=@myproject.name%> <%= link_to("<span class=\"glyphicon glyphicon-pencil\"></span>".html_safe, edit_project_path(@myproject.id), :class => 'btn btn-success')%></td></span></span>
     <!-- Start Table Header --><br>
 <span style="max-width:555px;float:right;;display:inline;padding:0px;margin:">
    <%= link_to "<span class=\"glyphicon glyphicon-random\"></span>&nbsp;&nbsp;Autogroup".html_safe, autogroup_project_path(@myproject.id), :class => 'btn btn-info btn-md'%>
@@ -8,11 +8,15 @@
 
 <!-- End Table Header -->
 <table class="table" style="width: 95%!important;">
+  <%if @myproject.name_gen == 'numbered'%>
+  <% ids = @myproject.groups.uniq%>
+  <%else%>
   <% ids = @myproject.groups.order(:name).uniq%>
+  <%end%>
   <% ids.each do |group| %>
 	 <% @group = Group.find(group) %>
     <tr>
-     <td colspan="9"> <span style="font-size:20px; font-weight:bold;"><%= link_to @group.name, @group %></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=  link_to "<u><span class=\"glyphicon glyphicon-arrow-left\"></span>&nbsp;&nbsp;Disband Grouping</u>".html_safe, disband_team_group_path(group), :class => 'btn btn-danger btn-xs' %></td>
+     <td colspan="9"> <span style="font-size:20px; font-weight:bold;"><%= link_to @group.name, @group %></span>&nbsp;&nbsp;&nbsp;&nbsp;<%=  link_to "<span class=\"glyphicon glyphicon-remove\"></span>".html_safe, disband_team_group_path(group), :class => 'btn btn-default btn-xs' %>
 
 
     <% members = members_of(@group) %>

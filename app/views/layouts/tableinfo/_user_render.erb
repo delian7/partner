@@ -1,5 +1,5 @@
 <%if !@mygroup.nil? %>
-	<% mygroupsize = GroupRelation.where(project_id: @myproject.id, group_id: @mygroup.id).size%>
+	<% mygroupsize = @myproject.groups.size%>
 	<%else%>
 	<% mygroupsize = 0%>
 	<!-- Room in group-->
@@ -23,12 +23,11 @@
 
 <!-- No room in group-->
 	<% else  %>
-	<% GroupRelation.where(group_id: @mygroup).collect(&:user_id).each do |user| %>
-	<% @user = User.find(user)%>
-	<%if @user != current_user && !teammates?(@user, current_user)%>
-	<td class='collapsable'><%= link_to (image_tag (@user.avatar.url), :style => 'max-width: 45px;'), @user %></td> 
-	<td><%= link_to "#{@user.first_name} #{@user.last_name}", @user %> </td>
-	<td class='collapsable'><%= @user.email %></td>
+	<% @mygroup.users.each do |user| %>
+	<%if user != current_user && !teammates?(user, current_user)%>
+	<td class='collapsable'><%= link_to (image_tag (user.avatar.url), :style => 'max-width: 45px;'), user %></td> 
+	<td><%= link_to "#{user.first_name} #{user.last_name}", user: @user %> </td>
+	<td class='collapsable'><%= user.email %></td>
 	<%if current_user.role == 0%>
 
 

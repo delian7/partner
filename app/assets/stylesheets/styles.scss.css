@@ -11,7 +11,6 @@ margin: 0px 0px 0px 0px;
   color:black;
   font-size:17px;
   padding-right: 15px;
-  vertical-align: middle;
 }
 .navbar-nav {
 float: none;
@@ -19,10 +18,11 @@ float: none;
 
 .navbar-custom {
   background-color: #3e97db;
-  border-color: #fff 0px;
+  border: 0px;
 }
 .navbar-custom .navbar-brand {
   color: #ffffff;
+  vertical-align: bottom;
 }
 .navbar-custom .navbar-brand:hover,
 .navbar-custom .navbar-brand:focus {
@@ -45,6 +45,8 @@ float: none;
 .navbar-custom .navbar-nav > .active > a:focus {
   color: #000;
   background-color: #fff;
+  border-top-left-radius: 9px;
+  border-top-right-radius: 9px;
 
 }
 .navbar-custom .navbar-nav > .disabled > a,
@@ -96,7 +98,6 @@ float: none;
   .navbar-custom .navbar-nav > .active > a {
   color: #000;
   background-color: #fff;
-
   border-top-left-radius: 0px 0px;
   border-top-right-radius: 0px 0px;
 }

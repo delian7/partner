@@ -1,5 +1,5 @@
 <table class="table" style="width: 95%!important;">
-  <% ids = GroupRelation.where(project_id:@myproject.id).collect(&:group_id).uniq%>
+    <% ids = @myproject.groups.order(:name).uniq%>
   <% ids.each do |group| %>
 	 <% @group = Group.find(group) %>
     <tr>
