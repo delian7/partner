@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :reports
   mount Upmin::Engine => '/kayslegion'
 
   get 'groups/profile'

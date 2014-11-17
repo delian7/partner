@@ -5,6 +5,12 @@ max-width: 150px;
 img#non-responsive {
 margin: 0px 0px 0px 0px;
 }
+.reports-grid{
+    color:red;
+}
+.order{
+  display: inline;
+}
 
 .navbar .nav > li > a {
   font-family: 'Helvetica', sans-serif;
