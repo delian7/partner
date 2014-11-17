@@ -1,4 +1,4 @@
-<%= render 'users/tabnav/find_group'%><% @group = Group.find(params[:id])%>
+<% @group = Group.find(params[:id])%>
 <%= link_to("<< Back to List", :back) %><br>
 <table class="table" style="width: 95%!important;">
 <span style="font-size:45px; font-weight:bold;">Group Profile of<br></span><span style="font-size:25px; font-weight:bold;"><%=@group.name%></font></div><br></span>

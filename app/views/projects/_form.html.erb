@@ -1,7 +1,7 @@
 <div style="line-height:2; max-width:400px;">
 <%if !@project.nil?%>
-	<% random = Project.find_by(@project.id).name_gen %>
-	<% repeat = Project.find_by(@project.id).allow_repeat %>
+	<% random = Project.find_by_id(@project.id).name_gen %>
+	<% repeat = Project.find_by_id(@project.id).allow_repeat %>
 	<%else%>
 
 	
@@ -19,16 +19,25 @@
 	<%= f.select :group_size, [['2 people','2'], ['3 people','3'], ['4 people','4'], ['5 people','5'], ['6 people','6']], {}, {class: "form-control"} %><br>
 
 	<%= f.label 'Allow partners to repeat for different projects? ' %><br>
-	  <%= f.radio_button :allow_repeat, true, :checked => repeat == true %> 
+	    <%= f.radio_button :allow_repeat, true, :checked => repeat == true %> 
 	  <%= f.label 'Yes 1' %><br>
-	  <%= f.radio_button :allow_repeat, false, :checked => repeat == false %>
+	    <%= f.radio_button :allow_repeat, false, :checked => repeat == false %>
 	  <%= f.label 'No 0' %><br><br>
 
 	<%= f.label 'Group Name Randomization ' %><br>
-	  <%= f.radio_button :name_gen, false, :checked => random == false %> 
-	  <%= f.label 'Default 0' %><br>
-	  <%= f.radio_button :name_gen, true, :checked => random == true %>
-	  <%= f.label 'Randomize 1' %><br><br>
+<<<<<<< HEAD
+	  <!-- <%= f.select :name_gen, [['2 people','2'], ['3 people','3'], ['4 people','4'], ['5 people','5'], ['6 people','6']], {}, {class: "form-control"} %> -->
+	
+=======
+	    <%= f.radio_button :name_gen, "numbered", :checked => random == "numbered" %> 
+	  <%= f.label 'Default' %><br>
+	    <%= f.radio_button :name_gen, "hacker", :checked => random == "hacker" %>
+	  <%= f.label 'Hacker' %><br>
+	  	<%= f.radio_button :name_gen, "creatures", :checked => random == "creatures" %>
+	  <%= f.label 'Creatures' %><br>
+	  	<%= f.radio_button :name_gen, "colors", :checked => random == "colors" %>
+	  <%= f.label 'Colors' %><br>
+>>>>>>> FETCH_HEAD
 	<%= f.submit("Save Project", :class => 'btn btn-primary') %>
 
 </div>

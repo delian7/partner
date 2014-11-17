@@ -1,5 +1,4 @@
-<%= render 'users/tabnav/find_group'%>
-	<div class="section-group">
+<div class="section-group">
 		<div class="col span_2_of_3">
 			<table class="table" style="width: 95%!important;">
 		<span style="font-size:45px; font-weight:bold;">Find Partner</span>
@@ -9,7 +8,7 @@
 		      <td colspan="2" style="max-width:100px;"><b>Request</td></b>
 		   </tr>
 		<!-- End Table Header -->
-		  <%= render 'users/tableinfo/user_render'%></table>
+		  <%= render 'layouts/tableinfo/user_render'%></table>
 		</div>
 		<div class="col span_1_of_3">
 			<% if my_partner_for(@myproject).nil? %>
