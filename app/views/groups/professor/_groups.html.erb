@@ -1,21 +1,18 @@
 <table class="table" style="width: 95%!important;">
-<div style="font-size:45px; font-weight:bold;"><% if @myproject.group_size == 2 %>Partnerships <%else%>Groups<%end%>
+<span style="font-size:45px; font-weight:bold;display:inline"><% if @myproject.group_size == 2 %>Partnerships <%else%>Groups<%end%><span style="font-size:30px; font-weight:bold;display:inline">for<br><%=@myproject.name%></span></span>
     <!-- Start Table Header --><br>
-<div style="max-width:550px;float:right;padding-right:7%;">
-  
-  <%= link_to("Autogroup", autogroup_project_path(@myproject.id), :class => 'btn btn-info')%><%=  link_to "Reset Partnerships", clear_partnerships_project_path(@myproject.id), :style => 'color: #fff;', :class => 'btn btn-danger' %></div>
-
-<div style="max-width:550px;float:right;padding-right:7%;">
-<%=link_to 'Export Table', export_csv_users_path(current_user), :class=>"btn btn-warning" %>
-</div>
+<span style="max-width:555px;float:right;;display:inline;padding:0px;margin:">
+   <%= link_to "<span class=\"glyphicon glyphicon-random\"></span>&nbsp;&nbsp;Autogroup".html_safe, autogroup_project_path(@myproject.id), :class => 'btn btn-info btn-md'%>
+  <%=  link_to "<span class=\"glyphicon glyphicon-warning-sign\"></span>&nbsp;&nbsp;Reset Groups".html_safe, clear_partnerships_project_path(@myproject.id), :class => 'btn btn-danger btn-md' %>
+</span>
 
 <!-- End Table Header -->
 <table class="table" style="width: 95%!important;">
-  <% ids = GroupRelation.where(project_id:@myproject.id).collect(&:group_id).uniq%>
+  <% ids = @myproject.groups.order(:name).uniq%>
   <% ids.each do |group| %>
 	 <% @group = Group.find(group) %>
     <tr>
-     <td colspan="9"> <span style="font-size:20px; font-weight:bold;"><%= link_to @group.name, @group %></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=  link_to "<<< Reset Group", disband_team_group_path(group), :style => 'color: #fff;', :class => 'btn btn-danger' %></td>
+     <td colspan="9"> <span style="font-size:20px; font-weight:bold;"><%= link_to @group.name, @group %></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=  link_to "<u><span class=\"glyphicon glyphicon-arrow-left\"></span>&nbsp;&nbsp;Disband Grouping</u>".html_safe, disband_team_group_path(group), :class => 'btn btn-danger btn-xs' %></td>
 
 
     <% members = members_of(@group) %>
@@ -39,7 +36,7 @@
 		<% groups = GroupRelation.where(user_id: user.id, project_id:@myproject, status: 2).collect(&:group_id)%>
 				<% groups.each do |group|%>
 				<%= form_for(:group, :url => {:action => 'update_relation',:controller => 'groups', :id => group, user: user.id}, :html => { :style => 'display:inline;'}) do |f|%>	
-				<%= f.select :name, options_from_collection_for_select(Group.where(project_id: @myproject), 'id', 'name', Group.find(group).id), {}, 
+				<%= f.select :name, options_from_collection_for_select(@myproject.groups.uniq, 'id', 'name', group), {}, 
 				{class: 'form-control', style: 'width:70%; display:inline; height:25px;', onchange: 'this.form.submit();'} %>
 				<% end %></td>
 				<% end %><% end %>

@@ -8,11 +8,7 @@
     <% end %>
   <% when 1 .. 2 %>
     <%= render'users/professor/enrolled_students' %>
-
-    <%= render 'layouts/tableinfo/buttons/vip_button' %>
   <% when 3 %>
      <%= render'users/admin/find_members' %>
-
-    <%= render 'layouts/tableinfo/buttons/vip_button' %>
 <% end %>
 </table>
