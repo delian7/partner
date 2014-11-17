@@ -26,6 +26,25 @@ def edit
     redirect_to(:action => 'index')
   end
 
+  def update_relation  
+    newgroup = params[:group][:name]
+    user = params[:user]
+    if !params[:id].nil?
+    relation = GroupRelation.find_by(group_id: params[:id], user_id: user)
+    relation.group_id = newgroup
+      if GroupRelation.find_by(group_id: params[:id]).nil?
+        Group.find(params[:id]).destroy
+      end
+  else
+    relation = GroupRelation.create(group_id: params[:group][:name], user_id: params[:id])
+    end
+    if relation.save
+      redirect_to :back, :notice => "<b>#{User.find(params[:user]).first_name} #{User.find(params[:user]).last_name}</b> moved to <b>#{Group.find(params[:group][:name]).name}</b>"
+    else
+      redirect_to :back, :alert => "Unable to change group."
+    end
+  end
+
   def update
     @group = Group.find(params[:id])
     
@@ -201,6 +220,23 @@ def edit
       flash[:notice] = "Removed User."
     else 
       flash[:error] = "Unable to remove user."
+    end
+  redirect_to users_path
+  end
+
+    def disband_team
+    group = Group.find(params[:id])
+    groupname = group.name
+    authorize current_user
+    set_current_users_instance_variables
+    
+      GroupRelation.where(group_id: group.id).each do |relation|
+      relation.destroy
+    end
+    if group.destroy
+       flash[:notice] = "#{groupname} has been disbanded."
+     else
+      flash[:error] = "Unable to disband #{groupname}."
     end
   redirect_to users_path
   end

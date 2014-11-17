@@ -51,8 +51,6 @@ class UsersController < ApplicationController
     authorize User.find(params[:id])
     current_user.update_attributes(secure_params)
     set_current_users_instance_variables
-    
-    
     @current_projects = Project.where(course_id: @mycourse.id, active: true)
 
     if @current_projects.exists?
@@ -60,7 +58,7 @@ class UsersController < ApplicationController
     else
       current_user.update_attributes(current_project: 0)
     end
-    redirect_to users_path
+    redirect_to :back
      
   end
   
@@ -68,7 +66,7 @@ class UsersController < ApplicationController
     user = User.find(params[:id])
     authorize user
     current_user.update_attributes(secure_params)
-    redirect_to users_path
+    redirect_to :back
   end
 
   # Start download of csv file of partner data
@@ -77,21 +75,26 @@ class UsersController < ApplicationController
       authorize user
       roster_csv = CSV.generate do |csv|
       csv << ["Group", "First Name", "Last Name", "Email", "confirmed"]
-      User.where(role: 0).each do |user|
-          members = members_of(@group)
-     members.each do |user| 
+    @members=[]
+    groupids = GroupRelation.where(project_id:current_user.current_project).collect(&:group_id).uniq
+    groupids.each do |group|
+    @group = Group.find(group)
 
-    if GroupRelation.find_by(user_id: user.id, group_id: @group.id).status == 2
-        user.email 
-        Confirmed
+    GroupRelation.where(group_id: group).collect(&:user_id).each do |i|
+    name = "#{user.first_name} #{user.last_name}"
+    user = User.find(i)
+
+    if GroupRelation.find_by(user_id: user.id, group_id: @group.id).nil?
+        @confirmed ="Request Pending"
+    elsif GroupRelation.find_by(user_id: user.id, group_id: @group.id).status == 2
+        @confirmed = "Confirmed"
     else
-      user.email 
-          Request Pending
+        @confirmed ="Request Pending"
     end 
+    csv << [@group.name, user.first_name, user.last_name, user.email, @confirmed]   
        end 
-        csv << [user.first_name, user.last_name, user.email]     
-      end 
       end    
+    end
     send_data(roster_csv, :type =>  'text/csv', :filename =>  'groups.csv')
   end
 
@@ -185,7 +188,6 @@ class UsersController < ApplicationController
   redirect_to users_path
   end
 
-
   private
 
   def admin_only
@@ -193,9 +195,6 @@ class UsersController < ApplicationController
       redirect_to :back, :alert => "Access denied."
     end
   end
-  # def login_params
-  #   params.require(:user).permit(:id)
-  # end
   def secure_params
     params.require(:user).permit(:id, :avatar, :description, :availability, :role, :current_course, :current_project)
   end
