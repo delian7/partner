@@ -22,15 +22,12 @@
 		<% when 1..2 %><p>
 			<div class="col span_1_of_3">
 				<center>
-					<p><%= link_to("Upload Roster", roster_path, :class => 'btn btn-info', :style=>"width:50%; float:center;") %></p>
-					<p><%= link_to("Students", users_path, :class => 'btn btn-warning', :style=>"width:50%; float:center;") %></p>
-					<p><%= link_to("Projects", projects_path, :class => 'btn btn-success', :style=>"width:50%; float:center;") %></p>
 					<h4>There are currently <strong><%= User.count %></strong> registered users</h4>
 		    </center>
 			</div>
 			
 		<!-- if the user is an admin -->
-		<% when 5 %>
+		<% when 3 %>
 			<div class="col span_2_of_3">
 		  	<h2>Groups</h2>
 	    	<table class = "table" style = "width:100%;">

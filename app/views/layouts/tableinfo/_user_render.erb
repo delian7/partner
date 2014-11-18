@@ -9,7 +9,7 @@
 <% @users = Course.find(current_user.current_course).users.order(:last_name)%>
 <% @users.each do |user| %>
 	<% @user = User.find(user) %>
-	<% if (classmates?(@user, @mycourse)|| teammates?(@user, current_user)) && (!same?(current_user.id, @user.id) && is_student?(user)) && !confirmed?(@user)  %>
+	<% if (classmates?(@user, @mycourse)|| teammates?(@user, current_user)) && (!same?(current_user.id, @user.id) && is_student?(@user)) && !confirmed?(@user)  %>
 	<tr>
 	<td class='collapsable'><%= link_to (image_tag @user.avatar.url, :style => 'max-width: 45px;'), @user %></td> 
 	<td><%= link_to "#{@user.first_name} #{@user.last_name}", @user %> </td>
@@ -24,6 +24,7 @@
 <!-- No room in group-->
 	<% else  %>
 	<% @mygroup.users.each do |user| %>
+		<% @user = User.find(user) %>
 	<%if user != current_user && !teammates?(user, current_user)%>
 	<td class='collapsable'><%= link_to (image_tag (user.avatar.url), :style => 'max-width: 45px;'), user %></td> 
 	<td><%= link_to "#{user.first_name} #{user.last_name}", user: @user %> </td>

@@ -1,3 +1,5 @@
-<%=  link_to "<span class=\"glyphicon glyphicon-chevron-left\"></span>&nbsp;&nbsp;<b>Confirm</b>".html_safe, confirm_user_path(user), class: "btn btn-edit btn-md" %></span>, confirm_user_path(user)%>
-<td style="max-width:50px;padding-left:0px;"><button class="btn btn-danger" style="width:100%;"><%=  link_to "Ignore", leave_group_user_path(user), :style => 'color: #fff;width:100%;' %></button></td>
-<%=  link_to "<span class=\"glyphicon glyphicon-chevron-left\"></span>&nbsp;&nbsp;<b>Ignore</b>".html_safe, confirm_user_path(user), class: "btn btn-danger btn-md" %></span>, leave_group_user_path(user)%>
+<td><%=  link_to "<span class=\"glyphicon glyphicon-plus\"></span>&nbsp;&nbsp;<b>Confirm</b>".html_safe, confirm_user_path(user), class: "btn btn-info btn-md" %></span>
+</td>
+<td>
+	<%=  link_to "<span class=\"glyphicon glyphicon-remove\"></span>&nbsp;&nbsp;<b>Ignore</b>".html_safe, ignore_user_path(user), class: "btn btn-danger btn-md" %></span>
+</td>

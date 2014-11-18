@@ -16,7 +16,8 @@ My Group
  <span style="font-size:18px;"><%=@myproject.name%></span>
    <span style="font-size:20px; font-weight:bold;">  <br>Course:</span>
  <span style="font-size:18px;"><%=@myproject.course_id%><br></span>
- <div style="float:right;"><%=  link_to "Start a Doodle", "http://doodle.com/create?type=date&locale=en&title=#{@mygroup.name}%20Group%20Meeting&name=#{current_user.first_name}%20#{current_user.last_name}&eMailAddress=#{current_user.email}&description=Our%20first%20group%20meeting...", :style => 'color: #fff;width:100%;', class: "btn btn-info" %></div>
+ <div style="float:right;">  <%=  link_to "<span class=\"glyphicon glyphicon-calendar\"></span>&nbsp;&nbsp;<b>Start a Doodle</b>".html_safe, "http://doodle.com/create?type=date&locale=en&title=#{@mygroup.name}%20Group%20Meeting&name=#{current_user.first_name}%20#{current_user.last_name}&eMailAddress=#{current_user.email}&description=Our%20first%20group%20meeting...", class: "btn btn-info btn-md" %></span>
+</div>
 
 
 
