@@ -5,7 +5,7 @@ include Pundit
 
   protect_from_forgery with: :exception
   before_action :configure_permitted_parameters, if: :devise_controller?
-  before_action :startup, :nil_check
+  before_action :startup, :nil_check, :pending_notifications
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
@@ -59,6 +59,24 @@ include Pundit
     end
 
   end
+def pending_notifications
+  if user_signed_in?
+  pending = []
+  x = false
+  current_user.group_relations.each do |group|
+      if group.status == 1
+        pending.push(group)
+        x = true
+      end
+  end
+  if x == true
+    pending.each do|request|
+    flash[:alert] = "You have a pending request from <b>#{Group.find(request.group_id).name}</b> for <b>#{Course.find(request.course_id).course_title}, #{Project.find(request.project_id).name}</b>"
+    end
+  end
+end
+end
+
 
   protected
 

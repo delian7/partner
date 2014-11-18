@@ -2,7 +2,7 @@ module UsersHelper
 
 def get_status(user)
   if !@mygroup.nil?
-    @user_status = GroupRelation.where(project_id: @myproject.id, user_id: user.id, group_id: @mygroup.id).pluck(:status)[0]
+    @user_status = GroupRelation.find_by(project_id: @myproject.id, user_id: user.id, group_id: @mygroup.id).status
   end
 end
 

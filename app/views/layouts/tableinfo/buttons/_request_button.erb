@@ -1,1 +1,2 @@
-<td colspan="2" style="max-width:100px;"><button class="btn btn-primary" style="width:100%;"><%=  link_to "Send Request", send_request_user_path(user), :style => 'color: #fff; width:100%;' %></button></td>
+<td colspan="2" style="max-width:100px;">
+	<%=  link_to "<span class=\"glyphicon glyphicon-plus\"></span>&nbsp;&nbsp;Send Request".html_safe, send_request_user_path(user), class: "btn btn-primary btn-md" %></span></td>

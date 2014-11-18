@@ -122,6 +122,8 @@ def csv_import
   else
     @course = Course.find(@course_code)
     make_default_project(@course_code)
+    set_current_project_course(current_user, @proj, @course)
+    Roster.create(course_id: @course_code, user_id: current_user.id)
   end
  
   # for every 'row' or array in studentdata array, excluding row 1 and the last two
@@ -150,7 +152,7 @@ end
         set_current_project_course(@user, @proj, @course)
       end
       end 
-      set_current_project_course(current_user, @proj, @course)
+  
   redirect_to :back, :notice => "CSV Import Successful,  #{add} students added to this class, #{removal} students removed from this class"
 end
 

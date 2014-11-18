@@ -52,11 +52,11 @@ class ProjectsController < ApplicationController
     @project = Project.find(params[:id])
     relations = Roster.where(course_id: @project.course_id).collect(&:user_id)
       relations.each do |user|
-        if User.find(user).role==0 && GroupRelation.where(user_id: user, project_id: @project).empty?
+        if User.find(user).role == 0 && GroupRelation.where(user_id: user, project_id: @project).empty?
         students.push(User.find(user))
         end
       end
-    times = Roster.where(course_id: @project.course_id).size.divmod @project.group_size
+    times = Course.find(current_user.current_course).users.where(role: 0).size.divmod @project.group_size
     fullteams = times[0]
     leftovers= times[1]
 
@@ -82,7 +82,7 @@ class ProjectsController < ApplicationController
     for i in 1..leftovers
     case @project.name_gen
       when "numbered"
-        groupname = "Team #{Group.where(project_id: @project.id).size + 1}"
+        groupname = "Team #{Group.where(project_id: @project.id).size + 1} ,,,"
       when "hacker"
         groupname = "Team #{Faker::Hacker.ingverb.titlecase} #{Faker::Hacker.adjective.titlecase}"
       when "creatures"
