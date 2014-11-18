@@ -221,7 +221,7 @@ def edit
     else 
       flash[:error] = "Unable to remove user."
     end
-  redirect_to users_path
+  redirect_to groups_path
   end
 
     def disband_team
@@ -238,7 +238,7 @@ def edit
      else
       flash[:error] = "Unable to disband #{groupname}."
     end
-  redirect_to users_path
+  redirect_to groups_path
   end
 
 
