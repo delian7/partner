@@ -1,20 +1,32 @@
 <div style="font-size:45px; font-weight:bold;">Projects
 	    <%=  link_to "<span class=\"glyphicon glyphicon-plus\"></span>&nbsp;&nbsp;Add New Project".html_safe,  {:action => 'new'}, class: "btn btn-primary btn-md", :style=>"float:right;margin-bottom:10px;" %>
-<table class="table">
-  <tr>
-  	
-    <td><b>Project Name</td>
-    <td class='collapsable'><b>Course Name</td><td class='collapsable'><strong>Group Size</strong></td><td></td><td></td><td></td>
+  <table class="table" style= "border:1px grey!important;">
+  <!-- goes throguh all users courses, then for every course, pushes all projects to array @projs-->
+<% @projs=[] %>
+<% current_user.courses.each do |course| %>
+<tr>
+    <th><%= course.course_title%></th><td class='collapsable'><strong>Group Size</strong></td><td class='collapsable'><strong>Allow Repeat Partners?</strong></td><td class='collapsable'><strong>Naming</strong></td><td></td><td colspan="5"></td>
   </tr></b>
-	<% @projects.each do |project| %>
-	  <tr> <% if project.id !=0%>
+	<% course.projects.each do |project| %>
+		<tr> <% if project.id !=0 %>
 	  	<td><%= project.name %></td>
-		<td class='collapsable'><%= Course.find(project.course_id).course_title %>
-		<td class='collapsable'><%= project.group_size %></td>
-	    <td><% @project=project%>
+		<td class='collapsable'><% project.group_size.times do |o|%>
+			<span class="glyphicon glyphicon-user"></span>
+			<% end %></td>
+		<td class='collapsable'><center><%= project.allow_repeat ? "<span class=\"glyphicon glyphicon-ok\" style=\"color:green; font-size:20px;\"></span>".html_safe : "<span class=\"glyphicon glyphicon-ban-circle\" style=\"color:red; font-size:20px;\"></span>".html_safe%></center></td>
+		<td class='collapsable'>
+<% case project.name_gen %>
+<% when "numbered"%>Team 1, Team 2, Team 3....
+<% when "colors"%><img src="/system/colors.png">
+<% when "creatures"%><img src="/system/paw.png" style="max-width:25px">
+<% when "hacker"%><img src="/system/code.png" style="max-width:25px">
+<%end%>
+
+		</td>
+		<td style="text-align:right">
 	    <%=  link_to "<span class=\"glyphicon glyphicon-pencil\"></span>&nbsp;&nbsp;Edit".html_safe, edit_project_path(project.id), class: "btn btn-success btn-md" %></td><td>
-    	 <%=  link_to "<span class=\"glyphicon glyphicon-remove\"></span>&nbsp;&nbsp;Delete".html_safe, remove_project_path(project.id), :data => { :confirm =>"Are you sure you want to delete this project?"}, class: "btn btn-danger btn-md" %></td><td>
-	    </td>
+    	 <%=  link_to "<span class=\"glyphicon glyphicon-remove\"></span>&nbsp;&nbsp;Delete".html_safe, remove_project_path(project.id), :data => { :confirm =>"Are you sure you want to delete this project?"}, class: "btn btn-danger btn-md" %></td>
 		</tr>
-	<% end %><% end %>
-</table>
+	<% end %>
+<% end %><tr><td colspan="9" style="height:50px;"></td></tr>
+<% end %></table>

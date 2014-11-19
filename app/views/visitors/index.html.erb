@@ -1,51 +1,36 @@
-<div class="section group">
-  <div class="col span_2_of_3">
-  	<% if user_signed_in? %>
-<center><h2> Hi <%= @current_user.first_name %> <%= @current_user.last_name %></h2></center>
-<%end%>
-  	<%= render "visitors/welcomemsg" %>
-  </div>
-
 <% if user_signed_in? %>
+	<div class="col span_1_of_3" style="text-align:center;">
+  	<%= render "visitors/welcomemsg" %>
+  	<!-- pending requests/notifications here-->
+  </div>
+	<div class="col span_2_of_3">
 	<% case current_user.role %>
 	  <% when 0 %>
+	  <%current_user.projects.each do |project|%>
+	  <% @myproject = project %>
 		<!-- ^^ if the user is a student -->
-			<div class="col span_1_of_3" style="text-align:center;">
-					<%= image_tag current_user.avatar.url, :style=>"max-width:50%;" %>
-			    <h2>To Get Started</h2>
-					<p><button class="btn btn-success" style = "width:75%;"><span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;<%=  link_to "Edit Profile", edit_user_registration_path, :style => 'color: #fff;' %></button></p>
-					<p><button class="btn btn-primary" style = "width:75%;"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;<%=  link_to "Find a Partner", users_path, :style => 'color: #fff;' %></button></p>
-			      <br>
-				</div>
-					
+		<% if @mygroup = current_user.groups.find_by(project_id: project.id)%>
+		<%if @mygroup.group_relations.find_by(user_id: current_user.id).status == 2 %>
+		<%= render 'groups/profile', project: @myproject, group: @mygroup  %>
+		     <% end %><% end %><% end %>
 		<!-- if the user is a Professor or a T/A -->
 		<% when 1..2 %><p>
-			<div class="col span_1_of_3">
 				<center>
 					<h4>There are currently <strong><%= User.count %></strong> registered users</h4>
 		    </center>
-			</div>
-			
 		<!-- if the user is an admin -->
 		<% when 3 %>
-			<div class="col span_2_of_3">
-		  	<h2>Groups</h2>
-	    	<table class = "table" style = "width:100%;">
-			    <tr>
-			      <td><b>Group ID</b></td>
-			      <td><b>Group Name</b></td>
-			      <td></td>
-			    </tr>
-					<%= render "visitors/current_groups" %>
-		  	</table>
-			</div>
-		
+
 	<% end %>
 	<% else%> 
+		<div class="col span_2_of_3" style="text-align:center;">
+  	<%= render "visitors/welcomemsg" %>
+  	<!-- pending requests/notifications here-->
+  </div>
 		<div class="col span_1_of_3">
 			<%= render 'layouts/signin_select'%>
 			<%= render 'layouts/signin_textfield'%>
-		</div>
 <% end %>
+		</div>
 
-</div>
+

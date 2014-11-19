@@ -9,14 +9,14 @@
 <!-- End Table Header -->
 <table class="table" style="width: 95%!important;">
   <%if @myproject.name_gen == 'numbered'%>
-  <% ids = @myproject.groups.uniq%>
+  <% ids = Group.where(project_id: @myproject).uniq%>
   <%else%>
-  <% ids = @myproject.groups.order(:name).uniq%>
+  <% ids = Group.where(project_id: @myproject).order(:name).uniq%>
   <%end%>
   <% ids.each do |group| %>
 	 <% @group = Group.find(group) %>
     <tr>
-     <td colspan="9"> <span style="font-size:20px; font-weight:bold;"><%= link_to @group.name, @group %></span>&nbsp;&nbsp;&nbsp;&nbsp;<%=  link_to "<span class=\"glyphicon glyphicon-remove\"></span>".html_safe, disband_team_group_path(group), :class => 'btn btn-default btn-xs' %>
+     <td colspan="9"> <span style="font-size:20px; font-weight:bold;"><%= link_to @group.name, @group %></span>&nbsp;&nbsp;&nbsp;&nbsp;<%=  link_to "<span class=\"glyphicon glyphicon-remove\"></span>".html_safe, disband_team_group_path(group), :class => 'btn btn-default btn-sm' %>
 
 
     <% members = members_of(@group) %>
@@ -27,7 +27,7 @@
   	     <td class='collapsable'><%= link_to (image_tag (user.avatar.url), :style => 'max-width: 45px;'), user %></td> 
         <td><%= link_to "#{user.first_name} #{user.last_name}", user %> </td>
         <td class='collapsable'><%= user.email %></td>
-      	<td>Confirmed</td>
+      	<td>Confirmed <span class="glyphicon glyphicon-ok" style="color:green; font-size:20px;"></span>
     <%else%>
     <tr style= "background-color:eee; opacity: 0.6;">
 	    <td class='collapsable'><%= link_to (image_tag (user.avatar.url), :style => 'max-width: 45px;'), user %></td> 
@@ -44,12 +44,13 @@
 				{class: 'form-control', style: 'width:70%; display:inline; height:25px;', onchange: 'this.form.submit();'} %>
 				<% end %></td>
 				<% end %><% end %>
-	</tr>
+  </tr> 
     	<% end %>
 
 
-
+  </tr><tr><td colspan="9"><span style="font-size:20px; font-weight:bold;"><%=  link_to "<span class=\"glyphicon glyphicon-plus\" &nbsp;&nbsp;Add New Group</span>".html_safe, new_group_path, :class => 'btn btn-success btn-sm' %></td></tr><tr><td colspan="9" style="height:40px;"> </tr>
 
 
       <% end %>
+
     </table>

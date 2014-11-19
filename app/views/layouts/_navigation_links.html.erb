@@ -3,13 +3,11 @@
 	<% case current_user.role %>
 		<% when 0 %> 
 		<% if Project.find(current_user.current_project).group_size != 2 %>
-		<li role="presentation" class="<%= 'active' if current_page?(users_profile_path) %>"><%= link_to 'Profile', users_profile_path %></li>
-			<li role="presentation" class="<%= 'active' if current_page?(groups_profile_path) %>"><%= link_to "<span class=\"glyphicon glyphicon-eye-open\"></span>&nbsp;&nbsp;My Group".html_safe, groups_profile_path%></li>
+		<li role="presentation" class="<%= 'active' if current_page?(users_profile_path) %>"><%= link_to "<span class=\"glyphicon glyphicon-list-alt\"></span>&nbsp;&nbsp;My Profile".html_safe, users_profile_path %></li>
 			<li role="presentation" class="<%= 'active' if current_page?(users_path) %>"><%= link_to "<span class=\"glyphicon glyphicon-user\"></span>&nbsp;&nbsp;Classmates".html_safe, users_path %></li>
 			<li role="presentation" class="<%= 'active' if current_page?(groups_path) %>"><%= link_to "<span class=\"glyphicon glyphicon-user\"></span><span class=\"glyphicon glyphicon-user\"></span><span class=\"glyphicon glyphicon-user\"></span>&nbsp;&nbsp;Groups".html_safe, groups_path %></li>
 			<% else %>
 			<li role="presentation" class="<%= 'active' if current_page?(users_profile_path) %>"><%= link_to "<span class=\"glyphicon glyphicon-list-alt\"></span>&nbsp;&nbsp;My Profile".html_safe, users_profile_path %></li>
-			<li role="presentation" class="<%= 'active' if current_page?(groups_profile_path) %>"><%= link_to "<span class=\"glyphicon glyphicon-eye-open\"></span>&nbsp;&nbsp;Partner Status".html_safe,  groups_profile_path %></li>
 			<li role="presentation" class="<%= 'active' if current_page?(users_path) %>"><%= link_to "<span class=\"glyphicon glyphicon-user\"></span>&nbsp;&nbsp;Find a Partner".html_safe, users_path %></li>
 			<% end %>
 		<% when 1 .. 2 %>
@@ -40,7 +38,7 @@
 </div>
 
 <% else %>
-  <li><%= render 'layouts/signin_link'%>
+  <li style="height: 50px;"><%= render 'layouts/signin_link'%></li>
 <% end %>
 
 

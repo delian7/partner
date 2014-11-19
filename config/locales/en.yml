@@ -20,4 +20,26 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  faker:
+    separator: ' & '
+    name:
+
+    commerce:
+      color: ['Apricot','Aquamarine','Auburn','Azure','Banana','Beige','Black','Blue','Brass','Brown','Burgundy','Canary','Carnation','Carrott','Celadon','Cerise','Cerulean','Charcoal','Cherry','Chestnut','Cinnabar','Citrine','Cobalt','Copper','Coral','Cornflower','Cranberry','Crimson','Cyan','Eggplant','Flamingo','Fuschia','Garnet','Gold','Grape','Gray','Green','Indigo','Ivory','Jade','Khaki','Lava','Lavender','Lilac','Magenta','Magenta','Mahogany','Mango','Maroon','Mauve','Melon','Midnight','Mint','Moss','Mulberry','Navy','Olive','Onyx','Orange','Orchid','Peach','Periwinkle','Pewter','Plum','Purple','Red','Rose','Saffron','Salmon','Sapphire','Scarlet','Sepia','Silver','Strawberry','Tan','Tangerine','Taupe','Teal','Thistle','Tomato','Tulip','Tumbleweed','Turquoise','Vermillion','Violet','Viridian','Watermelon','White','Wisteria','Yellow']
+      department: ["Books", "Movies", "Music", "Games", "Electronics", "Computers", "Home", "Garden", "Tools", "Grocery", "Health", "Beauty", "Toys", "Kids", "Baby", "Clothing", "Shoes", "Jewelery", "Sports", "Outdoors", "Automotive", "Industrial"]
+      product_name:
+        adjective: [Small, Ergonomic, Rustic, Intelligent, Gorgeous, Incredible, Fantastic, Practical, Sleek, Awesome]
+        material: [Steel, Wooden, Concrete, Plastic, Cotton, Granite, Rubber]
+        product: [Chair, Car, Computer, Gloves, Pants, Shirt, Table, Shoes, Hat]
+
+    team:
+      creature: ['Alligator','Alpaca','Anaconda','Antelope','Ape','Armadillo','Baboon','Badger','Barracuda','Bat','Beagle','Bear','Beaver','Bee','Bird','Bison','Boa','Boar','Bobcat','Bulldog','Butterfly','Camel','Capybara','Caribou','Cat','Cattle','Chameleon','Cheetah','Chicken','Chihuahua','Chipmunk','Clam','Cobra','Colt','Condor','Cougar','Coyote','Crane','Crocodile','Crow','Deer','Dinosaur','Dog','Dolphin','Donkey','Dove','Duck','Eagle','Eel','Elephant','Elk','Emu','Falcon','Ferret','Fish','Flamingo','Fox','Frog','Gecko','Gerbil','German Shepard','Giraffe','Goat','Golden Retriever','Goose','Gorilla','Guinea pig','Hamster','Hare','Hawk','Hedgehog','Heron','Hippopotamus','Honey Badger','Horse','Hummingbird','Hyena','Impala','Jackal','Jaguar','Jellyfish','Kangaroo','Killer Whale','Koala','Komodo Dragon','Leopard','Lion','Llama','Lynx','Macaw','Mamba','Manatee','Mongoose','Monkey','Moose','Mouse','Mule','Mustang','Narwhal','Nightingale','Ocelot','Octopus','Opossum','Ostrich','Otter','Owl','Ox','Oyster','Panda','Panther','Parrot','Penguin','Pig','Pigeon','Piranha','Pitbull','Platypus','Polar Bear','Poodle','Porpoise','Prairie Dog','Pug','Puma','Python','Quail','Rabbit','Raccoon','Rat','Raven','Reindeer','Rottweiler','Salmon','Sand Dollar','Scorpion','Sea Urchin','Seal','Serval','Shark','Sheep','Skunk','Snake','Sparrow','Spider','Squid','Squirrel','Starfish','Stingray','Swan','Swordfish','Tasmanian Devil','Tiger','Toucan','Trout','Turtle','Viper','Vulture','Wallaby','Walrus','Whale','Wolf','Wombat','Woodpecker','Wren','Yak','Zebra']
+    hacker:
+      abbreviation: [TCP,HTTP,SDD,RAM,GB,CSS,SSL,AGP,SQL,FTP,PCI,AI,ADP,RSS,XML,EXE,COM,HDD,THX,SMTP,SMS,USB,PNG,SAS,IB,SCSI,JSON,XSS,JBOD]
+      adjective: [auxiliary,primary,back-end,digital,open-source,virtual,cross-platform,redundant,online,haptic,multi-byte,bluetooth,wireless,1080p,neural, optical,solid state,mobile]
+      noun: [driver,protocol,bandwidth,panel,microchip,program,port,card,array, interface,system,sensor,firewall,hard drive,pixel,alarm,feed,monitor,application,transmitter,bus,circuit,capacitor,matrix]
+      verb: [back up,bypass,hack,override,compress,copy,navigate,index,connect,generate,quantify,calculate,synthesize,input,transmit,program,reboot,parse]
+      ingverb: [backing up,bypassing,hacking,overriding,compressing,copying, navigating,indexing,connecting,generating,quantifying,calculating, synthesizing,transmitting,programming,parsing]
+
+    app:
+      name: ['Redhold', 'Treeflex', 'Trippledex', 'Kanlam', 'Bigtax', 'Daltfresh', 'Toughjoyfax', 'Mat Lam Tam', 'Otcom', 'Tres-Zap', 'Y-Solowarm', 'Tresom', 'Voltsillam', 'Biodex', 'Greenlam', 'Viva', 'Matsoft', 'Temp', 'Zoolab', 'Subin', 'Rank', 'Job', 'Stringtough', 'Tin', 'It', 'Home Ing', 'Zamit', 'Sonsing', 'Konklab', 'Alpha', 'Latlux', 'Voyatouch', 'Alphazap', 'Holdlamis', 'Zaam-Dox', 'Sub-Ex', 'Quo Lux', 'Bamity', 'Ventosanzap', 'Lotstring', 'Hatity', 'Tempsoft', 'Overhold', 'Fixflex', 'Konklux', 'Zontrax', 'Tampflex', 'Span', 'Namfix', 'Transcof', 'Stim', 'Fix San', 'Sonair', 'Stronghold', 'Fintone', 'Y-find', 'Opela', 'Lotlux', 'Ronstring', 'Zathin', 'Duobam', 'Keylex']

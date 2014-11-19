@@ -1,3 +1,7 @@
+<% if user_signed_in? %>
+<center><h2> Hi <%= @current_user.first_name %> <%= @current_user.last_name %></h2></center>
+<%end%>
+
 <center><h2>Welcome to <br><img src="/assets/PartnerUpLogo.png" style="max-width:75%;"></h2>
 
 <h4>UCI's premier partnering service. <br><br></h4>

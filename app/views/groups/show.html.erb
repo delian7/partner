@@ -1,28 +1,53 @@
-<% @group = Group.find(params[:id])%>
-<%= link_to("<< Back to List", :back) %><br>
-<table class="table" style="width: 95%!important;">
-<span style="font-size:45px; font-weight:bold;">Group Profile of<br></span><span style="font-size:25px; font-weight:bold;"><%=@group.name%></font></div><br></span>
-<td class='collapsable'></td><td><strong>Name</td><td class='collapsable'><strong>Email</td><td><strong>Status</td></strong>
+<% @myproject = Project.find(current_user.current_project)%>
+
+<div class="section-group">
+<div class="col span_1_of_3">
+  <span style="font-size:50px; font-weight:bold;">
+<% if @myproject.group_size ==2%>
+Partnership
+<% else %>
+Group
+<%end%>
+ </span><br><span style="font-size:25px; font-weight:bold;"><%=@group.name%></font><br></span>
+  <span style="font-size:20px; font-weight:bold;">  <br>Project:</span>
+ <span style="font-size:18px;"><%=@myproject.name%></span>
+   <span style="font-size:20px; font-weight:bold;">  <br>Course:</span>
+ <span style="font-size:18px;"><%=@myproject.course_id%><br></span>
+ <div style="float:right;">  <%=  link_to "<span class=\"glyphicon glyphicon-calendar\"></span>&nbsp;&nbsp;<b>Start a Doodle</b>".html_safe, "http://doodle.com/create?type=date&locale=en&title=#{@group.name}%20Group%20Meeting&name=#{current_user.first_name}%20#{current_user.last_name}&eMailAddress=#{current_user.email}&description=Our%20first%20group%20meeting...", class: "btn btn-info btn-md" %></span>
+  
+  <%if current_user.groups.include? @group || current_user.role !=0%>
+  <%=  link_to "<span class=\"glyphicon glyphicon-pencil\"></span>&nbsp;&nbsp;Edit Group".html_safe,  {:action => 'edit'}, class: "btn btn-success btn-md", :style=>"float:right;margin-bottom:10px;" %>
+
+<%end%></div>
+
+
+</div>
+<div class="col span_2_of_3">
+    <span style="font-size:50px; font-weight:bold;">
+<% if @myproject.group_size !=2%>
+Group Members</span>
+<%end%>
+  <table class="table" style="width: 95%!important;">
+    <td class='collapsable'></td><td><strong>Name</td><td class='collapsable'><strong>Email</td><td><strong>Status</td></strong>
     <% members = members_of(@group) %>
     <% members.each do |user| %>
 
-    <%if teammates?(user, current_user)%>
+       <%if GroupRelation.find_by(user_id: user.id, group_id: @group.id).status == 2%>
     <tr>
-	<td class='collapsable'><%= link_to (image_tag (user.avatar.url), :style => 'max-width: 45px;'), user %></td> 
-      <td><%= link_to "#{user.first_name} #{user.last_name}", user %> </td>
-      <td class='collapsable'><%= user.email %></td>
-
-    	<td>Confirmed</td>
+         <td class='collapsable'><%= link_to (image_tag (user.avatar.url), :style => 'max-width: 45px;'), user %></td> 
+        <td><%= link_to "#{user.first_name} #{user.last_name}", user %> </td>
+        <td class='collapsable'><%= user.email %></td>
+        <td>Confirmed</td>
     <%else%>
-        <tr style= "background-color:eee; opacity: 0.6;">
-	<td class='collapsable'><%= link_to (image_tag (user.avatar.url), :style => 'max-width: 45px;'), user %></td> 
+    <tr style= "background-color:eee; opacity: 0.6;">
+      <td class='collapsable'><%= link_to (image_tag (user.avatar.url), :style => 'max-width: 45px;'), user %></td> 
       <td><%= link_to "#{user.first_name} #{user.last_name}", user %> </td>
       <td class='collapsable'><%= user.email %></td>
+          <td>Request Pending</td>
+    <%end%> 
 
-        	<td>Request Pending</td>
-    <%end%>	
-
-	</tr>
-    	<% end %>
+  </tr>
+      <% end %>
     </table>
-</div>
+
+</div></div>

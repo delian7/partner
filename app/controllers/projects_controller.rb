@@ -17,6 +17,8 @@ class ProjectsController < ApplicationController
     @project = Project.new(project_params)
     
     if @project.save
+    relation = ProjectRelation.create(course_id: params[:project][:course_id], project_id: @project.id)
+    relation.save
       redirect_to(:action => 'index')
     else
       render('new')
@@ -25,12 +27,14 @@ class ProjectsController < ApplicationController
   
   def edit
     @project = Project.find(params[:id])
+
   end
   
   def destroy
     @project = Project.find(params[:id])
     @project.destroy
     @project.save
+    ProjectRelation.find_by(project_id: params[:id]).destroy
     redirect_to(:action => 'index')
   end
 
@@ -38,6 +42,12 @@ class ProjectsController < ApplicationController
     @project = Project.find(params[:id])
     
     if @project.update_attributes(project_params)
+      if ProjectRelation.find_by(project_id: @project.id).nil?
+        relation = ProjectRelation.create(course_id: params[:project][:course_id], project_id: @project.id)
+        relation.save
+      else
+    ProjectRelation.find_by(project: @project.id).update_attributes(course_id: params[:project][:course_id], project_id: @project.id)
+      end
       flash[:notice] = "Project updated successfully"
       redirect_to(:action => 'index')
     else
@@ -82,7 +92,7 @@ class ProjectsController < ApplicationController
     for i in 1..leftovers
     case @project.name_gen
       when "numbered"
-        groupname = "Team #{Group.where(project_id: @project.id).size + 1} ,,,"
+        groupname = "Team #{Group.where(project_id: @project.id).size + 1}"
       when "hacker"
         groupname = "Team #{Faker::Hacker.ingverb.titlecase} #{Faker::Hacker.adjective.titlecase}"
       when "creatures"

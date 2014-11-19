@@ -1,22 +1,24 @@
 <!-- selecting course that users will add groups to -->
 <!-- if the user is signed in and their enrolled in at least one course on roster -->
 
-	<div style="max-width:500px; float:right; font-size: 12px; line-height: 10px; display:inline;">
+	<div style="min-height: 20px;padding: 10px  5px 10px 5px; background-color: #f9fbfb;
+  border: 1px solid #d6d6d6; float:right; width:40%;  border-radius: 4px;-webkit-box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);display:inline;">
 	<% @current_projects = Project.where(course_id: Course.find(current_user.current_course).id, active: true)%>
 		<!-- setting current course & project (if there's only one project)-->
-	  <%= form_for :user, :url => set_current_course_user_path(current_user.id), :html => { :style => 'display:inline;'} do |f|%>		
+	  <%= form_for :user, :url => set_current_course_user_path(current_user.id), :html => { :style => 'padding: 10px!important; display:inline;'} do |f|%>		
 			<%= f.label 'Selected Course:', style: 'display:inline'%>
 			<%= f.select :current_course, options_from_collection_for_select(current_user.courses, 
 				'id', 'course_title', current_user.current_course), {}, 
 				{class: 'form-control', style: 'width:70%; display:inline; height:25px;', onchange: 'this.form.submit();' } %>
 		<% end %>
 		
-			<br / ><br/>
+			
 	
 		<!-- setting current_project (if more than one exist)	 -->
 		<% if Project.where(course_id: Course.find(current_user.current_course).id).size < 2 %>
 		<% else %>	
-		  <%= form_for :user, :url => set_current_project_user_path(current_user.id), :html => { :style => 'display:inline;'} do |f|%>
+		<br>
+		  <%= form_for :user, :url => set_current_project_user_path(current_user.id), :html => { :style => 'padding: 10px!important; display:inline;'} do |f|%>
 				<%= f.label 'Selected Project:', style: 'display:inline'%>			
 				<%= f.select :current_project, options_from_collection_for_select(@current_projects, 
 					'id', 'name', current_user.current_project), {}, 

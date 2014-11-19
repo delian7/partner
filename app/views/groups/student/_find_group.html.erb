@@ -12,12 +12,7 @@
         <table class="table" style="width: 95%!important;">
           <span style="font-size:35px; font-weight:bold;">Sorry,</span><br><span style="font-size:25px; font-weight:normal;"> it looks like you don't have a partner yet for <span style="font-size:25px; font-weight:bold;"><%=@myproject.name%></font></span></center>
       <% else %>
-        <% if @myproject.group_size == 2 %>
-        <%= render 'groups/partner', project: @myproject  %>
-        <% elsif @myproject.group_size > 2%>
-        <%= render 'groups/profile', project: @myproject  %>
-        <% else %>
-        <% end %>
+        <%= render 'groups/profile', project: @myproject, group: @mygroup  %>
       <% end %>
     </div>
 </div>

@@ -114,17 +114,18 @@ def csv_import
   # variables for counting how many roster relations made
   add, removal = [0, 0]
   csv = open_and_parse_csv
-  enrolls = enrolled_students(@course_code)
+  # enrolls = enrolled_students(@course_code)
   #makes new course and project if doesnt exist
   if Course.where(id: @course_code)[0].nil?
     @course = Course.create(id: @course_code, course_title: @course_title, instructor: @instructor[0])
+    Roster.create(course_id: @course_code, user_id: current_user.id)
     make_default_project(@course_code)
   else
     @course = Course.find(@course_code)
-    make_default_project(@course_code)
-    set_current_project_course(current_user, @proj, @course)
-    Roster.create(course_id: @course_code, user_id: current_user.id)
+    @proj = @course.projects.find_by(active: true)
   end
+    set_current_project_course(current_user, @proj, @course)
+    
  
   # for every 'row' or array in studentdata array, excluding row 1 and the last two
   @student_data[1..-2].each do |i|
@@ -144,7 +145,7 @@ def csv_import
   end
 end
 
-      enrolls.each do |enrolled_student_netid|
+      Course.find(@course_code).users.pluck(:ucinetid).each do |enrolled_student_netid|
       if enrolled?(enrolled_student_netid, @course_code) && !in_new_roster?(enrolled_student_netid, @student_data)
         destroy_roster_relation(enrolled_student_netid, @course_code)
         removal+=1

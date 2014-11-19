@@ -84,7 +84,7 @@ def edit
     params.require(:grouprelation).permit(:id)
   end
   def secure_params
-    params.require(:grouprelation).permit(:id, :course_id, :group_id, :projet_id, :user_id)
+    params.require(:grouprelation).permit(:id, :course_id, :group_id, :project_id, :user_id)
     params.require(:group).permit(:name)
   end
 end

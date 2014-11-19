@@ -75,6 +75,7 @@ def make_default_project(coursecode)
   else
     @proj = Project.create(name: "#{@word1} #{@word2} - New Project", course_id: coursecode, active: true, group_size: 2)
   end
+  ProjectRelation.create(course_id: coursecode, project_id: @proj.id)
   return @proj
 end
 

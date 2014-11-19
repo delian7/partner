@@ -1,5 +1,4 @@
 class RosterController < ApplicationController
-class RostersController < ApplicationController
   
   def index
     @rosters = Roster.all
@@ -63,5 +62,4 @@ class RostersController < ApplicationController
     params.require(:roster).permit(:user_id, :course_id)
   end 
   
-end
 end

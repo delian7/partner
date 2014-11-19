@@ -15,8 +15,15 @@ class GroupsController < ApplicationController
       # @allowed_project_size = @myproject.group_size
   end
 
-def edit
+  def edit
     @group = Group.find(params[:id])
+  end
+  
+  
+  def create
+    @group = Group.create(name: params[:group][:name], course_id: current_user.current_course, project_id: current_user.current_project)
+    @group.save
+    redirect_to(:action => 'index')
   end
   
   def destroy
@@ -47,7 +54,6 @@ def edit
 
   def update
     @group = Group.find(params[:id])
-    
     if @group.update_attributes(group_params)
       flash[:notice] = "Group updated successfully"
       redirect_to(:action => 'index')
@@ -77,14 +83,10 @@ def edit
     end
   end
 
-  def update
-    user = User.find(params[:id])
-    authorize user
-    if user.update_attributes(secure_params)
-      redirect_to users_path, :notice => "User updated."
-    else
-      redirect_to users_path, :alert => "Unable to update user."
-    end
+  def show
+    @group = Group.find(params[:id])
+    authorize current_user
+
   end
 
   def destroy
@@ -244,10 +246,8 @@ def edit
 
 
   private
-  def login_params
-    params.require(:user).permit(:id)
-  end
-  def secure_params
-    params.require(:user).permit(:id, :name, :ucinetid, :role, :current_course, :current_project)
+
+  def group_params
+    params.require(:group).permit(:name, :project_id)
   end
 end

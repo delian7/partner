@@ -4,8 +4,10 @@ class Project < ActiveRecord::Base
    belongs_to :user
    has_many :users, :through => :group_relations
    has_many :group_relations
+   has_many :project_relations
    belongs_to :group
-   has_many :courses, :through => :group_relations, :source => :course
+   has_many :courses, :through => :project_relations
+   belongs_to :course
 
    enum name_gen: [:numbered, :hacker, :creatures, :colors]
 end
