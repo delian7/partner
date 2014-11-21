@@ -131,7 +131,7 @@ class GroupsController < ApplicationController
     # Delete the group
     @mygroup.destroy
     # Delete relation for current user
-    GroupRelation.where(user_id: requester?(user).id, group_id: @mygroup.id, status: 2).first.destroy
+    GroupRelation.where(user_id: requester?(current_user).id, group_id: @mygroup.id, status: 2).first.destroy
     end
     # Delete relation for user
     flash[:notice] = "Ignored Request."

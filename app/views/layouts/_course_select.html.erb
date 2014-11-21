@@ -2,8 +2,13 @@
 <!-- if the user is signed in and their enrolled in at least one course on roster -->
 
 	<div style="min-height: 20px;padding: 10px  5px 10px 5px; background-color: #f9fbfb;
+<<<<<<< HEAD
   border: 1px solid #d6d6d6; float:right; width:450px;  border-radius: 4px;-webkit-box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);display:inline;">
 	<% @current_projects = Project.where(course_id: Course.find(current_user.current_course).id, active: true)%>
+=======
+  border: 1px solid #d6d6d6; float:right; width:40%;  border-radius: 4px;-webkit-box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);display:inline;">
+	
+>>>>>>> origin/rspec
 		<!-- setting current course & project (if there's only one project)-->
 	  <%= form_for :user, :url => set_current_course_user_path(current_user.id), :html => { :style => 'padding: 10px!important; display:inline;'} do |f|%>		
 			<%= f.label 'Selected Course:', style: 'display:inline'%>

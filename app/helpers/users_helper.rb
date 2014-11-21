@@ -43,11 +43,11 @@ end
 
 def set_current_users_instance_variables
 @users = User.all
-@mycourse = Course.find(current_user.current_course)
-@myproject = Project.find(current_user.current_project)
+@mycourse = Course.find_by_id(current_user.current_course)
+@myproject = Project.find_by_id(current_user.current_project)
 @groups = Group.all
 @allowed_group_size = @myproject.group_size
-@current_projects = Project.where(course_id: @mycourse.id, active: true)
+@current_projects = Project.where(course_id: @mycourse.id, active: true) if !@mycourse.nil? && @myproject.nil?
   if enrolled?(current_user.ucinetid, @mycourse)
   	@my_courses = Roster.where(user_id: current_user.id).collect
   end

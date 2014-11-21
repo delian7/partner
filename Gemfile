@@ -29,6 +29,7 @@ group :development do
   gem 'binding_of_caller', :platforms=>[:mri_21]
   gem 'guard-bundler'
   gem 'guard-rails'
+  gem 'guard'
   gem 'guard-rspec'
   gem 'quiet_assets'
   gem 'rails_layout'
@@ -40,6 +41,7 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'faker'
   gem 'rspec-rails'
+  
 end
 group :test do
   gem 'capybara'

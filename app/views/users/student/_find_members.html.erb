@@ -1,7 +1,11 @@
 <div class="section-group">
 		<div class="col span_2_of_3">
 			<table class="table" style="width: 95%!important;">
-		<span style="font-size:45px; font-weight:bold;">Find Members</span>
+			<% if Project.find(current_user.current_project).group_size == 2 %>
+		<h1 style="font-size:45px; font-weight:bold;">Find Partner</span>
+			<% else %>
+		<h1 style="font-size:45px; font-weight:bold;">Find Members</span>
+			<% end %>
 		    <!-- Start Table Header -->
 	<%if !@mygroup.nil? %>
 		<% mygroupsize = GroupRelation.where(project_id: @myproject.id, group_id: @mygroup.id).size%>
