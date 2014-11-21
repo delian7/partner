@@ -1,0 +1,6 @@
+<%current_user.projects.each do |project|%>
+	  <% @myproject = project %>
+		<% if @mygroup = current_user.groups.find_by(project_id: project.id)%>
+		<%if @mygroup.group_relations.find_by(user_id: current_user.id).status == 2 %>
+		<%= render 'groups/profile', project: @myproject, group: @mygroup  %>
+		     <% end %><% end %><% end %>

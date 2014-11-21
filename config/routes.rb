@@ -16,9 +16,6 @@ devise_for :users, :controllers => {:registrations => "registrations"}
      member do
         get :send_request
         get :undo_request
-        get :confirm
-        get :ignore
-        get :leave_group
 
         get :registrations
         get :sessions
@@ -35,11 +32,12 @@ devise_for :users, :controllers => {:registrations => "registrations"}
 
   resources :groups do
     member do
-       get :edit
-       post :update
-       get :remove
-       get :disband_team
-       
+      get :edit
+      post :update
+      get :remove
+      get :disband
+      get :leave
+      get :confirm
       post :update_relation
       post :new_relation
     end
@@ -64,6 +62,7 @@ devise_for :users, :controllers => {:registrations => "registrations"}
        post :update
        get :remove
        get :autogroup
+       post :autogroup
        get :clear_partnerships
         end
      collection do

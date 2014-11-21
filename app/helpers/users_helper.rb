@@ -1,34 +1,24 @@
 module UsersHelper
 
-def get_status(user)
-  if !@mygroup.nil?
-    @user_status = GroupRelation.find_by(project_id: @myproject.id, user_id: user.id, group_id: @mygroup.id).status
-  end
-end
-
 def course_ids(user)
 	Roster.where(user_id: user).collect(&:course_id)
 end
 
-def group_ids(course)
-	GroupRelation.where(course_id:course.id).collect(&:group_id).uniq
-end
+# def group_ids(course)
+# 	GroupRelation.where(course_id:course.id).collect(&:group_id).uniq
+# end
 
-def groups_for(course)
-group_array=[]
-	group_ids(course).each do |group|
-		group_array.push(Group.find(group))
-  end
-	return group_array
-end
+# def groups_for(course)
+# group_array=[]
+# 	group_ids(course).each do |group|
+# 		group_array.push(Group.find(group))
+#   end
+# 	return group_array
+# end
 
-def user_netid(netid)
-  User.find_by(ucinetid: netid)
-end
-
-def member_group_ids(group)
-GroupRelation.where(group_id: group).collect(&:user_id)
-end
+# def member_group_ids(group)
+# GroupRelation.where(group_id: group).collect(&:user_id)
+# end
 
 def members_of(group)
   member_array=[]
@@ -82,26 +72,15 @@ def active_projects_for(coursecode)
   Project.where(course_id: coursecode, active: true)
 end
 
-def requester?(user)
-	get_status(user)
-  if @current_user_status == 2
-    return current_user
-  elsif @user_status == 2
-    return user
-  end
-end
-
 def requested?(user)
-	get_status(user)
-  if @current_user_status == 1
-    return current_user
-  elsif @user_status == 1
-    return user
+	if !@mygroup.nil? || !@myproject.nil?
+    @user_status = GroupRelation.find_by(project_id: @myproject.id, user_id: user.id, group_id: @mygroup.id).status
   end
+  @user_status == 1
 end
 
 def enrolled?(ucinetid, coursecode)
-    Roster.find_by(user_id: user_netid(ucinetid).id, course_id: coursecode) != nil
+    Roster.find_by(user_id: User.find_by(ucinetid: ucinetid).id, course_id: coursecode) != nil
 end
 
 def classmates?(user,course)
@@ -231,19 +210,5 @@ end
     end
   redirect_to users_path
   end
-
-  def delete_self_from_group(user)
-    set_current_users_instance_variables
-    if !@mygroup.nil?
-        # Delete relation for current user and user
-        GroupRelation.find_by(user_id: current_user.id, group_id: @mygroup.id).destroy
-        # Delete relation for user
-      flash[:notice] = "Removed User."
-    else 
-      flash[:error] = "Unable to remove user."
-    end
-  redirect_to users_path
-  end
-
 
 end

@@ -24,16 +24,6 @@
 	    <%= f.radio_button :allow_repeat, false, :checked => repeat == false %>
 	  <%= f.label 'Restrict Repeats' %><br><br>
 
-	<%= f.label 'Group Name Randomization' %><br>
-	    <%= f.radio_button :name_gen, "numbered", :checked => random == "numbered" %> 
-	  <%= f.label 'Default' %>,  Team 1, Team 2, Team 3...<br>
-	    <%= f.radio_button :name_gen,"hacker", :checked => random == "hacker" %>
-	  <%= f.label 'Hacker' %>,  TBD<br>
-	  	<%= f.radio_button :name_gen, "creatures", :checked => random == "creatures" %>
-	  <%= f.label 'Creatures' %>,  Team Birds, Team Cats...<br>
-	  	<%= f.radio_button :name_gen, "colors", :checked => random == "colors" %>
-	  <%= f.label 'Colors' %>, Team Red, Team Blue, Team Azure... <br>
-
 	<%= f.submit("Save Project", :class => 'btn btn-primary') %>
 
 </div>

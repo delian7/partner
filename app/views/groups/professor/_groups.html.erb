@@ -1,22 +1,36 @@
-<table class="table" style="width: 95%!important;">
-<span style="font-size:45px; font-weight:bold;display:inline"><% if @myproject.group_size == 2 %>Partnerships <%else%>Groups<%end%><span style="font-size:30px; font-weight:bold;display:inline"> for<br><%=@myproject.name%> <%= link_to("<span class=\"glyphicon glyphicon-pencil\"></span>".html_safe, edit_project_path(@myproject.id), :class => 'btn btn-success')%></td></span></span>
-    <!-- Start Table Header --><br>
-<span style="max-width:555px;float:right;;display:inline;padding:0px;margin:">
-   <%= link_to "<span class=\"glyphicon glyphicon-random\"></span>&nbsp;&nbsp;Autogroup".html_safe, autogroup_project_path(@myproject.id), :class => 'btn btn-info btn-md'%>
-  <%=  link_to "<span class=\"glyphicon glyphicon-warning-sign\"></span>&nbsp;&nbsp;Reset Groups".html_safe, clear_partnerships_project_path(@myproject.id), :class => 'btn btn-danger btn-md' %>
-</span>
+<table class="table" style="width: 95%!important;"><div style="float:left">
+  <!-- autogroup form-->
+<span style="font-size:45px; font-weight:bold;display:inline;"><% if @myproject.group_size == 2 %>Partnerships <%else%>Groups<%end%></span><span style="font-size:30px; font-weight:bold;display:inline"> for<br><%=@myproject.name%> <%= link_to("<span class=\"glyphicon glyphicon-pencil\"></span>&nbsp;&nbsp;Edit Project".html_safe, edit_project_path(@myproject.id), :class => 'btn btn-success')%> 
+<%=  link_to "<span class=\"glyphicon glyphicon-warning-sign\"></span>&nbsp;&nbsp;Reset Groups".html_safe, clear_partnerships_project_path(@myproject.id), :class => 'btn btn-danger btn-md', style: "display:inline" %></span>
+    <!-- Start Table Header --><br></div>
+<span style="max-width:555px;display:inline;padding:0px;padding: 10px  5px 10px 5px; background-color: #f9fbfb; border: 1px solid #d6d6d6; float:right; width:450px;  border-radius: 4px;-webkit-box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);display:inline;">
 
-<!-- End Table Header -->
+      <%= form_for :project, :url => {action: 'autogroup', controller: 'projects', id: @myproject.id}, :html => { :style => 'padding: 10px!important; display:inline;'} do |f|%>
+    <div class="col-lg-6">
+    <div class="input-group" style="background-color: #f9fbfb; border: 1px solid #999; border-radius: 0px;-webkit-box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);">
+      <%= f.select :name_gen, options_for_select([['Team 1, Team 2, Team 3...','0'], ['Random','1'], ['Team Bear, Team Cat....','2'],['Team Red, Tean Cyan...','3'],['Horde, Champions of Cyrodil...','4']]), {}, {class: 'form-control', style: 'width:225px; display:inline; border-radius:0px!important;'} %>
+      <span class="input-group-btn"><%= button_tag(type: 'submit', class: "btn btn-default", style: "border-radius:0px;") do %></span>
+       Autogroup&nbsp;&nbsp;<span class="glyphicon glyphicon-random"></span> 
+      <% end %></end></div>
+    <% end %>
+</div>
+    </div></span>
+  </div>
+</div>
+
+</span>
+ 
+<!-- End autogroupform -->
 <table class="table" style="width: 95%!important;">
-  <%if @myproject.name_gen == 'numbered'%>
-  <% ids = Group.where(project_id: @myproject).uniq%>
+  <%if @myproject.groups.collect(&:name).include?("Team 10") || @myproject.groups.include?("Team 11")%>
+  <% ids = Group.where(project_id: @myproject)%>
   <%else%>
   <% ids = Group.where(project_id: @myproject).order(:name).uniq%>
   <%end%>
   <% ids.each do |group| %>
-	 <% @group = Group.find(group) %>
+   <% @group = Group.find(group) %>
     <tr>
-     <td colspan="9"> <span style="font-size:20px; font-weight:bold;"><%= link_to @group.name, @group %></span>&nbsp;&nbsp;&nbsp;&nbsp;<%=  link_to "<span class=\"glyphicon glyphicon-remove\"></span>".html_safe, disband_team_group_path(group), :class => 'btn btn-default btn-sm' %>
+     <td colspan="9"> <span style="font-size:20px; font-weight:bold;"><%= link_to @group.name, @group %></span>&nbsp;&nbsp;&nbsp;&nbsp;<%=  link_to "<span class=\"glyphicon glyphicon-remove\"></span>".html_safe, disband_group_path(group), :class => 'btn btn-default btn-sm' %>
 
 
     <% members = members_of(@group) %>
@@ -24,31 +38,31 @@
 
     <%if GroupRelation.find_by(user_id: user.id, group_id: @group.id).status == 2%>
     <tr>
-  	     <td class='collapsable'><%= link_to (image_tag (user.avatar.url), :style => 'max-width: 45px;'), user %></td> 
+         <td class='collapsable'><%= link_to (image_tag (user.avatar.url), :style => 'max-width: 45px;'), user %></td> 
         <td><%= link_to "#{user.first_name} #{user.last_name}", user %> </td>
         <td class='collapsable'><%= user.email %></td>
-      	<td>Confirmed <span class="glyphicon glyphicon-ok" style="color:green; font-size:20px;"></span>
+        <td>Confirmed <span class="glyphicon glyphicon-ok" style="color:green; font-size:20px;"></span>
     <%else%>
     <tr style= "background-color:eee; opacity: 0.6;">
-	    <td class='collapsable'><%= link_to (image_tag (user.avatar.url), :style => 'max-width: 45px;'), user %></td> 
+      <td class='collapsable'><%= link_to (image_tag (user.avatar.url), :style => 'max-width: 45px;'), user %></td> 
       <td><%= link_to "#{user.first_name} #{user.last_name}", user %> </td>
       <td class='collapsable'><%= user.email %></td>
-        	<td>Request Pending</td>
-    <%end%>	
+          <td>Request Pending</td>
+    <%end%> 
 <td class='collapsable'>
-		<% if in_group_for?(user, @myproject)%>
-		<% groups = GroupRelation.where(user_id: user.id, project_id:@myproject, status: 2).collect(&:group_id)%>
-				<% groups.each do |group|%>
-				<%= form_for(:group, :url => {:action => 'update_relation',:controller => 'groups', :id => group, user: user.id}, :html => { :style => 'display:inline;'}) do |f|%>	
-				<%= f.select :name, options_from_collection_for_select(@myproject.groups.uniq, 'id', 'name', group), {}, 
-				{class: 'form-control', style: 'width:70%; display:inline; height:25px;', onchange: 'this.form.submit();'} %>
-				<% end %></td>
-				<% end %><% end %>
+    <% if in_group_for?(user, @myproject)%>
+    <% groups = GroupRelation.where(user_id: user.id, project_id:@myproject, status: 2).collect(&:group_id)%>
+        <% groups.each do |group|%>
+        <%= form_for(:group, :url => {:action => 'update_relation',:controller => 'groups', :id => group, user: user.id}, :html => { :style => 'display:inline;'}) do |f|%> 
+        <%= f.select :name, options_from_collection_for_select(@myproject.groups.uniq, 'id', 'name', group), {}, 
+        {class: 'form-control', style: 'width:70%; display:inline; height:25px;', onchange: 'this.form.submit();'} %>
+        <% end %></td>
+        <% end %><% end %>
   </tr> 
-    	<% end %>
+      <% end %>
 
 
-  </tr><tr><td colspan="9"><span style="font-size:20px; font-weight:bold;"><%=  link_to "<span class=\"glyphicon glyphicon-plus\" &nbsp;&nbsp;Add New Group</span>".html_safe, new_group_path, :class => 'btn btn-success btn-sm' %></td></tr><tr><td colspan="9" style="height:40px;"> </tr>
+  </tr><tr><td colspan="9"><span style="font-size:20px; font-weight:bold;"><%=  link_to "<span class=\"glyphicon glyphicon-plus\"&nbsp;&nbsp;Add New Group</span>".html_safe, new_group_path, :class => 'btn btn-success btn-sm' %></td></tr><tr><td colspan="9" style="height:40px;"> </tr>
 
 
       <% end %>

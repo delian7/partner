@@ -1,7 +1,10 @@
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
 #, :lockable, :timeoutable and :omniauthable, :recoverable, :rememberable, :trackable, 
-  has_many :evaluations   
+  has_many :evaluations
+  belongs_to :group
+  belongs_to :project
+  belongs_to :course
   has_many :rosters
   has_many :group_relations, :source => :groups
   has_many :groups, :through => :group_relations

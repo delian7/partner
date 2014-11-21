@@ -21,7 +21,9 @@ class GroupsController < ApplicationController
   
   
   def create
-    @group = Group.create(name: params[:group][:name], course_id: current_user.current_course, project_id: current_user.current_project)
+    if !params[:group][:name].nil?
+      @group = Group.create(name: params[:group][:name], course_id: current_user.current_course, project_id: current_user.current_project)
+    end
     @group.save
     redirect_to(:action => 'index')
   end
@@ -100,23 +102,63 @@ class GroupsController < ApplicationController
     end
   end
   
-  def set_current_course
-    authorize User.find(params[:id])
-    set_current_users_instance_variables
-    current_user.update_attributes(secure_params)
+
+  def confirm
+    group = Group.find(params[:id])
+    authorize current_user
+    allowed_group_size = Project.find_by_id(current_user.current_project).group_size
     
-    if @current_projects.exists?
-      current_user.update_attributes(current_project: @current_projects.first.id)
+    if allowed_group_size >= 2
+      requested = GroupRelation.find_by(user_id: current_user.id, group_id: group.id)
+      requested.status = 2
+    if requested.save
+      redirect_to users_path(@current_group), flash: { :notice => "You are now in group: <b>#{group.name}</b>" }
+    else
+      redirect_to users_path(@current_group), flash: { :error => "There was a problem, try again" }
     end
-    redirect_to users_path
-      
+    else
+      flash[:notice] = "Your Professor specified this project is an individual task. If this is incorrect, please contact your professor. "
+      redirect_to users_path
+    end
   end
   
-  def set_current_project
+  def leave
+    @mygroup = Group.find(params[:id])
+    authorize current_user
+    set_current_users_instance_variables
+    if !@mygroup.nil?
+    if GroupRelation.where(group_id: @mygroup.id).size <= 2
+    # Delete the group
+    @mygroup.destroy
+    # Delete relation for current user
+    GroupRelation.where(user_id: requester?(user).id, group_id: @mygroup.id, status: 2).first.destroy
+    end
+    # Delete relation for user
+    flash[:notice] = "Ignored Request."
+    else 
+    flash[:error] = "Unable to ignore request."
+    end
+    GroupRelation.where(user_id: requested?(user).id, group_id: @mygroup.id, status: 0).first.destroy
+    redirect_to users_path
+  end
+
+  def undo_request
     user = User.find(params[:id])
     authorize user
-    current_user.update_attributes(secure_params)
-    redirect_to users_path
+    set_current_users_instance_variables
+    if !@mygroup.nil?
+    GroupRelation.where(project_id: @myproject.id, user_id: user.id, group_id: @mygroup.id, status: 1).first.destroy
+    # Delete relation for user
+    
+    if @current_group_size <= 2
+    # Delete the group
+    @mygroup.destroy
+    # Delete relation for current user
+    GroupRelation.where(project_id: @myproject.id, user_id: current_user.id, group_id: @mygroup.id, status: 2).first.destroy
+    end
+    flash[:error] = "Successfully removed request"
+    end
+  redirect_to users_path
   end
 
   # Start download of csv file of partner data
@@ -132,79 +174,6 @@ class GroupsController < ApplicationController
     send_data(roster_csv, :type =>  'text/csv', :filename =>  'groups.csv')
   end
 
-  def send_request
-    user = User.find(params[:id])
-    authorize user
-    set_current_users_instance_variables
-   
-    if @current_group_size >= @allowed_group_size
-      flash[:error] = "Unable to send request, you have too many pending requests."
-    elsif @allowed_group_size == 2
-      request_partner(user)
-    elsif @allowed_group_size >= 2
-      request_group_member(user)
-    else
-      flash[:notice] = "Your Professor specified this project is an individual task. If this is incorrect, please contact your professor. "
-    end
-    redirect_to users_path
-  end
-
-   def undo_request
-    user = User.find(params[:id])
-    authorize user
-    set_current_users_instance_variables
-    if !@mygroup.nil?
-    GroupRelation.where(project_id: @myproject.id, user_id: user.id, group_id: @mygroup.id, status: 0).first.destroy
-    # Delete relation for user
-    
-    if @current_group_size <= 2
-    # Delete the group
-    @mygroup.destroy
-    # Delete relation for current user
-    GroupRelation.where(project_id: @myproject.id, user_id: current_user.id, group_id: @mygroup.id, status: 2).first.destroy
-    end
-    flash[:error] = "Successfully removed request"
-    end
-  redirect_to users_path
-  end
-
-  def confirm
-    user = User.find(params[:id])
-    authorize user
-    set_current_users_instance_variables
-    allowed_group_size = Project.find_by_id(current_user.current_project).group_size
-    
-    if allowed_group_size == 2
-      confirm_partner(user)
-    elsif allowed_group_size >= 2
-      confirm_group_member(user)
-    else
-    flash[:notice] = "Your Professor specified this project is an individual task. If this is incorrect, please contact your professor. "
-       redirect_to users_path
-    end
-  end
-  
-  def ignore
-    user = User.find(params[:id])
-    authorize user
-    set_current_users_instance_variables
-    if !@mygroup.nil?
-    if GroupRelation.where(group_id: @mygroup.id).size <= 2
-    # Delete the group
-    @mygroup.destroy
-    # Delete relation for current user
-    GroupRelation.where(user_id: requester?(user).id, group_id: @mygroup.id, status: 2).first.destroy
-    
-  
-    # Delete relation for user
-    flash[:notice] = "Removed request."
-    else 
-    flash[:error] = "Unable to remove request."
-    end
-    GroupRelation.where(user_id: requested?(user).id, group_id: @mygroup.id, status: 0).first.destroy
-  end
-    redirect_to users_path
-  end
 
   def delete_partnership
     user = User.find(params[:id])
@@ -226,7 +195,7 @@ class GroupsController < ApplicationController
   redirect_to groups_path
   end
 
-    def disband_team
+    def disband
     group = Group.find(params[:id])
     groupname = group.name
     authorize current_user

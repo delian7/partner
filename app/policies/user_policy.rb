@@ -18,7 +18,7 @@ class UserPolicy
   def remove?
     true
   end  
-  def disband_team?
+  def disband?
     true
   end
     def clear_partnerships?

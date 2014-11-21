@@ -104,25 +104,21 @@ def enrolled_students(course_code)
   return @enrolled_students_array
   end
 
-def user_netid(netid)
-    User.find_by(ucinetid: netid)
-end
+# def user_netid(netid)
+#     User.find_by(ucinetid: netid)
+# end
 
-def course_id(coursecode)
-    Course.find_by(id: coursecode)
-end
+# def course_id(coursecode)
+#     Course.find_by(id: coursecode)
+# end
 
-def active_projects_for(coursecode)
-    Project.where(course_id: coursecode, active: true)
-end
+# def active_projects_for(coursecode)
+#     Project.where(course_id: coursecode, active: true)
+# end
 
-def user_exists?(symbol, id)
-  !User.find_by(symbol => id).nil?
-end
-
-def enrolled?(ucinetid, coursecode)
-    !Roster.find_by(user_id: user_netid(ucinetid).id, course_id: coursecode).nil?
-end
+# def user_exists?(symbol, id)
+#   !User.find_by(symbol => id).nil?
+# end
 
 def in_new_roster?(ucinetid, student_data_array)
   if user_exists?(:ucinetid, ucinetid)

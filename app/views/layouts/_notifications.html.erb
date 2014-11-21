@@ -1,0 +1,23 @@
+<br><div style="padding: 10px  15px 10px 15px; background-color: #f9fbfb;
+  border: 1px solid #d6d6d6; border-radius: 4px;-webkit-box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);"><span style="font-size:40px; font-weight:bold;">Notifications</span>
+
+<% case current_user.role %>
+<% when 0 %>
+
+<%= render 'layouts/requests' %>
+
+<% when 1..2 %>
+<% current_user.courses.each do |course|%>
+	<%course.users.each do |user|%>
+	
+
+	<% end %>
+	<% end %>
+
+
+<% when 3 %>
+
+
+
+
+<% end %></div>

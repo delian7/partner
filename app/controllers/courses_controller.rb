@@ -75,7 +75,7 @@ def destroy
 end
 
 def destroy_roster_relation(netid, coursecode)
-  if user_exists?(:ucinetid, netid)
+  if !User.where(ucinetid: netid).nil?
     @user = User.find_by(ucinetid: netid)
     set_current_project_course(@user, Project.find(0), Course.find(0))
     roster = Roster.find_by(course_id: coursecode, user_id: User.find_by(ucinetid: netid).id)
