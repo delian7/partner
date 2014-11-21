@@ -72,13 +72,6 @@ def active_projects_for(coursecode)
   Project.where(course_id: coursecode, active: true)
 end
 
-def requested?(user)
-	if !@mygroup.nil? || !@myproject.nil?
-    @user_status = GroupRelation.find_by(project_id: @myproject.id, user_id: user.id, group_id: @mygroup.id).status
-  end
-  @user_status == 1
-end
-
 def enrolled?(ucinetid, coursecode)
     Roster.find_by(user_id: User.find_by(ucinetid: ucinetid).id, course_id: coursecode) != nil
 end
