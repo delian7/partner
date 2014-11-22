@@ -2,19 +2,21 @@
 <table class="table" style="width: 95%!important; display: table;">
   <tr>
     <td class='collapsable'><b>Course ID</td><td class='collapsable'><b>Course Name</td><td class='collapsable' colspan ="6" style="width:30%;"><b></td>
-  </tr>
+  </tr>          <tbody>
 
 <% case current_user.role%>
-	<% when 0 %>
-	<% when 0..3 %>
+	<% when 1..2 %>
+              <% current_user.courses.each do |course| %>
+              <% if course.id !=0%>
+              <tr><%= render course %></tr></div>
+              <% end %><% end %>
 
-
-          <tbody>
+	<% when 3 %>
               <% @courses.each do |course| %>
               <% if course.id !=0%>
               <tr><%= render course %></tr></div>
               <% end %><% end %>
-          </tbody>
-        </table>
 				
 <%end%>
+          </tbody>
+        </table>

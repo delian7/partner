@@ -1,5 +1,5 @@
 class CoursesController < ApplicationController
-  include CoursesHelper
+  include CoursesHelper, UsersHelper
   before_filter :authenticate_user!
   #after_action :verify_authorized, except: [:show, :edit]
 
@@ -46,7 +46,7 @@ require 'csv'
 
   def remove
     authorize User.all
-    if !Course.find(params[:id]).nil?
+    if !Course.find_by_id(params[:id]).nil?
     @course = Course.find(params[:id])
         enrolled_students(@course.id).each do |enrolled_student_netid|
         destroy_roster_relation(enrolled_student_netid, @course.id)
@@ -56,6 +56,9 @@ require 'csv'
         Project.where(course_id: @course.id).each do |project|
         project.destroy
       end
+    @course.project_relations.each do |x|
+      x.destroy
+    end
     end
     @course.destroy
     @course.save ? flash[:notice] = "Course Deleted" : flash[:error] = "Course could not be deleted"

@@ -110,28 +110,28 @@ def same?(x , y)
 	x == y
 end
 
-def set_status_confirmed(user,user2)
-  y = GroupRelation.where(project_id: @myproject.id, user_id: requested?(user).id, group_id: @mygroup.id)
-  y.status = 2
-  y.save
-end
+# def set_status_confirmed(user,user2)
+#   y = GroupRelation.where(project_id: @myproject.id, user_id: requested?(user).id, group_id: @mygroup.id)
+#   y.status = 2
+#   y.save
+# end
 
-def request_partner(user)
-set_current_users_instance_variables
-	if @current_group_size >= 2
-	    flash[:error] = "Unable to send request, you have too many pending requests."
-	else
-	    newgroup = Group.create(name: "#{current_user.first_name}'s group for #{@myproject.name}")
-	    #create relation for current user which is always the requester (status=0, pending)
-	    GroupRelation.create(course_id: @mycourse.id, user_id: current_user.id, project_id: @myproject.id, 
-	    status: 2, group_id: newgroup.id)
-			# create relation for user who is being requested (status=1, requested)
-			GroupRelation.create(course_id: @mycourse.id, user_id: user.id, project_id: @myproject.id, 
-			  status: 1, group_id: newgroup.id)
-			username = user.first_name + " " + user.last_name
-			flash[:notice] = "Requested <b>#{username}</b>" + " as partner for <b>#{@myproject.name}</b>"
-	end
-end
+# def request_partner(user)
+# set_current_users_instance_variables
+# 	if @current_group_size >= 2
+# 	    flash[:error] = "Unable to send request, you have too many pending requests."
+# 	else
+# 	    newgroup = Group.create(name: "#{current_user.first_name}'s group for #{@myproject.name}")
+# 	    #create relation for current user which is always the requester (status=0, pending)
+# 	    GroupRelation.create(course_id: @mycourse.id, user_id: current_user.id, project_id: @myproject.id, 
+# 	    status: 2, group_id: newgroup.id)
+# 			# create relation for user who is being requested (status=1, requested)
+# 			GroupRelation.create(course_id: @mycourse.id, user_id: user.id, project_id: @myproject.id, 
+# 			  status: 1, group_id: newgroup.id)
+# 			username = user.first_name + " " + user.last_name
+# 			flash[:notice] = "Requested <b>#{username}</b>" + " as partner for <b>#{@myproject.name}</b>"
+# 	end
+# end
 
 def request_group_member(user)
 set_current_users_instance_variables
@@ -139,16 +139,7 @@ set_current_users_instance_variables
 	if @current_group_size >= @allowed_group_size
 	    flash[:error] = "Unable to send request, you have too many pending requests."
 	else
-	   case @myproject.name_gen 
-       when 0
-        groupname = "Team #{Group.where(project_id: project.id).size + 1}"
-       when 1
-        groupname = Faker::Hacker.ingverb.titlecase + " " + Faker::Hacker.adjective.titlecase
-       when 2
-        groupname = Faker::Team.creature.titlecase
-       when 3
-        groupname = Faker::Team.color.titlecase
-     end
+	   group_namer("random")
      if @mygroup.nil?
      newgroup = Group.create(name: groupname, course_id: @mycourse.id, project_id: @myproject.id)
       #create relation for current user
@@ -165,43 +156,43 @@ set_current_users_instance_variables
 	end
 end
 
-def confirm_group_member(user)
-    # sets the status of the group to accepted "status=2"
-      requested = GroupRelation.find_by(user_id: current_user.id, group_id: @mygroup.id)
-      requested.status = 2
-      if requested.save
-      redirect_to users_path(@current_group), flash: { :notice => "You are now in group: <b>#{@mygroup.name}</b>" }
-    else
-      redirect_to users_path(@current_group), flash: { :error => "There was a problem, try again" }
-    end
-end
+# def confirm_group_member(user)
+#     # sets the status of the group to accepted "status=2"
+#       requested = GroupRelation.find_by(user_id: current_user.id, group_id: @mygroup.id)
+#       requested.status = 2
+#       if requested.save
+#       redirect_to users_path(@current_group), flash: { :notice => "You are now in group: <b>#{@mygroup.name}</b>" }
+#     else
+#       redirect_to users_path(@current_group), flash: { :error => "There was a problem, try again" }
+#     end
+# end
 
-  def confirm_partner(user)
-    # sets the status of the group to accepted "status=2"
-      requested = GroupRelation.find_by(user_id: current_user.id, group_id: @mygroup.id)
-      requested.status = 2
-      if requested.save
-      redirect_to users_path(@current_group), flash: { :notice => "You are now in group: <b>#{@mygroup.name}</b>" }
-    else
-      redirect_to users_path(@current_group), flash: { :error => "There was a problem, try again" }
-    end
-  end
+#   def confirm_partner(user)
+#     # sets the status of the group to accepted "status=2"
+#       requested = GroupRelation.find_by(user_id: current_user.id, group_id: @mygroup.id)
+#       requested.status = 2
+#       if requested.save
+#       redirect_to users_path(@current_group), flash: { :notice => "You are now in group: <b>#{@mygroup.name}</b>" }
+#     else
+#       redirect_to users_path(@current_group), flash: { :error => "There was a problem, try again" }
+#     end
+#   end
 
-  def delete_partnership(user)
-    if !@mygroup.nil?
-      if @current_group_size <= 2
-        # Delete the group
-        @mygroup.destroy
-        # Delete relation for current user and user
-        GroupRelation.find_by(user_id: current_user.id, group_id: @mygroup.id).destroy
-        # Delete relation for user
-      end
-      GroupRelation.find_by(user_id: user.id, group_id: @mygroup.id).destroy
-      flash[:notice] = "Removed User."
-    else 
-      flash[:error] = "Unable to remove user."
-    end
-  redirect_to users_path
-  end
+  # def delete_partnership(user)
+  #   if !@mygroup.nil?
+  #     if @current_group_size <= 2
+  #       # Delete the group
+  #       @mygroup.destroy
+  #       # Delete relation for current user and user
+  #       GroupRelation.find_by(user_id: current_user.id, group_id: @mygroup.id).destroy
+  #       # Delete relation for user
+  #     end
+  #     GroupRelation.find_by(user_id: user.id, group_id: @mygroup.id).destroy
+  #     flash[:notice] = "Removed User."
+  #   else 
+  #     flash[:error] = "Unable to remove user."
+  #   end
+  # redirect_to users_path
+  # end
 
 end

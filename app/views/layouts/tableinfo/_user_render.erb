@@ -28,7 +28,11 @@
 	<td><%= link_to "#{user.first_name} #{user.last_name}", user: @user %> </td>
 	<td class='collapsable'><%= user.email %></td>
 	<%if current_user.role == 0%>
-
+	<% if has_grouprelation_for?(@user, @myproject) %>
+		<%= render 'layouts/tableinfo/buttons/undo_button', user: @user %>
+	<% else %>
+		<%= render 'layouts/tableinfo/buttons/request_button', user: @user %>
+	<% end %>
 
 
 	<% end %>

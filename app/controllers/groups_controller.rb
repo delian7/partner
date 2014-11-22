@@ -102,26 +102,6 @@ class GroupsController < ApplicationController
     end
   end
   
-
-  def confirm
-    group = Group.find(params[:id])
-    authorize current_user
-    allowed_group_size = Project.find_by_id(current_user.current_project).group_size
-    
-    if allowed_group_size >= 2
-      requested = GroupRelation.find_by(user_id: current_user.id, group_id: group.id)
-      requested.status = 2
-    if requested.save
-      redirect_to users_path(@current_group), flash: { :notice => "You are now in group: <b>#{group.name}</b>" }
-    else
-      redirect_to users_path(@current_group), flash: { :error => "There was a problem, try again" }
-    end
-    else
-      flash[:notice] = "Your Professor specified this project is an individual task. If this is incorrect, please contact your professor. "
-      redirect_to users_path
-    end
-  end
-  
   def leave
     @mygroup = Group.find(params[:id])
     authorize current_user

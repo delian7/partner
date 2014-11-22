@@ -37,21 +37,6 @@ class UsersController < ApplicationController
     redirect_to users_path, :notice => "User deleted."
   end
 
-def send_request
-    user = User.find(params[:id])
-    authorize user
-    set_current_users_instance_variables
-   
-    if @current_group_size >= @allowed_group_size
-      flash[:error] = "Unable to send request, you have too many pending requests."
-    elsif @allowed_group_size >= 2
-      request_group_member(user)
-    else
-      flash[:notice] = "Your Professor specified this project is an individual task. If this is incorrect, please contact your professor. "
-    end
-    redirect_to users_path
-  end
-
   def set_current_course
     authorize User.find(params[:id])
     current_user.update_attributes(secure_params)
@@ -124,6 +109,40 @@ def send_request
     end
   end
 
+  def confirm
+    user = User.find(params[:id])
+    authorize current_user
+    allowed_group_size = Project.find_by_id(current_user.current_project).group_size
+    
+    if allowed_group_size >= 2
+      requested = GroupRelation.find_by(user_id: current_user.id, group_id: group.id)
+      requested.status = 2
+    if requested.save
+      redirect_to users_path, flash: { :notice => "You are now in group: <b>#{group.name}</b>" }
+    else
+      redirect_to users_path, flash: { :error => "There was a problem, try again" }
+    end
+    else
+      flash[:notice] = "Your Professor specified this project is an individual task. If this is incorrect, please contact your professor. "
+      redirect_to users_path
+    end
+  end
+  
+  def send_request
+      user = User.find(params[:id])
+      authorize user
+      set_current_users_instance_variables
+     
+      if @current_group_size >= @allowed_group_size
+        flash[:error] = "Unable to send request, you have too many pending requests."
+      elsif @allowed_group_size >= 2
+        request_group_member(user)
+      else
+        flash[:notice] = "Your Professor specified this project is an individual task. If this is incorrect, please contact your professor. "
+      end
+      redirect_to users_path
+    end
+  
   private
 
   def admin_only

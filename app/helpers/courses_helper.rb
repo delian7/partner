@@ -96,8 +96,8 @@ def enrolled_students(course_code)
   @enrolled_students_array = []
   array = Roster.where(course_id: course_code).pluck(:user_id)
   array.each do |i|
-    if user_exists?(:id, i)
-      user = User.find(i)
+    if User.find_by_id(i) !=nil
+      user = User.find_by_id(i)
       @enrolled_students_array.push(user.ucinetid)
     end
   end
@@ -121,7 +121,7 @@ def enrolled_students(course_code)
 # end
 
 def in_new_roster?(ucinetid, student_data_array)
-  if user_exists?(:ucinetid, ucinetid)
+  if User.find_by(ucinetid: ucinetid) != nil
       @student_netids = csv_netids(student_data_array)
       @student_netids.each do |enrolled_student_netid|
        return true if ucinetid == enrolled_student_netid
