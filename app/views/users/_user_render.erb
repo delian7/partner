@@ -1,8 +1,8 @@
 <% !@mygroup.nil? ? mygroupsize = @myproject.groups.size : mygroupsize = 0 %>
-<% allowed_size = Project.find(current_user.current_project).group_size%>
+<% allowed_size = Project.find(current_user.current_project).group_size %>
 
-<% if allowed_size > mygroupsize%>
-<% @users = Course.find(current_user.current_course).users.order(:last_name)%>
+<% if allowed_size > mygroupsize %>
+<% @users = Course.find(current_user.current_course).users.order(:last_name) %>
 <% @users.each do |user| %>
 	<% @user = User.find(user) %>
 	<% if (classmates?(@user, @mycourse)) && (!same?(current_user.id, @user.id) && is_student?(@user)) && (!confirmed?(@user))  %>
@@ -10,10 +10,8 @@
 	<td class='collapsable'><%= link_to (image_tag @user.avatar.url, :style => 'max-width: 45px;'), @user %></td> 
 	<td><%= link_to "#{@user.first_name} #{@user.last_name}", @user %> </td>
 	<td class='collapsable'><%= @user.email %></td>
-	<% if has_grouprelation_for?(@user, @myproject) %>
-		<%= render 'layouts/tableinfo/buttons/undo_button', user: @user %>
-	<% else %>
-		<%= render 'layouts/tableinfo/buttons/request_button', user: @user %>
+	<% if current_user.role == 0 %>
+		<%= render 'layouts/buttons/button_render', user: @user %>
 	<% end %>
 	</tr>
 	<% end %>
@@ -23,22 +21,11 @@
 	<% else  %>
 	<% @mygroup.users.each do |user| %>
 		<% @user = User.find(user) %>
-	<%if user != current_user && !teammates?(user, current_user)%>
+	<% if user != current_user && !teammates?(user, current_user) %>
 	<td class='collapsable'><%= link_to (image_tag (user.avatar.url), :style => 'max-width: 45px;'), user %></td> 
 	<td><%= link_to "#{user.first_name} #{user.last_name}", user: @user %> </td>
 	<td class='collapsable'><%= user.email %></td>
-	<%if current_user.role == 0%>
-	<% if has_grouprelation_for?(@user, @myproject) %>
-		<%= render 'layouts/tableinfo/buttons/undo_button', user: @user %>
-	<% else %>
-		<%= render 'layouts/tableinfo/buttons/request_button', user: @user %>
-	<% end %>
-
-
-	<% end %>
-	<% end %>
-
 	</tr>
-
-
-<% end %>	<% end %>
+	<% end %>
+	<% end %>
+<% end %>

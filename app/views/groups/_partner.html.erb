@@ -1,9 +1,0 @@
-<table class="table" style="width: 95%!important;">
- <% user = my_partner_for(@myproject) %>
-<span style="font-size:35px; font-weight:bold;">My Partner <br></span><span style="font-size:15px; font-weight:bold;"><%=@myproject.name%></font></div><br></span>
-        <tr>
-	<td class='collapsable'><%= link_to (image_tag (user.avatar.url), :style => 'max-width: 45px;'), user %></td> 
-      <td><%= link_to "#{user.first_name} #{user.last_name}", user %> </td>
-      <td class='collapsable'><%= user.email %></td>
-	</tr>
-    </table>

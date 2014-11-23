@@ -1,24 +1,29 @@
 module GroupsHelper
 
 def get_status(user)
-  if !@mygroup.nil?
-    @current_user_status = GroupRelation.where(project_id: @myproject.id, user_id: current_user.id, group_id: @mygroup.id).pluck(:status)[0]
-    @user_status = GroupRelation.where(project_id: @myproject.id, user_id: user.id, group_id: @mygroup.id).pluck(:status)[0]
+  if !@mygroup.nil? && ((current_user.groups & user.groups) !=nil)
+    their_group = (current_user.groups & user.groups)[0]
+    their_group.group_relations.each do |relation|
+      @user_status = relation.status if (relation.user_id == user.id) && (relation.group_id == their_group.id)
+      return @user_status
+    end
   end
 end
 
 def group_namer(namegen)
   case namegen
-  when "0"
+  when "number"
     @groupname = "Team #{Group.where(project_id: @project.id).size + 1}"
-  when "1"
+  when "random"
     @groupname = "Team #{Faker::Team.random.titlecase}"
-  when "2"
+  when "creature"
     @groupname = "Team #{Faker::Team.creature.titlecase}"
-  when "3"
+  when "color"
     @groupname = "Team #{Faker::Commerce.color.titlecase}"
-  when "4"
+  when "gamer"
     @groupname = "#{Faker::Hacker.gamer.titlecase}"
+  when "partner"
+    @groupname = "#{current_user.first_name} and #{User.find(params[:id]).first_name}"
   end
   return @groupname
 end

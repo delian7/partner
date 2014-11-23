@@ -29,8 +29,7 @@ Group Members</span>
 <%end%>
   <table class="table" style="width: 95%!important;">
     <td class='collapsable'></td><td><strong>Name</td><td class='collapsable'><strong>Email</td><td><strong>Status</td></strong>
-    <% members = members_of(@group) %>
-    <% members.each do |user| %>
+    <% @group.users.each do |user| %>
 
        <%if GroupRelation.find_by(user_id: user.id, group_id: @group.id).status == 2%>
     <tr>

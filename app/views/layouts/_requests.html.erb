@@ -1,45 +1,28 @@
-<% current_user.groups.each do |group| %>
-    <% @myproject = group.project %>
-    <% project = group.project %>
-    <% if @mygroup = current_user.groups.find_by(project_id: project.id) %>
-    <% if @mygroup.group_relations.find_by(user_id: current_user.id).status == 1 %>
-    <div style='float:left;'>
-<%@group = @mygroup%>
-  <% if @group.nil?%>
-  <span style="font-size:35px; font-weight:bold;">Sorry,</span><br><span style="font-size:25px; font-weight:normal;"> it looks like you don't have a partner yet for  </span><span style="font-size:25px; font-weight:bold;"><%=@myproject.name%></span>
-
-<%else%>
-    <% if !@group.name.nil? %>
-        <%groupname = @group.name%>
-    <% else %>
-        <%groupname= @group.users.pluck(:first_name).to_sentence%>
-    <%end%>
-
- <span style="font-size:25px; font-weight:bold;"><%= link_to groupname, @group%></span>
-<div style='float:right;'><%=  link_to "<span class=\"glyphicon glyphicon-user\"></span>&nbsp;&nbsp;<b>Join #{groupname}</b>".html_safe, confirm_group_path(@group), class: "btn btn-primary btn-md" %></div>
- <span style="font-size:15px; font-weight:bold;">  <br>Project:</span>
- <span style="font-size:14px;"><%=@myproject.name%></span>
- <span style="font-size:15px; font-weight:bold;">  <br>Course:</span>
- <span style="font-size:14px;"><%=Course.find(@myproject.course_id).course_title%><br></span></div>
-
-  <table class="table" style="width: 95%!important;">
-    <td><strong>Name</td><td><strong>Status</td></strong>
-  <% ids = @group.users.order(:last_name).uniq%>
-    <% ids.each do |user| %>
-
-       <%if GroupRelation.find_by(user_id: user.id, group_id: @group.id).status == 2%>
-    <tr>
-        <td><%= link_to "#{user.first_name} #{user.last_name}", user %> </td>
-        <td>Confirmed</td>
-    <%else%>
-    <tr style= "background-color:eee; opacity: 0.6;">
-      <td><%= link_to "#{user.first_name} #{user.last_name}", user %> </td>
-          <td>Request Pending</td>
-    <%end%> 
-
-  </tr>
-      <% end %>
-    </table>
-
-<%end%>
-         <% end %><% end %><% end %>
+<% current_user.groups.order(:project_id).uniq.each do |group| %>
+  <% if (group.group_relations.find_by(user_id: current_user.id, group_id: group.id).status == 1) && (group.project.group_relations.find_by(user_id: current_user.id, status: 2) == nil) %>
+    <% group.name != nil ? groupname = group.name : groupname = group.users.pluck(:first_name).to_sentence%>
+    <% members = group.users.order(:last_name).uniq %>
+        <span style="font-size:25px; font-weight:bold;"> <%= link_to groupname, group %></span>
+      <div style='float:right;'> <%=  link_to "<span class=\"glyphicon glyphicon-user\"></span>&nbsp;&nbsp;<b>Join #{groupname}</b>".html_safe, confirm_group_path(group), class: "btn btn-primary btn-md" %></div>
+        <span style="font-size:15px; font-weight:bold;">  <br>Project:</span>
+        <span style="font-size:14px;"> <%= group.project.name %></span>
+        <span style="font-size:15px; font-weight:bold;">  <br>Course:</span>
+        <span style="font-size:14px;"> <%= Course.find(group.project.course_id).course_title %><br></span>
+        <table class="table" style="width: 95%!important;">
+          <td><strong>Name</td><td><strong>Status</td></strong>
+              <% members.each do |user| %>
+                <% if GroupRelation.find_by(user_id: user.id, group_id: group.id).status == 2 %>
+                  <tr>
+                    <td> <%= link_to "#{user.first_name} #{user.last_name}", user %> </td>
+                    <td>Confirmed</td>
+                  </tr>
+                 <% else %>
+                  <tr style= "background-color:eee; opacity: 0.6;">
+                    <td> <%= link_to "#{user.first_name} #{user.last_name}", user %></td>
+                    <td>Request Pending</td>
+                  </tr>
+                <% end %> 
+              <% end %>
+        </table>
+  <% end %>  
+<% end %>

@@ -20,7 +20,7 @@ devise_for :users, :controllers => {:registrations => "registrations"}
         get :registrations
         get :sessions
         
-        get :leave
+
         post :set_current_course
         post :set_current_project
 
@@ -36,6 +36,7 @@ devise_for :users, :controllers => {:registrations => "registrations"}
       get :edit
       post :update
       get :remove
+      get :leave
       get :disband
 
       get :confirm

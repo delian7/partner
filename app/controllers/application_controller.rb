@@ -42,6 +42,7 @@ include Pundit
       end
         return @results
     end
+
   def nil_check
     if Project.where(course_id: 0).empty?
       proj = Project.create(id: 0, course_id: 0)
@@ -57,7 +58,6 @@ include Pundit
       course.course_title= ""
       course.save
     end
-
   end
 
 

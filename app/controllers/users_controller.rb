@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   before_filter :authenticate_user!
   # before_filter :admin_only, :except => :show
   helper_method :course_ids, :requested?, :my_partner_for, :requester?, :teammates?, :in_group_for?, :classmates?, :same?, :is_student?, :user_netid
-  include UsersHelper
+  include UsersHelper, GroupsHelper
   # after_action :verify_authorized, except: [:show, :index]
   require 'csv'
    
@@ -101,29 +101,10 @@ class UsersController < ApplicationController
           end
       GroupRelation.where(user_id: current_user.id, group_id: @mygroup.id).first.destroy
       # Delete relation for user
-      flash[:notice] = "Ignored Request."
+      flash[:notice] = "Group Relation successfully reset."
       redirect_to users_path
     else 
-      flash[:error] = "Unable to ignore request."
-      redirect_to users_path
-    end
-  end
-
-  def confirm
-    user = User.find(params[:id])
-    authorize current_user
-    allowed_group_size = Project.find_by_id(current_user.current_project).group_size
-    
-    if allowed_group_size >= 2
-      requested = GroupRelation.find_by(user_id: current_user.id, group_id: group.id)
-      requested.status = 2
-    if requested.save
-      redirect_to users_path, flash: { :notice => "You are now in group: <b>#{group.name}</b>" }
-    else
-      redirect_to users_path, flash: { :error => "There was a problem, try again" }
-    end
-    else
-      flash[:notice] = "Your Professor specified this project is an individual task. If this is incorrect, please contact your professor. "
+      flash[:error] = "Unable to reset Group Relation."
       redirect_to users_path
     end
   end
@@ -135,14 +116,24 @@ class UsersController < ApplicationController
      
       if @current_group_size >= @allowed_group_size
         flash[:error] = "Unable to send request, you have too many pending requests."
-      elsif @allowed_group_size >= 2
-        request_group_member(user)
       else
-        flash[:notice] = "Your Professor specified this project is an individual task. If this is incorrect, please contact your professor. "
-      end
+      @allowed_group_size > 2 ? group_namer("random") : group_namer("partner")
+        if @mygroup.nil?
+          newgroup = Group.create(name: @groupname, course_id: @mycourse.id, project_id: @myproject.id)
+          #create relation for current user
+          current_user_relation = GroupRelation.create(course_id: @mycourse.id, user_id: current_user.id, 
+          project_id: @myproject.id, status: 2, group_id: newgroup.id)
+        else
+          newgroup = Group.find_by_id(@mygroup)
+        end
+      # create relation for user who is being requested (status=1, requested)
+      user_relation = GroupRelation.create(course_id: @mycourse.id, user_id: user.id, project_id: @myproject.id, 
+        status: 1, group_id: newgroup.id)
+      flash[:notice] = "Requested <b>#{user.first_name} #{user.last_name}</b> to your group: <b>#{newgroup.name}</b> "
+    end
       redirect_to users_path
     end
-  
+
   private
 
   def admin_only

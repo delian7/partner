@@ -1,9 +1,9 @@
 <table class="table" style="width: 95%!important;">
-  <%if @myproject.name_gen == 'numbered' %>
-  <% ids = @myproject.groups.uniq%>
-  <%else%>
-  <% ids = @myproject.groups.order(:name).uniq%>
-  <%end%>
+  <% if @myproject.name_gen == 'numbered' %>
+  <% ids = @myproject.groups.uniq %>
+  <% else %>
+  <% ids = @myproject.groups.order(:name).uniq %>
+  <% end %>
     <% ids.each do |group| %>	 
     <% @group = Group.find(group) %>
     <tr>
@@ -12,19 +12,19 @@
     <% members = group.users.order(:last_name).uniq %>
     <% members.each do |user| %>
 
-    <%if GroupRelation.find_by(user_id: user.id, group_id: @group.id).status == 2%>
+    <% if GroupRelation.find_by(user_id: user.id, group_id: @group.id).status == 2 %>
     <tr>
   	     <td class='collapsable'><%= link_to (image_tag (user.avatar.url), :style => 'max-width: 45px;'), user %></td> 
         <td><%= link_to "#{user.first_name} #{user.last_name}", user %> </td>
         <td class='collapsable'><%= user.email %></td>
       	<td>Confirmed&nbsp;&nbsp;<span class="glyphicon glyphicon-ok" style="color:green; font-size:20px;"></span></td>
-    <%else%>
+    <% else %>
     <tr style= "background-color:eee; opacity: 0.6;">
 	    <td class='collapsable'><%= link_to (image_tag (user.avatar.url), :style => 'max-width: 45px;'), user %></td> 
       <td><%= link_to "#{user.first_name} #{user.last_name}", user %> </td>
       <td class='collapsable'><%= user.email %></td>
-        	<td>Request Pending </td>
-    <%end%>	
+        	<td>Pending </td>
+    <% end %>	
 	</tr>
     	<% end %>
       <% end %>

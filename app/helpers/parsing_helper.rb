@@ -1,4 +1,4 @@
-module CoursesHelper
+module ParsingHelper
 
 def regexecute(exp)
 Regexp.new(exp,Regexp::IGNORECASE)  
@@ -21,6 +21,7 @@ def TA_parse(txt)
   return m.match(txt)[1] if m.match(txt)
 end
 
+#gets the course title without the unit information
 def course_unit_parse(txt)
   m = regexecute('(.*),(.*),.* (.*)')
   if m.match(txt)
@@ -69,64 +70,16 @@ def data_slice(array, x, y)
   array.slice!(x,y)
 end
 
-def make_default_project(coursecode)
-  if !Project.where(course_id: coursecode, active: true).empty?
-    @proj = Project.find_by(course_id: coursecode, active: true)
-  else
-    @proj = Project.create(name: "#{@word1} #{@word2} - New Project", course_id: coursecode, active: true, group_size: 2)
-  end
-  ProjectRelation.create(course_id: coursecode, project_id: @proj.id)
-  return @proj
-end
-
-def set_current_project_course(user, project, course)
-  user.current_project = project.id
-  user.current_course = course.id
-  user.save
- end
-
-def remove_nils(array)
-  # remove all nils from array of arrays
-  array.each { |nils|  nils.compact! }
-  # delete all empty arrays
-  array.delete_if { |x| x.empty? }
-end
-
-def enrolled_students(course_code)
-  @enrolled_students_array = []
-  array = Roster.where(course_id: course_code).pluck(:user_id)
-  array.each do |i|
-    if User.find_by_id(i) !=nil
-      user = User.find_by_id(i)
-      @enrolled_students_array.push(user.ucinetid)
+def csv_netids(student_data_array)
+  @student_netids = []
+    student_data_array.each do |i|
+      if i.size > 2
+        @netid = i[@mail_col].downcase
+        @netid.slice! "@uci.edu"
+        @student_netids.push(@netid)
+      end
     end
-  end
-  return @enrolled_students_array
-  end
-
-# def user_netid(netid)
-#     User.find_by(ucinetid: netid)
-# end
-
-# def course_id(coursecode)
-#     Course.find_by(id: coursecode)
-# end
-
-# def active_projects_for(coursecode)
-#     Project.where(course_id: coursecode, active: true)
-# end
-
-# def user_exists?(symbol, id)
-#   !User.find_by(symbol => id).nil?
-# end
-
-def in_new_roster?(ucinetid, student_data_array)
-  if User.find_by(ucinetid: ucinetid) != nil
-      @student_netids = csv_netids(student_data_array)
-      @student_netids.each do |enrolled_student_netid|
-       return true if ucinetid == enrolled_student_netid
-  	  end
-  return false
-	end
+  @student_netids.push(current_user.ucinetid)
 end
+
 end

@@ -1,105 +1,73 @@
 class CoursesController < ApplicationController
-  include CoursesHelper, UsersHelper
+  include CoursesHelper, UsersHelper, ParsingHelper
   before_filter :authenticate_user!
   #after_action :verify_authorized, except: [:show, :edit]
 
 require 'csv'
 
   def index
-    @users = User.all
-    @courses = Course.all
-    @groups = Group.all
-    authorize @users
+  authorize current_user
   end
 
   def new
-    authorize @users
-  end
-
-  def show
-    @course = Course.find(params[:id])
-    unless user_signed_in?
-    authorize @users
-    redirect_to :back, :alert => "Access denied."
-    end
-  end
-
-  def profile
-    authorize @users
-  end
-
-  def update
-    authorize User.all
-    @course = Course.find(params[:id])
-    
-    if @course.update_attributes(course_params)
-      flash[:notice] = "Course updated successfully"
-      redirect_to(:action => 'index')
-    else
-      flash[:error] = "Course could not be updated"
-    end
+  authorize current_user
   end
 
   def edit
     @course = Course.find(params[:id])
   end
 
-  def remove
-    authorize User.all
-    if !Course.find_by_id(params[:id]).nil?
+ def profile
+    authorize current_user
+  end
+
+  def show
     @course = Course.find(params[:id])
-        enrolled_students(@course.id).each do |enrolled_student_netid|
-        destroy_roster_relation(enrolled_student_netid, @course.id)
-        set_current_project_course(@user, Project.find(0), Course.find(0))
+    unless user_signed_in?
+    authorize current_user
+    redirect_to :back, :alert => "Access denied."
+    end
+  end
+
+  def update
+    authorize current_user
+    @course = Course.find(params[:id])
+    if @course.update_attributes(course_params)
+      redirect_to :back, :alert => "Course updated successfully"
+    else
+      redirect_to :back, :error => "Course could not be updated"
+    end
+  end
+
+
+  def remove
+    authorize current_user
+    if Course.find_by_id(params[:id]) != nil
+    @course = Course.find(params[:id])
+        @course.users.each do |user|
+        set_current_project_course(user, Project.find_by_id(0), Course.find_by_id(0))
         end
-      if !Project.where(course_id: @course.id).empty?
-        Project.where(course_id: @course.id).each do |project|
-        project.destroy
-      end
-    @course.project_relations.each do |x|
-      x.destroy
-    end
-    end
+    destroy_roster_relations(@course)
+    destroy_project_relations(@course)
     @course.destroy
-    @course.save ? flash[:notice] = "Course Deleted" : flash[:error] = "Course could not be deleted"
+    @course.save ? flash[:notice] = "Success!  Course has been deleted" : flash[:error] = "Course could not be deleted"
     redirect_to(:action => 'index')
     end
   end
 
 def destroy
-  course = Course.find(params[:id])
-  authorize User.all
-  unless course == current_course
-    course.destroy
-    redirect_to courses_path, :notice => "Course deleted."
-  else
-    redirect_to courses_path, :notice => "Can't delete yourself."
-  end
-end
-
-def destroy_roster_relation(netid, coursecode)
-  if !User.where(ucinetid: netid).nil?
-    @user = User.find_by(ucinetid: netid)
-    set_current_project_course(@user, Project.find(0), Course.find(0))
-    roster = Roster.find_by(course_id: coursecode, user_id: User.find_by(ucinetid: netid).id)
-    roster.destroy
-    relations = GroupRelation.where(course_id: coursecode, user_id: User.find_by(ucinetid: netid).id)
-      relations.each do |deletions|
-      deletions.destroy
+  authorize current_user
+  if Course.find_by_id(params[:id]) != nil
+  @course = Course.find(params[:id])
+      @course.users.each do |user|
+      set_current_project_course(user, Project.find_by_id(0), Course.find_by_id(0))
       end
+  destroy_roster_relations(@course)
+  destroy_project_relations(@course)
+  @course.destroy
+  @course.save ? flash[:notice] = "Success!  Course has been deleted" : flash[:error] = "Course could not be deleted"
+  redirect_to(:action => 'index')
   end
-end
-
-def csv_netids(student_data_array)
-  @student_netids = []
-    student_data_array.each do |i|
-      if i.size > 2
-        @netid = i[@mail_col].downcase
-        @netid.slice! "@uci.edu"
-        @student_netids.push(@netid)
-      end
-    end
-  @student_netids.push(current_user.ucinetid)
 end
 
 
@@ -110,7 +78,7 @@ def open_and_parse_csv
   csv = data_slice(csv, 8, 100)
   @course_data = get_course_data(csv)
   @student_data = data_slice(csv, 11, 600)
-    enrolls = enrolled_students(@course_code)
+  # enrolls = Course.find(@course_code).users.pluck(:ucinetid)
 end
 
 def csv_import
@@ -141,16 +109,16 @@ def csv_import
     @user = User.create(ucinetid: @netid, first_name: @name[0], last_name: @name[1], email: @mail, 
       uci_affiliations: "student", current_course:  @course_code)
   end
-   if !enrolled?(@netid, @course_code) && in_new_roster?(@netid, @student_data)
+   if !enrolled?(@netid, @course_code) && in_new_roster?(@netid)
       roster = Roster.create(course_id: @course_code, user_id: @user.id)
       set_current_project_course(@user, @proj, @course)
       add+=1
   end
 end
 
-      Course.find(@course_code).users.pluck(:ucinetid).each do |enrolled_student_netid|
-      if enrolled?(enrolled_student_netid, @course_code) && !in_new_roster?(enrolled_student_netid, @student_data)
-        destroy_roster_relation(enrolled_student_netid, @course_code)
+      Course.find(@course_code).users.pluck(:ucinetid).each do |enrolled_netid|
+      if enrolled?(enrolled_netid, @course_code) && !in_new_roster?(enrolled_netid)
+        Roster.find_by(user_id: User.find_by(ucinetid: enrolled_netid).id, course_id: @course_code).destroy
         removal+=1
       else
         set_current_project_course(@user, @proj, @course)
