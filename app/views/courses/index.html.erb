@@ -12,7 +12,7 @@
               <% end %><% end %>
 
 	<% when 3 %>
-              <% @courses.each do |course| %>
+              <% Course.all.each do |course| %>
               <% if course.id !=0%>
               <tr><%= render course %></tr></div>
               <% end %><% end %>

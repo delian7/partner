@@ -15,7 +15,7 @@
 		<td class='collapsable'><%= @user.email %></td>
 
 <td class='collapsable'>
-		<% if in_group_for?(@user, @myproject)%>
+		<% if GroupRelation.where(user_id: @user.id, project_id:@myproject, status: 2) != nil%>
 		<% groups = GroupRelation.where(user_id: @user.id, project_id:@myproject, status: 2).collect(&:group_id)%>
 				<% groups.each do |group|%>
 				<%= form_for(:group, :url => {:action => 'update_relation',:controller => 'groups', :id => group, user: @user.id}, :html => { :style => 'display:inline;'}) do |f|%>	

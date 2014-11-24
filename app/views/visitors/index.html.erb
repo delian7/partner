@@ -2,12 +2,12 @@
 	<div class="col span_1_of_3">
   	<%= render "visitors/welcomemsg" %>
   	<!-- pending requests/notifications here-->
-  	<%= render "layouts/notifications"%>
+  	<%= render "visitors/notifications"%>
   </div>
 	<div class="col span_2_of_3">
 	<% case current_user.role %>
 	  <% when 0 %>
-	  <%= render 'layouts/mygroups'%>
+	  <%= render 'visitors/mygroups'%>
 		<!-- if the user is a Professor or a T/A -->
 		<% when 1..2 %><p>
 			 <center>
@@ -23,8 +23,8 @@
   	<!-- pending requests/notifications here-->
   </div>
 		<div class="col span_1_of_3">
-			<%= render 'layouts/signin_select'%>
-			<%= render 'layouts/signin_textfield'%>
+			<%= render 'visitors/signin_select'%>
+			<%= render 'visitors/signin_textfield'%>
 <% end %>
 		</div>
 

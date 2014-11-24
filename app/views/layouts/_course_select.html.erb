@@ -16,7 +16,7 @@
 		<br>
 		  <%= form_for :user, :url => set_current_project_user_path(current_user.id), :html => { :style => 'padding: 10px!important; display:inline;'} do |f|%>
 				<%= f.label 'Selected Project:', style: 'display:inline'%>			
-				<%= f.select :current_project, options_from_collection_for_select(@current_projects, 
+				<%= f.select :current_project, options_from_collection_for_select(@current_projects,
 					'id', 'name', current_user.current_project), {}, 
 					{class: "form-control", style: 'width:275px; display:inline; height:25px;', onchange: 'this.form.submit();'} %>
 			<% end %>

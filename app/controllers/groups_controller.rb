@@ -1,5 +1,5 @@
 class GroupsController < ApplicationController
-  include UsersHelper
+  include UsersHelper, GroupsHelper
   helper_method :course_ids, :requested?, :requester?, :my_partner_for,:teammates?, :in_group_for?, :classmates?, :same?, :is_student?, :get_status
   before_filter :authenticate_user!
   # after_action :verify_authorized
@@ -37,8 +37,8 @@ class GroupsController < ApplicationController
       if GroupRelation.find_by(group_id: params[:id]).nil?
         Group.find(params[:id]).destroy
       end
-  else
-    relation = GroupRelation.create(group_id: params[:group][:name], user_id: params[:id])
+    else
+    relation = GroupRelation.create(group_id: Group.find(params[:id]), user_id: params[:id])
     end
     if relation.save
       redirect_to :back, :notice => "<b>#{User.find(params[:user]).first_name} #{User.find(params[:user]).last_name}</b> moved to <b>#{Group.find(params[:group][:name]).name}</b>"
