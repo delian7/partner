@@ -12,6 +12,13 @@ Rails.application.routes.draw do
 devise_for :users, :controllers => {:registrations => "registrations"}
   root :to => "visitors#index"
   
+  resources :evaluations do
+    member do
+    end
+    collection do
+    end
+  end
+  
   resources :users do
      member do
         get :send_request
