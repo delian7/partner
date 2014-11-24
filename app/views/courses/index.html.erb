@@ -5,8 +5,8 @@
   </tr>
 
 <% case current_user.role%>
-<% when 0 %>
-<% when 0..3 %>
+	<% when 0 %>
+	<% when 0..3 %>
 
 
           <tbody>
@@ -16,4 +16,5 @@
               <% end %><% end %>
           </tbody>
         </table>
+				
 <%end%>
