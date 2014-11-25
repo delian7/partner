@@ -4,7 +4,7 @@
 <% case current_user.role %>
 <% when 0 %>
 	<% current_user.projects.uniq.each do |project| %>	
-			<%= render 'visitors/requests', project: project %>
+			<%= render 'layouts/requests', project: project %>
 	<% end %>
 <% when 1..2 %>
 <% current_user.courses.each do |course|%>

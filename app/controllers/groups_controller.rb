@@ -106,7 +106,7 @@ class GroupsController < ApplicationController
             # Delete relation for current user
             group.group_relations.each { |relation| relation.destroy }
           else
-            current_user.group_relations.find_by(group_id: group.id)
+            current_user.group_relations.find_by(group_id: group.id).destroy
           end
       # Delete relation for user
       flash[:notice] = "Group Relation successfully reset." 
@@ -130,6 +130,20 @@ class GroupsController < ApplicationController
         redirect_to :back, flash[:error] = "Your Professor specified this project is an individual task. If this is incorrect, please contact your professor." 
     end
   end
+
+    def send_request
+      group = Group.find(params[:id])
+      authorize current_user
+      set_current_users_instance_variables
+     
+          #create relation for current user
+          current_user_relation = GroupRelation.create(course_id: @mycourse.id, user_id: current_user.id, 
+          project_id: @myproject.id, status: 1, group_id: group.id)
+
+      flash[:notice] = "Sent request to join <b>#{newgroup.name}</b> "
+      redirect_to users_path
+    end
+
 
   # Start download of csv file of partner data
   def export_csv

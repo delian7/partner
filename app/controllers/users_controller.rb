@@ -9,7 +9,6 @@ class UsersController < ApplicationController
 
 
   def index
-    # @user = User.find(params[:id])
     @users = User.all
     set_current_users_instance_variables
     
@@ -93,7 +92,7 @@ class UsersController < ApplicationController
     authorize user
     set_current_users_instance_variables
     if !@mygroup.nil?
-          if GroupRelation.where(group_id: @mygroup.id).size <= 2
+          if GroupRelation.where(group_id: @mygroup.id, status: 2).size <= 2
             # Delete the group
             @mygroup.destroy
             # Delete relation for current user

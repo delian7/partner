@@ -56,7 +56,9 @@ def has_grouprelation_for?(user, project)
 end
 
 def in_group_for?(user, project)
-   project.group_relations.collect(&:user_id).include?(user.id) && confirmed?(user)
+   if project.group_relations.collect(&:user_id).include?(user.id)
+    !user.group_relations.where(project_id: project.id, status:2).nil?
+   end
 end
 
 def is_student?(user)

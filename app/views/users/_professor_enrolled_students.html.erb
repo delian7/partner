@@ -1,5 +1,10 @@
+<div class="section-group">
+<div class="col span_2_of_3">
+<span style="font-size:45px; font-weight:bold;">Enrolled Students</span></div>
+	<div class="col span_1_of_3">
+<%= render 'layouts/buttons/course_select'%></div>
+</div>
 <table class="table" style="width: 95%!important;">
-<div style="font-size:45px; font-weight:bold;">Enrolled Students
     <!-- Start Table Header -->
       <td><b></td>
       <td class='collapsable'><b>Students</td>
@@ -15,18 +20,20 @@
 		<td class='collapsable'><%= @user.email %></td>
 
 <td class='collapsable'>
-		<% if GroupRelation.where(user_id: @user.id, project_id:@myproject, status: 2) != nil%>
+		
 		<% groups = GroupRelation.where(user_id: @user.id, project_id:@myproject, status: 2).collect(&:group_id)%>
 				<% groups.each do |group|%>
-				<%= form_for(:group, :url => {:action => 'update_relation',:controller => 'groups', :id => group, user: @user.id}, :html => { :style => 'display:inline;'}) do |f|%>	
+				<% if GroupRelation.where(user_id: @user.id, project_id:@myproject, status: 2).empty?%>
+				<%= form_for(:group, :url => {:action => 'update_relation',:controller => 'groups', :id => group, user: @user.id}, :html => { :style => 'display:inline;'}) do |f|%>
 				<%= f.select :name, options_from_collection_for_select(Group.where(project_id: @myproject), 'id', 'name', Group.find(group).id), {}, 
 				{class: 'form-control', style: 'width:70%; display:inline; height:25px;', onchange: 'this.form.submit();'} %>
 				<% end %>
-			</td><% end %>
+			</td>
 
 		<% else %>
 				<%= form_for(:group, :url => {:action => 'update_relation',:controller => 'groups', :id => @user.id}, :html => { :style => 'display:inline;'}) do |f|%>	
 				<%= f.select :name, options_from_collection_for_select(Group.where(project_id: @myproject), 'id', 'name'), {include_blank: true}, {class: 'form-control', style: 'width:70%; display:inline; height:25px;', onchange: 'this.form.submit();'} %>
+				<% end %>
 				<% end %>
 		</tr>
 	<% end %><% end %>

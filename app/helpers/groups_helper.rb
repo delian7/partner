@@ -1,7 +1,9 @@
 module GroupsHelper
 
 def get_status(user)
-  if !@mygroup.nil? && ((current_user.groups & user.groups) !=nil)
+  if @mygroup.nil? || (current_user.groups & user.groups).empty?
+    return 0
+  else
     their_group = (current_user.groups & user.groups)[0]
     their_group.group_relations.each do |relation|
       @user_status = relation.status if (relation.user_id == user.id) && (relation.group_id == their_group.id)

@@ -1,5 +1,6 @@
 <% if @myproject.nil? || @mygroup.nil?%>
 	<span style="font-size:35px; font-weight:bold;">Sorry,</span><br><span style="font-size:25px; font-weight:normal;"> it looks like you don't have a partner yet for <span style="font-size:25px; font-weight:bold;"><%=@myproject.name%></span></center>
+
   <%=  link_to "<span class=\"glyphicon glyphicon-plus\"></span>&nbsp;&nbsp;Add New Group".html_safe,  {:action => 'new'}, class: "btn btn-primary btn-md", :style=>"float:right;margin-bottom:10px;" %>
 
 <%else%>
@@ -7,33 +8,26 @@
 <div class="section-group">
 <div class="col span_1_of_3">
   <span style="font-size:50px; font-weight:bold;">
-<% if @myproject.group_size ==2%>
-My Partner 
-<% else %>
-My Group 
-<%end%>
+<% if @myproject.group_size == 2 %>My Partner<% else %>My Group<%end%>
  </span><br><span style="font-size:25px; font-weight:bold;"><%=@mygroup.name%></font><br></span>
-  <span style="font-size:20px; font-weight:bold;">  <br>Project:</span>
- <span style="font-size:18px;"><%=@myproject.name%></span>
-   <span style="font-size:20px; font-weight:bold;">  <br>Course:</span>
- <span style="font-size:18px;"><%=@myproject.course_id%><br></span>
- <div style="float:right;">  <%=  link_to "<span class=\"glyphicon glyphicon-calendar\"></span>&nbsp;&nbsp;<b>Start a Doodle</b>".html_safe, "http://doodle.com/create?type=date&locale=en&title=#{@mygroup.name}%20Group%20Meeting&name=#{current_user.first_name}%20#{current_user.last_name}&eMailAddress=#{current_user.email}&description=Our%20first%20group%20meeting...", class: "btn btn-info btn-md" %></span>
-</div>  <%=  link_to "<span class=\"glyphicon glyphicon-pencil\"></span>&nbsp;&nbsp;Edit Group".html_safe,  {:action => 'edit'}, class: "btn btn-primary btn-md", :style=>"float:right;margin-bottom:10px;" %>
-
-
-
+ <span style="font-size:20px; font-weight:bold;">  <br>Project:</span>
+ <span style="font-size:18px;"><%= @myproject.name%></span>
+ <span style="font-size:20px; font-weight:bold;">  <br>Course:</span>
+ <span style="font-size:18px;"><%= @myproject.course_id%><br></span>
+ <div style="float:right;">  <%= link_to "<span class=\"glyphicon glyphicon-calendar\"></span>&nbsp;&nbsp;<b>Start a Doodle</b>".html_safe, "http://doodle.com/create?type=date&locale=en&title=#{@mygroup.name}%20Group%20Meeting&name=#{current_user.first_name}%20#{current_user.last_name}&eMailAddress=#{current_user.email}&description=Our%20first%20group%20meeting...", class: "btn btn-info btn-md" %></span>
+</div>  
+<%= link_to "<span class=\"glyphicon glyphicon-pencil\"></span>&nbsp;&nbsp;Edit Group".html_safe,  {:action => 'edit'}, class: "btn btn-primary btn-md", :style=>"float:right;margin-bottom:10px;" %>
 </div>
+
 <div class="col span_2_of_3">
     <span style="font-size:50px; font-weight:bold;">
-<% if @myproject.group_size !=2%>
-Group Members</span>
-<%end%>
+  <% if @myproject.group_size != 2 %>Group Members<% else %>My Partner<% end %></span>
   <table class="table" style="width: 95%!important;">
   	<td class='collapsable'></td><td><strong>Name</td><td class='collapsable'><strong>Email</td><td><strong>Status</td></strong>
-    <% members = members_of(@mygroup) %>
+    <% members = @mygroup.users %>
     <% members.each do |user| %>
 
-       <%if GroupRelation.find_by(user_id: user.id, group_id: @mygroup.id).status == 2%>
+       <% if GroupRelation.find_by(user_id: user.id, group_id: @mygroup.id).status == 2 %>
     <tr>
          <td class='collapsable'><%= link_to (image_tag (user.avatar.url), :style => 'max-width: 45px;'), user %></td> 
         <td><%= link_to "#{user.first_name} #{user.last_name}", user %> </td>
@@ -51,4 +45,6 @@ Group Members</span>
     	<% end %>
     </table>
 
-</div></div><%end%>
+</div>
+</div>
+<%end%>

@@ -1,10 +1,10 @@
 <table class="table" style="width: 95%!important;">
-  <% if @myproject.name_gen == 'numbered' %>
-  <% ids = @myproject.groups.uniq %>
+  <% if @myproject.groups.collect(&:name).include?('Team 10')||@myproject.groups.collect(&:name).include?('Team 11') %>
+  <% groups = @myproject.groups.uniq %>
   <% else %>
-  <% ids = @myproject.groups.order(:name).uniq %>
+  <% groups = @myproject.groups.order(:name).uniq %>
   <% end %>
-    <% ids.each do |group| %>	 
+    <% groups.each do |group| %>	 
     <% @group = Group.find(group) %>
     <tr>
      <td colspan="3"> <span style="font-size:20px; font-weight:bold;"><%= link_to @group.name, @group %></span></td><td></td>
