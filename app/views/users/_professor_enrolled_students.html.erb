@@ -23,7 +23,7 @@
 		
 		<% groups = GroupRelation.where(user_id: @user.id, project_id:@myproject, status: 2).collect(&:group_id)%>
 				<% groups.each do |group|%>
-				<% if GroupRelation.where(user_id: @user.id, project_id:@myproject, status: 2).empty?%>
+				<% if !GroupRelation.where(user_id: @user.id, project_id:@myproject, status: 2).empty?%>
 				<%= form_for(:group, :url => {:action => 'update_relation',:controller => 'groups', :id => group, user: @user.id}, :html => { :style => 'display:inline;'}) do |f|%>
 				<%= f.select :name, options_from_collection_for_select(Group.where(project_id: @myproject), 'id', 'name', Group.find(group).id), {}, 
 				{class: 'form-control', style: 'width:70%; display:inline; height:25px;', onchange: 'this.form.submit();'} %>

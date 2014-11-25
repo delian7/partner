@@ -39,12 +39,11 @@
       <td class='collapsable'>
         <%= render 'layouts/buttons/team_select', user: user%>
     </td>
-    </tr><tr>
+    </tr><%end%><tr>
       <td colspan="9"><span style="font-size:20px; font-weight:bold;"><%=  link_to "<span class=\"glyphicon glyphicon-plus\"&nbsp;&nbsp;Add New Group</span>".html_safe, new_group_path, :class => 'btn btn-success btn-sm' %></span></td>
     </tr><tr>
       <td colspan="9" style="height:40px;"></td>
     </tr>
-  
 </div>
 <%end%>
-<%end%></table>
+</table>
