@@ -8,6 +8,7 @@ class CreateProjects < ActiveRecord::Migration
       t.boolean :active, default: true
       t.integer :group_size, default: 2
       t.boolean :autogroup, default: false
+      t.string :evaluation_id
       t.timestamps
     end
    # add_index :projects, ["course_id"],["group_id"]

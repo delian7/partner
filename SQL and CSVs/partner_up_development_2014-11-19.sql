@@ -229,17 +229,17 @@ UNLOCK TABLES;
 LOCK TABLES `projects` WRITE;
 /*!40000 ALTER TABLE `projects` DISABLE KEYS */;
 
-INSERT INTO `projects` (`id`, `name`, `course_id`, `allow_repeat`, `name_gen`, `allow_randomization`, `active`, `group_size`, `autogroup`, `created_at`, `updated_at`)
+INSERT INTO `projects` (`id`, `name`, `course_id`, `allow_repeat`, `name_gen`, `allow_randomization`, `active`, `group_size`, `autogroup`, `evaluation_id`,  `created_at`, `updated_at`)
 VALUES
-	(0,NULL,0,0,0,NULL,1,2,0,'2014-11-15 01:42:50','2014-11-15 01:42:50'),
-	(5,'Linked Lists',36684,1,0,NULL,1,2,0,'2014-11-18 07:00:54','2014-11-18 20:47:12'),
-	(6,'WTB naxx rub',36624,0,2,NULL,1,2,0,'2014-11-18 07:08:18','2014-11-18 23:10:33'),
-	(7,'Smiley Faces',36684,1,0,NULL,1,2,0,'2014-11-18 07:08:37','2014-11-18 20:47:17'),
-	(8,'Requirements Elicitation',36624,1,1,NULL,1,5,0,'2014-11-18 17:01:26','2014-11-18 18:44:19'),
-	(9,'Lemon Party',36601,1,3,NULL,1,3,0,'2014-11-18 18:41:59','2014-11-18 19:52:29'),
-	(10,'WTB van queef run',36624,0,1,NULL,1,2,0,'2014-11-18 18:43:37','2014-11-18 18:43:56'),
-	(18,'Social Table',37050,0,2,NULL,1,3,0,'2014-11-18 19:42:40','2014-11-19 00:00:40'),
-	(23,'In4matx 191A  Sec. A - New Project',37200,0,0,NULL,1,2,0,'2014-11-19 01:07:56','2014-11-19 01:07:56');
+	(0,NULL,0,0,0,NULL,1,2,0, '2014-11-15 01:42:50','2014-11-15 01:42:50'),
+	(5,'Linked Lists',36684,1,0,NULL,1,2,0,NULL,'2014-11-18 07:00:54','2014-11-18 20:47:12'),
+	(6,'WTB naxx rub',36624,0,2,NULL,1,2,0,NULL,'2014-11-18 07:08:18','2014-11-18 23:10:33'),
+	(7,'Smiley Faces',36684,1,0,NULL,1,2,0,NULL,'2014-11-18 07:08:37','2014-11-18 20:47:17'),
+	(8,'Requirements Elicitation',36624,1,1,NULL,1,5,0,NULL,'2014-11-18 17:01:26','2014-11-18 18:44:19'),
+	(9,'Lemon Party',36601,1,3,NULL,1,3,0,NULL,'2014-11-18 18:41:59','2014-11-18 19:52:29'),
+	(10,'WTB van queef run',36624,0,1,NULL,1,2,0,NULL,'2014-11-18 18:43:37','2014-11-18 18:43:56'),
+	(18,'Social Table',37050,0,2,NULL,1,3,0,NULL,'2014-11-18 19:42:40','2014-11-19 00:00:40'),
+	(23,'In4matx 191A  Sec. A - New Project',37200,0,0,NULL,1,2,0,NULL,'2014-11-19 01:07:56','2014-11-19 01:07:56');
 
 /*!40000 ALTER TABLE `projects` ENABLE KEYS */;
 UNLOCK TABLES;

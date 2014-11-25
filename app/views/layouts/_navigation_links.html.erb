@@ -16,6 +16,7 @@
 			<li role="presentation" class="<%= 'active' if current_page?(groups_path) %>"><%= link_to "<span class=\"glyphicon glyphicon-user\"></span><span class=\"glyphicon glyphicon-user\"></span><span class=\"glyphicon glyphicon-user\"></span>&nbsp;&nbsp;Groups".html_safe, groups_path %></li>
 			<li role="presentation" class="<%= 'active' if current_page?(projects_path) %>"><%= link_to "<span class=\"glyphicon glyphicon-pushpin\"></span>&nbsp;&nbsp;Projects".html_safe, projects_path %></li>
 			<li role="presentation" class="<%= 'active' if current_page?(courses_path) %>"><%= link_to "<span class=\"glyphicon glyphicon-dashboard\"></span>&nbsp;&nbsp;Courses".html_safe,  courses_path %></li>
+			<li role="presentation" class="<%= 'active' if current_page?(evaluations_path) %>"><%= link_to "<span class=\"glyphicon glyphicon-comment\"></span>&nbsp;&nbsp;Evaluations".html_safe,  evaluations_path %></li>		
 		<% when 3 %>
 			<li><%= link_to 'Control Panel', '/kayslegion' %></li>
 			<li role="presentation" class="<%= 'active' if current_page?(roster_path) %>"><%= link_to "<span class=\"glyphicon glyphicon-list-alt\"></span>&nbsp;&nbsp;Upload Roster".html_safe,  roster_path %></li>
