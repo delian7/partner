@@ -1,3 +1,45 @@
+<h2>Evaluations</h2>
+
+<p> Please make a Google Form and then return here and pick the form from the button below.</p>	
+<button type="button" class="btn btn-primary" id="pick">Pick File</button>
+
+<table class="table" style= "border:1px grey!important;">
+  <!-- goes throguh all users courses, then for every course, pushes all projects to array @projs-->
+
+	<% @projs=[] %>
+
+	<% current_user.courses.each do |course| %>
+		<tr>
+	    <th><%= course.course_title%></th>
+	
+			<td class='collapsable'><strong>Group Size</strong></td>
+			<td><strong>Evaluation URL</strong></td>
+		</tr>
+		<% course.projects.each do |project| %>
+			<tr> 
+				<% if project.id !=0 %>
+				  <td><%= project.name %></td>
+					<td class='collapsable'><% project.group_size.times do |o|%>
+						<span class="glyphicon glyphicon-user"></span>
+					<% end %>
+					</td>
+					<td>
+				    <%if project.evaluation_id.nil? %>
+							<%=  link_to "<span class=\"glyphicon glyphicon-plus\"></span>&#09;New Evaluation".html_safe, edit_project_path(project.id), class: "btn btn-success btn-md" %></td>
+						<% else %>
+							<%=  link_to "<span class=\"glyphicon glyphicon-pencil\"></span>&#09;Edit Evaluation".html_safe, edit_project_path(project.id), class: "btn btn-success btn-md" %></td>
+						<% end %>
+					</td>
+				<% end %>
+			</tr>	
+		<% end %>
+		<tr>
+			<td colspan="9" style="height:50px;"></td>
+		</tr>
+	<% end %>
+</table>
+
+
 <!-- Makes a new Google Picker Object -->
 <script src="googlepicker.js"></script>
 <script>
@@ -12,15 +54,5 @@
 		});	
 	}
 </script>
-
 <script src="https://www.google.com/jsapi?key=AIzaSyBS1kkt93r43jbYUpOH81Jb7Oa8jD6j9Eg"></script>
 <script src="https://apis.google.com/js/client.js?onload=initPicker"></script>
-
-
-<%= render 'layouts/course_select'%>	
-<h2>Evaluations</h2>
-
-<p> Please make a Google Form and then return here and pick the form from the button below.</p>	
-<button type="button" class="btn btn-primary" id="pick">Pick File</button>
-
-
