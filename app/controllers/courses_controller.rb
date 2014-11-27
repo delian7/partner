@@ -75,9 +75,9 @@ def open_and_parse_csv
   csv_text = File.open(params[:dump][:file].tempfile, :headers => true)
   csv = CSV.parse(csv_text)
   csv = remove_nils(csv)
-  csv = data_slice(csv, 8, 100)
+  csv = data_slice(csv, csv.find_index{|each| each[0].include?("Quarter,")}, 20)
   @course_data = get_course_data(csv)
-  @student_data = data_slice(csv, 11, 600)
+  @student_data = data_slice(csv, csv.find_index{|each| each.include?("Student#")}, 900)
   # enrolls = Course.find(@course_code).users.pluck(:ucinetid)
 end
 
