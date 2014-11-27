@@ -10,6 +10,10 @@ end
 
 def set_current_users_instance_variables
   #making variables so easier to find the users current project and course
+  if Project.find_by_id(current_user.current_project).nil? || Course.find_by_id(current_user.current_course).nil?
+    current_user.current_project = "0"
+    current_user.current_course = "0"
+  else
 @mycourse = Course.find_by_id(current_user.current_course)
 @myproject = Project.find_by_id(current_user.current_project)
  # gets group size allowed for the current_users current_project
@@ -27,6 +31,7 @@ def set_current_users_instance_variables
 	else
 	 @current_group_size = 0
   end
+end
 end
 
 def set_current_project_course(user, project, course)
