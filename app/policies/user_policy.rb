@@ -12,6 +12,9 @@ class UserPolicy
   def new?
     true
   end
+    def request_join?
+    true
+  end
   def show?
     true
   end

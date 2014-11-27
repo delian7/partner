@@ -1,14 +1,14 @@
 <div style="font-size:45px; font-weight:bold;">Projects
 	    <%=  link_to "<span class=\"glyphicon glyphicon-plus\"></span>&nbsp;&nbsp;Add New Project".html_safe,  {:action => 'new'}, class: "btn btn-primary btn-md", :style=>"float:right;margin-bottom:10px;" %>
   <table class="table" style= "border:1px grey!important;width:75%;">
-  <!-- goes throguh all users courses, then for every course, pushes all projects to array @projs-->
-<% @projs=[] %>
-<% current_user.courses.each do |course| %>
+ <% @empty_courses = current_user.courses%>
+<% @empty_courses.each {|course| @empty_courses = @empty_courses.unshift(course) if course.projects.empty?} %>
+<% @empty_courses.uniq.each do |course| %>
 <tr>
     <th><%= course.course_title%></th><td class='collapsable'><strong>Group Size</strong></td><td class='collapsable'><strong>Allow Repeat Partners?</strong></td><td></td><td colspan="5"></td>
   </tr></b>
   <% if course.projects.empty? %>
-  <tr style= "background-color:#ED8080;"><td colspan="6"><b>Alert:</b> There is no active project for this course. Students are not able to partner up.  <%=  link_to "<span class=\"glyphicon glyphicon-plus\"></span>&nbsp;&nbsp;Add New Project".html_safe,  {:action => 'new'}, class: "btn btn-primary btn-xs", :style=>"float:right;margin-bottom:10px;" %></tr></td>
+  <tr style= "background-color:#ED8080;"><td colspan="6"><b>Alert:</b> There is no active project for this course. Students are not able to partner up.  <%=  link_to "<span class=\"glyphicon glyphicon-plus\"></span>&nbsp;&nbsp;Add New Project".html_safe,  {action: 'new', controller: 'projects', id: course}, class: "btn btn-primary btn-xs", :style=>"float:right;margin-bottom:10px;" %></tr></td>
   <% end %>
 	<% course.projects.each do |project| %>
 		<tr> <% if project.id !=0 %>
@@ -18,7 +18,6 @@
 			<% end %></td>
 		<td class='collapsable'><center><%= project.allow_repeat ? "<span class=\"glyphicon glyphicon-ok\" style=\"color:green; font-size:20px;\"></span>".html_safe : "<span class=\"glyphicon glyphicon-ban-circle\" style=\"color:red; font-size:20px;\"></span>".html_safe%></center></td>
 		<td class='collapsable'>
-
 		</td>
 		<td style="text-align:right">
 	    <%=  link_to "<span class=\"glyphicon glyphicon-pencil\"></span>&nbsp;&nbsp;Edit".html_safe, edit_project_path(project.id), class: "btn btn-success btn-md" %></td><td>

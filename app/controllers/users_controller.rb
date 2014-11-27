@@ -87,26 +87,7 @@ class UsersController < ApplicationController
     send_data(roster_csv, :type =>  'text/csv', :filename =>  'groups.csv')
   end
 
-  def leave
-    user = User.find(params[:id])
-    authorize user
-    set_current_users_instance_variables
-    if !@mygroup.nil?
-          if GroupRelation.where(group_id: @mygroup.id, status: 2).size <= 2
-            # Delete the group
-            @mygroup.destroy
-            # Delete relation for current user
-            GroupRelation.where(user_id: user.id, group_id: @mygroup.id).first.destroy
-          end
-      GroupRelation.where(user_id: current_user.id, group_id: @mygroup.id).first.destroy
-      # Delete relation for user
-      flash[:notice] = "Group Relation successfully reset."
-      redirect_to users_path
-    else 
-      flash[:error] = "Unable to reset Group Relation."
-      redirect_to users_path
-    end
-  end
+
   
   def send_request
       user = User.find(params[:id])

@@ -1,9 +1,18 @@
-<br><div style="padding: 15px  15px 15px 15px; background-color: #f9fbfb;border: 1px solid #d6d6d6; border-radius: 4px;-webkit-box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);"><h1 style="font-size:40px; font-weight:bold;"><center>Current Groups</center></h1><br><br>
+<br><div style="padding: 15px  15px 55px 15px; background-color: #f9fbfb;border: 1px solid #d6d6d6; border-radius: 4px;-webkit-box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);"><h1 style="font-size:40px; font-weight:bold;"><center>Current Groups</center></h1><br><br>
+<%if current_user.groups.empty?%>
+	<div style= "padding:0px 0px 0px 25px;"><span style="font-size:25px; font-weight:bold; ">Sorry,</span><span style="font-size:20px; font-weight:normal; "> it looks like you don't
+    have any groups yet!</span></div>
+<% else %>
+		    
   <% current_user.groups.each do |group| %>
   	<% if group.group_relations.find_by(user_id: current_user.id).status == 2 %>
-		<div style="padding: 10px  15px 10px 15px; background-color: #f9fbfb;
+	 	<div style="padding: 10px  15px 10px 15px; background-color: #f9fbfb;
   border: 1px solid #d6d6d6; border-radius: 4px;-webkit-box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);">
 		<%= render 'groups/profile', group: group %></div><br>
-		     <% end %><% end %></div>
+	<% end %>
+  <% end %>
+<% end %>
+
+		</div>
 
  

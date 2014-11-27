@@ -44,6 +44,7 @@ devise_for :users, :controllers => {:registrations => "registrations"}
       post :update
       get :remove
       get :leave
+      get :request_join
       get :disband
 
       get :confirm

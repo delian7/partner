@@ -4,7 +4,7 @@
     <h1 style="font-size:45px; font-weight:bold;">Find 
     	<% if Project.find(current_user.current_project).group_size == 2 %>Partner<% else %>Members</h1><% end %>
 	<% !@mygroup.nil? ? mygroupsize = @mygroup.group_relations.size : mygroupsize = 0 %>
-	<!-- Room in group-->
+	<!-- Room in group?-->
 	<% allowed_size = Project.find(current_user.current_project).group_size %>
     <% if allowed_size <= mygroupsize %>
 	    <% msg ="#{@mygroup.name} is full.  You are allowed <span style= 'font-size: 18px; font-weight:bold;'>#{allowed_size}</span> members. You have <span style= 'font-size: 18px; font-weight:bold;'>#{mygroupsize}.</span>"%>
@@ -18,9 +18,10 @@
 		      <td colspan="2" style="max-width:100px;"><b>
 		      	<% if allowed_size <= mygroupsize %> Confirmed? <% else %> Request <% end %></td></b>
 		   </tr>
-		<!-- End Table Header -->
+		<!-- Render every user -->
 		  <%= render 'users/user_render'%></table>
 		</div>
+			<!-- group sidebar-->
   	<div class="col span_1_of_3">
   		<%= render 'layouts/buttons/course_select'%>
   		<% group = @group%>

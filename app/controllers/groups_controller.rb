@@ -29,19 +29,19 @@ class GroupsController < ApplicationController
   end
 
   def update_relation  
-    newgroup = params[:group][:name]
-    user = params[:user]
+    user = User.find_by_id(params[:id])
     if !params[:id].nil?
-    relation = GroupRelation.find_by(group_id: params[:id], user_id: user)
-    relation.group_id = newgroup
+      newgroup = Group.find_by(params[:group][:name])
+      relation = GroupRelation.find_by(group_id: params[:group][:name], user_id: params[:id])
+      relation.group_id = newgroup
       if GroupRelation.find_by(group_id: params[:id]).nil?
-        Group.find(params[:id]).destroy
+        Group.find(params[:group][:name]).destroy
       end
     else
-    relation = GroupRelation.create(group_id: Group.find(params[:id]), user_id: params[:id])
+    relation = GroupRelation.create(group_id: Group.find(params[:group][:name]), user_id: params[:id])
     end
     if relation.save
-      redirect_to :back, :notice => "<b>#{User.find(params[:user]).first_name} #{User.find(params[:user]).last_name}</b> moved to <b>#{Group.find(params[:group][:name]).name}</b>"
+      redirect_to :back, :notice => "<b>#{User.find(params[:id]).first_name} #{User.find(params[:id]).last_name}</b> moved to <b>#{Group.find(params[:group][:name]).name}</b>"
     else
       redirect_to :back, :alert => "Unable to change group."
     end
@@ -100,7 +100,7 @@ class GroupsController < ApplicationController
     authorize current_user
     set_current_users_instance_variables
     if !group.nil?
-          if group.group_relations.size <= 2
+          if group.group_relations.where(status: 2).size <= 2
             # Delete the group
             group.destroy
             # Delete relation for current user
@@ -131,17 +131,21 @@ class GroupsController < ApplicationController
     end
   end
 
-    def send_request
+    def request_join
       group = Group.find(params[:id])
       authorize current_user
       set_current_users_instance_variables
-     
+      allowed_group_size = Project.find_by_id(current_user.current_project).group_size
+    
+    if allowed_group_size <= group.users.size
           #create relation for current user
           current_user_relation = GroupRelation.create(course_id: @mycourse.id, user_id: current_user.id, 
           project_id: @myproject.id, status: 1, group_id: group.id)
-
-      flash[:notice] = "Sent request to join <b>#{newgroup.name}</b> "
-      redirect_to users_path
+      flash[:notice] = "Sent request to join <b>#{group.name}</b> "
+    else 
+      flash[:error] = "<b>#{group.name}</b> is full"
+    end
+    redirect_to users_path
     end
 
 

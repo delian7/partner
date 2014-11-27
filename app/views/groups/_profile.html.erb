@@ -13,18 +13,15 @@
             <%= link_to "<span class=\"glyphicon glyphicon-calendar\"></span>&nbsp;&nbsp;<b>Start a Doodle</b>".html_safe, "http://doodle.com/create?type=date&locale=en&title=#{@group.name}%20Group%20Meeting&name=#{current_user.first_name}%20#{current_user.last_name}&eMailAddress=#{current_user.email}&description=Our%20first%20group%20meeting...", class: "btn btn-info btn-sm" %>
             <% if current_page?(root_path)%>
             <%= link_to "<span class=\"glyphicon glyphicon-remove\"></span>&nbsp;&nbsp;<b>Leave Group</b>".html_safe, leave_group_path(@group), class: "btn btn-danger btn-xs" %>
-            <%end%></td>
+            <% end %></td>
         </tr>
         <tr>
             <td colspan="2">
                 <div style="float:left;">
-                    <span style=
-                    "font-size:20px; font-weight:bold;">Project:</span>
-                    <span style=
-                    "font-size:18px;"><%= @group.project.name%></span>
+                    <span style="font-size:20px; font-weight:bold;">Project:</span>
+                    <span style="font-size:18px;"><%= @group.project.name%></span>
                     <span style="font-size:20px; font-weight:bold;"><br>
-                    Course:</span> <span style=
-                    "font-size:18px;"><%= Course.find(@group.project.course_id).course_title%><br>
+                    Course:</span> <span style="font-size:18px;"><%= Course.find(@group.project.course_id).course_title%><br>
                     </span>
                 </div>
                 <div></div>
@@ -36,8 +33,8 @@
             <td class='collapsable'></td>
             <td><strong>Name</strong></td>
             <td class='collapsable'><strong>Email</strong></td>
-            <td>
-            <strong>Status</strong></td><% members = group.users.order(:last_name).uniq %><% members.each do |user| %><% if user.group_relations.find_by(group_id: group.id).status == 2 %>
+            <td >
+            <strong>Status</strong></td><% members = @group.users.order(:last_name).uniq %><% members.each do |user| %><% if user.group_relations.find_by(group_id: @group.id).status == 2 %>
         </tr>
         <tr>
             <td class='collapsable'>

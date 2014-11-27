@@ -30,7 +30,7 @@
       <td class='collapsable'><%= link_to (image_tag (user.avatar.url), :style => 'max-width: 45px;'), user %></td>
       <td><%= link_to "#{user.first_name} #{user.last_name}", user %></td>
          <td class='collapsable'><%= user.email %></td>
-            <td><%if GroupRelation.find_by(user_id: user.id, group_id: @group.id).status == 2%>
+            <td><%if GroupRelation.find_by(user_id: user.id, group_id: @group.id).status != 2 %>
               Request Pending
             <%else%>
               Confirmed <span class="glyphicon glyphicon-ok" style="color:green; font-size:20px;"></span>
