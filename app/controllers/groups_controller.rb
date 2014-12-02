@@ -30,18 +30,16 @@ class GroupsController < ApplicationController
 
   def update_relation  
     user = User.find_by_id(params[:id])
-    if !params[:id].nil?
-      newgroup = Group.find_by(params[:group][:name])
-      relation = GroupRelation.find_by(group_id: params[:group][:name], user_id: params[:id])
-      relation.group_id = newgroup
-      if GroupRelation.find_by(group_id: params[:id]).nil?
-        Group.find(params[:group][:name]).destroy
-      end
+    if !params[:group][:old].nil?
+      relation = GroupRelation.find_by(project_id: current_user.current_project, user_id: params[:id])
+      oldgroup = Group.find_by_id(params[:group][:old])
+      newgroup = Group.find_by_id(params[:group][:id])
+      relation.group_id = params[:group][:id]
     else
-    relation = GroupRelation.create(group_id: Group.find(params[:group][:name]), user_id: params[:id])
+    relation = GroupRelation.create(group_id: Group.find(params[:group][:id]), user_id: params[:id])
     end
     if relation.save
-      redirect_to :back, :notice => "<b>#{User.find(params[:id]).first_name} #{User.find(params[:id]).last_name}</b> moved to <b>#{Group.find(params[:group][:name]).name}</b>"
+      redirect_to :back, :notice => "<b>#{User.find(params[:id]).first_name} #{User.find(params[:id]).last_name}</b> moved to <b>#{newgroup.name}</b>"
     else
       redirect_to :back, :alert => "Unable to change group."
     end
