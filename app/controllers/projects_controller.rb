@@ -91,8 +91,7 @@ end
   end
 
   def clear_partnerships
-    user = User.find(params[:id])
-    authorize user
+    authorize current_user
     set_current_users_instance_variables
     if !@myproject.nil?
     Group.where(project_id: @myproject).each do |proj|
