@@ -5,7 +5,7 @@
     <% if @myproject.group_size == 2 %>Partnerships<% else %>Groups<% end %>
   </span> 
   <span style="font-size:30px; font-weight:bold;display:inline">for<br>
-    <%=@myproject.name%>
+    <%=@myproject.name%><br>
     <%= link_to("<span class=\"glyphicon glyphicon-pencil\"></span>&nbsp;&nbsp;Edit Project".html_safe, edit_project_path(@myproject.id), :class => 'btn btn-success')%>
     <%=  link_to "<span class=\"glyphicon glyphicon-warning-sign\"></span>&nbsp;&nbsp;Reset Groups".html_safe, clear_partnerships_project_path(@myproject.id), :class => 'btn btn-danger btn-md', style: "display:inline" %></span></div>
     <div class="col span_1_of_3">

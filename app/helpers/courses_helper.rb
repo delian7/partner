@@ -1,22 +1,5 @@
 module CoursesHelper
 
-
-
-def get_course_data(array)
-  @quarter = array[0][0]
-  @course_code = find_first_digits(array[1][0])  
-  @instructor = get_instructor_name(array[3][0])
-  @permissions = TA_parse(array[8][0])
-  @course_title = course_unit_parse(array[2][0])
-  #@course_title = array[2][0]
-  #@location = csv[4][0]  if location is needed later
-  return @quarter, @course_code, @instructor, @permissions, @course_title
-end
-
-def data_slice(array, x, y)
-  array.slice!(x,y)
-end
-
 def make_default_project(coursecode)
   if !Project.where(course_id: coursecode, active: true).empty?
     @proj = Project.find_by(course_id: coursecode, active: true)
