@@ -1,4 +1,4 @@
-	<% groups = GroupRelation.where(user_id: @user.id, project_id:@myproject, status: 2).collect(&:group_id).compact%>
+<% groups = @user.group_relations.find_by(project_id:@myproject, status: 2) %>
 	<% groups.each do |group|%>
 	<%= form_for(:group, :url => {:action => 'update_relation',:controller => 'groups', :id => user.id}, :html => { :style => 'display:inline;'}) do |f|%>
 <% if !groups.empty? %>
