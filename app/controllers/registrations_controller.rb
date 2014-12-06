@@ -120,18 +120,6 @@ class RegistrationsController < Devise::RegistrationsController
     after_sign_in_path_for(resource)
   end
 
-  def after_sign_in_path_for(resource)
-    current_user.age_in_seconds = @age_in_seconds
-    current_user.ucinetid = @ucinetid
-    current_user.uci_affiliations = @uci_affiliations
-    current_user.save
-    if request.ip != "127.0.0.1"
-      User.where(:id => current_user).update_all(:id => @campus_id)
-    end
-    current_user.save
-    signed_in_root_path(resource)
-  end
-
   # The path used after sign up for inactive accounts. You need to overwrite
   # this method in your own RegistrationsController.
   def after_inactive_sign_up_path_for(resource)
