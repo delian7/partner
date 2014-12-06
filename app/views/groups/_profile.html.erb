@@ -4,9 +4,7 @@
     <span style="font-size:25px; font-weight:normal;">it looks like you don't
     have a partner yet for</span> <span style=
     "font-size:25px; font-weight:bold;"><%= Project.find(current_user.current_project).name %></span>
-    <% else %> 
-    <% @group = @mygroup %>
-    <% @group = group%>
+    <% else %>
     <% if !@group.name.nil? %><% groupname = @group.name %><% else %><% groupname = @group.users.pluck(:first_name).to_sentence %><% end %>
     <table class="table" style="width: 100%!important;padding:5px;">
         <tr>

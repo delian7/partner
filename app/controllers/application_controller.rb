@@ -58,6 +58,9 @@ include Pundit
       course.course_title= ""
       course.save
     end
+    if Course.find_by_id(current_user.current_course).nil? || Project.find_by_id(current_user.current_project).nil?
+      set_current_project_course(current_user, Project.find(0), Course.find(0))
+    end
   end
 
 
