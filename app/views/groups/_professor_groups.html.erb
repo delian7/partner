@@ -1,18 +1,18 @@
 <div class="section-group">
   <div class="col span_2_of_3">
     <!-- autogroup form-->
-    <span style="font-size:45px; font-weight:bold;display:inline;">
-    <% if @myproject.group_size == 2 %>Partnerships<% else %>Groups<% end %>
-  </span> 
-  <span style="font-size:30px; font-weight:bold;display:inline">for<br>
-    <%=@myproject.name%><br>
-    <%= link_to("<span class=\"glyphicon glyphicon-pencil\"></span>&nbsp;&nbsp;Edit Project".html_safe, edit_project_path(@myproject.id), :class => 'btn btn-success')%>
-    <%=  link_to "<span class=\"glyphicon glyphicon-warning-sign\"></span>&nbsp;&nbsp;Reset Groups".html_safe, clear_partnerships_project_path(@myproject.id), :class => 'btn btn-danger btn-md', style: "display:inline" %></span></div>
-    <div class="col span_1_of_3">
+	  <span style="font-size:45px; font-weight:bold;display:inline;"><% if @myproject.group_size == 2 %>Partnerships<% else %>Groups<% end %></span> 
+	  <span style="font-size:30px; font-weight:bold;display:inline">for<br>
+	    <%=@myproject.name%><br>
+	    <%= link_to("<span class=\"glyphicon glyphicon-pencil\"></span>&nbsp;&nbsp;Edit Project".html_safe, edit_project_path(@myproject.id), :class => 'btn btn-success')%>
+	    <%=  link_to "<span class=\"glyphicon glyphicon-warning-sign\"></span>&nbsp;&nbsp;Reset Groups".html_safe, clear_partnerships_project_path(@myproject.id), :class => 'btn btn-danger btn-md', style: "display:inline" %>
+		</span>
+	</div>
+  
+	<div class="col span_1_of_3">
     <!-- Start Table Header --><br>
     <%= render 'layouts/buttons/course_select'%> 
-     <%= render 'layouts/buttons/autogroup'%> 
-    </div> 
+    <%= render 'layouts/buttons/autogroup'%> 
   </div> 
   <table class="table" style="width: 95%!important;">
     <!-- End autogroupform -->
@@ -37,7 +37,8 @@
             <% end %>
             </td>
       <td class='collapsable'>
-        <%= render 'layouts/buttons/team_select', user: user%>
+        <% @user = user %>
+        <%= render 'layouts/buttons/team_select', user: @user%>
     </td>
     </tr><%end%><tr>
       <td colspan="9"><span style="font-size:20px; font-weight:bold;"><%=  link_to "<span class=\"glyphicon glyphicon-plus\"&nbsp;&nbsp;Add New Group</span>".html_safe, new_group_path, :class => 'btn btn-success btn-sm' %></span></td>
@@ -46,4 +47,5 @@
     </tr>
 </div>
 <%end%>
-</table>
+
+

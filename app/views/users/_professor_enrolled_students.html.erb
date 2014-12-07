@@ -19,22 +19,9 @@
 		<td><%= link_to "#{@user.first_name} #{@user.last_name}", @user %> </td>
 		<td class='collapsable'><%= @user.email %></td>
 
-<td class='collapsable'>
-		
-	<% groups = GroupRelation.where(user_id: @user.id, project_id:@myproject, status: 2).collect(&:group_id).compact%>
-	<% if !groups.empty?%>
-	<% groups.each do |group|%>
-				<%= form_for(:group, :url => {:action => 'update_relation',:controller => 'groups', :id => group, user: @user.id}, :html => { :style => 'display:inline;'}) do |f|%>
-				<%= f.select :name, options_from_collection_for_select(Group.where(project_id: @myproject), 'id', 'name', Group.find(group).id), {}, 
-				{class: 'form-control', style: 'width:70%; display:inline; height:25px;', onchange: 'this.form.submit();'} %>
-				<% end %>
-					<% end %>
-		<% else %>
-				<%= form_for(:group, :url => {:action => 'update_relation',:controller => 'groups', :id => @user.id}, :html => { :style => 'display:inline;'}) do |f|%>	
-				<%= f.select :name, options_from_collection_for_select(Group.where(project_id: @myproject), 'id', 'name'), {include_blank: true}, {class: 'form-control', style: 'width:70%; display:inline; height:25px;', onchange: 'this.form.submit();'} %>
-					<% end %>
-		<% end %>
-		</td></tr>
+      <td class='collapsable'>
+        <%= render 'layouts/buttons/team_select', user: @user%>
+    </td></tr>
 
 <% end %>
 <% end %>

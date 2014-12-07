@@ -2,7 +2,6 @@
 			<%= link_to 'Login to Webauth', request.ip == "127.0.0.1" ? user_session_path : "https://login.uci.edu/" %><br>
 		<% else %>
 			<%= form_for(resource, :url => user_session_path) do |f| %>
-		    <%= f.hidden_field :id, :value => @campus_id %> 
 		    <%= f.hidden_field :ucinetid, :value => @ucinetid %> 
 		    <%= link_to_submit 'Sign in to Partner UP' %>
   		<% end %>

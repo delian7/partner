@@ -4,8 +4,10 @@
 		<%= render 'layouts/buttons/undo_button', user: @user %>
 	<% elsif get_status(@user) == 2 && get_status(current_user) == 1 %>
 		<%= render 'layouts/buttons/confirm_button', user: @user  %>
-	<% else %> 
+	<% elsif get_status(@user) == 0 %> 
 		<%= render 'layouts/buttons/request_button', user: @user  %>
+	<% else %>
+		<td></td>
 	<% end %>
 
 <% when 1..2 %>
