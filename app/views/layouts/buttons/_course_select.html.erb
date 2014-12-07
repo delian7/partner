@@ -1,7 +1,6 @@
 <!-- selecting course that users will add groups to -->
 <!-- if the user is signed in and their enrolled in at least one course on roster -->
-<div style="min-height: 20px;padding: 10px  5px 10px 5px; background-color: #f9fbfb;
-  border: 1px solid #d6d6d6; float:right; width:100%;  padding:10px;border-radius: 4px;-webkit-box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);display:inline;">
+<div class="content-box" style="float:right; width:100%;padding:10px;display:inline;">
 	<% @current_projects = Project.where(course_id: Course.find(current_user.current_course).id, active: true) %>
 		<!-- setting current course & project (if there's only one project)-->
 	  <%= form_for :user, :url => set_current_course_user_path(current_user.id), :html => { :style => 'display:inline;'} do |f|%>		

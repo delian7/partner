@@ -11,7 +11,7 @@ end
 #gets instructors name from cell and returns both last name with spaces 
 #accounted for and first initial
 def get_instructor_name(txt)
-  m = regexecute('Instructor:\s(.*?){1},\s(.*).')
+  m = regexecute('Instructor:\s(.*)')
   return m.match(txt)[1], m.match(txt)[2] if m.match(txt)
 end
 
