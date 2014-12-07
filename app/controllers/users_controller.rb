@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_filter :authenticate_user!
   # before_filter :admin_only, :except => :show
-  helper_method :course_ids, :requested?, :my_partner_for, :requester?, :teammates?, :in_group_for?, :classmates?, :same?, :is_student?, :user_netid
+  helper_method :my_partner_for, :teammates?, :in_group_for?, :classmates?, :same?, :is_student?, :previously_partnered?
   include UsersHelper, GroupsHelper
   # after_action :verify_authorized, except: [:show, :index]
   require 'csv'

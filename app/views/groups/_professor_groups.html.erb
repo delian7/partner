@@ -35,6 +35,7 @@
     
     <% @group.users.each do |user| %>
       <tr>
+        <% @user = user %>
         <td class='collapsable'><%= link_to (image_tag (user.avatar.url), :style => 'max-width: 45px;'), user %></td>
         <td><%= link_to "#{user.first_name} #{user.last_name}", user %></td>
         <td class='collapsable'><%= user.email %></td>
@@ -44,7 +45,7 @@
           <%else%>
             Confirmed <span class="glyphicon glyphicon-ok" style="color:green; font-size:20px;"></span>
           <% end %>
-        </td><% @user = user %>
+        </td>
         <td class='collapsable'><%= render 'layouts/buttons/team_select', user: @user%></td>
       </tr>   
     <%end%>
