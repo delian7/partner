@@ -3,8 +3,13 @@
 
 <% case current_user.role %>
 <% when 0 %>
-	<% current_user.projects.uniq.each do |project| %>	
-		<%= render 'visitors/requests', project: project %>
+	<% if current_user.group_relations.where(status: 1).empty? %>
+	    <span style="font-size:25px; font-weight:normal;">You don't
+	    have any requests</span>
+	<% else %>
+		<% current_user.projects.uniq.each do |project| %>
+				<%= render 'visitors/requests', project: project %>
+		<% end %>
 	<% end %>
 <% when 1..2 %>
 	<% current_user.courses.each do |course|%>
