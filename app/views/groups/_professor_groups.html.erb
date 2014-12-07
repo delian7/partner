@@ -44,8 +44,8 @@
           <%else%>
             Confirmed <span class="glyphicon glyphicon-ok" style="color:green; font-size:20px;"></span>
           <% end %>
-        </td>
-        <td class='collapsable'><%= render 'layouts/buttons/team_select', user: user%></td>
+        </td><% @user = user %>
+        <td class='collapsable'><%= render 'layouts/buttons/team_select', user: @user%></td>
       </tr>   
     <%end%>
       
