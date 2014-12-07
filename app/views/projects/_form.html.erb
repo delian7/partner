@@ -1,8 +1,7 @@
 <div style="line-height:2; max-width:400px;">
 <%if !@project.nil?%>
-	<% random = Project.find_by_id(@project.id).name_gen %>
 	<% repeat = Project.find_by_id(@project.id).allow_repeat %>
-	<%else%>
+<%else%>
 
 	
 <%end%>
@@ -11,9 +10,9 @@
 
 	<%= f.label 'Select the class for which the project should be for: ' %>
 	<%if !params[:id].nil?%>
-		<%= f.select :course_id, options_from_collection_for_select(current_user.courses, 'id', 'course_title', params[:id]), {}, {class: "form-control"} %><br />
+		<%= f.select :course_id, options_from_collection_for_select(current_user.courses, 'id', 'course_title', Project.find_by_id(params[:id]).course.id), {}, {class: "form-control"} %><br />
 	<%else%>
-		<%= f.select :course_id, options_from_collection_for_select(current_user.courses, 'id', 'course_title'), {}, {class: "form-control"} %><br />
+		<%= f.select :course_id, options_from_collection_for_select(current_user.courses, 'id', 'course_title', Project.find_by_id(params[:id]).course.id), {}, {class: "form-control"} %><br />
 	<%end%>
 	<%= f.label 'Group Size of Project: ' %>
 	<%= f.select :group_size, [['2 people','2'], ['3 people','3'], ['4 people','4'], ['5 people','5'], ['6 people','6']], {}, {class: "form-control"} %><br>
