@@ -41,5 +41,11 @@ feature 'roster uploads' do
     expect(page).not_to have_content("Pearly Kays") 
   end
   
+  scenario 'roster upload should add correct number of students as in the roster' do
+    visit(users_path)
+    # first-week-roster has 72 students in it
+    expect(page).to have_selector('td:nth-child(2)', count: 72)
+  end
+  
 end
 
