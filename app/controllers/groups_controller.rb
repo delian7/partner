@@ -36,7 +36,8 @@ class GroupsController < ApplicationController
       newgroup = Group.find_by_id(params[:group][:id])
       relation.group_id = params[:group][:id]
     else
-    relation = GroupRelation.create(group_id: Group.find(params[:group][:id]), user_id: params[:id])
+      newgroup = Group.find_by_id(params[:group][:id])
+      relation = GroupRelation.create(group_id: newgroup.id, user_id: params[:id], project_id: current_user.current_project)
     end
     if relation.save
       redirect_to :back, :notice => "<b>#{User.find(params[:id]).first_name} #{User.find(params[:id]).last_name}</b> moved to <b>#{newgroup.name}</b>"

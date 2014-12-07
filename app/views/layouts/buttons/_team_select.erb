@@ -1,11 +1,17 @@
-	<% groups = GroupRelation.where(user_id: @user.id, project_id:@myproject, status: 2).collect(&:group_id).compact%>
-	<% groups.each do |group|%>
+<% if GroupRelation.where(user_id: @user.id, project_id:@myproject, status: 2).empty? %>
 	<%= form_for(:group, :url => {:action => 'update_relation',:controller => 'groups', :id => user.id}, :html => { :style => 'display:inline;'}) do |f|%>
-<% if !groups.empty? %>
-	<%= f.select :id, options_from_collection_for_select(Group.where(project_id: @myproject), 'id', 'name', Group.find(group).id), {}, {class: 'form-control', style: 'width:70%; display:inline; height:25px;', onchange: 'this.form.submit();'} %>
-	<%= f.hidden_field :old, value: GroupRelation.find_by(user_id: user.id, project_id:@myproject, status: 2).group_id %>
-<% else %>
 	<%= f.select :id, options_from_collection_for_select(Group.where(project_id: @myproject), 'id', 'name'), {include_blank: true}, {class: 'form-control', style: 'width:70%; display:inline; height:25px;', onchange: 'this.form.submit();'} %>
-<% end %>
+	<% end %>
+<% else%>
+	<% groups = GroupRelation.where(user_id: @user.id, project_id:@myproject, status: 2).collect(&:group_id).compact%>
+		<% groups.each do |group|%>
+		<%= form_for(:group, :url => {:action => 'update_relation',:controller => 'groups', :id => user.id}, :html => { :style => 'display:inline;'}) do |f|%>
+		<% if !groups.empty? %>
+			<%= f.select :id, options_from_collection_for_select(Group.where(project_id: @myproject), 'id', 'name', Group.find(group).id), {}, {class: 'form-control', style: 'width:70%; display:inline; height:25px;', onchange: 'this.form.submit();'} %>
+			<%= f.hidden_field :old, value: GroupRelation.find_by(user_id: user.id, project_id:@myproject, status: 2).group_id %>
+		<% else %>
+			<%= f.select :id, options_from_collection_for_select(Group.where(project_id: @myproject), 'id', 'name'), {include_blank: true}, {class: 'form-control', style: 'width:70%; display:inline; height:25px;', onchange: 'this.form.submit();'} %>
+		<% end %>
+	<% end %>
 <% end %>
 <% end %>
