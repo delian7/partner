@@ -3,7 +3,6 @@ class CreateRosters < ActiveRecord::Migration
     create_table :rosters do |t|
 	  t.belongs_to  :course
 	  t.belongs_to  :user
-      t.timestamps
     end
   end
 end

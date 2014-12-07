@@ -33,9 +33,9 @@ require 'csv'
     authorize current_user
     @course = Course.find(params[:id])
     if @course.update_attributes(course_params)
-      redirect_to :back, :alert => "Course updated successfully"
+      redirect_to :back, :notice => "Course updated successfully"
     else
-      redirect_to :back, :error => "Course could not be updated"
+      redirect_to :back, :alert => "Course could not be updated"
     end
   end
 

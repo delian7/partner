@@ -1,19 +1,24 @@
 <div style="line-height:2; max-width:400px;">
-<%if !@project.nil?%>
+<% if !@project.nil? %>
 	<% repeat = Project.find_by_id(@project.id).allow_repeat %>
-<%else%>
+<% else %>
 
 	
-<%end%>
+<% end %>
 	<%= f.label 'Project Name: ' %>
 	<%= f.text_field(:name, class: "form-control") %><br/>
 
 	<%= f.label 'Select the class for which the project should be for: ' %>
-	<%if !params[:id].nil?%>
-		<%= f.select :course_id, options_from_collection_for_select(current_user.courses, 'id', 'course_title', Project.find_by_id(params[:id]).course.id), {}, {class: "form-control"} %><br />
-	<%else%>
-		<%= f.select :course_id, options_from_collection_for_select(current_user.courses, 'id', 'course_title', Project.find_by_id(params[:id]).course.id), {}, {class: "form-control"} %><br />
-	<%end%>
+	<% if current_page? new_project_path %>
+		<%= f.select :course_id, options_from_collection_for_select(current_user.courses, 'id', 'course_title', params[:id]), {}, {class: "form-control"} %><br />
+
+	<% elsif current_page? edit_project_path %>
+		<% if Course.find_by_id(Project.find_by_id(params[:id]).course_id).projects.empty? %>
+			<%= f.select :course_id, options_from_collection_for_select(current_user.courses, 'id', 'course_title'), {}, {class: "form-control"} %><br />
+		<% else %>
+		<%= f.select :course_id, options_from_collection_for_select(current_user.courses, 'id', 'course_title', Project.find_by_id(params[:id]).course_id), {}, {class: "form-control"} %><br />
+		<% end %>
+	<% end %>
 	<%= f.label 'Group Size of Project: ' %>
 	<%= f.select :group_size, [['2 people','2'], ['3 people','3'], ['4 people','4'], ['5 people','5'], ['6 people','6']], {}, {class: "form-control"} %><br>
 
