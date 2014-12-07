@@ -33,6 +33,7 @@ db/*.sqlite3
 /db/*.javadb/
 /db/*.sqlite3
 /doc/api/
+/doc
 /doc/app/
 /doc/features.html
 /doc/specs.html

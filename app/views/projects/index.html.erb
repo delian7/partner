@@ -7,7 +7,7 @@
     <th><%= course.course_title%></th><td class='collapsable'><strong>Group Size</strong></td><td class='collapsable'><strong>Allow Repeat Partners?</strong></td><td colspan="5"><%=  link_to "<span class=\"glyphicon glyphicon-plus\"></span>&nbsp;&nbsp;Add New Project".html_safe,  {action: 'new', controller: 'projects', id: course}, class: "btn btn-primary btn-xs", id: "add-new-project", :style=>"float:right;margin-bottom:10px;" %></td>
   </tr></b>
   <% if course.projects.empty? %>
-  <tr style= "background-color:#ED8080;"><td colspan="6"><b>Alert:</b> There is no active project for this course. Students are not able to partner up.  <%=  link_to "<span class=\"glyphicon glyphicon-plus\"></span>&nbsp;&nbsp;Add New Project".html_safe,  {action: 'new', controller: 'projects', id: course}, class: "btn btn-primary btn-xs", id: "add-new-project", :style=>"float:right;margin-bottom:10px;" %></tr></td>
+  <tr style= "background-color:#ED8080;"><td colspan="6" style= "padding:0px;"><%=  link_to (new_project_path(id: course)), style: "color:#fff; text-align:left; width:100%; padding:11px;", class: "btn btn-danger" do %><b>Alert:</b> There is no active project for this course. Students are not able to partner up. <% end %> </tr></td>
   <% end %>
 	<% course.projects.each do |project| %>
 		<tr> <% if project.id !=0 %>

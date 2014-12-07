@@ -1,8 +1,5 @@
 	<% if course.projects.empty?%>
-	<div style="padding: 10px  15px 10px 15px; background-color: #f9fbfb;
-		  border: 1px solid #d6d6d6; border-radius: 4px;-webkit-box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);"><h3 style="font-size:20px; font-weight:bold;"><center><%= link_to course.course_title, projects_path %></center></h3>
-		  <table>
-			  <tr style= "background-color:#ED8080;"><td colspan="6"><b>Alert:</b> There is no active project for this course. Students are not able to partner up.  <%=  link_to "<span class=\"glyphicon glyphicon-plus\"></span>&nbsp;&nbsp;Add New Project".html_safe,  {action: 'new', controller: 'projects', id: course}, class: "btn btn-primary btn-xs", :style=>"float:right;margin-bottom:10px;" %></tr></td>
-			</table>
+	<div class="content-box"><h3 style="font-size:20px; font-weight:bold;"><center><%= link_to course.course_title, projects_path %></center></h3>
+		  <%=  link_to (new_project_path(id: course)), style: "color:#fff; text-align:left; padding:11px;", class: "btn btn-danger" do %><span style="font-weight:bold; font-size:20px;">Alert:</span><br>There is no active project for this course.<br>Students are not able to partner up.<% end %>
 	</div>
 	<%end%>

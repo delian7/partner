@@ -33,7 +33,6 @@ class ProjectsController < ApplicationController
     @project = Project.find(params[:id])
     @project.destroy
     @project.save
-    ProjectRelation.find_by(project_id: params[:id]).destroy
     redirect_to(:action => 'index')
   end
 
@@ -82,6 +81,15 @@ end
   def remove
     @project = Project.find(params[:id])
     @project.destroy
+   ProjectRelation.where(project_id: params[:id]).each do |relation|
+     relation.destroy
+   end
+   GroupRelation.where(project_id: params[:id]).each do |relation|
+     relation.destroy
+   end
+   Group.where(project_id: params[:id]).each do |relation|
+     relation.destroy
+   end
     if @project.save
       flash[:notice] = "Project Deleted"
     else
