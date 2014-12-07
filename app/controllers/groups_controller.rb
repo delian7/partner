@@ -35,15 +35,25 @@ class GroupsController < ApplicationController
       oldgroup = Group.find_by_id(params[:group][:old])
       newgroup = Group.find_by_id(params[:group][:id])
       relation.group_id = params[:group][:id]
-    else
-      newgroup = Group.find_by_id(params[:group][:id])
-      relation = GroupRelation.create(group_id: newgroup.id, user_id: params[:id], project_id: current_user.current_project)
-    end
-    if relation.save
+      if relation.save
+        if oldgroup.users.empty?
+          oldgroup.destroy
+        end
       redirect_to :back, :notice => "<b>#{User.find(params[:id]).first_name} #{User.find(params[:id]).last_name}</b> moved to <b>#{newgroup.name}</b>"
     else
       redirect_to :back, :alert => "Unable to change group."
     end
+
+    else
+      newgroup = Group.find_by_id(params[:group][:id])
+      relation = GroupRelation.create(group_id: newgroup.id, user_id: params[:id], project_id: current_user.current_project)
+        if relation.save
+      redirect_to :back, :notice => "<b>#{User.find(params[:id]).first_name} #{User.find(params[:id]).last_name}</b> moved to <b>#{newgroup.name}</b>"
+    else
+      redirect_to :back, :alert => "Unable to change group."
+    end
+    end
+
   end
 
   def update
