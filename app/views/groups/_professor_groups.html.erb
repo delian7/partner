@@ -5,7 +5,7 @@
     <span style="font-size:30px; font-weight:bold;display:inline">for<br>
       <%=@myproject.name%><br>
       <%= link_to("<span class=\"glyphicon glyphicon-pencil\"></span>&nbsp;&nbsp;Edit Project".html_safe, edit_project_path(@myproject.id), :class => 'btn btn-success')%>
-      <%=  link_to "<span class=\"glyphicon glyphicon-warning-sign\"></span>&nbsp;&nbsp;Reset Groups".html_safe, clear_partnerships_project_path(@myproject.id), :class => 'btn btn-danger btn-md', style: "display:inline" %>
+      <%=  link_to "<span class=\"glyphicon glyphicon-warning-sign\"></span>&nbsp;&nbsp;Reset Groups".html_safe, clear_partnerships_project_path(@myproject.id), :class => 'btn btn-danger btn-md', style: "display:inline", id: 'disband-all-btn'%>
     </span>
   </div>
   
@@ -24,12 +24,12 @@
 
   
 <% ids.each do |group| %>
-  <table class="table" style="width: 95%!important;" id="<%= group.id%>"> 
+  <table class="table" style="width: 95%!important;" id="group<%= group.id %>"> 
     <% @group = Group.find(group) %>
     <td colspan="9">
       <span style="font-size:20px; font-weight:bold;">
         <%= link_to @group.name, @group %>&nbsp;&nbsp;&nbsp;&nbsp;
-        <%=  link_to "<span class=\"glyphicon glyphicon-remove\"></span>".html_safe, disband_group_path(group), :class => 'btn btn-default btn-sm' %>
+        <%=  link_to "<span class=\"glyphicon glyphicon-remove\"></span>".html_safe, disband_group_path(group), :class => 'btn btn-default btn-sm', id: "disband-group-btn" %>
       </span>
     </td>
     
