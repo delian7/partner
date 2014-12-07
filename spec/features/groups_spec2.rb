@@ -21,20 +21,10 @@ feature 'autogroup:' do
       @number_of_groups = all('table').size 
   end
   
-  scenario 'should create group size based off project size' do
-    expect(page).to have_selector('#group1 td:nth-child(2)', count: @project.group_size)
+  scenario 'should create number of teams by dividing number of students by project_size' do
+    
+    find('select#team-select-btn-person3').find(:xpath, 'option[2]').select_option
+    
   end
-  
-  scenario 'disbanning first group should decrement number of groups by 1' do
-    all(:xpath, '//*[(@id = "disband-group-btn")]')[0].click
-    expect(page).to have_selector('table', count: @number_of_groups - 1)
-  end
-  
-  scenario 'disbanning all groups should reduce number of groups to 0' do 
-    click_link('disband-all-btn')
-    expect(page).to have_selector('table', count: 0)
-  end
-  
-
 end
 
