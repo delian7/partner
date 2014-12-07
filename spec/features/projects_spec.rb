@@ -5,15 +5,6 @@ require "selenium-webdriver"
 include Warden::Test::Helpers
 Warden.test_mode!
 
-feature 'navigation to project page' do
-  scenario 'only professor should be able to go to the project page' do
-    user = FactoryGirl.create(:professor)
-    login_as(user, :scope => :user)
-    visit(projects_path)
-    expect(page).to have_content 'Add New Project'
-  end  
-end
-
 feature 'course projects:' do
   
   
@@ -26,11 +17,17 @@ feature 'course projects:' do
       page.find('#upload-roster').click
   end
   
+  scenario 'only professor should be able to go to the project page' do #TODO:only professor
+    visit(projects_path)
+    page.body
+    expect(page).to have_content 'Add New Project'
+  end  
+  
   scenario 'creating test project and deleting the test project' do
     
     # addition of the test project
     visit(projects_path)
-    click_link ("add-new-project")
+    all(:xpath, '//*[(@id = "add-new-project")]')[0].click
     fill_in('project_name', with: 'Test Project')
     select('In4matx 191A, Sec. A, Lecture', from: 'project_course_id')
     click_button ("save-project")
@@ -46,7 +43,7 @@ feature 'course projects:' do
   scenario 'creating 10 new projects & deleting the projects' do
     visit(projects_path)
     for i in (0..10) 
-      click_link ("add-new-project")
+      all(:xpath, '//*[(@id = "add-new-project")]')[0].click
       fill_in('project_name', with: "Test Project #{i}")
       select('In4matx 191A, Sec. A, Lecture', from: 'project_course_id')
       click_button ("save-project")

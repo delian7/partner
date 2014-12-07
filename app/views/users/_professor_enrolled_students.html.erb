@@ -1,28 +1,30 @@
 <div class="section-group">
-<div class="col span_2_of_3">
-<span style="font-size:45px; font-weight:bold;">Enrolled Students</span></div>
+	<div class="col span_2_of_3">
+		<span style="font-size:45px; font-weight:bold;">Enrolled Students</span>
+	</div>
 	<div class="col span_1_of_3">
-<%= render 'layouts/buttons/course_select'%></div>
+		<%= render 'layouts/buttons/course_select'%>
+	</div>
 </div>
+
 <table class="table" style="width: 95%!important;">
-    <!-- Start Table Header -->
-      <td><b></td>
-      <td class='collapsable'><b>Students</td>
-      <td style="max-width:100px;"><b>Email</td></b>
-      <td><b>Team</td></b>
-   </tr><%@users = Course.find(current_user.current_course).users.order(:last_name)%>
-<% @users.each do |user| %>
-	<% @user = User.find(user) %>
-	<% if @user.role == 0 %>
-		<tr>
-		<td class='collapsable'><%= link_to (image_tag @user.avatar.url, :style => 'max-width: 45px;'), @user %></td> 
-		<td><%= link_to "#{@user.first_name} #{@user.last_name}", @user %> </td>
-		<td class='collapsable'><%= @user.email %></td>
-
-      <td class='collapsable'>
+	
+	<th></th>
+  <th style="text-align: left;" class='collapsable'><strong>Students</strong></th>
+  <th style="max-width:100px; text-align: left;"><strong>Email</strong></th>
+  <th style="text-align: left;"><strong>Team</strong></th>
+	
+  <%@users = Course.find(current_user.current_course).users.order(:last_name)%>
+	<% @users.each do |user| %>
+		<% @user = User.find(user) %>
+		<% if @user.role == 0 %>
+			<tr>
+				<td class='collapsable'><%= link_to (image_tag @user.avatar.url, :style => 'max-width: 45px;'), @user %></td> 
+				<td><%= link_to "#{@user.first_name} #{@user.last_name}", @user %> </td>
+				<td class='collapsable'><%= @user.email %></td>
+				<td class='collapsable'>
         <%= render 'layouts/buttons/team_select', user: @user%>
-    </td></tr>
-
-<% end %>
-<% end %>
-
+    	</tr>
+		<% end %>
+	<% end %>
+</table>
