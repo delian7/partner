@@ -5,7 +5,7 @@ include Pundit
 
   protect_from_forgery with: :exception
   before_action :configure_permitted_parameters, if: :devise_controller?
-  before_action :startup, :nil_check, :pending_notifications
+  before_action :startup, :nil_check
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
@@ -42,6 +42,7 @@ include Pundit
       end
         return @results
     end
+
   def nil_check
     if Project.where(course_id: 0).empty?
       proj = Project.create(id: 0, course_id: 0)
@@ -57,25 +58,10 @@ include Pundit
       course.course_title= ""
       course.save
     end
-
-  end
-def pending_notifications
-  if user_signed_in?
-  pending = []
-  x = false
-  current_user.group_relations.each do |group|
-      if group.status == 1
-        pending.push(group)
-        x = true
-      end
-  end
-  if x == true
-    pending.each do|request|
-    flash[:alert] = "You have a pending request from <b>#{Group.find(request.group_id).name}</b> for <b>#{Course.find(request.course_id).course_title}, #{Project.find(request.project_id).name}</b>"
+    if user_signed_in? && (Course.find_by_id(current_user.current_course).nil? || Project.find_by_id(current_user.current_project).nil?)
+      set_current_project_course(current_user, Project.find(0), Course.find(0))
     end
   end
-end
-end
 
 
   protected

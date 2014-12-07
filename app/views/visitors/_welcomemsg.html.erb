@@ -1,10 +1,11 @@
 <% if user_signed_in? %>
-<center><h2> Hi <%= @current_user.first_name %> <%= @current_user.last_name %></h2></center>
-<%end%>
+	<center><h2> Hi <%= @current_user.first_name %> <%= @current_user.last_name %></h2>
+	<h4>Welcome to <br><img src="/assets/PartnerUpLogo.png" style="max-width:75%;"></h4>
+	<h6>UCI's premier partnering service. </h6></center>
 
-<center><h2>Welcome to <br><img src="/assets/PartnerUpLogo.png" style="max-width:75%;"></h2>
+<%else%>
 
-<h4>UCI's premier partnering service. <br><br></h4>
+	<center><h2>Welcome to <br><img src="/assets/PartnerUpLogo.png" style="max-width:75%;"></h2>
 
-To use Partnerup, sign in with WebAuth. <br>
-Then you can get started finding a partner.</center>
+	<h4>UCI's premier partnering service. </h4></center>
+<% end %>

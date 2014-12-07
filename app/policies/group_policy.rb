@@ -13,7 +13,9 @@ class GroupPolicy
   def new?
     true
   end
-
+  def request_join?
+    true
+  end
   def show?
     true
   end

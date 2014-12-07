@@ -1,0 +1,25 @@
+<br><div style="padding: 10px  15px 55px 15px; background-color: #f9fbfb;
+  border: 1px solid #d6d6d6; border-radius: 4px;-webkit-box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);"><h1 style="font-size:40px; font-weight:bold;"><center>Notifications</center></h1>
+
+<% case current_user.role %>
+<% when 0 %>
+	<% if current_user.group_relations.where(status: 1).empty? %>
+	    <span style="font-size:25px; font-weight:normal;">You don't
+	    have any requests</span>
+	<% else %>
+		<% current_user.projects.uniq.each do |project| %>
+				<%= render 'visitors/requests', project: project %>
+		<% end %>
+	<% end %>
+<% when 1..2 %>
+	<% current_user.courses.each do |course|%>
+		<%= render 'visitors/professor_alerts', course: course %>
+	<%end%>
+<% when 3 %>
+<% Courses.all.each do |course|%>
+	<% course.projects.empty?%>
+	<div style="padding: 10px  15px 10px 15px; background-color: #f9fbfb;
+		  border: 1px solid #d6d6d6; border-radius: 4px;-webkit-box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);"><h3 style="font-size:20px; font-weight:bold;"><center><%= project.name %></center></h3>	
+	</div>
+<% end %>
+<% end %></div>

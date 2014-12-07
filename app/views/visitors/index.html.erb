@@ -1,23 +1,18 @@
 <% if user_signed_in? %>
-	<div class="col span_1_of_3" style="text-align:center;">
+	<div class="col span_1_of_3">
   	<%= render "visitors/welcomemsg" %>
   	<!-- pending requests/notifications here-->
+  	<%= render "visitors/notifications"%>
   </div>
 	<div class="col span_2_of_3">
 	<% case current_user.role %>
 	  <% when 0 %>
-	  <%current_user.projects.each do |project|%>
-	  <% @myproject = project %>
-		<!-- ^^ if the user is a student -->
-		<% if @mygroup = current_user.groups.find_by(project_id: project.id)%>
-		<%if @mygroup.group_relations.find_by(user_id: current_user.id).status == 2 %>
-		<%= render 'groups/profile', project: @myproject, group: @mygroup  %>
-		     <% end %><% end %><% end %>
+	  <%= render 'visitors/mygroups'%>
 		<!-- if the user is a Professor or a T/A -->
 		<% when 1..2 %><p>
-				<center>
+			 <center>
 					<h4>There are currently <strong><%= User.count %></strong> registered users</h4>
-		    </center>
+		     </center>
 		<!-- if the user is an admin -->
 		<% when 3 %>
 
@@ -28,8 +23,8 @@
   	<!-- pending requests/notifications here-->
   </div>
 		<div class="col span_1_of_3">
-			<%= render 'layouts/signin_select'%>
-			<%= render 'layouts/signin_textfield'%>
+			<%= render 'visitors/signin_select'%>
+			<%= render 'visitors/signin_textfield'%>
 <% end %>
 		</div>
 

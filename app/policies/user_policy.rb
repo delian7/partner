@@ -12,19 +12,22 @@ class UserPolicy
   def new?
     true
   end
+    def request_join?
+    true
+  end
   def show?
     true
   end
   def remove?
     true
   end  
-  def disband_team?
+  def disband?
     true
   end
     def clear_partnerships?
     true
   end
-   def leave_group?
+   def leave?
     true
   end
   def profile?

@@ -12,17 +12,22 @@ Rails.application.routes.draw do
 devise_for :users, :controllers => {:registrations => "registrations"}
   root :to => "visitors#index"
   
+  resources :evaluations do
+    member do
+    end
+    collection do
+    end
+  end
+  
   resources :users do
      member do
         get :send_request
         get :undo_request
-        get :confirm
-        get :ignore
-        get :leave_group
 
         get :registrations
         get :sessions
         
+
         post :set_current_course
         post :set_current_project
 
@@ -35,11 +40,14 @@ devise_for :users, :controllers => {:registrations => "registrations"}
 
   resources :groups do
     member do
-       get :edit
-       post :update
-       get :remove
-       get :disband_team
-       
+      get :edit
+      post :update
+      get :remove
+      get :leave
+      get :request_join
+      get :disband
+
+      get :confirm
       post :update_relation
       post :new_relation
     end
@@ -64,6 +72,7 @@ devise_for :users, :controllers => {:registrations => "registrations"}
        post :update
        get :remove
        get :autogroup
+       post :autogroup
        get :clear_partnerships
         end
      collection do

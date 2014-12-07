@@ -1,20 +1,24 @@
 <div style="line-height:2; max-width:400px;">
-<%if !@project.nil?%>
-	<% random = Project.find_by_id(@project.id).name_gen %>
+<% if !@project.nil? %>
 	<% repeat = Project.find_by_id(@project.id).allow_repeat %>
-	<%else%>
+<% else %>
 
 	
-<%end%>
+<% end %>
 	<%= f.label 'Project Name: ' %>
 	<%= f.text_field(:name, class: "form-control") %><br/>
 
 	<%= f.label 'Select the class for which the project should be for: ' %>
-	<%if !@project.nil?%>
-	<%= f.select :course_id, options_from_collection_for_select(current_user.courses, 'id', 'course_title', @project.course_id), {}, {class: "form-control"} %><br />
-	<%else%>
-		<%= f.select :course_id, options_from_collection_for_select(current_user.courses, 'id', 'course_title'), {}, {class: "form-control"} %><br />
-<%end%>
+	<% if current_page? new_project_path %>
+		<%= f.select :course_id, options_from_collection_for_select(current_user.courses, 'id', 'course_title', params[:id]), {}, {class: "form-control"} %><br />
+
+	<% elsif current_page? edit_project_path %>
+		<% if Course.find_by_id(Project.find_by_id(params[:id]).course_id).projects.empty? %>
+			<%= f.select :course_id, options_from_collection_for_select(current_user.courses, 'id', 'course_title'), {}, {class: "form-control"} %><br />
+		<% else %>
+		<%= f.select :course_id, options_from_collection_for_select(current_user.courses, 'id', 'course_title', Project.find_by_id(params[:id]).course_id), {}, {class: "form-control"} %><br />
+		<% end %>
+	<% end %>
 	<%= f.label 'Group Size of Project: ' %>
 	<%= f.select :group_size, [['2 people','2'], ['3 people','3'], ['4 people','4'], ['5 people','5'], ['6 people','6']], {}, {class: "form-control"} %><br>
 
@@ -24,16 +28,6 @@
 	    <%= f.radio_button :allow_repeat, false, :checked => repeat == false %>
 	  <%= f.label 'Restrict Repeats' %><br><br>
 
-	<%= f.label 'Group Name Randomization' %><br>
-	    <%= f.radio_button :name_gen, "numbered", :checked => random == "numbered" %> 
-	  <%= f.label 'Default' %>,  Team 1, Team 2, Team 3...<br>
-	    <%= f.radio_button :name_gen,"hacker", :checked => random == "hacker" %>
-	  <%= f.label 'Hacker' %>,  TBD<br>
-	  	<%= f.radio_button :name_gen, "creatures", :checked => random == "creatures" %>
-	  <%= f.label 'Creatures' %>,  Team Birds, Team Cats...<br>
-	  	<%= f.radio_button :name_gen, "colors", :checked => random == "colors" %>
-	  <%= f.label 'Colors' %>, Team Red, Team Blue, Team Azure... <br>
-
-	<%= f.submit("Save Project", :class => 'btn btn-primary') %>
+	<%= f.submit("Save Project", id: 'save-project', :class => 'btn btn-primary') %>
 
 </div>

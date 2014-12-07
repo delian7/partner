@@ -13,9 +13,5 @@
 		<p><b>Last Sign In:</b> <%= @user.last_sign_in_at if @user.last_sign_in_at %></p>
 		<br>
 		
-		  	<%= link_to "<span class=\"glyphicon glyphicon-send\"></span>&nbsp;&nbsp;&nbsp;&nbsp;Send Request".html_safe, send_request_user_path(@user), :style => 'max-width:200px; padding:10px;', class: "btn btn-primary"  %>
-		
-		<br>
-		
 	</div>
 </div>

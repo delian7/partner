@@ -1,0 +1,8 @@
+		<% if @ucinetid.blank? %>
+			<%= link_to 'Login to Webauth', request.ip == "127.0.0.1" ? user_session_path : "https://login.uci.edu/" %><br>
+		<% else %>
+			<%= form_for(resource, :url => user_session_path) do |f| %>
+		    <%= f.hidden_field :ucinetid, :value => @ucinetid %> 
+		    <%= f.submit 'Sign in to Partner UP', style: 'color:#fff;background-color:transparent;box-shadow:0px;border:0px;padding-top: 15px;padding-bottom: 15px;line-height: 20px;text-shadow: 0 1px 0 rgba(255,255,255,.25);font-family: "Helvetica", sans-serif;font-size: 17px;padding-right: 15px;'%>
+  		<% end %>
+  		<% end %></span>

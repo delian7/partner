@@ -1,48 +1,34 @@
 module GroupsHelper
 
 def get_status(user)
-  if !@mygroup.nil?
-    @current_user_status = GroupRelation.where(project_id: @myproject.id, user_id: current_user.id, group_id: @mygroup.id).pluck(:status)[0]
-    @user_status = GroupRelation.where(project_id: @myproject.id, user_id: user.id, group_id: @mygroup.id).pluck(:status)[0]
+  if @mygroup.nil? || (current_user.groups & user.groups).empty?
+    return 0
+  else
+    their_group = (current_user.groups & user.groups)[0]
+    their_group.group_relations.each do |relation|
+      @user_status = relation.status if (relation.user_id == user.id) && (relation.group_id == their_group.id)
+      return @user_status
+    end
   end
 end
 
-def course_ids(user)
-	Roster.where(user_id: user).collect(&:course_id)
-end
-
-def group_ids(course)
-	GroupRelation.where(course_id:course.id).collect(&:group_id).uniq
-end
-
-def groups_for(course)
-group_array=[]
-	group_ids(course).each do |group|
-		group_array.push(Group.find(group))
+def group_namer(namegen)
+  case namegen
+  when "number"
+    @groupname = "Team #{Group.where(project_id: @project.id).size + 1}"
+  when "random"
+    @groupname = "Team #{Faker::Team.random.titlecase}"
+  when "creature"
+    @groupname = "Team #{Faker::Team.creature.titlecase}"
+  when "color"
+    @groupname = "Team #{Faker::Commerce.color.titlecase}"
+  when "gamer"
+    @groupname = "#{Faker::Hacker.gamer.titlecase}"
+  when "partner"
+    @groupname = "#{current_user.first_name} and #{User.find(params[:id]).first_name}"
   end
-	return group_array
+  return @groupname
 end
-
-def user_netid(netid)
-  User.find_by(ucinetid: netid)
-end
-
-def members_of(group)
-  member_array=[]
-  @names_string
-  GroupRelation.where(group_id: group).collect(&:user_id).each do |i|
-    user = User.find(i)
-    member_array.push(user)
-    first = user.first_name
-    last = user.last_name
-    name = link_to "#{first} #{last}", user
-    @names_string.push(name)
-  end
-  @names_array.join(", ")
-  return member_array
-end
-
-
 
 def set_current_users_instance_variables
 @users = User.all
@@ -207,39 +193,5 @@ end
       end
   end
 
-  def delete_partnership(user)
-    if !@mygroup.nil?
-      if @current_group_size <= 2
-        # Delete the group
-        @mygroup.destroy
-        # Delete relation for current user and user
-        GroupRelation.find_by(user_id: current_user.id, group_id: @mygroup.id).destroy
-        # Delete relation for user
-      end
-      GroupRelation.find_by(user_id: user.id, group_id: @mygroup.id).destroy
-      flash[:notice] = "Removed User."
-    else 
-      flash[:error] = "Unable to remove user."
-    end
-  redirect_to users_path
-  end
-
-  def delete_self_from_group(user)
-    set_current_users_instance_variables
-    if !@mygroup.nil?
-      if @current_group_size <= 2
-        # Delete the group
-        @mygroup.destroy
-        # Delete relation for current user and user
-        GroupRelation.find_by(user_id: current_user.id, group_id: @mygroup.id).destroy
-        # Delete relation for user
-      end
-      GroupRelation.find_by(user_id: user.id, group_id: @mygroup.id).destroy
-      flash[:notice] = "Removed User."
-    else 
-      flash[:error] = "Unable to remove user."
-    end
-  redirect_to users_path
-  end
 
 end

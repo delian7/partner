@@ -1,10 +1,14 @@
-<div class="authform">
+<div class="authform" style="max-width:450px; margin:auto;">
   <%= form_for(resource, :as => resource_name, :url => user_registration_path(resource_name), :html => { :role => 'form'}) do |f| %>
     <h2>Create Account</h2>
     <%= devise_error_messages! %>
       <div class="form-group">
       <%= f.label :first_name %>
       <%= f.text_field :first_name, :autofocus => true, class: 'form-control' %>
+    </div>
+    <div class="form-group">
+      <%= f.label :last_name %>
+      <%= f.text_field :last_name, :autofocus => true, class: 'form-control' %>
     </div>
     <div class="form-group">
       <%= f.label :last_name %>
