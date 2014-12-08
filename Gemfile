@@ -24,6 +24,7 @@ gem 'paperclip', github: 'thoughtbot/paperclip'
 gem 'mysql2'
 gem 'simple_form'
 gem 'upmin-admin'
+gem 'rerun'
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller', :platforms=>[:mri_21]
