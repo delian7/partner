@@ -16,8 +16,8 @@ feature 'autogroup:' do
       # autogroups teams
       visit(groups_path)
       click_button('autogroup-btn')
-      @project = Project.find_by_name('In4matx 191A  Sec. A - New Project')
       # group statistics
+      @project = Project.find_by_name('In4matx 191A  Sec. A - New Project')
       @number_of_groups = all('table').size 
   end
   
@@ -34,5 +34,22 @@ feature 'autogroup:' do
     click_link('disband-all-btn')
     expect(page).to have_selector('table', count: 0)
   end
+  
+  scenario 'should create number of teams by dividing number of students by project_size' do #TODO only even numbered students
+    number_of_students = page.all('td#name').size    
+    expect(page).to have_selector('table', count: number_of_students / @project.group_size)
+  end
+  
+  scenario 'assigning student to new team' do #TODO JAVASCRIPT DOESN'T WORK
+    
+    page.all('td#name').map(&:text)
+    student = page.all('td#name').map(&:text)[0]
+    selected_group = first('select#team-select').find(:xpath, 'option[1]').text
+    first('select#team-select').find(:xpath, 'option[1]').select_option # move the student to the first team possible
+    page.all('td#name').map(&:text)
+    
+  end
+  
+
 end
 

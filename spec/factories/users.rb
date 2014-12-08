@@ -1,13 +1,23 @@
 FactoryGirl.define do
   factory :professor, class: User do
-    first_name "Professor Kay"
+    first_name "Kay"
     email "kay@uci.edu"
     role '2'
   end
   
-  factory :student, class: User do
-    first_name "Delian Petrov"
-    email "petrovd@uci.edu"
+  factory :student1, class: User do
+    first_name "Delian"
+    email "durenm@uci.edu"
     role '0'
+    id 100
   end
+  
+  factory :student2, class: User do
+    first_name "Christina"
+    email "cryder@uci.edu"
+    role '0'
+    id 101
+  end
+
+  
 end
