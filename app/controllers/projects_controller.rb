@@ -16,6 +16,9 @@ class ProjectsController < ApplicationController
     @project = Project.new(project_params)
     
     if @project.save
+    current_user.current_project = @project.id
+    current_user.current_course = params[:project][:course_id]
+    current_user.save
     relation = ProjectRelation.create(course_id: params[:project][:course_id], project_id: @project.id)
     relation.save
       redirect_to(:action => 'index')
@@ -57,6 +60,7 @@ class ProjectsController < ApplicationController
     def autogroup
     students, groups = [], []
     @project = Project.find(params[:id])
+    @course = @project.course
       @project.course.users.each do |user|
         if User.find(user).role == 0 && GroupRelation.where(user_id: user, project_id: @project).empty?
         students.push(user)
@@ -64,8 +68,8 @@ class ProjectsController < ApplicationController
       end
 
     while !students.empty?
-     group_namer(params[:project][:name_gen])
-     newgroup = Group.create(name: @groupname, project_id: @project.id,course_id: @project.course_id)
+     name = group_namer(params[:project][:name_gen])
+     newgroup = Group.create(name: name, project_id: @project.id,course_id: @project.course_id)
      students.sample(@project.group_size).collect(&:id).each do |student|
         GroupRelation.create(course_id: @project.course_id, group_id: newgroup.id, user_id: student, project_id: @project.id)
         groups.push(student)
@@ -119,7 +123,7 @@ end
   private 
   
   def project_params
-    params.require(:project).permit(:name, :active, :autogroup, :course_id, :group_size, :allow_repeat, :name_gen)
+    params.require(:project).permit(:name, :active, :autogroup, :course_id, :group_size, :allow_repeat, :end_date)
   end 
   
 end

@@ -1,4 +1,4 @@
-<br><div class="content-box" style= "padding:26px;"><h1 style="font-size:40px; font-weight:bold;"><center>Notifications</center></h1>
+<br><div class="jumbotron" style= "padding:20px;"><h1 style="font-size:40px; font-weight:bold;"><center>Notifications</center></h1>
 
 <% case current_user.role %>
 <% when 0 %>
@@ -17,7 +17,7 @@
 <% when 3 %>
 <% Courses.all.each do |course|%>
 	<% course.projects.empty?%>
-	<div  class="content-box"> <center><%= project.name %></center></h3>	
+	<div  class="jumbotron"> <center><%= project.name %></center></h3>	
 	</div>
 <% end %>
 <% end %></div>

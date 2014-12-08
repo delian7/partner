@@ -8,6 +8,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string     :last_name, limit: 20
       t.integer    :role,               default: 0, null: false, limit: 1
       t.string     :email,              null: false, default: ""
+      t.string     :phone,              default: "", limit: 12
       t.integer    :current_course, null: false, default: "", limit: 5
       t.integer    :current_project, null: false, default: "", limit: 5
       t.string     :description,               default: "", limit: 500
