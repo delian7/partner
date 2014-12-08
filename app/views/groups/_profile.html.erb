@@ -43,7 +43,7 @@
             <td>
             <%= link_to "#{user.first_name} #{user.last_name}", user %></td>
             <td class='collapsable'><%= user.email %></td>
-            <td>Confirmed</td>
+            <td style="font-size:13px;">Confirmed</td>
             <% else %>
         </tr>
         <tr style="background-color:eee; opacity: 0.6;">
@@ -52,6 +52,6 @@
             <td>
             <%= link_to "#{user.first_name} #{user.last_name}", user %></td>
             <td class='collapsable'><%= user.email %></td>
-            <td>Request Pending</td><% end %>
+            <td style="font-size:13px;">Requested</td><% end %>
         </tr><% end %>
     </table><% end %>

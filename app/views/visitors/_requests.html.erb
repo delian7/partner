@@ -1,14 +1,14 @@
 <% if !current_user.group_relations.where(project_id: project.id, status: 1).empty? %>
 <div  class="content-box"><h3 style="font-size:20px; font-weight:bold;"><center><%= project.name %></center></h3>
 
-      <% current_user.groups.order(:project_id).uniq.each do |group| %>
+  <% current_user.groups.order(:project_id).uniq.each do |group| %>
   <% if (group.group_relations.find_by(user_id: current_user.id, group_id: group.id).status == 1) && (group.project.group_relations.find_by(user_id: current_user.id, status: 2) == nil) %>
 <!-- checking if group's name is nil, make one for them -->
     <% group.name != nil ? groupname = group.name : groupname = group.users.pluck(:first_name).to_sentence%>
 
     <% members = group.users.order(:last_name).uniq %>
         <span style="font-size:25px; font-weight:bold;"> <%= link_to groupname, group %></span>
-        <div style='float:right;'> <%=  link_to "<span class=\"glyphicon glyphicon-user\"></span>&nbsp;&nbsp;<b>Join #{groupname}</b>".html_safe, confirm_group_path(group), class: "btn btn-primary btn-md" %></div>
+        <div style='float:right;'> <%=  link_to "<span class=\"glyphicon glyphicon-user\"></span>&nbsp;&nbsp;<b>Join</b>".html_safe, confirm_group_path(group), class: "btn btn-primary btn-md" %></div>
         <span style="font-size:15px; font-weight:bold;">  <br>Project:</span>
         <span style="font-size:14px;"> <%= group.project.name %></span>
         <span style="font-size:15px; font-weight:bold;">  <br>Course:</span>
@@ -19,12 +19,12 @@
                 <% if GroupRelation.find_by(user_id: user.id, group_id: group.id).status == 2 %>
                   <tr>
                     <td> <%= link_to "#{user.first_name} #{user.last_name}", user %> </td>
-                    <td>Confirmed</td>
+                    <td style="font-size:13px;">Confirmed</td>
                   </tr>
                  <% else %>
                   <tr style= "background-color:eee; opacity: 0.6;">
                     <td> <%= link_to "#{user.first_name} #{user.last_name}", user %></td>
-                    <td>Request Pending</td>
+                    <td style="font-size:13px;">Requested</td>
                   </tr>
                 <% end %> 
               <% end %>

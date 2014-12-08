@@ -10,7 +10,7 @@
   <tr style= "background-color:#ED8080;"><td colspan="6" style= "padding:0px;"><%=  link_to (new_project_path(id: course)), style: "color:#fff; text-align:left; width:100%; padding:11px;", class: "btn btn-danger" do %><b>Alert:</b> There is no active project for this course. Students are not able to partner up. <% end %> </tr></td>
   <% end %>
 	<% course.projects.each do |project| %>
-		<tr> <% if project.id !=0 %>
+		<tr><% if project.id != 0 %>
 	  	<td><%= project.name %></td>
 		<td class='collapsable'><% project.group_size.times do |o|%>
 			<span class="glyphicon glyphicon-user"></span>

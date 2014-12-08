@@ -3,11 +3,11 @@
 <div class="section-group">
 <div class="col span_1_of_3">
   <span style="font-size:50px; font-weight:bold;">
-<% if @myproject.group_size ==2%>
-Partnership
-<% else %>
-Group
-<%end%>
+    <% if @myproject.group_size ==2%>
+    Partnership
+    <% else %>
+    Group
+    <%end%>
  </span><br><span style="font-size:25px; font-weight:bold;"><%=@group.name%></font><br></span>
   <span style="font-size:20px; font-weight:bold;">  <br>Project:</span>
  <span style="font-size:18px;"><%=@myproject.name%></span>
@@ -28,7 +28,7 @@ Group
 Group Members</span>
 <%end%>
   <table class="table" style="width: 95%!important;">
-    <td class='collapsable'></td><td><strong>Name</td><td class='collapsable'><strong>Email</td><td><strong>Status</td></strong>
+    <td class='collapsable'></td><td><strong>Name</td><td class='collapsable'><strong>Email</td><td><strong>Status</td></strong><td><strong>Phone</td></strong>
     <% @group.users.each do |user| %>
 
        <%if GroupRelation.find_by(user_id: user.id, group_id: @group.id).status == 2%>
@@ -44,8 +44,10 @@ Group Members</span>
       <td class='collapsable'><%= user.email %></td>
           <td>Request Pending</td>
     <%end%> 
-
+    <td><%= link_to "#{user.phone}", user %>
+    </td>
   </tr>
+
       <% end %>
     </table>
 

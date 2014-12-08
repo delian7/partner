@@ -3,13 +3,13 @@
 	<% case current_user.role %>
 		<% when 0 %> 
 		<% if Project.find(current_user.current_project).group_size != 2 %>
-		<li role="presentation" class="<%= 'active' if current_page?(users_profile_path) %>"><%= link_to "<span class=\"glyphicon glyphicon-list-alt\"></span>&nbsp;&nbsp;My Profile".html_safe, users_profile_path %></li>
+			<li role="presentation" class="<%= 'active' if current_page?(users_profile_path) %>"><%= link_to "<span class=\"glyphicon glyphicon-list-alt\"></span>&nbsp;&nbsp;My Profile".html_safe, users_profile_path %></li>
 			<li role="presentation" class="<%= 'active' if current_page?(users_path) %>"><%= link_to "<span class=\"glyphicon glyphicon-user\"></span>&nbsp;&nbsp;Classmates".html_safe, users_path %></li>
 			<li role="presentation" class="<%= 'active' if current_page?(groups_path) %>"><%= link_to "<span class=\"glyphicon glyphicon-user\"></span><span class=\"glyphicon glyphicon-user\"></span><span class=\"glyphicon glyphicon-user\"></span>&nbsp;&nbsp;Groups".html_safe, groups_path %></li>
-			<% else %>
+		<% else %>
 			<li role="presentation" class="<%= 'active' if current_page?(users_profile_path) %>"><%= link_to "<span class=\"glyphicon glyphicon-list-alt\"></span>&nbsp;&nbsp;My Profile".html_safe, users_profile_path %></li>
 			<li role="presentation" class="<%= 'active' if current_page?(users_path) %>"><%= link_to "<span class=\"glyphicon glyphicon-user\"></span>&nbsp;&nbsp;Find a Partner".html_safe, users_path %></li>
-			<% end %>
+		<% end %>
 		<% when 1 .. 2 %>
 			<li role="presentation" class="<%= 'active' if current_page?(roster_path) %>"><%= link_to "<span class=\"glyphicon glyphicon-list-alt\"></span>&nbsp;&nbsp;Upload Roster".html_safe,  roster_path %></li>
 			<li role="presentation" class="<%= 'active' if current_page?(users_path) %>"><%= link_to "<span class=\"glyphicon glyphicon-user\"></span>&nbsp;&nbsp;Students".html_safe, users_path %></li>
@@ -37,6 +37,24 @@
     <li role="presentation"><%= link_to 'Sign out', destroy_user_session_path, :method => :delete %></li>
   </ul>
 </div>
+	<% case current_user.role %>
+	<% when 0 %>
+	<% if current_user.group_relations.where(status:1).size != 0 %>
+		<div class="dropdown pull-right">
+			<a href="/">
+				<button class="btn btn-primary" type="button">Requests&ensp;<span class="badge"><%= current_user.group_relations.where(status:1).size%></span></button>
+			</a></div>
+	<% end %>
+	<% when 1..2 %>
+	<% y = 0 %>
+	<% current_user.courses.each { |x| y += 1 if x.projects.empty? } %>
+		<% if y != 0 %>
+		<div class="dropdown pull-right">
+				<a href="/">
+					<button class="btn btn-primary" type="button">Alerts&ensp;<span class="badge"><%=y%></span></button>
+				</a></div>
+		<% end %>
+	<% end %>
 
 <% else %>
   <li style="height: 50px;"><%= render 'visitors/signin_link'%></li>

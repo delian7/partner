@@ -8,6 +8,4 @@ class Project < ActiveRecord::Base
    belongs_to :group
    has_many :courses, :through => :project_relations
    belongs_to :course
-
-   enum name_gen: [:numbered, :random, :creatures, :colors, :gamer, :partner]
 end

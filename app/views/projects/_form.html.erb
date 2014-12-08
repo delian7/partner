@@ -8,6 +8,9 @@
 	<%= f.label 'Project Name: ' %>
 	<%= f.text_field(:name, class: "form-control") %><br/>
 
+	<%= f.label 'Project Due Date: ' %>
+	<%= f.date_field :end_date%>
+
 	<%= f.label 'Select the class for which the project should be for: ' %>
 	<% if current_page? new_project_path %>
 		<%= f.select :course_id, options_from_collection_for_select(current_user.courses, 'id', 'course_title', params[:id]), {}, {class: "form-control"} %><br />
@@ -27,6 +30,7 @@
 	  <%= f.label 'Allow Repeats' %><br>
 	    <%= f.radio_button :allow_repeat, false, :checked => repeat == false %>
 	  <%= f.label 'Restrict Repeats' %><br><br>
+
 
 	<%= f.submit("Save Project", id: 'save-project', :class => 'btn btn-primary') %>
 
