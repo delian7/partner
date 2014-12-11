@@ -47,8 +47,10 @@ class ProjectsController < ApplicationController
         relation = ProjectRelation.create(course_id: params[:project][:course_id], project_id: @project.id)
         relation.save
       else
-    ProjectRelation.find_by(project: @project.id).update_attributes(course_id: params[:project][:course_id], project_id: @project.id)
-      end
+        if !params[:project][:course_id].nil?
+          ProjectRelation.find_by(project: @project.id).update_attributes(course_id: params[:project][:course_id], project_id: @project.id)
+        end
+    end
       flash[:notice] = "Project updated successfully"
       redirect_to(:action => 'index')
     else

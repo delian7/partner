@@ -1,8 +1,8 @@
-<div class="jumbotron" style="max-width: 600px; height:140%; margin:auto; padding:30px">
-  <div class="col span_2_of_3">
+<div class="jumbotron" style="max-width: 600px; margin:auto; padding:10px 25px 10px 25px">
   <%= form_for(resource, :as => resource_name, :url => user_registration_path, :html => { :method => :put, :role => 'form'}) do |f| %>
     <%= devise_error_messages! %>
       <h2>Edit Profile</h2>
+        <div class="col span_2_of_3">
       <table style="width:100%">
         <tr><td>
       &ensp;&thinsp;&thinsp;<span class="glyphicon glyphicon-envelope"></span>&emsp;<%= f.label :email, style:"font-size:14px!important;" %>
@@ -23,11 +23,11 @@
       <%= f.text_area :description, class: 'form-control' %></td></tr>
       </table>
   </div>
-<div class="col span_1_of_3 jumbotron" style=" text-align:center;">
+<div class="col span_1_of_3 jumbotron" style=" text-align:center;padding:0px 10px 10px 10px">
   <h4><span class="glyphicon glyphicon-picture"></span>&emsp;Profile Picture</h4>
   <b>Image Upload</b><br>
   <div class="fileupload fileupload-new" data-provides="fileupload">
-  <div class="fileupload-preview thumbnail" style="width: 155px; height:155px;"></div>
+  <div class="fileupload-preview thumbnail" style="width: 145px; height:145px;"></div><br>
     <span class="btn btn-info btn btn-file"><%= f.file_field :avatar %>
     <span class="fileupload-new btn-xs", style="max-width: 200px;"><span class="glyphicon glyphicon-picture"></span>&emsp;Select image
     </span>
@@ -37,8 +37,9 @@
     </span>
     <a href="#" class="btn fileupload-exists btn-xs" data-dismiss="fileupload">Remove</a>
     </div></div>
-    <div class="jumbotron" style= "text-align:center; width:100%;">
-    <%= link_to "<span class=\"glyphicon glyphicon-pencil\"></span>&emsp;Edit Profile".html_safe, "#", :onclick=> 'this.form.submit();', class: "btn btn-primary btn-xl", :style => 'max-width:200px; padding:10px;' %></div>
+    <div class="jumbotron" style= "clear:both;text-align:center; width:100%; padding:0px;">
+      <hr style="margin:0px 0px 10px 0px">
+    <%= link_to "<span class=\"glyphicon glyphicon-save\"></span>&emsp;Save Changes".html_safe, "#", :onclick=> 'this.form.submit();', class: "btn btn-primary btn-xl", :style => 'max-width:200px; padding:10px;' %></div>
 <% end %>
 
 </div>

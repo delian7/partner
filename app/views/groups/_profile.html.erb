@@ -17,14 +17,37 @@
         </tr>
         <tr>
             <td colspan="2">
-                <div style="float:left;">
-                    <span style="font-size:20px; font-weight:bold;">Project:</span>
-                    <span style="font-size:18px;"><%= @group.project.name%></span>
-                    <span style="font-size:20px; font-weight:bold;"><br>
-                    Course:</span> <span style="font-size:18px;"><%= Course.find(@group.project.course_id).course_title%><br>
-                    </span>
+                <div style="float:left;padding:0px">
+                <% if current_page? root_path%>
+                        <span style="font-size:20px; font-weight:bold;">Project:</span>
+                        <span style="font-size:18px;"><%= @group.project.name%></span>
+                        <span style="font-size:20px; font-weight:bold;"><br>
+                        Course:</span> <span style="font-size:18px;"><%= Course.find(@group.project.course_id).course_title%><br>
+                        </span>
+                    </div>
+                    <div style="float:right;"><span style="font-size:20px; font-weight:bold;padding:0px"><br>
+                        Due Date:</span> <span style="font-size:18px;">
+                        <%if @group.project.end_date == nil || @group.project.end_date == "" %>
+                            Not Specified
+                        <% else %>
+                            <%= @group.project.end_date%>
+                        <% end %>
+                <% else %>
+                    <span style="font-size:16px; font-weight:bold;">Project:</span>
+                        <span style="font-size:14px;"><%= @group.project.name%></span>
+                        <span style="font-size:16px; font-weight:bold;"><br>
+                        Course:</span> <span style="font-size:14px;"><%= Course.find(@group.project.course_id).course_title%><br>
+                        </span>
+                    </div>
+                    <div style="float:right;line-height: .5em;"><span style="font-size:16px; font-weight:bold; padding:0px;"><br>
+                        Due Date:</span> <span style="font-size:14px;">
+                        <%if @group.project.end_date == nil || @group.project.end_date == "" %>
+                            Not Specified
+                        <% else %>
+                            <%= @group.project.end_date%>
+                        <% end %>
+                <% end %>
                 </div>
-                <div></div>
             </td>
         </tr>
     </table>
