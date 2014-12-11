@@ -12,6 +12,7 @@
  *
  *= require_tree .
  *= require_self
+ *= require jquery.fileupload-ui
  */
 body {  
     border-radius:10px;  
