@@ -9,10 +9,10 @@
 
 <table class="table" style="width: 95%!important;">
 	
-	<th></th>
-  <th style="text-align: left;" class='collapsable'><strong>Students</strong></th>
-  <th style="max-width:100px; text-align: left;"><strong>Email</strong></th>
-  <th style="text-align: left;"><strong>Team</strong></th>
+	<th class='collapsable'></th>
+  <th style="text-align: left;"><strong>Students</strong></th>
+  <th style="max-width:100px; text-align: left;" class='collapsable'><strong>Email</strong></th>
+  <th style="text-align: left;" class='collapsable'><strong>Team</strong></th>
 	
   <%@users = Course.find(current_user.current_course).users.order(:last_name)%>
 	<% @users.each do |user| %>
