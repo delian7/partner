@@ -3,6 +3,7 @@ class CreateEvaluations < ActiveRecord::Migration
     create_table :evaluations do |t|
       t.belongs_to   :project, default: ""
       t.belongs_to   :user, default: ""
+      t.belongs_to   :user2, default: ""
       	t.timestamps
     end
   end

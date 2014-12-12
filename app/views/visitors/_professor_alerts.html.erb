@@ -1,5 +1,5 @@
 	<% if course.projects.empty?%>
 	<div class="content-box"><h3 style="font-size:20px; padding:5px;font-weight:bold;"><center><%= link_to course.course_title, projects_path %></center></h3>
-		  <%=  link_to (new_project_path(id: course)), style: "color:#fff; text-align:left; padding:10px", class: "btn btn-danger" do %><span style="font-weight:bold;">Alert:</span><br><span style="font-size:13px;">There is no active project for this course.<br>Students are not able to partner up.<% end %></span>
+		 <%=  link_to (new_project_path(id: course)), style: "color:#fff; text-align:left; padding:10px", class: "btn btn-danger" do %><span style="font-weight:bold;">Alert:</span><br><span style="font-size:13px;">There is no active project for this course.<br>Students are not able to partner up.<% end %></span>
 	</div>
 	<%end%>
