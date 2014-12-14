@@ -10,7 +10,7 @@ feature 'partnership requests' do
     login_as(professor, :scope => :user)
     visit(roster_path)
     first_week_roster = Rails.root + "SQL\ and\ CSVs/rspec_csvs/5\ students.csv"
-    attach_file('dump_file', first_week_roster, visible: false)
+    attach_file('upload_roster', first_week_roster)
     click_button 'Upload CSV File'
   end
   

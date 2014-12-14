@@ -13,7 +13,7 @@ feature 'course projects:' do
       login_as(professor, :scope => :user)
       visit(roster_path)
       first_week_roster = Rails.root + "SQL\ and\ CSVs/rspec_csvs/first_week_roster.csv"
-      attach_file('dump_file', first_week_roster)
+      attach_file('roster_upload', first_week_roster)
       page.find('#upload-roster').click
   end
   
