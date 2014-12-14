@@ -72,7 +72,7 @@ end
 
 
 def open_and_parse_csv
-  csv_text = File.open(params[:roster][:upload].tempfile, :headers => true)
+  csv_text = File.open(params[:upload][:roster].tempfile, :headers => true)
   csv = CSV.parse(csv_text)
   csv = remove_nils(csv)
   start_course_index = csv.find_index{|each| each[0].include?("Quarter,")}
