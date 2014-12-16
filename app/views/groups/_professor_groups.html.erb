@@ -1,8 +1,4 @@
-<div class="section-group">
-  <div style="float:left;width:70%">
-    <!-- autogroup form-->
-    <span style="font-size:45px; font-weight:bold;display:inline;">Groups</span> 
-    <span style="font-size:30px; font-weight:bold;display:inline">&nbsp;for<br>
+<span style="font-size:30px; font-weight:bold;display:inline">&nbsp;for<br>
       <%=@myproject.name%><br>
         <div style="float:left;width:75%">
           <%= link_to "<span class=\"glyphicons glyphicons-pencil\"></span>&nbsp;&nbsp;Edit Project".html_safe, edit_project_path(@myproject.id), class: 'btn btn-success'%>
@@ -32,7 +28,7 @@
   
    <% @group = Group.find(group) %>
    <tr>
-    <th style="text-align:left;" colspan="9" id="group<%= group.id %>">
+    <th colspan='9' style='background-color:#eee;' colspan='9' id="group<%= group.id %>">
       <span style="font-size:20px; font-weight:bold;">
         <%= link_to @group.name, @group %>&nbsp;
         <%=  link_to "<span class=\"glyphicons glyphicons-remove-2\"></span>".html_safe, disband_group_path(group), data: { confirm: "Are you sure? This will permanently delete this group and you will lose all evaluation information."},  id: "disband-group-btn", style:"color:red;font-size:10px;"%>
@@ -46,16 +42,16 @@
         <td id='name'><%= link_to "#{user.first_name} #{user.last_name}", user %></td>
         <td class='collapsable'><%= user.email %></td>
         <td>
-          <%if GroupRelation.find_by(user_id: user.id, group_id: @group.id).status != 2 %>
+          <% if GroupRelation.find_by(user_id: user.id, group_id: @group.id).status != 2 %>
             Request Pending
-          <%else%>
+          <% else %>
             Confirmed <span class="glyphicons glyphicons-ok-2" style="color:green; font-size:20px;"></span>
           <% end %>
         </td>
         <td class='collapsable'><%= render 'layouts/buttons/team_select', user: @user%></td>
-      </tr>   
-    <%end%>
+      </tr>  
+    <% end %>
       
  
-<%end%>
+<% end %>
  </table>

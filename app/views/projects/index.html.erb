@@ -1,11 +1,14 @@
-<div style="font-size:45px; font-weight:bold;">Projects
+<span style="font-size:50px; font-weight:bold;"><span class="glyphicons glyphicons-pushpin" style="font-size:60px"></span>&emsp;Projects</span><br><br>
 
 <table class="table" style="max-width:1200px;" align="center">
 <% @empty_courses = current_user.courses%>
 <% @empty_courses.each {|course| @empty_courses = @empty_courses.unshift(course) if course.projects.empty?} %>
 <% @empty_courses.uniq.each do |course| %>
 <tr>
-    <th><%= course.course_title%></th><td class='collapsable'><strong>Group Size</strong></td><td class='collapsable'><strong>Allow Repeat Partners?</strong></td><td class='collapsable'><strong>End Date</strong></td><td colspan="5"><%=  link_to "<span class=\"glyphicons glyphicons-plus\"></span>&nbsp;&nbsp;Add New Project".html_safe,  {action: 'new', controller: 'projects', id: course}, class: "btn btn-primary btn-xs", id: "add-new-project", style: "float:right;margin-bottom:10px;" %></td>
+    <th colspan='9' style='background-color:#eee;'><span style="font-size:20px; font-weight:bold;"><%= course.course_title%></span></th>
+</tr>
+<tr>
+	<th><span class="glyphicons glyphicons-pushpin"></span>&emsp;Project</th><th class='collapsable'><span class="glyphicons glyphicons-group"></span>&emsp;Group Size</th><th class='collapsable'><span class="glyphicons glyphicons-retweet-2"></span>&emsp;Allow Repeat Partners?</th><th class='collapsable'><span class="glyphicons glyphicons-calendar"></span>&emsp;End Date</th><th colspan="5"><%=  link_to "<span class=\"glyphicons glyphicons-plus\"></span>&nbsp;&nbsp;Add New Project".html_safe,  {action: 'new', controller: 'projects', id: course}, class: "btn btn-primary btn-xs", id: "add-new-project", style: "float:right;margin-bottom:10px;" %></th>
   </tr></b>
   <% if course.projects.empty? %>
   <tr style= "background-color:#ED8080;"><td colspan="6" style= "padding:0px;"><%=  link_to (new_project_path(id: course)), style: "color:#fff; text-align:left; width:100%; padding:11px;", class: "btn btn-danger" do %><b>Alert:</b> There is no active project for this course. Students are not able to partner up. <% end %> </tr></td>

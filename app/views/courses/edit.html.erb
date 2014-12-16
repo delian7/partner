@@ -3,7 +3,7 @@
 
 	<%= form_for(:course, url: {action: 'update', id: params[:id]}) do |f| %>
 	<h2>Edit Course</h2>
-		<%= render(partial: 'form', locals: {f: f}) %>
+		<%= render 'courses/form', f: f %>
 
 	<% end %>
 </div>

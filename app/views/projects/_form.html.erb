@@ -2,34 +2,61 @@
 <% if !@project.nil? %>
 	<% repeat = Project.find_by_id(@project.id).allow_repeat %>
 <% else %>
+<% end %>
+<table style="width:100%">
+	<tr>
+		<td><%= f.label 'Project Name: ' %></td>
+		<td colspan='2'><%= f.text_field(:name, class: "form-control") %></td>
+	</tr>
+</table>
+<table style="width:100%">
+	<tr>
+		<td><span class="glyphicons glyphicons-calendar"></span></td>
+		<td><%= f.label 'Project Due Date:'%></td>
+		<td><%= f.date_field :end_date%></td>
+	</tr>
+</table>
+	<table style="width:100%">
+	<tr>
+		<td><span class="glyphicons glyphicons-education"></span></td>
+		<td>	<%= f.label 'Course:' %></td>
+		<td>
+			<% if current_page? new_project_path %>
+			<%= f.select :course_id, options_from_collection_for_select(current_user.courses, 'id', 'course_title', params[:id]), {}, {class: "form-control"} %>
+
+			<% elsif current_page? edit_project_path %>
+				<% if Course.find_by_id(Project.find_by_id(params[:id]).course_id).projects.empty? %>
+					<%= f.select :course_id, options_from_collection_for_select(current_user.courses, 'id', 'course_title'), {}, {class: "form-control"} %>
+				<% else %>
+				<%= f.select :course_id, options_from_collection_for_select(current_user.courses, 'id', 'course_title', Project.find_by_id(params[:id]).course_id), {}, {class: "form-control"} %>
+				<% end %>
+			<% end %>
+		</td>
+	</tr>
+</table>
 
 	
-<% end %>
-	<%= f.label 'Project Name: ' %>
-	<%= f.text_field(:name, class: "form-control") %><br/>
-
-	<%= f.label 'Project Due Date: ' %>
-	<%= f.date_field :end_date%>
-
-	<%= f.label 'Select the class for which the project should be for: ' %>
-	<% if current_page? new_project_path %>
-		<%= f.select :course_id, options_from_collection_for_select(current_user.courses, 'id', 'course_title', params[:id]), {}, {class: "form-control"} %><br />
-
-	<% elsif current_page? edit_project_path %>
-		<% if Course.find_by_id(Project.find_by_id(params[:id]).course_id).projects.empty? %>
-			<%= f.select :course_id, options_from_collection_for_select(current_user.courses, 'id', 'course_title'), {}, {class: "form-control"} %><br />
-		<% else %>
-		<%= f.select :course_id, options_from_collection_for_select(current_user.courses, 'id', 'course_title', Project.find_by_id(params[:id]).course_id), {}, {class: "form-control"} %><br />
-		<% end %>
-	<% end %>
-	<%= f.label 'Group Size of Project: ' %>
-	<%= f.select :group_size, [['2 people','2'], ['3 people','3'], ['4 people','4'], ['5 people','5'], ['6 people','6']], {}, {class: "form-control"} %><br>
-
-	<%= f.label 'Let students partner with the same person for different projects?' %><br>
-	    <%= f.radio_button :allow_repeat, true, checked: repeat == true %> 
-	  <%= f.label 'Allow Repeats' %><br>
-	    <%= f.radio_button :allow_repeat, false, checked: repeat == false %>
-	  <%= f.label 'Restrict Repeats' %><br><br>
+	<table style="width:100%">
+	<tr>
+		<td><span class="glyphicons glyphicons-group"></span></td>
+		<td><%= f.label 'Group Size of Project: ' %></td>
+		<td><%= f.select :group_size, [['2 people','2'], ['3 people','3'], ['4 people','4'], ['5 people','5'], ['6 people','6']], {}, {class: "form-control"} %></td>
+	</tr>
+</table>
+<table style="width:100%">
+	<tr>
+		<td><span class="glyphicons glyphicons-retweet-2"></span></td>
+		<td colspan='2'><%= f.label 'Unique Partners for every Project?' %></td>
+	</tr>
+</table><table style="width:100%">
+	<tr>
+	   <td style="text-align:right"><%= f.radio_button :allow_repeat, true, checked: repeat == true %> </td>
+	  <td>Allow Repeats</td>
+	</tr><tr>
+	  <td style="text-align:right"><%= f.radio_button :allow_repeat, false, checked: repeat == false %> </td>
+	  <td>Restrict Repeats</td>
+	</tr>
+</table><br>
 
 
 	<%= f.submit("Save Project", id: 'save-project', class: 'btn btn-primary') %>

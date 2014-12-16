@@ -1,5 +1,5 @@
 <div class="jumbotron" style="max-width: 600px; margin:auto; padding:10px 25px 10px 25px">
-  <%= form_for(resource, :as => resource_name, :url => user_registration_path, :html => { :method => :put, :role => 'form'}) do |f| %>
+  <%= form_for(resource, as: resource_name, url: user_registration_path, html: { method: :put, role: 'form'}) do |f| %>
     <%= devise_error_messages! %>
       <h2>Edit Profile</h2>
         <div class="col span_2_of_3">
@@ -15,7 +15,7 @@
     </tr><tr><td>
       &ensp;&thinsp;&thinsp;<span class="glyphicons glyphicons-phone-alt"></span>&emsp;<%= f.label :phone, style:"font-size:14px!important;"  %>
     </td><td>
-      <%= f.phone_field :phone, class: 'form-control'   %>
+      <%= f.telephone_field :phone, class: 'form-control' %>
     </td></tr><tr><td colspan="2">
 
       &ensp;&thinsp;&thinsp;<span class="glyphicons glyphicons-edit"></span>&emsp;<%= f.label :description, style:"font-size:14px!important;" %>

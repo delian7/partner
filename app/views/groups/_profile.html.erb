@@ -30,7 +30,7 @@
                         <%if @group.project.end_date == nil || @group.project.end_date == "" %>
                             Not Specified
                         <% else %>
-                            <%= @group.project.end_date%>
+                            <%= @group.project.end_date.strftime("%m/%d/%y")%>
                         <% end %>
                 <% else %>
                     <span style="font-size:16px; font-weight:bold;">Project:</span>
@@ -44,7 +44,7 @@
                         <%if @group.project.end_date == nil || @group.project.end_date == "" %>
                             Not Specified
                         <% else %>
-                            <%= @group.project.end_date%>
+                            <%= @group.project.end_date.strftime("%m/%d/%y")%>
                         <% end %>
                 <% end %>
                 </div>
