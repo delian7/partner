@@ -11,7 +11,7 @@ def make_default_project(coursecode)
 end
 
 def set_current_project_course(user, project, course)
-  user.current_project = project.id
+  user.current_project = project.id unless project.nil?
   user.current_course = course.id
   user.save
  end

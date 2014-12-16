@@ -11,7 +11,7 @@ feature 'autogroup:' do
       # uploads roster to populate students
       visit(roster_path)
       first_week_roster = Rails.root + "SQL\ and\ CSVs/rspec_csvs/first_week_roster.csv"
-      attach_file('dump_file', first_week_roster, visible: false)
+      attach_file('roster_upload', first_week_roster, visible: false)
       click_button 'Upload CSV File'
       # autogroups teams
       visit(groups_path)
