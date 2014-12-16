@@ -100,6 +100,7 @@ def csv_import
               Roster.create(course_id: @course_code, user_id: current_user.id)
               make_default_project(@course_code)
             else
+              Roster.create(course_id: @course_code, user_id: current_user.id) if Roster.find_by(course_id: @course_code, user_id: current_user.id).nil?
               @course = Course.find(@course_code)
               @proj = @course.projects.find_by(active: true)
             end
@@ -132,7 +133,7 @@ def csv_import
                   set_current_project_course(@user, @proj, @course)
                 end
                 end 
-                msg = msg + "CSV Import Successful, for #{@course_title}. #{add} students added to this class, #{removal} students removed from this class<br>"
+                msg = msg + "CSV Import Successful, for <b>#{@course_title}</b>. #{add} students added to this class, #{removal} students removed from this class<br>"
   end
   flash[:notice] = msg.html_safe
     redirect_to :back
