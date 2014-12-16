@@ -18,9 +18,8 @@
 		<td class='collapsable'><center><%= project.allow_repeat ? "<span class=\"glyphicon glyphicon-ok\" style=\"color:green; font-size:20px;\"></span>".html_safe : "<span class=\"glyphicon glyphicon-ban-circle\" style=\"color:red; font-size:20px;\"></span>".html_safe%></center></td>
 		<td class='collapsable'><center>
 		<% if (project.end_date == "") || (project.end_date == nil) %>
-				<%= form_for(:project, :url => {:action => 'update', :id => project.id}) do |f| %>
-				<%= f.label 'Project Due Date: ' %>
-				<%= f.date_field :end_date, { onchange: 'this.form.submit();'}%>
+			<%= form_for(:project, :url => {:action => 'update', :id => project.id}) do |f| %>
+			<%= f.date_field :end_date, {onchange: 'this.form.submit();'} %>
 			<% end %>
 		<% else %>
 			<%= project.end_date.strftime('%m/%d/%Y')%>

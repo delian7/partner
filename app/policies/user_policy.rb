@@ -63,7 +63,7 @@ end
     true
   end
 
-  def export_csv?
+  def csv_import?
 true
   end
 
