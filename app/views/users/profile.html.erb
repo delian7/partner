@@ -3,7 +3,7 @@
 <div class="section group">
   <div class="col span_1_of_3">
   	<%= image_tag current_user.avatar.url, :style => "width:100%;"%><br><br><center>
-  	<%= link_to "<span class=\"glyphicon glyphicon-pencil\"></span>&nbsp;&nbsp;Edit Profile".html_safe, edit_user_registration_path, :style => 'max-width:200px; padding:10px;', class: "btn btn-success"  %></center>
+  	<%= link_to "<span class=\"glyphicons glyphicons-pencil\"></span>&nbsp;&nbsp;Edit Profile".html_safe, edit_user_registration_path, :style => 'max-width:200px; padding:10px;', class: "btn btn-success"  %></center>
   </div>
   <div class="col span_2_of_3">
 		<h2>Profile Page of <strong><%= current_user.first_name%> <%=current_user.last_name %></h2></strong>

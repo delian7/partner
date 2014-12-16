@@ -1,10 +1,11 @@
 <div style="font-size:45px; font-weight:bold;">Projects
-  <table class="table" style= "border:1px grey!important;width:75%;">
+
+<table class="table" style="max-width:1200px;" align="center">
 <% @empty_courses = current_user.courses%>
 <% @empty_courses.each {|course| @empty_courses = @empty_courses.unshift(course) if course.projects.empty?} %>
 <% @empty_courses.uniq.each do |course| %>
 <tr>
-    <th><%= course.course_title%></th><td class='collapsable'><strong>Group Size</strong></td><td class='collapsable'><strong>Allow Repeat Partners?</strong></td><td class='collapsable'><strong>End Date</strong></td><td colspan="5"><%=  link_to "<span class=\"glyphicon glyphicon-plus\"></span>&nbsp;&nbsp;Add New Project".html_safe,  {action: 'new', controller: 'projects', id: course}, class: "btn btn-primary btn-xs", id: "add-new-project", :style=>"float:right;margin-bottom:10px;" %></td>
+    <th><%= course.course_title%></th><td class='collapsable'><strong>Group Size</strong></td><td class='collapsable'><strong>Allow Repeat Partners?</strong></td><td class='collapsable'><strong>End Date</strong></td><td colspan="5"><%=  link_to "<span class=\"glyphicons glyphicons-plus\"></span>&nbsp;&nbsp;Add New Project".html_safe,  {action: 'new', controller: 'projects', id: course}, class: "btn btn-primary btn-xs", id: "add-new-project", style: "float:right;margin-bottom:10px;" %></td>
   </tr></b>
   <% if course.projects.empty? %>
   <tr style= "background-color:#ED8080;"><td colspan="6" style= "padding:0px;"><%=  link_to (new_project_path(id: course)), style: "color:#fff; text-align:left; width:100%; padding:11px;", class: "btn btn-danger" do %><b>Alert:</b> There is no active project for this course. Students are not able to partner up. <% end %> </tr></td>
@@ -13,23 +14,19 @@
 		<tr><% if project.id != 0 %>
 	  	<td><%= project.name %></td>
 		<td class='collapsable'><% project.group_size.times do |o|%>
-			<span class="glyphicon glyphicon-user"></span>
+			<span class="glyphicons glyphicons-user"></span>
 			<% end %></td>
-		<td class='collapsable'><center><%= project.allow_repeat ? "<span class=\"glyphicon glyphicon-ok\" style=\"color:green; font-size:20px;\"></span>".html_safe : "<span class=\"glyphicon glyphicon-ban-circle\" style=\"color:red; font-size:20px;\"></span>".html_safe%></center></td>
+		<td class='collapsable'><center><%= project.allow_repeat ? "<span class=\"glyphicons glyphicons-ok-2\" style=\"color:green; font-size:20px;\"></span>".html_safe : "<span class=\"glyphicons glyphicons-ban\" style=\"color:red; font-size:20px;\"></span>".html_safe%></center></td>
 		<td class='collapsable'><center>
-		<% if (project.end_date == "") || (project.end_date == nil) %>
-			<%= form_for(:project, :url => {:action => 'update', :id => project.id}) do |f| %>
-			<%= f.date_field :end_date, {onchange: 'this.form.submit();'} %>
+			<%= form_for(:project, url: {action: 'update', id: project.id}) do |f| %>
+			<%= f.date_field :end_date, {onchange: 'this.form.submit();', value: project.end_date} %>
 			<% end %>
-		<% else %>
-			<%= project.end_date.strftime('%m/%d/%Y')%>
-		<% end %>
 		</center></td>
 		<td class='collapsable'>
 		</td>
 		<td style="text-align:right">
-	    <%=  link_to "<span class=\"glyphicon glyphicon-pencil\"></span>&nbsp;&nbsp;Edit".html_safe, edit_project_path(project.id), class: "btn btn-success btn-md", id: "edit-#{project.id}" %></td><td>
-    	 <%=  link_to "<span class=\"glyphicon glyphicon-remove\"></span>&nbsp;&nbsp;Delete".html_safe, remove_project_path(project.id), id: "delete-#{project.id}", :data => { :confirm =>"Are you sure you want to delete this project?"}, class: "btn btn-danger btn-md" %></td>
+	    <%=  link_to "<span class=\"glyphicons glyphicons-edit\"></span>&nbsp;&nbsp;Edit".html_safe, edit_project_path(project.id), class: "btn btn-success btn-md", id: "edit-#{project.id}" %></td><td>
+    	 <%=  link_to "<span class=\"glyphicons glyphicons-remove-2\"></span>&nbsp;&nbsp;Delete".html_safe, remove_project_path(project.id), id: "delete-#{project.id}", data: { confirm: "Are you sure you want to delete this project?"}, class: "btn btn-danger btn-md" %></td>
 		</tr>
 	<% end %>
 <% end %><tr><td colspan="9" style="height:50px;"></td></tr>

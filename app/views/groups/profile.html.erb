@@ -1,7 +1,7 @@
 <% if @myproject.nil? || @mygroup.nil?%>
 	<span style="font-size:35px; font-weight:bold;">Sorry,</span><br><span style="font-size:25px; font-weight:normal;"> it looks like you don't have a partner yet for <span style="font-size:25px; font-weight:bold;"><%=@myproject.name%></span></center>
 
-  <%=  link_to "<span class=\"glyphicon glyphicon-plus\"></span>&nbsp;&nbsp;Add New Group".html_safe,  {:action => 'new'}, class: "btn btn-primary btn-md", :style=>"float:right;margin-bottom:10px;" %>
+  <%=  link_to "<span class=\"glyphicons glyphicons-plus\"></span>&nbsp;&nbsp;Add New Group".html_safe,  {:action => 'new'}, class: "btn btn-primary btn-md", :style=>"float:right;margin-bottom:10px;" %>
 
 <%else%>
 
@@ -14,9 +14,9 @@
  <span style="font-size:18px;"><%= @myproject.name%></span>
  <span style="font-size:20px; font-weight:bold;">  <br>Course:</span>
  <span style="font-size:18px;"><%= @myproject.course_id%><br></span>
- <div style="float:right;">  <%= link_to "<span class=\"glyphicon glyphicon-calendar\"></span>&nbsp;&nbsp;<b>Start a Doodle</b>".html_safe, "http://doodle.com/create?type=date&locale=en&title=#{@mygroup.name}%20Group%20Meeting&name=#{current_user.first_name}%20#{current_user.last_name}&eMailAddress=#{current_user.email}&description=Our%20first%20group%20meeting...", class: "btn btn-info btn-md" %></span>
+ <div style="float:right;">  <%= link_to "<span class=\"glyphicons glyphicons-calendar\"></span>&nbsp;&nbsp;<b>Start a Doodle</b>".html_safe, "http://doodle.com/create?type=date&locale=en&title=#{@mygroup.name}%20Group%20Meeting&name=#{current_user.first_name}%20#{current_user.last_name}&eMailAddress=#{current_user.email}&description=Our%20first%20group%20meeting...", class: "btn btn-info btn-md" %></span>
 </div>  
-<%= link_to "<span class=\"glyphicon glyphicon-pencil\"></span>&nbsp;&nbsp;Edit Group".html_safe,  {:action => 'edit'}, class: "btn btn-primary btn-md", :style=>"float:right;margin-bottom:10px;" %>
+<%= link_to "<span class=\"glyphicons glyphicons-pencil\"></span>&nbsp;&nbsp;Edit Group".html_safe,  {:action => 'edit'}, class: "btn btn-primary btn-md", :style=>"float:right;margin-bottom:10px;" %>
 </div>
 
 <div class="col span_2_of_3">

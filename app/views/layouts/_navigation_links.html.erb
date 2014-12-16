@@ -2,26 +2,26 @@
 <% if user_signed_in? %>
 	<% case current_user.role %>
 		<% when 0 %> 
-		<li role="presentation" class="<%= 'active' if current_page?(users_profile_path) %>"><%= link_to "<span class=\"glyphicons glyphicons-list-alt\"></span>&emsp;&emsp;My Profile".html_safe, users_profile_path %></li>
+		<li role="presentation" class="<%= 'active' if current_page?(users_profile_path) %>"><%= link_to "<span class=\"glyphicons glyphicons-list-alt\" style=\"font-size:23;\"></span>&emsp;&emsp;My Profile".html_safe, users_profile_path %></li>
 		<% if Project.find(current_user.current_project).group_size != 2 %>
-			<li role="presentation" class="<%= 'active' if current_page?(users_path) %>"><%= link_to "<span class=\"glyphicons glyphicons-address-book\"></span>&emsp;&emsp;Classmates".html_safe, users_path %></li>
-			<li role="presentation" class="<%= 'active' if current_page?(groups_path) %>"><%= link_to "<span class=\"glyphicons glyphicons-group\"></span>&emsp;&emsp;Groups".html_safe, groups_path %></li>
+			<li role="presentation" class="<%= 'active' if current_page?(users_path) %>"><%= link_to "<span class=\"glyphicons glyphicons-address-book\" style=\"font-size:23;\"></span>&emsp;&emsp;Classmates".html_safe, users_path %></li>
+			<li role="presentation" class="<%= 'active' if current_page?(groups_path) %>"><%= link_to "<span class=\"glyphicons glyphicons-group\" style=\"font-size:23;\"></span>&emsp;&emsp;Groups".html_safe, groups_path %></li>
 		<% else %>
-			<li role="presentation" class="<%= 'active' if current_page?(users_path) %>"><%= link_to "<span class=\"glyphicons glyphicons-user\"></span>&emsp;&emsp;Find a Partner".html_safe, users_path %></li>
+			<li role="presentation" class="<%= 'active' if current_page?(users_path) %>"><%= link_to "<span class=\"glyphicons glyphicons-user\" style=\"font-size:23;\"></span>&emsp;&emsp;Find a Partner".html_safe, users_path %></li>
 		<% end %>
 		<% when 1 .. 2 %>
 			<li role="presentation" class="<%= 'active' if current_page?(users_path) %>"><%= link_to "<span class=\"glyphicons glyphicons-address-book\" style=\"font-size:23;\"></span>&emsp;&emsp;Students".html_safe, users_path %></li>
 			<li role="presentation" class="<%= 'active' if current_page?(groups_path) %>"><%= link_to "<span class=\"glyphicons glyphicons-group\" style=\"font-size:23;\"></span>&emsp;&emsp;Groups".html_safe, groups_path %></li>
-			<li role="presentation" class="<%= 'active' if current_page?(projects_path) %>"><%= link_to "<span class=\"glyphicons glyphicons-pushpin\"></span>&emsp;&emsp;Projects".html_safe, projects_path %></li>
-			<li role="presentation" class="<%= 'active' if current_page?(courses_path) %>"><%= link_to "<span class=\"glyphicons glyphicons-dashboard\"></span>&emsp;&emsp;Courses".html_safe,  courses_path %></li>
-			<li role="presentation" class="<%= 'active' if current_page?(evaluations_path) %>"><%= link_to "<span class=\"glyphicons glyphicons-scale-classic\"></span>&emsp;&emsp;Evaluations".html_safe,  evaluations_path %></li>		
+			<li role="presentation" class="<%= 'active' if current_page?(projects_path) %>"><%= link_to "<span class=\"glyphicons glyphicons-pushpin\" style=\"font-size:23;\"></span>&emsp;&emsp;Projects".html_safe, projects_path %></li>
+			<li role="presentation" class="<%= 'active' if current_page?(courses_path) %>"><%= link_to "<span class=\"glyphicons glyphicons-dashboard\" style=\"font-size:23;\"></span>&emsp;&emsp;Courses".html_safe,  courses_path %></li>
+			<li role="presentation" class="<%= 'active' if current_page?(evaluations_path) %>"><%= link_to "<span class=\"glyphicons glyphicons-scale-classic\" style=\"font-size:23;\"></span>&emsp;&emsp;Evaluations".html_safe,  evaluations_path %></li>		
 		<% when 3 %>
 			<li><%= link_to 'Control Panel', '/kayslegion' %></li>
-			<li role="presentation" class="<%= 'active' if current_page?(roster_path) %>"><%= link_to "<span class=\"glyphicons glyphicons-list-alt\"></span>&emsp;&emsp;Upload Roster".html_safe,  roster_path %></li>
-			<li role="presentation" class="<%= 'active' if current_page?(users_path) %>"><%= link_to "<span class=\"glyphicons glyphicons-user\"></span>&emsp;&emsp;Students".html_safe, users_path %></li>
-			<li role="presentation" class="<%= 'active' if current_page?(groups_path) %>"><%= link_to "<span class=\"glyphicons glyphicons-group\">&emsp;&emsp;Groups".html_safe, groups_path %></li>
-			<li role="presentation" class="<%= 'active' if current_page?(projects_path) %>"><%= link_to "<span class=\"glyphicons glyphicons-pushpin\"></span>&emsp;&emsp;Projects".html_safe, projects_path %></li>
-			<li role="presentation" class="<%= 'active' if current_page?(courses_path) %>"><%= link_to "<span class=\"glyphicons glyphicons-dashboard\"></span>&emsp;&emsp;Courses".html_safe,  courses_path %></li>
+			<li role="presentation" class="<%= 'active' if current_page?(roster_path) %>"><%= link_to "<span class=\"glyphicons glyphicons-list-alt\" style=\"font-size:23;\"></span>&emsp;&emsp;Upload Roster".html_safe,  roster_path %></li>
+			<li role="presentation" class="<%= 'active' if current_page?(users_path) %>"><%= link_to "<span class=\"glyphicons glyphicons-user\" style=\"font-size:23;\"></span>&emsp;&emsp;Students".html_safe, users_path %></li>
+			<li role="presentation" class="<%= 'active' if current_page?(groups_path) %>"><%= link_to "<span class=\"glyphicons glyphicons-group\" style=\"font-size:23;\">&emsp;&emsp;Groups".html_safe, groups_path %></li>
+			<li role="presentation" class="<%= 'active' if current_page?(projects_path) %>"><%= link_to "<span class=\"glyphicons glyphicons-pushpin\" style=\"font-size:23;\"></span>&emsp;&emsp;Projects".html_safe, projects_path %></li>
+			<li role="presentation" class="<%= 'active' if current_page?(courses_path) %>"><%= link_to "<span class=\"glyphicons glyphicons-dashboard\" style=\"font-size:23;\"></span>&emsp;&emsp;Courses".html_safe,  courses_path %></li>
 		<%end%>
 <div class="dropdown pull-right">
   <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="background-color:transparent; background-image:none; border:1px solid transparent; text-shadow: 0 0px; box-shadow: 0 0px;">

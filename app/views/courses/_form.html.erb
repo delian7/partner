@@ -2,5 +2,5 @@
 	<%= f.label 'Course Name: ' %>
 	<%= f.text_field(:course_title, class: "form-control") %><br/>
 
-	<%= f.submit("Save Course", :class => 'btn btn-primary') %>
+	<button type= "submit" class="btn btn-primary" onclick= 'this.form.submit();'><span class="glyphicons glyphicons-disk-save"></span>Save Changes</button>
 </div>

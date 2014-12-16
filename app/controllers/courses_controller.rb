@@ -147,11 +147,4 @@ private
     params.require(:user).permit(:current_course)
   end
 
-endourse).permit(:course_title, :instructor, :id)
-  end 
-
-  def secure_params
-    params.require(:user).permit(:current_course)
-  end
-
 end

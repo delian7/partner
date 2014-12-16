@@ -1,9 +1,9 @@
-<span style="font-weight:bold;font-size:25px;"><%= link_to "<span class=\"glyphicon glyphicon-chevron-left\"></span>&nbsp;&nbsp;<b>Back</b>".html_safe, :back, class: "btn btn-default btn-md" %></span><br>
+<span style="font-weight:bold;font-size:25px;"><%= link_to "<span class=\"glyphicons glyphicons-chevron-left\"></span>&nbsp;&nbsp;<b>Back</b>".html_safe, :back, class: "btn btn-default btn-md" %></span><br>
 <div class="authform", style="max-width: 500px; line-height:3; padding: 1% 1% 1% 1%!important;margin:auto;">
 
-	<%= form_for(:course, :url => {:action => 'update', :id => params[:id]}) do |f| %>
+	<%= form_for(:course, url: {action: 'update', id: params[:id]}) do |f| %>
 	<h2>Edit Course</h2>
-		<%= render(:partial => 'form', :locals => {:f => f}) %>
+		<%= render(partial: 'form', locals: {f: f}) %>
 
 	<% end %>
 </div>

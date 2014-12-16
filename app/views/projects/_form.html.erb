@@ -26,12 +26,12 @@
 	<%= f.select :group_size, [['2 people','2'], ['3 people','3'], ['4 people','4'], ['5 people','5'], ['6 people','6']], {}, {class: "form-control"} %><br>
 
 	<%= f.label 'Let students partner with the same person for different projects?' %><br>
-	    <%= f.radio_button :allow_repeat, true, :checked => repeat == true %> 
+	    <%= f.radio_button :allow_repeat, true, checked: repeat == true %> 
 	  <%= f.label 'Allow Repeats' %><br>
-	    <%= f.radio_button :allow_repeat, false, :checked => repeat == false %>
+	    <%= f.radio_button :allow_repeat, false, checked: repeat == false %>
 	  <%= f.label 'Restrict Repeats' %><br><br>
 
 
-	<%= f.submit("Save Project", id: 'save-project', :class => 'btn btn-primary') %>
+	<%= f.submit("Save Project", id: 'save-project', class: 'btn btn-primary') %>
 
 </div>
