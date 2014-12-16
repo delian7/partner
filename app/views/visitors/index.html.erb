@@ -11,7 +11,9 @@
 		<!-- if the user is a Professor or a T/A -->
 		<% when 1..2 %><p>
 			 <center>
-			 	<%= render 'roster/roster' %></center>
+			 	<%= render 'roster/roster' %>
+			 	<hr>
+			 </center>
 				<%= render 'courses/index' %>
 		<!-- if the user is an admin -->
 		<% when 3 %>
