@@ -1,15 +1,15 @@
-<div class="section-group">
-  <div class="col span_2_of_3">
-    <!-- autogroup form-->
-    <span style="font-size:45px; font-weight:bold;display:inline;">Groups</span> 
-    <span style="font-size:30px; font-weight:bold;display:inline">&nbsp;for<br>
+<span style="font-size:30px; font-weight:bold;display:inline">&nbsp;for<br>
       <%=@myproject.name%><br>
-      <%= link_to("<span class=\"glyphicon glyphicon-pencil\"></span>&nbsp;&nbsp;Edit Project".html_safe, edit_project_path(@myproject.id), :class => 'btn btn-success')%>
-      <%=  link_to "<span class=\"glyphicon glyphicon-warning-sign\"></span>&nbsp;&nbsp;Reset Groups".html_safe, clear_partnerships_project_path(@myproject.id), :data => { :confirm =>"Are you sure? This will reset groups and you will lose this information."}, :class => 'btn btn-danger btn-md', style: "display:inline", id: 'disband-all-btn'%>
-    </span>
-  </div>
-  
-  <div class="col span_1_of_3">
+        <div style="float:left;width:75%">
+          <%= link_to "<span class=\"glyphicons glyphicons-pencil\"></span>&nbsp;&nbsp;Edit Project".html_safe, edit_project_path(@myproject.id), class: 'btn btn-success'%>
+          <%=  link_to "<span class=\"glyphicons glyphicons-plus\"></span>&nbsp;&nbsp;Add New Group</span>".html_safe, new_group_path, class: 'btn btn-primary' %>
+        </div>
+        <div style="float:left;width:25%">
+          <%=  link_to "<span class=\"glyphicons glyphicons-warning-sign\"></span>&nbsp;&nbsp;Reset Groups".html_safe, clear_partnerships_project_path(@myproject.id), data: { confirm: "Are you sure? This will reset groups and you will lose this information."}, class: 'btn btn-danger btn-sm', id: 'disband-all-btn'%>
+        </div>
+      </span>
+    </div>
+  <div style="float:left;width:30%">
     <!-- Start Table Header --><br>
     <%= render 'layouts/buttons/course_select'%> 
     <%= render 'layouts/buttons/autogroup'%> 
@@ -22,14 +22,16 @@
   <% ids = Group.where(project_id: @myproject).order(:name).uniq%>
 <% end %>
 
-  
+  <table class="table" style="width: 95%!important; max-width:1200px;" align="center"> 
+ 
 <% ids.each do |group| %>
-  <table class="table" style="width: 95%!important;" id="group<%= group.id %>"> 
-    <% @group = Group.find(group) %>
-    <th style="text-align:left;" colspan="9">
+  
+   <% @group = Group.find(group) %>
+   <tr>
+    <th colspan='9' style='background-color:#eee;' colspan='9' id="group<%= group.id %>">
       <span style="font-size:20px; font-weight:bold;">
-        <%= link_to @group.name, @group %>&nbsp;&nbsp;&nbsp;&nbsp;
-        <%=  link_to "<span class=\"glyphicon glyphicon-remove\"></span>".html_safe, disband_group_path(group), :class => 'btn btn-default btn-sm', id: "disband-group-btn" %>
+        <%= link_to @group.name, @group %>&nbsp;
+        <%=  link_to "<span class=\"glyphicons glyphicons-remove-2\"></span>".html_safe, disband_group_path(group), data: { confirm: "Are you sure? This will permanently delete this group and you will lose all evaluation information."},  id: "disband-group-btn", style:"color:red;font-size:10px;"%>
       </span>
     </th>
     
@@ -40,21 +42,16 @@
         <td id='name'><%= link_to "#{user.first_name} #{user.last_name}", user %></td>
         <td class='collapsable'><%= user.email %></td>
         <td>
-          <%if GroupRelation.find_by(user_id: user.id, group_id: @group.id).status != 2 %>
+          <% if GroupRelation.find_by(user_id: user.id, group_id: @group.id).status != 2 %>
             Request Pending
-          <%else%>
-            Confirmed <span class="glyphicon glyphicon-ok" style="color:green; font-size:20px;"></span>
+          <% else %>
+            Confirmed <span class="glyphicons glyphicons-ok-2" style="color:green; font-size:20px;"></span>
           <% end %>
         </td>
         <td class='collapsable'><%= render 'layouts/buttons/team_select', user: @user%></td>
-      </tr>   
-    <%end%>
+      </tr>  
+    <% end %>
       
-    
-    <th colspan="9" style="font-size:20px; font-weight:bold; text-align:left;">
-      <%=  link_to "<span class=\"glyphicon glyphicon-plus\"&nbsp;&nbsp;Add New Group</span>".html_safe, new_group_path, :class => 'btn btn-success btn-sm' %>
-    </th>
-    
-      
-  </table>
-<%end%>
+ 
+<% end %>
+ </table>

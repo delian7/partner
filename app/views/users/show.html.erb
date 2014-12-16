@@ -1,4 +1,4 @@
-<span style="font-weight:bold;font-size:25px;"><%= link_to "<span class=\"glyphicon glyphicon-chevron-left\"></span>&nbsp;&nbsp;<b>Back</b>".html_safe, :back, class: "btn btn-default btn-md" %></span>
+<span style="font-weight:bold;font-size:25px;"><%= link_to "<span class=\"glyphicons glyphicons-chevron-left\"></span>&nbsp;&nbsp;<b>Back</b>".html_safe, :back, class: "btn btn-default btn-md" %></span>
 
 <div class="section group">
   <div class="col span_1_of_3"><%= image_tag (@user.avatar.url), :style => "width:100%;"%></div>
@@ -7,6 +7,7 @@
 <span style="font-weight:bold;font-size:45px;"><%= @user.first_name%> <%= @user.last_name%></b></span>
 		<p><b>Name:</b> <%= @user.first_name%> <%=@user.last_name %></p>
 		<p><b>Email:</b> <%= @user.email if @user.email %></p>
+		<p><b>Phone</b> <%= number_to_phone(@user.phone, area_code: true)   if @user.phone%></p>
 	
 		<p><b>Description:</b> <%= @user.description if @user.description %></p>
 		<p><b>Availability:</b> <%= @user.availability if @user.availability%></p>

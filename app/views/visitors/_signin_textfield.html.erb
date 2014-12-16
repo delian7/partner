@@ -1,13 +1,13 @@
 <div class="jumbotron", style="max-width: 350px; padding:23px;">
-  <%= form_for(resource, :as => resource_name, :url => user_session_path, :html => { :role => 'form'}) do |f| %>
+  <%= form_for(resource, as: resource_name, url: user_session_path, html: { role: 'form'}) do |f| %>
     <h3>Sign in As...</h3>
     <%= devise_error_messages! %>
 		<% if request.ip == "127.0.0.1" || true %>
 			<%= f.text_field :id, {class: "form-control"} %>
 	 	<% else %>
-		  <%= f.hidden_field :id, :value => @campus_id %> 
-		  <%= f.hidden_field :ucinetid, :value => @ucinetid %>
+		  <%= f.hidden_field :id, value: @campus_id %> 
+		  <%= f.hidden_field :ucinetid, value: @ucinetid %>
 		<% end %>
-		<%= f.submit 'Sign in', :class => 'btn btn-primary' %>
+		<%= f.submit 'Sign in', class: 'btn btn-primary' %>
 		</div>
 	<%end%>

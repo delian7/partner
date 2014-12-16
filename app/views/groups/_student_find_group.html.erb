@@ -1,11 +1,8 @@
-<div class="section-group">
-	<div class="col span_2_of_3">
-		<span style="font-size:45px; font-weight:bold;">Find Group</span>
-		<table class="table" style="width: 95%!important;">
+		<table class="table" style="width: 95%!important; max-width:1200px;" align="center">
 			<%= render 'groups/group_render'%>
 		</table>
 	</div><!-- start group sidebar -->
-	<div class="col span_1_of_3">
+  <div style="float:left;width:30%">
 		<%= render 'layouts/buttons/course_select'%>
 		 <% @group = current_user.groups.find_by(project_id: current_user.current_project) %>
 		<%= render 'groups/profile', group: @group %>

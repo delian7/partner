@@ -1,8 +1,8 @@
   <div class="section-group">
     <div class="col span_2_of_3">
       <table class="table" style="width: 95%!important;">
-    <h1 style="font-size:45px; font-weight:bold;">Find 
-    	<% if Project.find(current_user.current_project).group_size == 2 %>Partner <% else %>Members </h1><% end %></h1>
+	<span style="font-size:50px; font-weight:bold;"><span class="glyphicons glyphicons-address-book" style="font-size:60px"></span>&ensp;Find
+    	<% if Project.find(current_user.current_project).group_size == 2 %>Partner <% else %>Members </span> <% end %></span>
 	<% !@mygroup.nil? ? mygroupsize = @mygroup.group_relations.size : mygroupsize = 0 %>
 	<!-- Room in group?-->
 	<% allowed_size = Project.find(current_user.current_project).group_size %>
@@ -11,12 +11,12 @@
 		 <div class="alert alert-info">
 	     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 	      <%= content_tag :div, msg.html_safe, :id => "flash_success" %></div>
-  	<%end%>
-
-      	 <td colspan="2"><b>Name</td>
-		      <td class='collapsable'><b>Students</td>
-		      <td colspan="2" style="max-width:100px;"><b>
-		      	<% if allowed_size <= mygroupsize %> Confirmed? <% else %> Request <% end %></td></b>
+  	<% end %>
+  	<tr style="background-color:#eee">
+      	 <th colspan="2"><b>Name</th>
+		      <th class='collapsable'><b>Email</th>
+		      <th colspan="2" style="max-width:100px;"><b>
+		      	<% if allowed_size <= mygroupsize %> Confirmed? <% else %> Request <% end %></th></b>
 		   </tr>
 		<!-- Render every user -->
 		  <%= render 'users/user_render'%></table>

@@ -7,20 +7,20 @@
     <% groups.each do |group| %>	 
     <% @group = Group.find(group) %>
     <tr>
-     <td colspan="3"> <span style="font-size:20px; font-weight:bold;"><%= link_to @group.name, @group %></span></td><td><%= link_to("<span class=\"glyphicon glyphicon-send\"></span>&nbsp;&nbsp;Request to join".html_safe, request_join_group_path(@group.id), :class => 'btn btn-success')%></td>
+     <td colspan="3"> <span style="font-size:20px; font-weight:bold;"><%= link_to @group.name, @group %></span></td><td><%= link_to("<span class=\"glyphicons glyphicons-send\"></span>&nbsp;&nbsp;Request to join".html_safe, request_join_group_path(@group.id), class: 'btn btn-success')%></td>
 
     <% members = group.users.order(:last_name).uniq %>
     <% members.each do |user| %>
 
     <% if GroupRelation.find_by(user_id: user.id, group_id: @group.id).status == 2 %>
     <tr>
-  	     <td class='collapsable'><%= link_to (image_tag (user.avatar.url), :style => 'max-width: 45px;'), user %></td> 
+  	     <td class='collapsable'><%= link_to (image_tag (user.avatar.url), style: 'max-width: 45px;'), user %></td> 
         <td><%= link_to "#{user.first_name} #{user.last_name}", user %> </td>
         <td class='collapsable'><%= user.email %></td>
-      	<td>Confirmed&nbsp;&nbsp;<span class="glyphicon glyphicon-ok" style="color:green; font-size:20px;"></span></td>
+      	<td>Confirmed&nbsp;&nbsp;<span class="glyphicons glyphicons-ok" style="color:green; font-size:20px;"></span></td>
     <% else %>
     <tr style= "background-color:eee; opacity: 0.6;">
-	    <td class='collapsable'><%= link_to (image_tag (user.avatar.url), :style => 'max-width: 45px;'), user %></td> 
+	    <td class='collapsable'><%= link_to (image_tag (user.avatar.url), style: 'max-width: 45px;'), user %></td> 
       <td><%= link_to "#{user.first_name} #{user.last_name}", user %> </td>
       <td class='collapsable'><%= user.email %></td>
         	<td>Pending </td>

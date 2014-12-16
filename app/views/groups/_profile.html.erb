@@ -10,9 +10,9 @@
         <tr>
             <td><span style="font-size:25px; font-weight:bold;"><%= link_to groupname, @group%></span></td>
             <td width="20%">
-            <%= link_to "<span class=\"glyphicon glyphicon-calendar\"></span>&nbsp;&nbsp;<b>Start a Doodle</b>".html_safe, "http://doodle.com/create?type=date&locale=en&title=#{@group.name}%20Group%20Meeting&name=#{current_user.first_name}%20#{current_user.last_name}&eMailAddress=#{current_user.email}&description=Our%20first%20group%20meeting...", class: "btn btn-info btn-sm" %>
+            <%= link_to "<span class=\"glyphicons glyphicons-calendar\"></span>&nbsp;&nbsp;<b>Start a Doodle</b>".html_safe, "http://doodle.com/create?type=date&locale=en&title=#{@group.name}%20Group%20Meeting&name=#{current_user.first_name}%20#{current_user.last_name}&eMailAddress=#{current_user.email}&description=Our%20first%20group%20meeting...", class: "btn btn-info btn-sm" %>
             <% if current_page?(root_path)%>
-            <%= link_to "<span class=\"glyphicon glyphicon-remove\"></span>&nbsp;&nbsp;<b>Leave Group</b>".html_safe, leave_group_path(@group), class: "btn btn-danger btn-xs" %>
+            <%= link_to "<span class=\"glyphicons glyphicons-remove\"></span>&nbsp;&nbsp;<b>Leave Group</b>".html_safe, leave_group_path(@group), class: "btn btn-danger btn-xs" %>
             <% end %></td>
         </tr>
         <tr>
@@ -30,7 +30,7 @@
                         <%if @group.project.end_date == nil || @group.project.end_date == "" %>
                             Not Specified
                         <% else %>
-                            <%= @group.project.end_date%>
+                            <%= @group.project.end_date.strftime("%m/%d/%y")%>
                         <% end %>
                 <% else %>
                     <span style="font-size:16px; font-weight:bold;">Project:</span>
@@ -44,7 +44,7 @@
                         <%if @group.project.end_date == nil || @group.project.end_date == "" %>
                             Not Specified
                         <% else %>
-                            <%= @group.project.end_date%>
+                            <%= @group.project.end_date.strftime("%m/%d/%y")%>
                         <% end %>
                 <% end %>
                 </div>
@@ -62,7 +62,7 @@
         </tr>
         <tr>
             <td class='collapsable'>
-            <%= link_to (image_tag (user.avatar.url), :style => 'max-width: 45px;'), user %></td>
+            <%= link_to (image_tag (user.avatar.url), style: 'max-width: 45px;'), user %></td>
             <td>
             <%= link_to "#{user.first_name} #{user.last_name}", user %></td>
             <td class='collapsable'><%= user.email %></td>
@@ -71,7 +71,7 @@
         </tr>
         <tr style="background-color:eee; opacity: 0.6;">
             <td class='collapsable'>
-            <%= link_to (image_tag (user.avatar.url), :style => 'max-width: 45px;'), user %></td>
+            <%= link_to (image_tag (user.avatar.url), style: 'max-width: 45px;'), user %></td>
             <td>
             <%= link_to "#{user.first_name} #{user.last_name}", user %></td>
             <td class='collapsable'><%= user.email %></td>

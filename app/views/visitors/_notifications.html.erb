@@ -1,5 +1,5 @@
-<br><div class="jumbotron" style= "padding:20px;"><h1 style="font-size:40px; font-weight:bold;"><center>Notifications</center></h1>
-
+<br><div class="jumbotron" style= "padding:20px;"><h1 style="font-size:40px; font-weight:bold;"><center><span class="glyphicons glyphicons-circle-exclamation-mark"></span>&ensp;Notifications</center></h1>
+<%@notifications = false%>
 <% case current_user.role %>
 <% when 0 %>
 	<% if current_user.group_relations.where(status: 1).empty? %>
@@ -11,9 +11,14 @@
 		<% end %>
 	<% end %>
 <% when 1..2 %>
-	<% current_user.courses.each do |course|%>
+   		<% current_user.courses.each do |course|%>
 		<%= render 'visitors/professor_alerts', course: course %>
-	<%end%>
+		<% end %> 
+	<% if @notifications == false %>
+		<span style="font-size:20px; font-weight:normal;">You don't
+	    have any requests</span>
+	<% end %>
+
 <% when 3 %>
 <% Courses.all.each do |course|%>
 	<% course.projects.empty?%>

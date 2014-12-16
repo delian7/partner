@@ -12,8 +12,9 @@
 		<% when 1..2 %><p>
 			 <center>
 			 	<%= render 'roster/roster' %>
-					<h4>There are currently <strong><%= User.count %></strong> registered users</h4>
-		     </center>
+			 	<hr>
+			 </center>
+				<%= render 'courses/index' %>
 		<!-- if the user is an admin -->
 		<% when 3 %>
 
@@ -21,6 +22,7 @@
 	<% else%> 
 		<div class="col span_2_of_3" style="text-align:center;">
   	<%= render "visitors/welcomemsg" %>
+  	<h4>There are currently <strong><%= User.count %></strong> registered users</h4>
   	<!-- pending requests/notifications here-->
   </div>
 		<div class="col span_1_of_3">

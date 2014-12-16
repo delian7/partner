@@ -1,37 +1,37 @@
 <div class="jumbotron" style="max-width: 600px; margin:auto; padding:10px 25px 10px 25px">
-  <%= form_for(resource, :as => resource_name, :url => user_registration_path, :html => { :method => :put, :role => 'form'}) do |f| %>
+  <%= form_for(resource, as: resource_name, url: user_registration_path, html: { method: :put, role: 'form'}) do |f| %>
     <%= devise_error_messages! %>
       <h2>Edit Profile</h2>
         <div class="col span_2_of_3">
       <table style="width:100%">
         <tr><td>
-      &ensp;&thinsp;&thinsp;<span class="glyphicon glyphicon-envelope"></span>&emsp;<%= f.label :email, style:"font-size:14px!important;" %>
+      &ensp;&thinsp;&thinsp;<span class="glyphicons glyphicons-envelope"></span>&emsp;<%= f.label :email, style:"font-size:14px!important;" %>
     </td><td>
       <%= f.email_field :email, class: 'form-control' %>
     </td></tr><tr><td>
-      &ensp;&thinsp;&thinsp;<span class="glyphicon glyphicon-calendar"></span>&emsp;<%= f.label :availability, style:"font-size:14px!important;"  %>
+      &ensp;&thinsp;&thinsp;<span class="glyphicons glyphicons-calendar"></span>&emsp;<%= f.label :availability, style:"font-size:14px!important;"  %>
     </td><td>
       <%= f.text_field :availability, class: 'form-control' %>
     </tr><tr><td>
-      &ensp;&thinsp;&thinsp;<span class="glyphicon glyphicon-phone-alt"></span>&emsp;<%= f.label :phone, style:"font-size:14px!important;"  %>
+      &ensp;&thinsp;&thinsp;<span class="glyphicons glyphicons-phone-alt"></span>&emsp;<%= f.label :phone, style:"font-size:14px!important;"  %>
     </td><td>
-      <%= f.phone_field :phone, class: 'form-control'   %>
+      <%= f.telephone_field :phone, class: 'form-control' %>
     </td></tr><tr><td colspan="2">
 
-      &ensp;&thinsp;&thinsp;<span class="glyphicon glyphicon-edit"></span>&emsp;<%= f.label :description, style:"font-size:14px!important;" %>
+      &ensp;&thinsp;&thinsp;<span class="glyphicons glyphicons-edit"></span>&emsp;<%= f.label :description, style:"font-size:14px!important;" %>
       </td></tr><tr><td colspan="2">
       <%= f.text_area :description, class: 'form-control' %></td></tr>
       </table>
   </div>
 <div class="col span_1_of_3 jumbotron" style=" text-align:center;padding:0px 10px 10px 10px">
-  <h4><span class="glyphicon glyphicon-picture"></span>&emsp;Profile Picture</h4>
+  <h4><span class="glyphicons glyphicons-picture"></span>&emsp;Profile Picture</h4>
   <b>Image Upload</b><br>
   <div class="fileupload fileupload-new" data-provides="fileupload">
   <div class="fileupload-preview thumbnail" style="width: 145px; height:145px;"></div><br>
     <span class="btn btn-info btn btn-file"><%= f.file_field :avatar %>
-    <span class="fileupload-new btn-xs", style="max-width: 200px;"><span class="glyphicon glyphicon-picture"></span>&emsp;Select image
+    <span class="fileupload-new btn-xs", style="max-width: 200px;"><span class="glyphicons glyphicons-picture"></span>&emsp;Select image
     </span>
-    <span class="fileupload-exists btn-xs"><span class="glyphicon glyphicon-picture"></span>&emsp;Change
+    <span class="fileupload-exists btn-xs"><span class="glyphicons glyphicons-picture"></span>&emsp;Change
     </span>
       <input type="file" />
     </span>
@@ -39,7 +39,8 @@
     </div></div>
     <div class="jumbotron" style= "clear:both;text-align:center; width:100%; padding:0px;">
       <hr style="margin:0px 0px 10px 0px">
-    <%= link_to "<span class=\"glyphicon glyphicon-save\"></span>&emsp;Save Changes".html_safe, "#", :onclick=> 'this.form.submit();', class: "btn btn-primary btn-xl", :style => 'max-width:200px; padding:10px;' %></div>
+     <button type= "submit" class="btn btn-primary btn-xl" onclick= 'this.form.submit();'><span class="glyphicons glyphicons-disk-save"></span>Save Changes</button>
+</div>
 <% end %>
 
 </div>
