@@ -11,6 +11,7 @@
 		<!-- if the user is a Professor or a T/A -->
 		<% when 1..2 %><p>
 			 <center>
+			 	<%= render 'roster/roster' %>
 					<h4>There are currently <strong><%= User.count %></strong> registered users</h4>
 		     </center>
 		<!-- if the user is an admin -->

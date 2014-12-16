@@ -71,8 +71,8 @@ def destroy
 end
 
 
-def open_and_parse_csv
-  csv_text = File.open(params[:roster][:upload].tempfile, :headers => true)
+def open_and_parse_csv(index)
+  csv_text = File.open(params[:files][index].tempfile, :headers => true)
   csv = CSV.parse(csv_text)
   csv = remove_nils(csv)
   start_course_index = csv.find_index{|each| each[0].include?("Quarter,")}
@@ -90,48 +90,49 @@ end
 def csv_import
   # variables for counting how many roster relations made
   add, removal = [0, 0]
-  csv = open_and_parse_csv
-  # enrolls = enrolled_students(@course_code)
-  #makes new course and project if doesnt exist
-  if Course.where(id: @course_code)[0].nil?
-    @course = Course.create(id: @course_code, course_title: @course_title, instructor: @instructor[0])
-    Roster.create(course_id: @course_code, user_id: current_user.id)
-    make_default_project(@course_code)
-  else
-    @course = Course.find(@course_code)
-    @proj = @course.projects.find_by(active: true)
-  end
-    set_current_project_course(current_user, @proj, @course)
-    
- 
-  # for every 'row' or array in studentdata array, excluding row 1 and the last two
-  @student_data[1..-2].each do |i|
-    get_student_data(i, @student_data)
-    # if i student exists, find them
-  if !User.find_by(ucinetid: @netid).nil?
-    @user = User.find_by(ucinetid: @netid)
-  else 
-    #make a new user with the info we got from studentdata array
-    @user = User.create(ucinetid: @netid, first_name: @name[0], last_name: @name[1], email: @mail, 
-      uci_affiliations: "student", current_course:  @course_code)
-  end
-   if !enrolled?(@netid, @course_code) && in_new_roster?(@netid)
-      roster = Roster.create(course_id: @course_code, user_id: @user.id)
-      set_current_project_course(@user, @proj, @course)
-      add+=1
-  end
-end
-
-      Course.find(@course_code).users.pluck(:ucinetid).each do |enrolled_netid|
-      if enrolled?(enrolled_netid, @course_code) && !in_new_roster?(enrolled_netid)
-        Roster.find_by(user_id: User.find_by(ucinetid: enrolled_netid).id, course_id: @course_code).destroy
-        removal+=1
+  params[:files].each_with_index do |file,index|
+      csv = open_and_parse_csv(index)
+      # enrolls = enrolled_students(@course_code)
+      #makes new course and project if doesnt exist
+      if Course.where(id: @course_code)[0].nil?
+        @course = Course.create(id: @course_code, course_title: @course_title, instructor: @instructor[0])
+        Roster.create(course_id: @course_code, user_id: current_user.id)
+        make_default_project(@course_code)
       else
-        set_current_project_course(@user, @proj, @course)
+        @course = Course.find(@course_code)
+        @proj = @course.projects.find_by(active: true)
       end
-      end 
-  
-  redirect_to :back, :notice => "CSV Import Successful,  #{add} students added to this class, #{removal} students removed from this class"
+        set_current_project_course(current_user, @proj, @course)
+        
+     
+      # for every 'row' or array in studentdata array, excluding row 1 and the last two
+      @student_data[1..-2].each do |i|
+        get_student_data(i, @student_data)
+        # if i student exists, find them
+      if !User.find_by(ucinetid: @netid).nil?
+        @user = User.find_by(ucinetid: @netid)
+      else 
+        #make a new user with the info we got from studentdata array
+        @user = User.create(ucinetid: @netid, first_name: @name[0], last_name: @name[1], email: @mail, 
+          uci_affiliations: "student", current_course:  @course_code)
+      end
+       if !enrolled?(@netid, @course_code) && in_new_roster?(@netid)
+          roster = Roster.create(course_id: @course_code, user_id: @user.id)
+          set_current_project_course(@user, @proj, @course)
+          add+=1
+      end
+    end
+
+          Course.find(@course_code).users.pluck(:ucinetid).each do |enrolled_netid|
+          if enrolled?(enrolled_netid, @course_code) && !in_new_roster?(enrolled_netid)
+            Roster.find_by(user_id: User.find_by(ucinetid: enrolled_netid).id, course_id: @course_code).destroy
+            removal+=1
+          else
+            set_current_project_course(@user, @proj, @course)
+          end
+          end 
+  end
+    redirect_to :back, :notice => "CSV Import Successful,  #{add} students added to this class, #{removal} students removed from this class"
 end
 
 
