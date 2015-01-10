@@ -19,17 +19,12 @@ $(document).ready( function() {
         } else {
             if( log ) alert(log);
         }
-        
     });
 });
 </script>  
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script src="js/vendor/jquery.ui.widget.js"></script>
-<script src="js/jquery.iframe-transport.js"></script>
-<script src="js/jquery.fileupload.js"></script>
 
 <div class="jumbotron", style="max-width: 500px; margin:auto; padding:20px 20px 0px 20px;">
-<%= form_for :roster, :url=>{:controller=>"courses", :action=>"csv_import"}, :html => { :multipart => true } do |f| %>
+<%= form_for :roster, url: {controller: "courses", action: "csv_import"}, html: { multipart: true } do |f| %>
  <div class="form-group">
   <label for="dump_file">
 <div style="font-size:30px; font-weight:bold;"><span class="glyphicons glyphicons-disk-import"></span>&emsp;Import WebRoster
@@ -40,7 +35,7 @@ $(document).ready( function() {
   <div class="input-group" style="float :left;">
                 <span class="input-group-btn">
                     <span class="btn btn-info btn-file">
-                      Browse...<input id="fileupload" type="file" name="files[]" data-url="server/php/" multiple>
+                      Browse...<input id="fileupload" type="file" name="files[]" multiple>
                     </span>
                 </span>
                 <input type="text" class="form-control" style= "background-color:white" readonly>
