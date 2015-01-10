@@ -10,7 +10,7 @@
       	<% end %>
 
       </td><td style="padding:0px;margin:0px">
-	    <%=  link_to "<span class=\"glyphicons glyphicons-pencil\"></span>&nbsp;&nbsp;Edit".html_safe, edit_project_path(course.id), class: "btn btn-success btn-sm" %></td>
+	    <%=  link_to "<span class=\"glyphicons glyphicons-pencil\"></span>&nbsp;&nbsp;Edit".html_safe, edit_course_path(course.id), class: "btn btn-success btn-sm" %></td>
 	    <td style="padding:0px;margin:0px">
     	 <%=  link_to "<span class=\"glyphicons glyphicons-remove-2\"></span>&nbsp;&nbsp;Delete".html_safe, remove_course_path(course.id), data: { confirm: "Are you sure you want to delete this course? You will permanently lose all information associated with this course."}, class: "btn btn-danger btn-sm" %></td>
     </tr>

@@ -2,7 +2,7 @@
     <div class="col span_2_of_3">
       <table class="table" style="width: 95%!important;">
 	<span style="font-size:50px; font-weight:bold;"><span class="glyphicons glyphicons-address-book" style="font-size:60px"></span>&ensp;Find
-    	<% if Project.find(current_user.current_project).group_size == 2 %>Partner <% else %>Members </span> <% end %></span>
+    	<% if Project.find(current_user.current_project).group_size == 2 %>Partner <% else %>Members </span> <% end %></span><br><br>
 	<% !@mygroup.nil? ? mygroupsize = @mygroup.group_relations.size : mygroupsize = 0 %>
 	<!-- Room in group?-->
 	<% allowed_size = Project.find(current_user.current_project).group_size %>

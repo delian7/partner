@@ -1,5 +1,1 @@
-<div style="max-width:550px;float:right;padding-right:7%;">
-  
-  <%= link_to "<span class=\"glyphicons glyphicons-random\"></span>&nbsp;&nbsp;Autogroup".html_safe, autogroup_project_path(@myproject.id), :class => 'btn btn-info'%>
-  <%=  link_to "<span class=\"glyphicons glyphicons-warning-sign\"></span>&nbsp;&nbsp;Reset Partnerships".html_safe, clear_partnerships_project_path(@myproject.id), :class => 'btn btn-danger' %>
-  <%=link_to "<span class=\"glyphicons glyphicons-disk-export\"></span>&nbsp;&nbsp;Export Table".html_safe, export_csv_users_path(current_user), :class=>"btn btn-warning" %></div>
+  <%=link_to "<span class=\"glyphicons glyphicons-disk-export\"></span>&nbsp;&nbsp;Export Table".html_safe, export_csv_users_path(current_user), :class=>"btn btn-warning" %>

@@ -89,7 +89,7 @@ end
 
 def csv_import
   # variables for counting how many roster relations made
-  msg=""
+  msg = ""
   add, removal = [0, 0]
   params[:files].each_with_index do |file,index|
             csv = open_and_parse_csv(index)
