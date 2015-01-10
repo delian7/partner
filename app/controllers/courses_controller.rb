@@ -70,7 +70,7 @@ def destroy
   end
 end
 
-
+# opens and parses CSV, removes the nils values, to get the student data and course data seperately. 
 def open_and_parse_csv(index)
   csv_text = File.open(params[:files][index].tempfile, :headers => true)
   csv = CSV.parse(csv_text)
@@ -124,7 +124,7 @@ def csv_import
                 add+=1
             end
           end
-
+                # removes students if they are not enrolled in the newest roster
                 Course.find(@course_code).users.pluck(:ucinetid).each do |enrolled_netid|
                 if enrolled?(enrolled_netid, @course_code) && !in_new_roster?(enrolled_netid)
                   Roster.find_by(user_id: User.find_by(ucinetid: enrolled_netid).id, course_id: @course_code).destroy

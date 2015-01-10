@@ -22,6 +22,7 @@ include Pundit
   COOKIE_NAME  = "ucinetid_auth"
   attr_reader :auth_key
 
+# grabs UCI WEBAUTH COOKIE and returns <%=@auth_fail%> <%=@error_code%><%=@ucinetid%> <%=@campus_id%> <%=@auth_host%> <%=@age_in_seconds%> <%=@uci_affiliations%>
   def startup
       @auth_key=cookies[COOKIE_NAME]
       http = Net::HTTP.new('login.uci.edu', 80)
@@ -42,7 +43,7 @@ include Pundit
       end
         return @results
     end
-
+# checks to make sure that the users current_course and current_project both exist, if they don't then sets it to default 0
   def nil_check
     if Project.where(course_id: 0).empty?
       proj = Project.create(id: 0, course_id: 0)
