@@ -48,15 +48,6 @@ def edit
     end
     redirect_to(:action => 'index')
   end
-  
-  def profile
-    set_current_users_instance_variables
-    if user_signed_in?
-    authorize current_user
-    else
-    redirect_to :back, :alert => "Access denied."
-    end
-  end
 
   def update
     authorize current_user

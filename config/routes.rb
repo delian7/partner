@@ -30,10 +30,10 @@ devise_for :users, :controllers => {:registrations => "registrations"}
         post :set_current_course
         post :set_current_project
 
-
         end
      collection do
-       get :export_csv
+       get :export_organized
+       get :export_horizontal
         end
     end
 

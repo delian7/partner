@@ -6,7 +6,7 @@
         </div>
         <div style="float:left;width:25%">
           <%=  link_to "<span class=\"glyphicons glyphicons-warning-sign\"></span>&nbsp;&nbsp;Reset Groups".html_safe, clear_partnerships_project_path(@myproject.id), data: { confirm: "Are you sure? This will reset groups and you will lose this information."}, class: 'btn btn-danger btn-sm', id: 'disband-all-btn'%>
-           <%=link_to "<span class=\"glyphicons glyphicons-disk-export\"></span>&nbsp;&nbsp;Export Table".html_safe, export_csv_users_path(current_user), :class=>"btn btn-warning btn-sm" %>
+           <%=link_to "<span class=\"glyphicons glyphicons-disk-export\"></span>&nbsp;&nbsp;Export Table".html_safe, export_horizontal_users_path(current_user), :class=>"btn btn-warning btn-sm" %>
         </div>
       </span>
     </div>

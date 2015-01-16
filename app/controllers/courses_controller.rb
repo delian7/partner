@@ -17,10 +17,6 @@ require 'csv'
     @course = Course.find(params[:id])
   end
 
- def profile
-    authorize current_user
-  end
-
   def show
     @course = Course.find(params[:id])
     unless user_signed_in?
@@ -48,27 +44,14 @@ require 'csv'
         set_current_project_course(user, Project.find_by_id(0), Course.find_by_id(0))
         end
     destroy_roster_relations(@course)
-    destroy_project_relations(@course)
+    destroy_groups(@course)
+    destroy_projects(@course)
+
     @course.destroy
     @course.save ? flash[:notice] = "Success!  Course has been deleted" : flash[:error] = "Course could not be deleted"
     redirect_to(:action => 'index')
     end
   end
-
-def destroy
-  authorize current_user
-  if Course.find_by_id(params[:id]) != nil
-  @course = Course.find(params[:id])
-      @course.users.each do |user|
-      set_current_project_course(user, Project.find_by_id(0), Course.find_by_id(0))
-      end
-  destroy_roster_relations(@course)
-  destroy_project_relations(@course)
-  @course.destroy
-  @course.save ? flash[:notice] = "Success!  Course has been deleted" : flash[:error] = "Course could not be deleted"
-  redirect_to(:action => 'index')
-  end
-end
 
 # opens and parses CSV, removes the nils values, to get the student data and course data seperately. 
 def open_and_parse_csv(index)

@@ -157,20 +157,6 @@ class GroupsController < ApplicationController
     redirect_to users_path
     end
 
-
-  # Start download of csv file of partner data
-  def export_csv
-      user = User.find(params[:id])
-      authorize user
-      roster_csv = CSV.generate do |csv|
-      csv << ["First Name", "Last Name", "Email"]
-      User.where(role: 0).each do |user|
-        csv << [user.first_name, user.last_name, user.email]     
-      end 
-      end    
-    send_data(roster_csv, :type =>  'text/csv', :filename =>  'groups.csv')
-  end
-
     def disband
     group = Group.find(params[:id])
     groupname = group.name
