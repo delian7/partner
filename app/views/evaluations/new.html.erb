@@ -1,0 +1,40 @@
+<span style="font-weight:bold;font-size:25px;"><%= link_to "<span class=\"glyphicons glyphicons-chevron-left\"></span>&nbsp;&nbsp;<b>Back</b>".html_safe, :back, class: "btn btn-default btn-md" %></span><br>
+<div class="authform", style="max-width: 500px; margin:auto;">
+	
+
+	<%= form_for(:evaluation, :url => {:action => 'create'}) do |f| %>
+		<div style="font-size:45px; font-weight:bold;">New Evaluation<br></div><br>
+		<table style="width:100%">
+	<tr>
+		<td><%= f.label 'Team Member: ' %></td>
+		<% if !@mygroup.nil?%>
+			<td colspan='2'>
+				<% evaluated_left = User.find(@mygroup.users.collect(&:id) - @mygroup.eval_relations.where(reviewer_id:current_user.id).collect(&:user_id)) %>
+					<%= f.select :reviewer, options_for_select(evaluated_left.collect {|p| [ p.first_name + " " + p.last_name, p.id ]}),  {include_blank: true}, {class: 'form-control', style: 'width:70%; display:inline; height:29px;' }  %>
+			</td>
+		<% end %>
+	</tr>
+	<tr>
+		<td><%= f.label 'Effort: ' %></td>
+		<td colspan='2'><%= f.range_field(:effort, in: 1..100) %></td>
+	</tr>
+	<tr>
+		<td><%= f.label 'Quality: ' %></td>
+		<td colspan='2'><%= f.select :quality, options_for_select((0..100).step(5)) %> % </td>
+	</tr>
+	<tr>
+		<td><%= f.label 'Reliability: ' %></td>
+		<td colspan='2'><%= f.number_field :reliability, in: 1..100 %></td>
+	</tr>
+	<tr>
+		<td><%= f.label 'Comments: ' %></td>
+		<td colspan='2'><%= f.text_area(:comments, class: "form-control") %></td>
+	</tr>
+	</tr><td width='25%' style='text-align:right'>
+		<%= f.check_box :flag %></td><td><%= f.label 'Flag this Evaluation for Professor', style: "color:red" %></td>
+	</tr>
+</table>
+	<%= f.submit("Save Project", id: 'save-project', class: 'btn btn-primary') %>
+</div>
+	<% end %>
+</div>

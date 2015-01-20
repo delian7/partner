@@ -50,11 +50,11 @@
 	</tr>
 </table><table style="width:100%">
 	<tr>
-	   <td style="text-align:right"><%= f.radio_button :allow_repeat, true, checked: repeat == true %> </td>
-	  <td>Allow Repeats</td>
+	   <td style="text-align:right; <%= 'background:#ddd' if repeat == true %>"><%= f.radio_button :allow_repeat, true, checked: repeat == true %> </td>
+	  <td style="<%= 'background:#ddd' if repeat == true %>"><span class="glyphicons glyphicons-ok-2" style="color:green;"></span>&ensp;Allow Repeats</td>
 	</tr><tr>
-	  <td style="text-align:right"><%= f.radio_button :allow_repeat, false, checked: repeat == false %> </td>
-	  <td>Restrict Repeats</td>
+	  <td style="text-align:right; <%= 'background:#ddd' if repeat == false %>"><%= f.radio_button :allow_repeat, false, checked: repeat == false %> </td>
+	  <td style="<%= 'background:#ddd' if repeat == false %>"><span class="glyphicons glyphicons-ban" style="color:red;"></span>&ensp;Restrict Repeats</td>
 	</tr>
 </table><br>
 

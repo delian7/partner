@@ -1,5 +1,4 @@
-<span style="font-size:30px; font-weight:bold;display:inline">&nbsp;for<br>
-      <%=@myproject.name%><br>
+<span style="font-size:20px; display:inline">&nbsp;for <span style="font-weight:bold;"><%=@myproject.name%><br>
         <div style="float:left;width:75%">
           <%= link_to "<span class=\"glyphicons glyphicons-pencil\"></span>&nbsp;&nbsp;Edit Project".html_safe, edit_project_path(@myproject.id), class: 'btn btn-success'%>
           <%=  link_to "<span class=\"glyphicons glyphicons-plus\"></span>&nbsp;&nbsp;Add New Group</span>".html_safe, new_group_path, class: 'btn btn-primary' %>

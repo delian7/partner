@@ -4,10 +4,12 @@ class EvaluationsController < ApplicationController
 
   def index
   authorize current_user
+  set_current_users_instance_variables
   end
 
   def new
   authorize current_user
+  set_current_users_instance_variables
   end
 
   def edit
@@ -71,7 +73,7 @@ end
 private 
   
   def evaluation_params
-    params.require(:evaluation).permit(:evaluation_title, :instructor, :id)
+    params.require(:evaluation).permit(:evaluation_title, :group_id, :user_id, :user_id, :instructor, :id, :field1, :field2, :field3)
   end 
 
 end

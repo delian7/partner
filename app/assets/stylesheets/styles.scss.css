@@ -5,11 +5,17 @@ max-width: 150px;
 img#non-responsive {
 margin: 0px 0px 0px 0px;
 }
-.reports-grid{
-    color:red;
-}
+
 .order{
   display: inline;
+}
+
+.groupsize_changes {
+  color:black
+}
+
+.groupsize_changes:hover {
+  color: red;
 }
 
 .navbar .nav > li > a {

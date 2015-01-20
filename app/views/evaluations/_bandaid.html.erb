@@ -1,0 +1,37 @@
+<div class="section-group">
+  <div style="float:left;width:70%">
+	<span style="font-size:40px; font-weight:bold;"><span class="glyphicons glyphicons-scale-classic"></span>&emsp;Evaluations</span>
+</div>
+	<div style="float:left;width:30%">
+    <!-- Start Table Header -->
+    <%= render 'layouts/buttons/course_select'%> 
+  </div> 
+</div> 
+
+<table class="table" style= "border:1px grey!important;">
+  <!-- goes throguh all users courses, then for every course, pushes all projects to array @projs-->
+	<tr>
+		<th>Student</th>
+    	<th>Average</th>
+    	<th>Effort</th>
+    	<th>Quality</th>
+    	<th>Reliability</th>
+		<th>Group</th>
+	</tr>
+
+	<% Project.find(current_user.current_project).evaluations.each do |evaluation| %>
+		<% avg = ((evaluation.effort + evaluation.reliability + evaluation.quality)/3) %>
+		<tr> 
+			<td><%= evaluation.users.collect(&:first_name)[0] %> <%= evaluation.users.collect(&:last_name)[0] %></td>
+			<td><center><%= avg %> %</td>
+			<td><center><%= evaluation.effort %> %</td>
+			<td><center><%= evaluation.quality %> %</td>
+			<td><center><%= evaluation.reliability %> %</td>
+			<td><center><%= evaluation.groups.collect(&:name)[0] %></td>
+
+		</tr>	
+	<% end %>
+		<tr>
+			<td colspan="9" style="height:50px;"></td>
+		</tr>
+</table>

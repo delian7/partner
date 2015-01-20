@@ -26,6 +26,32 @@ class ProjectsController < ApplicationController
       render('new')
     end
   end
+
+  def reduce_groupsize
+    @project = Project.find(params[:id])
+    if @project.group_size > 2
+      @project.group_size -= 1
+      if @project.save
+        flash[:notice] = "Size Reduced to #{@project.group_size}"
+      end
+    else
+      flash[:error] = "Group size is too small, it could not be reduced"
+    end
+      redirect_to(action: 'index')
+  end
+
+  def increase_groupsize
+    @project = Project.find(params[:id])
+    if @project.group_size < 7
+      @project.group_size += 1
+      if @project.save
+       flash[:notice] = "Size Increased to #{@project.group_size}"
+      end
+    else
+      flash[:error] = "Group size is too large, it could not be increased"
+    end
+    redirect_to(action: 'index')
+  end
   
   def edit
     @project = Project.find(params[:id])
@@ -101,7 +127,7 @@ end
     else
       flash[:error] = "Project could not be deleted"
     end
-    redirect_to(:action => 'index')
+    redirect_to(action: 'index')
   end
 
   def clear_partnerships

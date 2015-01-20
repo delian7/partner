@@ -1,36 +1,53 @@
-<span style="font-size:50px; font-weight:bold;"><span class="glyphicons glyphicons-pushpin" style="font-size:60px"></span>&emsp;Projects</span><br><br>
+<span style="font-size:40px; font-weight:bold;"><span class="glyphicons glyphicons-pushpin"></span>&emsp;Projects</span><br>
 
 <table class="table" style="max-width:1200px;" align="center">
 <% @empty_courses = current_user.courses%>
 <% @empty_courses.each {|course| @empty_courses = @empty_courses.unshift(course) if course.projects.empty?} %>
 <% @empty_courses.uniq.each do |course| %>
-<tr>
-    <th colspan='9' style='background-color:#eee;'><span style="font-size:20px; font-weight:bold;"><%= course.course_title%></span></th>
+<tr style='background-color:#eee;'>
+    <th colspan="10" style="height:20px; padding:7px 10px 3px 10px;"><span style="font-size:17px; font-weight:bold;"><%= course.course_title%></span></th>
+    <th style="height:20px; padding:7px 10px 3px 10px;"><%=  link_to "<span class=\"glyphicons glyphicons-plus\"></span>&nbsp;&nbsp;Add New Project".html_safe,  {action: 'new', controller: 'projects', id: course}, class: "btn btn-primary btn-xs", id: "add-new-project", style: "float:right;margin-bottom:10px;" %></th>
 </tr>
 <tr>
-	<th><span class="glyphicons glyphicons-pushpin"></span>&emsp;Project</th><th class='collapsable'><span class="glyphicons glyphicons-group"></span>&emsp;Group Size</th><th class='collapsable'><span class="glyphicons glyphicons-retweet-2"></span>&emsp;Allow Repeat Partners?</th><th class='collapsable'><span class="glyphicons glyphicons-calendar"></span>&emsp;End Date</th><th colspan="5"><%=  link_to "<span class=\"glyphicons glyphicons-plus\"></span>&nbsp;&nbsp;Add New Project".html_safe,  {action: 'new', controller: 'projects', id: course}, class: "btn btn-primary btn-xs", id: "add-new-project", style: "float:right;margin-bottom:10px;" %></th>
+	<th></th><th style="padding:7px 10px 3px 10px;"><span class="glyphicons glyphicons-pushpin"></span>&emsp;Project</th><th class='collapsable' style="padding:7px 10px 3px 10px;"><span class="glyphicons glyphicons-group"></span>&emsp;Group Size</th><th class='collapsable' style="padding:7px 10px 3px 10px;"><span class="glyphicons glyphicons-retweet-2"></span>&emsp;Repeats?</th><th class='collapsable' style="padding:7px 10px 3px 10px;"><span class="glyphicons glyphicons-calendar"></span>&emsp;End Date</th>
   </tr></b>
   <% if course.projects.empty? %>
-  <tr style= "background-color:#ED8080;"><td colspan="6" style= "padding:0px;"><%=  link_to (new_project_path(id: course)), style: "color:#fff; text-align:left; width:100%; padding:11px;", class: "btn btn-danger" do %><b>Alert:</b> There is no active project for this course. Students are not able to partner up. <% end %> </tr></td>
+  <tr style= "background-color:#ED8080; "><td colspan="6" style= "padding:0px;"><%=  link_to (new_project_path(id: course)), style: "color:#fff; text-align:left; width:100%; padding:11px;", class: "btn btn-danger" do %><b>Alert:</b> There is no active project for this course. Students are not able to partner up. <% end %> </tr></td>
   <% end %>
 	<% course.projects.each do |project| %>
 		<tr><% if project.id != 0 %>
-	  	<td><%= project.name %></td>
-		<td class='collapsable'><% project.group_size.times do |o|%>
-			<span class="glyphicons glyphicons-user"></span>
-			<% end %></td>
-		<td class='collapsable'><center><%= project.allow_repeat ? "<span class=\"glyphicons glyphicons-ok-2\" style=\"color:green; font-size:20px;\"></span>".html_safe : "<span class=\"glyphicons glyphicons-ban\" style=\"color:red; font-size:20px;\"></span>".html_safe%></center></td>
-		<td class='collapsable'><center>
+			<td></td>
+	  	<td style="padding:10px 10px 0px 10px;">
+	  	<%= form_for(:project, url: {action: 'update', id: project.id}, html: {style: "margin-bottom:0em;"}) do |f| %>
+			<%= f.text_field :name, {onchange: 'this.form.submit();', value: project.name} %>
+			<% end %>
+		</td>
+		<td class='collapsable' style="padding:10px 10px 0px 10px;">
+		<% project.group_size.times do |o|%>
+	    	<%=  link_to "<span class=\"glyphicons glyphicons-user\"></span>".html_safe, reduce_groupsize_project_path(project.id), class: "groupsize_changes"%>
+	    <% end %>
+	    <% if project.group_size < 7 %>
+	    	<%=  link_to "<span class=\"glyphicons glyphicons-plus\"></span>".html_safe, increase_groupsize_project_path(project.id), style: "color:green"%>
+	    	<% end %>
+		</td>
+			
+		<td class='collapsable' style="padding:10px 10px 0px 10px;">
 			<%= form_for(:project, url: {action: 'update', id: project.id}) do |f| %>
-			<%= f.date_field :end_date, {onchange: 'this.form.submit();', value: project.end_date} %>
+			<center><%= project.allow_repeat ? "<span class=\"glyphicons glyphicons-ok-2\" style=\"color:green; font-size:17px;\"></span>".html_safe : "<span class=\"glyphicons glyphicons-ban\" style=\"color:red; font-size:17px;\"></span>".html_safe%>
+			<%= f.check_box :allow_repeat, {onclick: 'this.form.submit();', checked: project.allow_repeat} %>
+			<% end %></center>
+			</td>
+		<td class='collapsable'  style="padding:10px 10px 0px 10px;"><center>
+			<%= form_for(:project, url: {action: 'update', id: project.id}, html: {style: "margin-bottom:0em;"}) do |f| %>
+			<%= f.date_field :end_date, {onchange: 'this.form.submit();', value: project.end_date, style: "line-height: 10px;"} %>
 			<% end %>
 		</center></td>
-		<td class='collapsable'>
+		<td class='collapsable' style="padding:10px 10px 0px 10px;">
 		</td>
-		<td style="text-align:right">
-	    <%=  link_to "<span class=\"glyphicons glyphicons-edit\"></span>&nbsp;&nbsp;Edit".html_safe, edit_project_path(project.id), class: "btn btn-success btn-md", id: "edit-#{project.id}" %></td><td>
+		<td style="text-align:right" style="padding:10px 10px 0px 10px;">
+<!-- 	    <%=  link_to "<span class=\"glyphicons glyphicons-edit\"></span>&nbsp;&nbsp;Edit".html_safe, edit_project_path(project.id), class: "btn btn-success btn-md", id: "edit-#{project.id}" %></td><td> -->
     	 <%=  link_to "<span class=\"glyphicons glyphicons-remove-2\"></span>&nbsp;&nbsp;Delete".html_safe, remove_project_path(project.id), id: "delete-#{project.id}", data: { confirm: "Are you sure you want to delete this project?"}, class: "btn btn-danger btn-md" %></td>
 		</tr>
 	<% end %>
-<% end %><tr><td colspan="9" style="height:50px;"></td></tr>
+<% end %><tr><td colspan="9" style="height:20px; padding:10px 10px 0px 10px;"></td></tr>
 <% end %></table>

@@ -34,7 +34,7 @@ end
 def name_parse(txt)
   m = regexecute('(.*),\s(.*)')
   if m.match(txt)
-  	word1,word2 = m.match(txt)[1],m.match(txt)[2] 
+  	word2,word1 = m.match(txt)[1],m.match(txt)[2] 
   return word1, word2
   end
 end
