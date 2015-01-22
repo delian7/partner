@@ -39,8 +39,8 @@ def set_current_project_course(user, project, course)
   user.save
 end
 
-def enrolled?(ucinetid, coursecode)   
-    Course.find_by_id(coursecode).users.include?(User.find_by(ucinetid: ucinetid))
+def enrolled?(ucinetid, course)   
+    Course.find_by_id(course.id).users.include?(User.find_by(ucinetid: ucinetid))
 end
 
 def classmates?(user,course)

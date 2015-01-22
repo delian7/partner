@@ -1,10 +1,10 @@
 <% case @current_user.role %>
 <% when 0..3 %>
 <tr>
-	  <td class='collapsable'><%= course.id %></td>
+	  <td class='collapsable'><%= course.course_code %></td>
       <td><%= course.course_title %></td>
       <td class='collapsable' width='30%'>
-      	<% projects = course.projects.where(active: true).uniq %>
+      	<% projects = course.projects.uniq %>
       	<% projects.each do |project| %>
       	<span class="glyphicons glyphicons-pushpin" style="font-size:10px;"></span>&ensp;<%= link_to project.name, edit_project_path(project.id) %><br>
       	<% end %>

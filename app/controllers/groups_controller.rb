@@ -133,7 +133,12 @@ class GroupsController < ApplicationController
     if allowed_group_size >= 2
       requested = GroupRelation.find_by(user_id: current_user.id, group_id: group.id)
       requested.status = 2
+      other_requests = GroupRelation.find_by(user_id: current_user.id, project_id: project.id) - requested
+        other_requests.each do |other_request|
+          other_request.destroy
+        end
       redirect_to :back
+
       requested.save ? flash[:notice] = "You are now in group: <b>#{group.name}</b>"  : flash[:notice] = "There was a problem, try again" 
     else
         redirect_to :back, flash[:error] = "Your Professor specified this project is an individual task. If this is incorrect, please contact your professor." 
