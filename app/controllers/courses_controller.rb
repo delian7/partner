@@ -78,14 +78,14 @@ def csv_import
             csv = open_and_parse_csv(index)
             # enrolls = enrolled_students(@course_code)
             #makes new course and project if doesnt exist
-            if Course.where(id: @course_code)[0].nil?
-              @course = Course.create(id: @course_code, course_title: @course_title, instructor: @instructor[0])
-              Roster.create(course_id: @course_code, user_id: current_user.id)
-              make_default_project(@course_code)
+            if Course.where(course_code: @course_code, quarter: @quarter)[0].nil?
+              @course = Course.create(course_code: @course_code, course_title: @course_title, instructor: @instructor[0], quarter: @quarter)
+              Roster.create(course_id: @course.id, user_id: current_user.id)
+              make_default_project(@course.id)
             else
-              Roster.create(course_id: @course_code, user_id: current_user.id) if Roster.find_by(course_id: @course_code, user_id: current_user.id).nil?
-              @course = Course.find(@course_code)
-              @proj = @course.projects.find_by(active: true)
+              @course = Course.where(course_code: @course_code, quarter: @quarter)[0]
+              Roster.create(course_id: @course.id, user_id: current_user.id) if Roster.find_by(course_id: @course.id, user_id: current_user.id).nil?
+              @proj = @course.projects[0]
             end
               set_current_project_course(current_user, @proj, @course)
               
@@ -99,18 +99,18 @@ def csv_import
             else 
               #make a new user with the info we got from studentdata array
               @user = User.create(ucinetid: @netid, first_name: @name[0], last_name: @name[1], email: @mail, 
-                uci_affiliations: "student", current_course:  @course_code)
+                uci_affiliations: "student", current_course:  @course.id)
             end
-             if !enrolled?(@netid, @course_code) && in_new_roster?(@netid)
-                roster = Roster.create(course_id: @course_code, user_id: @user.id)
+             if !enrolled?(@netid, @course) && in_new_roster?(@netid)
+                roster = Roster.create(course_id: @course.id, user_id: @user.id)
                 set_current_project_course(@user, @proj, @course)
                 add+=1
             end
           end
                 # removes students if they are not enrolled in the newest roster
-                Course.find(@course_code).users.pluck(:ucinetid).each do |enrolled_netid|
-                if enrolled?(enrolled_netid, @course_code) && !in_new_roster?(enrolled_netid)
-                  Roster.find_by(user_id: User.find_by(ucinetid: enrolled_netid).id, course_id: @course_code).destroy
+                Course.where(course_code: @course_code, quarter: @quarter)[0].users.pluck(:ucinetid).each do |enrolled_netid|
+                if enrolled?(enrolled_netid, @course) && !in_new_roster?(enrolled_netid)
+                  Roster.find_by(user_id: User.find_by(ucinetid: enrolled_netid).id, course_id: @course.id).destroy
                   removal+=1
                 else
                   set_current_project_course(@user, @proj, @course)
@@ -127,7 +127,7 @@ end
 private 
   
   def course_params
-    params.require(:course).permit(:course_title, :instructor, :id)
+    params.require(:course).permit(:course_title, :instructor, :id, :course_code)
   end 
 
   def secure_params

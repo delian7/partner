@@ -5,7 +5,7 @@
 <% else %>
 
   <% current_user.groups.each do |group| %><center>
-	 	<div class="content-box" style= "padding:10px 10px 10px 10px; width:80%;">
+	 	<div class="content-box" style= "padding:10px 10px 10px 10px; width:90%;">
   		<% @group = group%>
 		<%= render 'groups/profile', group: @group %></div><br></center>
   <% end %>

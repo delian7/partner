@@ -83,8 +83,8 @@ def requested?(user)
   end
 end
 
-def enrolled?(ucinetid, coursecode)
-    Roster.find_by(user_id: user_netid(ucinetid).id, course_id: coursecode) != nil
+def enrolled?(ucinetid, course)
+    Roster.find_by(user_id: user_netid(ucinetid).id, course_id: course.id) != nil
 end
 
 def classmates?(user,course)
@@ -106,14 +106,6 @@ end
 
 def in_group_for?(user, project)
    GroupRelation.where(project_id: project, user_id: user.id).first != nil && GroupRelation.where(project_id: project, user_id: user.id).first.status ==2
-end
-
-def is_student?(user)
-	user.role == 0
-end
-
-def same?(x , y)
-	x == y
 end
 
 def set_status_confirmed(user,user2)

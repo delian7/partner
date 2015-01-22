@@ -151,7 +151,7 @@ end
   private 
   
   def project_params
-    params.require(:project).permit(:name, :active, :autogroup, :course_id, :group_size, :allow_repeat, :end_date)
+    params.require(:project).permit(:name,:course_id, :group_size, :allow_repeat, :partnership_deadline, :evaluation_deadline)
   end 
   
 end

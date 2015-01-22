@@ -12,6 +12,13 @@
 	     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 	      <%= content_tag :div, msg.html_safe, :id => "flash_success" %></div>
   	<% end %>
+  	<% if Project.find(current_user.current_project).partnership_deadline < Date.today %>
+	    <% msg ="Partnership Deadline has passed. Contact your Professor."%>
+		 <div class="alert alert-danger">
+	     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+	      <%= content_tag :div, msg.html_safe, :id => "error" %>
+	  	</div>
+  	<% else %>
   	<tr style="background-color:#eee">
       	 <th colspan="2"><b>Name</th>
 		      <th class='collapsable'><b>Email</th>
@@ -19,7 +26,9 @@
 		      	<% if allowed_size <= mygroupsize %> Confirmed? <% else %> Request <% end %></th></b>
 		   </tr>
 		<!-- Render every user -->
-		  <%= render 'users/user_render'%></table>
+		  <%= render 'users/user_render'%>
+	<% end %>
+	</table>
 		</div>
 			<!-- group sidebar-->
   	<div class="col span_1_of_3">
@@ -27,4 +36,5 @@
   	  <% @group = current_user.groups.find_by(project_id: current_user.current_project) %>
 	  <%= render 'groups/profile', group: @group %>
 	</div>
+
 </div>

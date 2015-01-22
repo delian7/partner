@@ -1,12 +1,12 @@
 module CoursesHelper
 
-def make_default_project(coursecode)
-  if !Project.where(course_id: coursecode, active: true).empty?
-    @proj = Project.find_by(course_id: coursecode, active: true)
+def make_default_project(courseid)
+  if !Project.where(course_id: courseid).empty?
+    @proj = Project.find_by(course_id: courseid)
   else
-    @proj = Project.create(name: "#{@word1} #{@word2} - New Project", course_id: coursecode, active: true, group_size: 2)
+    @proj = Project.create(name: "#{@word1} #{@word2} - New Project", course_id: courseid, group_size: 2)
   end
-  ProjectRelation.create(course_id: coursecode, project_id: @proj.id)
+  ProjectRelation.create(course_id: courseid, project_id: @proj.id)
   return @proj
 end
 

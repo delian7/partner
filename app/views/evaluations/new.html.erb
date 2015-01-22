@@ -10,7 +10,15 @@
 		<% if !@mygroup.nil?%>
 			<td colspan='2'>
 				<% evaluated_left = User.find(@mygroup.users.collect(&:id) - @mygroup.eval_relations.where(reviewer_id:current_user.id).collect(&:user_id)) %>
+				<% if evaluated_left.nil?%>
+					<% msg ="Looks like you have no one left to Evaluate"%>
+					 <div class="alert alert-danger">
+				     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+				      <%= content_tag :div, msg.html_safe, :id => "error" %>
+				  	</div>
+				<% else %>
 					<%= f.select :reviewer, options_for_select(evaluated_left.collect {|p| [ p.first_name + " " + p.last_name, p.id ]}),  {include_blank: true}, {class: 'form-control', style: 'width:70%; display:inline; height:29px;' }  %>
+				<% end %>
 			</td>
 		<% end %>
 	</tr>
@@ -34,7 +42,7 @@
 		<%= f.check_box :flag %></td><td><%= f.label 'Flag this Evaluation for Professor', style: "color:red" %></td>
 	</tr>
 </table>
-	<%= f.submit("Save Project", id: 'save-project', class: 'btn btn-primary') %>
+	<%= f.submit("Submit Evaluation", id: 'save-project', class: 'btn btn-primary') %>
 </div>
 	<% end %>
 </div>

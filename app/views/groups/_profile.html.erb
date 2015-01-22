@@ -2,49 +2,61 @@
 
     <span style="font-size:35px; font-weight:bold;">Sorry,</span><br>
     <span style="font-size:25px; font-weight:normal;">it looks like you don't
-    have a partner yet for</span> <span style=
-    "font-size:25px; font-weight:bold;"><%= Project.find(current_user.current_project).name %></span>
+    have a partner yet for</span> 
+    <span style="font-size:25px; font-weight:bold;">
+    <%= Project.find(current_user.current_project).name %></span>
     <% else %>
     <% if !@group.name.nil? %><% groupname = @group.name %><% else %><% groupname = @group.users.pluck(:first_name).to_sentence %><% end %>
     <table class="table" style="width: 100%!important;padding:5px;">
         <tr>
             <td><span style="font-size:25px; font-weight:bold;"><%= link_to groupname, @group%></span></td>
             <td width="20%">
-            <%= link_to "<span class=\"glyphicons glyphicons-calendar\"></span>&nbsp;&nbsp;<b>Start a Doodle</b>".html_safe, "http://doodle.com/create?type=date&locale=en&title=#{@group.name}%20Group%20Meeting&name=#{current_user.first_name}%20#{current_user.last_name}&eMailAddress=#{current_user.email}&description=Our%20first%20group%20meeting...", class: "btn btn-info btn-sm" %>
+
             <% if current_page?(root_path)%>
-            <%= link_to "<span class=\"glyphicons glyphicons-remove\"></span>&nbsp;&nbsp;<b>Leave Group</b>".html_safe, leave_group_path(@group), class: "btn btn-danger btn-xs" %>
+            <%= link_to "<span class=\"glyphicons glyphicons-remove\"></span>&nbsp;&nbsp;<b>Leave Group</b>".html_safe, leave_group_path(@group), data: { confirm: "Are you sure you want to leave the group #{@group.name}?"},  class: "btn btn-danger btn-xs" %>
             <% end %></td>
         </tr>
         <tr>
             <td colspan="2">
                 <div style="float:left;padding:0px">
-                <% if current_page? root_path%>
-                        <span style="font-size:20px; font-weight:bold;">Project:</span>
-                        <span style="font-size:18px;"><%= @group.project.name%></span>
-                        <span style="font-size:20px; font-weight:bold;"><br>
-                        Course:</span> <span style="font-size:18px;"><%= Course.find(@group.project.course_id).course_title%><br>
+                        <span style="font-size:15px; font-weight:bold;">Project:</span>
+                        <span style="font-size:15px;"><%= @group.project.name%></span>
+                        <span style="font-size:15px; font-weight:bold;"><br>
+                        Course:</span> <span style="font-size:15px;"><%= Course.find(@group.project.course_id).course_title%><br>
                         </span>
+                        <% if current_page? root_path%>
                     </div>
-                    <div style="float:right;"><span style="font-size:20px; font-weight:bold;padding:0px"><br>
-                        Due Date:</span> <span style="font-size:18px;">
-                        <%if @group.project.end_date == nil || @group.project.end_date == "" %>
+                     <div style="float:right;line-height: .5em;"><span style="font-size:13px; font-weight:bold; padding:0px;"><br>
+                        Partnership Deadline:</span> <span style="font-size:14px;">
+                        <%if @group.project.partnership_deadline == nil || @group.project.partnership_deadline == "" %>
                             Not Specified
                         <% else %>
-                            <%= @group.project.end_date.strftime("%m/%d/%y")%>
+                            <%= @group.project.partnership_deadline.strftime("%m/%d/%y")%>
+                        <% end %>
+                        <br><br>
+                        <span style="font-size:13px; font-weight:bold; padding:0px;">
+                        Evaluation Deadline:</span> <span style="font-size:14px;">
+                        <%if @group.project.evaluation_deadline == nil || @group.project.evaluation_deadline == "" %>
+                            Not Specified
+                        <% else %>
+                            <%= @group.project.partnership_deadline.strftime("%m/%d/%y")%>
                         <% end %>
                 <% else %>
-                    <span style="font-size:16px; font-weight:bold;">Project:</span>
-                        <span style="font-size:14px;"><%= @group.project.name%></span>
-                        <span style="font-size:16px; font-weight:bold;"><br>
-                        Course:</span> <span style="font-size:14px;"><%= Course.find(@group.project.course_id).course_title%><br>
-                        </span>
                     </div>
-                    <div style="float:right;line-height: .5em;"><span style="font-size:16px; font-weight:bold; padding:0px;"><br>
-                        Due Date:</span> <span style="font-size:14px;">
-                        <%if @group.project.end_date == nil || @group.project.end_date == "" %>
+                    <div style="float:right;line-height: .5em;"><span style="font-size:13px; font-weight:bold; padding:0px;"><br>
+                        Partnership Deadline:</span> <span style="font-size:14px;">
+                        <%if @group.project.partnership_deadline == nil || @group.project.partnership_deadline == "" %>
                             Not Specified
                         <% else %>
-                            <%= @group.project.end_date.strftime("%m/%d/%y")%>
+                            <%= @group.project.partnership_deadline.strftime("%m/%d/%y")%>
+                        <% end %>
+                        <br><br>
+                        <span style="font-size:13px; font-weight:bold; padding:0px;">
+                        Evaluation Deadline:</span> <span style="font-size:14px;">
+                        <%if @group.project.evaluation_deadline == nil || @group.project.evaluation_deadline == "" %>
+                            Not Specified
+                        <% else %>
+                            <%= @group.project.partnership_deadline.strftime("%m/%d/%y")%>
                         <% end %>
                 <% end %>
                 </div>
@@ -54,27 +66,30 @@
     <table class="table" style="width: 100%!important;padding:5px;">
         <tr>
             <td class='collapsable'></td>
-            <td><strong>Name</strong></td>
-            <td class='collapsable'><strong>Email</strong></td>
-            <td >
-            <strong>Status</strong></td><% members = @group.users.order(:last_name).uniq %><% members.each do |user| %>
-            <% if user.group_relations.find_by(group_id: @group.id).status == 2 %>
+            <td style="font-size:15px;font-weight:bold;"><strong>Name</strong></td>
+            <td class='collapsable' style="font-size:15px;font-weight:bold;">Email</strong></td>
+            <td style="font-size:15px;font-weight:bold;">Status</strong></td>
+    <% members = @group.users.order(:last_name).uniq %><% members.each do |user| %>
+    <% if user.group_relations.find_by(group_id: @group.id).status == 2 %>
         </tr>
-        <tr>
+        <tr style="<% 'background-color:eee; opacity: 0.6;' if true %>">
             <td class='collapsable'>
             <%= link_to (image_tag (user.avatar.url), style: 'max-width: 45px;'), user %></td>
             <td>
             <%= link_to "#{user.first_name} #{user.last_name}", user %></td>
             <td class='collapsable'><%= user.email %></td>
             <td style="font-size:13px;">Confirmed</td>
-            <% else %>
+    <% else %>
         </tr>
-        <tr style="background-color:eee; opacity: 0.6;">
+        <tr style="<% 'background-color:eee; opacity: 0.6;' if true %>">
             <td class='collapsable'>
             <%= link_to (image_tag (user.avatar.url), style: 'max-width: 45px;'), user %></td>
             <td>
             <%= link_to "#{user.first_name} #{user.last_name}", user %></td>
             <td class='collapsable'><%= user.email %></td>
-            <td style="font-size:13px;">Requested</td><% end %>
-        </tr><% end %>
-    </table><% end %>
+            <td style="font-size:13px;">Requested</td>
+    <% end %>
+        </tr>
+    <% end %>
+    </table>
+<% end %>
