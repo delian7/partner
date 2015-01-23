@@ -63,32 +63,37 @@
             </td>
         </tr>
     </table>
-    <table class="table" style="width: 100%!important;padding:5px;">
+    <table class="table" style="width: 100%!important;padding:0px;">
         <tr>
-            <td class='collapsable'></td>
-            <td style="font-size:15px;font-weight:bold;"><strong>Name</strong></td>
-            <td class='collapsable' style="font-size:15px;font-weight:bold;">Email</strong></td>
-            <td style="font-size:15px;font-weight:bold;">Status</strong></td>
+            <% if current_page?(root_path) %>
+            <td></td>
+            <% end %>
+            <td style="font-size:13px;font-weight:bold;"><strong>Name</strong></td>
+            <td class='collapsable' style="font-size:13px;font-weight:bold;">Email</strong></td>
+            <td style="font-size:13px;font-weight:bold;">Phone</strong></td>
+            <td style="font-size:13px;font-weight:bold;">Status</strong></td>
+            <td style="font-size:13px;font-weight:bold;">Evaluated?</strong></td>
+
     <% members = @group.users.order(:last_name).uniq %><% members.each do |user| %>
-    <% if user.group_relations.find_by(group_id: @group.id).status == 2 %>
-        </tr>
-        <tr style="<% 'background-color:eee; opacity: 0.6;' if true %>">
-            <td class='collapsable'>
-            <%= link_to (image_tag (user.avatar.url), style: 'max-width: 45px;'), user %></td>
-            <td>
-            <%= link_to "#{user.first_name} #{user.last_name}", user %></td>
-            <td class='collapsable'><%= user.email %></td>
-            <td style="font-size:13px;">Confirmed</td>
-    <% else %>
-        </tr>
-        <tr style="<% 'background-color:eee; opacity: 0.6;' if true %>">
-            <td class='collapsable'>
-            <%= link_to (image_tag (user.avatar.url), style: 'max-width: 45px;'), user %></td>
-            <td>
-            <%= link_to "#{user.first_name} #{user.last_name}", user %></td>
-            <td class='collapsable'><%= user.email %></td>
-            <td style="font-size:13px;">Requested</td>
-    <% end %>
+        <tr style="<%= (user.group_relations.find_by(group_id: @group.id).status != 2) ? 'background-color:eee; opacity: 0.6;' : '' %>">
+            <% if current_page?(root_path) %>
+            <td style="font-size:12px;" class='collapsable'>
+            <%= link_to (image_tag (user.avatar.url), style: "max-width: 45px;"), user %></td>
+            <% end %>
+             <td style="font-size:12px;">
+                <%= link_to "#{user.first_name} #{user.last_name}", user %></td>
+            <td style="font-size:12px;" class='collapsable'><%= user.email %></td>
+            <td style="font-size:12px;" class='collapsable'><%= number_to_phone(user.phone, area_code: true) if current_user.phone %></td>
+
+            <td style="font-size:12px;" ><%= (user.group_relations.find_by(group_id: @group.id).status == 2) ? 'Confirmed' : 'Requested'%></td>
+            <% if user == current_user %>
+                <td style="font-size:12px;" >You can't evaluate yourself</td>
+            <% elsif (user.group_relations.find_by(group_id: @group.id).status == 1) %>
+                <td style="font-size:12px;" >Request Still Pending</td>
+            <% else %>        
+                <% evaluated_left = User.find(@mygroup.users.collect(&:id) - @mygroup.eval_relations.where(reviewer_id:current_user.id).collect(&:user_id)) %>
+                 <td style="font-size:12px;" ><%= evaluated_left.include?(user) ? '<a href="/evaluations" class="btn btn-primary btn-xs">Evaluate this Partner<span class=\"glyphicons glyphicons-remove\"></span></a>'.html_safe : 'Evaluation Completed' %></td>
+            <% end %>
         </tr>
     <% end %>
     </table>

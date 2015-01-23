@@ -15,6 +15,7 @@
 			<%# if the group size of this project is 2, then renders "find a partner" %>
 			<li role="presentation" class="<%= 'active' if current_page?(users_path) %>"><%= link_to "<span class=\"glyphicons glyphicons-address-book\" style=\"font-size:23;\"></span>&emsp;&emsp;Find a Partner".html_safe, users_path %></li>
 		<% end %>
+		<li role="presentation" class="<%= 'active' if current_page?(evaluations_path) %>"><%= link_to "<span class=\"glyphicons glyphicons-scale-classic\" style=\"font-size:23;\"></span>&emsp;&emsp;Evaluations".html_safe,  evaluations_path %></li>
 		<% when 1 .. 2 %>
 			<li role="presentation" class="<%= 'active' if current_page?(users_path) %>"><%= link_to "<span class=\"glyphicons glyphicons-user\" style=\"font-size:23;\"></span>&emsp;&emsp;Students".html_safe, users_path %></li>
 			<li role="presentation" class="<%= 'active' if current_page?(groups_path) %>"><%= link_to "<span class=\"glyphicons glyphicons-group\" style=\"font-size:23;\"></span>&emsp;&emsp;Groups".html_safe, groups_path %></li>

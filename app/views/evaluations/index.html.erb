@@ -1,7 +1,7 @@
 <!-- <span style="font-size:40px; font-weight:bold;"><span class="glyphicons glyphicons-scale-classic"></span>&emsp;Evaluations</span> -->
 <% case current_user.role %>
 <% when 0 %>	
-	<%= render 'evaluations/form' %>
+	<%= render 'evaluations/student' %>
 
 <% when 1..2 %>	
 
