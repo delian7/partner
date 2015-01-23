@@ -130,7 +130,7 @@ class GroupsController < ApplicationController
     authorize current_user
     allowed_group_size = Project.find_by_id(current_user.current_project).group_size
   
-    if allowed_group_size >= 2
+    if allowed_group_size > 2
       requested = GroupRelation.find_by(user_id: current_user.id, group_id: group.id)
       requested.status = 2
       other_requests = GroupRelation.find_by(user_id: current_user.id, project_id: project.id) - requested
@@ -151,7 +151,7 @@ class GroupsController < ApplicationController
     set_current_users_instance_variables
     allowed_group_size = Project.find_by_id(current_user.current_project).group_size
   
-    if allowed_group_size >= group.users.size
+    if allowed_group_size > group.users.size
       #create relation for current user
       current_user_relation = GroupRelation.create(course_id: @mycourse.id, user_id: current_user.id, 
       project_id: @myproject.id, status: 1, group_id: group.id)

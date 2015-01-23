@@ -1,14 +1,16 @@
 <% if @myproject.nil? || @mygroup.nil?%>
-	<span style="font-size:35px; font-weight:bold;">Sorry,</span><br><span style="font-size:25px; font-weight:normal;"> it looks like you don't have a partner yet for <span style="font-size:25px; font-weight:bold;"><%=@myproject.name%></span></center>
-
-  <%=  link_to "<span class=\"glyphicons glyphicons-plus\"></span>&nbsp;&nbsp;Add New Group".html_safe,  {:action => 'new'}, class: "btn btn-primary btn-md", :style=>"float:right;margin-bottom:10px;" %>
+	<span style="font-size:35px; font-weight:bold;">Sorry,</span><br>
+	<span style="font-size:25px; font-weight:normal;"> it looks like you don't have a partner yet for 
+	<span style="font-size:25px; font-weight:bold;"><%=@myproject.name%></span></center>
+	<%=  link_to "<span class=\"glyphicons glyphicons-plus\"></span>&nbsp;&nbsp;Add New Group".html_safe, 
+		{:action => 'new'}, class: "btn btn-primary btn-md", :style=>"float:right;margin-bottom:10px;" %>
 
 <%else%>
 
 <div class="section-group">
-<div class="col span_1_of_3">
-  <span style="font-size:50px; font-weight:bold;">
-<% if @myproject.group_size == 2 %>My Partner<% else %>My Group<%end%>
+	<div class="col span_1_of_3">
+  	<span style="font-size:50px; font-weight:bold;">
+				<% if @myproject.group_size == 2 %>My Partner<% else %>My Group<%end%>
  </span><br><span style="font-size:25px; font-weight:bold;"><%=@mygroup.name%></font><br></span>
  <span style="font-size:20px; font-weight:bold;">  <br>Project:</span>
  <span style="font-size:18px;"><%= @myproject.name%></span>
