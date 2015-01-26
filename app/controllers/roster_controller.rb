@@ -4,14 +4,6 @@ class RosterController < ApplicationController
     @rosters = Roster.all
   end
   
-  def show
-    @roster = Roster.find(params[:id])
-  end
-  
-  def new
-    #@roster = Roster.new(:active => true)
-  end
-  
   def create
     @roster = Roster.new(roster_params)
     
@@ -20,10 +12,6 @@ class RosterController < ApplicationController
     else
       render('new')
     end
-  end
-  
-  def edit
-    @roster = Roster.find(params[:id])
   end
   
   def destroy

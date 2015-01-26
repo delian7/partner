@@ -1,7 +1,7 @@
 <!-- selecting course that users will add groups to -->
 <!-- if the user is signed in and their enrolled in at least one course on roster -->
 <div class="jumbotron" style="float:right; width:100%;padding:10px;display:inline;margin:0px">
-	<% @current_projects = Project.where(course_id: Course.find(current_user.current_course).id, active: true) %>
+	<% @current_projects = Project.where(course_id: Course.find(current_user.current_course).id) %>
 		<!-- setting current course & project (if there's only one project)-->
 	  <%= form_for :user, url: set_current_course_user_path(current_user.id), html: { :style => 'display:inline;'} do |f|%>		
 			&nbsp;<span style="font-weight:bold; font-size:16px;">Course:&emsp;</span><%= f.select :current_course, options_from_collection_for_select(current_user.courses, 

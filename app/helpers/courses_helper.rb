@@ -1,12 +1,12 @@
 module CoursesHelper
 
-def make_default_project(coursecode)
-  if !Project.where(course_id: coursecode, active: true).empty?
-    @proj = Project.find_by(course_id: coursecode, active: true)
+def make_default_project(courseid)
+  if !Project.where(course_id: courseid).empty?
+    @proj = Project.find_by(course_id: courseid)
   else
-    @proj = Project.create(name: "#{@word1} #{@word2} - New Project", course_id: coursecode, active: true, group_size: 2)
+    @proj = Project.create(name: "#{@word1} #{@word2} - New Project", course_id: courseid, group_size: 2)
   end
-  ProjectRelation.create(course_id: coursecode, project_id: @proj.id)
+  ProjectRelation.create(course_id: courseid, project_id: @proj.id)
   return @proj
 end
 
@@ -35,15 +35,36 @@ def csv_netids(student_data_array)
   @student_netids.push(current_user.ucinetid)
 end
 
-  def destroy_roster_relations(course)
-    course.rosters.each do |relation|
-    relation.destroy
+  def destroy_groups(course)
+    course.groups.each do |group|
+        group.destroy
+      end
+    destroy_group_relations(course)
+  end
+
+  def destroy_projects(course)
+    course.projects.each do |project|
+      destroy_project_relations(course)
+      destroy_groups(course)
+      project.destroy
     end
   end
 
+  def destroy_group_relations(course)
+    course.group_relations.each do |relation|
+      relation.destroy
+    end
+  end
+  
   def destroy_project_relations(course)
     course.project_relations.each do |relation|
-    relation.destroy
+      relation.destroy
+    end
+  end
+
+  def destroy_roster_relations(course)
+    course.rosters.each do |relation|
+      relation.destroy
     end
   end
 

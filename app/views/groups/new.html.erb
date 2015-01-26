@@ -1,8 +1,0 @@
-<span style="font-weight:bold;font-size:25px;"><%= link_to "<span class=\"glyphicons glyphicons-chevron-left\"></span>&nbsp;&nbsp;<b>Back</b>".html_safe, :back, class: "btn btn-default btn-md" %></span><br>
-<div class="authform", style="max-width: 500px; margin:auto;">
-
-	<%= form_for(:group, :url => {:action => 'create'}) do |f| %>
-		<div style="font-size:45px; font-weight:bold;">Create Group<br></div><br>
-		<%= render(:partial => 'form', :locals => {:f => f}) %>
-	<% end %>
-</div>

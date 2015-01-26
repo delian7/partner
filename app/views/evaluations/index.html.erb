@@ -1,6 +1,22 @@
-<span style="font-size:50px; font-weight:bold;"><span class="glyphicons glyphicons-scale-classic" style="font-size:60px"></span>&emsp;Evaluations</span>
+<!-- <span style="font-size:40px; font-weight:bold;"><span class="glyphicons glyphicons-scale-classic"></span>&emsp;Evaluations</span> -->
+<% case current_user.role %>
+<% when 0 %>	
+	<%= render 'evaluations/student' %>
+
+<% when 1..2 %>	
+
 	<% if false %>
 		<%= render 'evaluations/not_implemented' %>
 	<% else %>
-		<%= render 'evaluations/implemented' %>
+		<% if Project.find(current_user.current_project).evaluation_deadline > Date.today%>
+		<%= render 'evaluations/bandaid' %>
+		<% else %>
+			<% msg ="Evaluation Deadline has passed. Contact your Professor."%>
+		 <div class="alert alert-danger">
+	     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+	      <%= content_tag :div, msg.html_safe, :id => "error" %>
+	  	</div>
+		<% end%>
 	<% end %>
+
+<% end %>

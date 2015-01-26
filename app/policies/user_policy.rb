@@ -46,7 +46,10 @@ class UserPolicy
   def set_current_project?
     true
   end
-def export_csv?
+def export_horizontal?
+  true
+end
+def export_organized?
   true
 end
 def send_request?

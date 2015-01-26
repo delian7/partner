@@ -30,10 +30,10 @@ devise_for :users, :controllers => {:registrations => "registrations"}
         post :set_current_course
         post :set_current_project
 
-
         end
      collection do
-       get :export_csv
+       get :export_organized
+       get :export_horizontal
         end
     end
 
@@ -70,6 +70,8 @@ devise_for :users, :controllers => {:registrations => "registrations"}
        get :edit
        post :update
        get :remove
+       get :reduce_groupsize
+       get :increase_groupsize
        get :autogroup
        post :autogroup
        get :clear_partnerships
@@ -79,6 +81,15 @@ devise_for :users, :controllers => {:registrations => "registrations"}
     end
 
   resources :grouprelations do
+     member do
+       get :edit
+       post :update
+       get :remove
+        end
+     collection do
+        end
+    end
+  resources :evaluations do
      member do
        get :edit
        post :update

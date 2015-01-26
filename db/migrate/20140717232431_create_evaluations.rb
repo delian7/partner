@@ -1,9 +1,11 @@
 class CreateEvaluations < ActiveRecord::Migration
   def change
     create_table :evaluations do |t|
-      t.belongs_to   :project, default: ""
-      t.belongs_to   :user, default: ""
-      t.belongs_to   :user2, default: ""
+    	t.integer :effort
+    	t.integer :quality
+    	t.integer :reliability
+    	t.boolean :flag
+    	t.string :comments
       	t.timestamps
     end
   end

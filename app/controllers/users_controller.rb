@@ -58,16 +58,17 @@ class UsersController < ApplicationController
     redirect_to :back
   end
 
-  # Start download of csv file of partner data
-  def export_csv
+    # Start download of csv file of partner data
+  def export_organized
       user = current_user
       authorize user
       roster_csv = CSV.generate do |csv|
-      csv << ["Group", "First Name", "Last Name", "Email", "confirmed"]
-    @members=[]
+      csv << ["Project: " + Project.find_by_id(current_user.current_project).name, "Course: " + Course.find_by_id(current_user.current_course).course_title, "Downloaded by: " + current_user.first_name + " " + current_user.last_name]
+
     groupids = GroupRelation.where(project_id:current_user.current_project).collect(&:group_id).uniq
     groupids.each do |group|
     @group = Group.find(group)
+      csv << [@group.name]
 
     GroupRelation.where(group_id: group).collect(&:user_id).each do |i|
     name = "#{user.first_name} #{user.last_name}"
@@ -80,11 +81,39 @@ class UsersController < ApplicationController
     else
         @confirmed ="Request Pending"
     end 
-    csv << [@group.name, user.first_name, user.last_name, user.email, @confirmed]   
+    csv << [user.first_name, user.last_name, user.email, @confirmed]
        end 
       end    
     end
-    send_data(roster_csv, :type =>  'text/csv', :filename =>  'groups.csv')
+    send_data(roster_csv, type:  'text/csv', filename:  'groups.csv')
+  end
+
+      # Start download of csv file of partner data
+  def export_horizontal
+      user = current_user
+      authorize user
+      roster_csv = CSV.generate do |csv|
+      header=[]
+      header.push()
+      csv << ["Project: #{Project.find_by_id(current_user.current_project).name}", "Course: #{Course.find_by_id(current_user.current_course).course_title}", "Total Teams: #{Project.find_by_id(current_user.current_project).groups.uniq.size}", "Total Students: #{Course.find_by_id(current_user.current_course).users.where(role:0).size}"]
+      csv << ["Instructor: " + Course.find_by_id(current_user.current_course).instructor, "Downloaded by: " + current_user.first_name + " " + current_user.last_name, "Date: #{Time.now.strftime("%m/%d/%Y")}", "Time: #{Time.now.strftime("%I:%M %p")}"]
+       
+
+    groupids = GroupRelation.where(project_id:current_user.current_project).collect(&:group_id).uniq
+    groupids.each do |group|
+      @group = Group.find(group)
+      members = []
+      members.push(@group.name)
+        GroupRelation.where(group_id: group).collect(&:user_id).each do |i|
+        user = User.find(i)
+        name = user.first_name + ", " + user.last_name
+        members.push(name)
+        end
+      # csv << [members[0], members[1], members[2], members[3], members[4], members[5], members[6], members[7]]
+      csv << members
+      end
+    end
+    send_data(roster_csv, type:  'text/csv', filename:  'groups.csv')
   end
 
 
