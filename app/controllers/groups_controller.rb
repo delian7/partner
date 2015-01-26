@@ -128,15 +128,22 @@ class GroupsController < ApplicationController
   def confirm
     group = Group.find(params[:id])
     authorize current_user
-    allowed_group_size = Project.find_by_id(current_user.current_project).group_size
+    project = Project.find_by_id(current_user.current_project)
+    allowed_group_size = project.group_size
   
     if allowed_group_size >= 2
       requested = GroupRelation.find_by(user_id: current_user.id, group_id: group.id)
       requested.status = 2
-      other_requests = GroupRelation.find_by(user_id: current_user.id, project_id: project.id) - requested
-        other_requests.each do |other_request|
-          other_request.destroy
-        end
+      
+      # "other_requests" are request excluding the one being confirmed (for the same project)
+      other_requests = GroupRelation.where(user_id: current_user.id, project_id: project.id) - GroupRelation.where(user_id: current_user.id, group_id: group.id)
+      
+      # we want to delete all the "other_requests" since if person confirms group then
+      # all the other requests should disappear 
+      other_requests.each do |other_request|
+        other_request.destroy
+      end
+      
       redirect_to :back
 
       requested.save ? flash[:notice] = "You are now in group: <b>#{group.name}</b>"  : flash[:notice] = "There was a problem, try again" 
@@ -154,7 +161,7 @@ class GroupsController < ApplicationController
     if allowed_group_size >= group.users.size
       #create relation for current user
       current_user_relation = GroupRelation.create(course_id: @mycourse.id, user_id: current_user.id, 
-      project_id: @myproject.id, status: 1, group_id: group.id)
+      project_id: @myproject.id, status: 0, group_id: group.id)
       flash[:notice] = "Sent request to join <b>#{group.name}</b> "
     else 
       flash[:error] = "<b>#{group.name}</b> is full"
