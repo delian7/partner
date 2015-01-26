@@ -1,18 +1,20 @@
 <div class="jumbotron" style= "padding:23px 0px 0px 0px;"><span style="font-size:40px; font-weight:bold;"><center>Current Groups</center></span><br><br>
-<%if current_user.groups.empty?%>
-	<div style= "padding:0px 0px 20px 25px;"><span style="font-size:25px; font-weight:bold; ">Sorry,</span><span style="font-size:20px; font-weight:normal; "> it looks like you don't
-    have any groups yet!</span></div>
-<% else %>
-
-  <% current_user.groups.each do |group| %><center>
-	 	<div class="content-box" style= "padding:10px 10px 10px 10px; width:90%;">
-  		<% @group = group%>
-		<%= render 'groups/profile', group: @group %></div><br></center>
-  <% end %>
-<% end %>
-
-
-
+	<%if current_user.groups.empty?%>
+		<div style= "padding:0px 0px 20px 25px;">
+			<span style="font-size:25px; font-weight:bold; ">Sorry,</span>
+			<span style="font-size:20px; font-weight:normal; "> it looks like you don'thave any groups yet!</span>
 		</div>
+	<% else %>
+
+	  <% current_user.groups.each do |group| %>
+			<center>
+			 	<div class="content-box" style= "padding:10px 10px 10px 10px; width:90%;">
+		  		<% @group = group%>
+					<%= render 'groups/profile', group: @group %>
+				</div><br>
+			</center>
+  	<% end %>
+	<% end %>
+</div>
 
  
