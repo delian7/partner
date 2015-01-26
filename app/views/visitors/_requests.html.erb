@@ -1,4 +1,4 @@
-<%if !current_user.group_relations.where(project_id: group.project.id, status: 1).empty? %>
+<%if !current_user.group_relations.where(project_id: project.id, status: 1).empty? %>
 	<div  class="content-box">
 		<h3 style="font-size:20px; font-weight:bold;"></h3>
 		<center><%= project.name %></center>
