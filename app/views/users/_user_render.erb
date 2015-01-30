@@ -1,7 +1,7 @@
 <% if !@mygroup.nil? %><% mygroupsize = @myproject.groups.size %><% else %><% mygroupsize = 0 %><% end %>
 	<% allowed_size = Project.find(current_user.current_project).group_size %>
 
-	<% if allowed_size > mygroupsize %>
+<% if allowed_size > mygroupsize %>
 		<% @users = Course.find(current_user.current_course).users.order(:last_name) %>
 		<% @users.each do |user| %>
 			<% @user = User.find(user) %>
@@ -16,7 +16,7 @@
 		<% end %>
 		
 <!-- No room in group-->
-	<% else %>
+<% else %>
 	<% @mygroup.users.each do |user| %>
 		<% @user = User.find(user) %>
 	<% if user != current_user %>
@@ -28,5 +28,5 @@
 		<% end %>
 	</tr>
 	<% end %>
-	<% end %>
+<% end %>
 <% end %>
