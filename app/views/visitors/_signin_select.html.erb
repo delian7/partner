@@ -4,7 +4,7 @@
     <%= devise_error_messages! %>
 		<% if request.ip == "127.0.0.1" || true %>
 		<%users = User.all%>
-			<%= f.select :id, options_for_select(users.collect {|p| [ p.first_name + " " + p.last_name, p.id ]}), {}, 
+			<%= f.select :id, options_for_select(users.collect {|p| [ p.first_name + " " + p.last_name + " - ID: " + p.id.to_s, p.id ]}), {}, 
 				{class: 'form-control', style: 'width:70%; display:inline; height:29px;', onchange: 'this.form.submit();' } %>
 	 	<% else %>
 		  <%= f.hidden_field :id, value: @campus_id %> 
