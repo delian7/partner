@@ -91,7 +91,7 @@
             <% elsif (user.group_relations.find_by(group_id: @group.id).status == 1) %>
                 <td style="font-size:12px;" >Request Still Pending</td>
             <% else %>        
-                <% evaluated_left = User.find(@mygroup.users.collect(&:id) - @mygroup.eval_relations.where(reviewer_id:current_user.id).collect(&:user_id)) %>
+                <% evaluated_left = User.find(@group.users.collect(&:id) - @group.eval_relations.where(reviewer_id:current_user.id).collect(&:user_id)) %>
                  <td style="font-size:12px;" ><%= evaluated_left.include?(user) ? '<a href="/evaluations" class="btn btn-primary btn-xs">Evaluate this Partner<span class=\"glyphicons glyphicons-remove\"></span></a>'.html_safe : 'Evaluation Completed' %></td>
             <% end %>
         </tr>
