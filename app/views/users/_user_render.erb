@@ -20,7 +20,7 @@
 	<% @mygroup.users.each do |user| %>
 		<% @user = User.find(user) %>
 	<% if user != current_user %>
-	<td class='collapsable'><%= link_to (image_tag (user.avatar.url), :style => 'max-width: 45px;'), user %></td> 
+	<td class='collapsable'><%= link_to (image_tag (user.avatar.url), style: 'max-width: 45px;'), user %></td> 
 	<td><%= link_to "#{user.first_name} #{user.last_name}", user: @user %> </td>
 	<td class='collapsable'><%= user.email %></td>
 		<% if current_user.role == 0 %>

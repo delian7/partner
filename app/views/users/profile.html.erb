@@ -1,4 +1,4 @@
-<span style="font-size:30px; font-weight:bold;">My Profile</span><br>
+<span style="font-size:40px; font-weight:bold;"><span class="glyphicons glyphicons-nameplate-alt" style="font-size:50;"></span>&emsp;My Profile</span><br>
 
 <div class="section group">
   <div class="col span_1_of_3">
@@ -8,18 +8,18 @@
   <div class="col span_2_of_3">
 		<h2>Profile Page of <strong><%= current_user.first_name%> <%=current_user.last_name %></h2></strong>
 	<table style = "width:75%;">
-		<tr><td style = "text-align:right;padding:7px;font-size:14px;"><span style="font-weight:bold;">Name:</span> </td>
-		<td style="padding:7px;font-size:14px;"> <%= current_user.first_name%> <%=current_user.last_name %></td></tr>
-		<tr><td style = "text-align:right;padding:7px;font-size:14px;"><span style="font-weight:bold;">Email:</span> </td>
-		<td style="padding:7px;font-size:14px;"> <%= current_user.email if current_user.email %></td></tr>
-		<tr><td style = "text-align:right;padding:7px;font-size:14px;"><span style="font-weight:bold;">Description:</span> </td>
-		<td style="padding:7px;font-size:14px;"> <%= current_user.description if current_user.description %></td></tr>
-		<tr><td style = "text-align:right;padding:7px;font-size:14px;"><span style="font-weight:bold;">Phone:</span> </td>
-		<td style="padding:7px;font-size:14px;"> <%= number_to_phone(current_user.phone, area_code: true) if current_user.phone %></td></tr>
-		<tr><td style = "text-align:right;padding:7px;font-size:14px;"><span style="font-weight:bold;">Availability:</span> </td>
-		 <td style="padding:7px;font-size:14px;"><%= current_user.availability if current_user.availability%></td></tr>
-		<tr><td style = "text-align:right;padding:7px;font-size:14px;"><span style="font-weight:bold;">Last Sign In:</td>
-			<td style="padding:7px;font-size:14px;"></span> <%= current_user.last_sign_in_at.strftime('%A, %B') if current_user.last_sign_in_at %> <%= current_user.last_sign_in_at.strftime('%e ').to_i.ordinalize if current_user.last_sign_in_at %><%= current_user.last_sign_in_at.strftime(' %Y, at %I:%M%P') if current_user.last_sign_in_at %></td></tr>
+		<tr><td style = "text-align:right;padding:7px;"><span style="font-weight:bold;">Name:</span> </td>
+		<td style="padding:7px;"> <%= current_user.first_name%> <%=current_user.last_name %></td></tr>
+		<tr><td style = "text-align:right;padding:7px;"><span style="font-weight:bold;">Email:</span> </td>
+		<td style="padding:7px;"> <%= current_user.email if current_user.email %></td></tr>
+		<tr><td style = "text-align:right;padding:7px;"><span style="font-weight:bold;">Description:</span> </td>
+		<td style="padding:7px;"> <%= current_user.description if current_user.description %></td></tr>
+		<tr><td style = "text-align:right;padding:7px;"><span style="font-weight:bold;">Phone:</span> </td>
+		<td style="padding:7px;"> <%= number_to_phone(current_user.phone, area_code: true) if current_user.phone %></td></tr>
+		<tr><td style = "text-align:right;padding:7px;"><span style="font-weight:bold;">Availability:</span> </td>
+		 <td style="padding:7px;"><%= current_user.availability if current_user.availability%></td></tr>
+		<tr><td style = "text-align:right;padding:7px;"><span style="font-weight:bold;">Last Sign In:</td>
+			<td style="padding:7px;"></span> <%= current_user.last_sign_in_at.strftime('%A, %B') if current_user.last_sign_in_at %> <%= current_user.last_sign_in_at.strftime('%e ').to_i.ordinalize if current_user.last_sign_in_at %><%= current_user.last_sign_in_at.strftime(' %Y, at %I:%M%P') if current_user.last_sign_in_at %></td></tr>
 	</table>
   </div>
 </div>

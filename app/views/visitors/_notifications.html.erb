@@ -6,13 +6,13 @@
 	    <span style="font-size:20px; font-weight:normal;">You don't
 	    have any requests</span>
 	<% else %>
-		<% current_user.projects.uniq.each do |project| %>
-				<%= render 'visitors/requests', project: project %>
+		<% current_user.groups.order(:project_id).uniq.each do |group| %>
+				<%= render 'visitors/notification_student', group: group%>
 		<% end %>
 	<% end %>
 <% when 1..2 %>
    		<% current_user.courses.each do |course|%>
-		<%= render 'visitors/professor_alerts', course: course %>
+		<%= render 'visitors/notification_professor', course: course %>
 		<% end %> 
 	<% if @notifications == false %>
 		<span style="font-size:20px; font-weight:normal;">You don't

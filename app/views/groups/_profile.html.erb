@@ -51,7 +51,9 @@
             <% end %>
             <td style="font-size:13px;font-weight:bold;"><strong>Name</strong></td>
             <td class='collapsable' style="font-size:13px;font-weight:bold;">Email</strong></td>
+            <% if current_page?(root_path)%>
             <td style="font-size:13px;font-weight:bold;">Phone</strong></td>
+            <% end %>
             <td style="font-size:13px;font-weight:bold;">Status</strong></td>
             <td style="font-size:13px;font-weight:bold;">Evaluated?</strong></td>
 
@@ -64,8 +66,9 @@
              <td style="font-size:12px;">
                 <%= link_to "#{user.first_name} #{user.last_name}", user %></td>
             <td style="font-size:12px;" class='collapsable'><%= user.email %></td>
+            <% if current_page?(root_path)%>
             <td style="font-size:12px;" class='collapsable'><%= number_to_phone(user.phone, area_code: true) if current_user.phone %></td>
-
+            <% end %>
             <td style="font-size:12px;" ><%= (user.group_relations.find_by(group_id: @group.id).status == 2) ? 'Confirmed' : 'Requested'%></td>
         <% if user == current_user %>
                 <td style="font-size:12px;" >You can't evaluate yourself</td>

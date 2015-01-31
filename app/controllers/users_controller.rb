@@ -104,7 +104,7 @@ class UsersController < ApplicationController
       @group = Group.find(group)
       members = []
       members.push(@group.name)
-        GroupRelation.where(group_id: group).collect(&:user_id).each do |i|
+        GroupRelation.where(group_id: group, status:2).collect(&:user_id).each do |i|
         user = User.find(i)
         name = user.first_name + ", " + user.last_name
         members.push(name)
