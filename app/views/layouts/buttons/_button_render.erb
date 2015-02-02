@@ -1,10 +1,7 @@
 <% case current_user.role %>
 <% when 0 %>
-	<% if get_status(@user) == 0 %> 
 		<%= render 'layouts/buttons/request_button', user: @user  %>
-	<% else %>
-		<td></td>
-	<% end %>
+
 
 <% when 1..2 %>
 

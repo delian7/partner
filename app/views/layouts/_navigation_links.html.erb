@@ -48,6 +48,10 @@
 <% when 0 %>
 	<% request_count = 0 %>
 	<% current_user.group_relations.where(status: 1).uniq.each {|x| request_count+=1}%>
+	    <%@confirmed_groupids = current_user.group_relations.where(status:2).collect(&:group_id)%>
+     <% @confirmed_groups = []%>
+     <% @confirmed_groupids.each {|group| @confirmed_groups.push(Group.find_by_id(group))} %>
+     
 	<% @confirmed_groups.each do |group|%>
 		<% group.group_relations.each do |relation|%>
 			<% if relation.status == 0 %>

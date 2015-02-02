@@ -5,15 +5,18 @@
 <% project = Project.find(current_user.current_project)%>
 <%= project.group_size == 2 ? "a Partner" : "Members"%> </span><br><br>
    <% current_user.groups.order(:project_id).uniq.each do |group| %>
-   <% is_current_user_requested = (project.group_relations.find_by(user_id: current_user.id, group_id: group.id).status == 1) %>
-	    
-	 <% if is_current_user_requested %>
+ 
+   	<% if project.group_relations.find_by(user_id: current_user.id, group_id: group.id)%>
+   	  <% is_current_user_requested = project.group_relations.find_by(user_id: current_user.id, group_id: group.id)%>
+   	  	<% if is_current_user_requested.status == 1 %>
 	    <% msg ="You have pending requests, please respond to these before requesting more people."%>
 	    	<div class="alert alert-warning">
 		     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 		      <%= content_tag :div, msg.html_safe, id: "flash_success" %></div>
-					<%= render 'visitors/requests', project: group.project %>
-	 <% else %>
+					<%= render 'visitors/notification_student', group: group %>
+		<% end %>
+
+	<% else %>
 
 		<% !@mygroup.nil? ? mygroupsize = @mygroup.group_relations.size : mygroupsize = 0 %>
 		<!-- Room in group?-->
@@ -40,7 +43,6 @@
 			<% end %>
 	 <% end %>
 	 <% end %>
-
 
 
 	 <% if current_user.groups.order(:project_id).empty?%>

@@ -19,14 +19,14 @@
         <tr>
             <td colspan="2">
                 <div style="float:left;padding:0px">
-                        <span style="font-size:15px; font-weight:bold;">Project:</span>
-                        <span style="font-size:15px;"><%= @group.project.name%></span>
-                        <span style="font-size:15px; font-weight:bold;"><br>
-                        Course:</span> <span style="font-size:15px;"><%= Course.find(@group.project.course_id).course_title%><br>
+                        <span style=" font-weight:bold;">Project:</span>
+                        <span style=""><%= @group.project.name%></span>
+                        <span style=" font-weight:bold;"><br>
+                        Course:</span> <span style=""><%= Course.find(@group.project.course_id).course_title%><br>
                         </span>
                     </div>
                     <div style="float:right;line-height: .5em;"><span style="font-size:13px; font-weight:bold; padding:0px;"><br>
-                        Partnership Deadline:</span> <span style="font-size:14px;">
+                        Partnership Deadline:</span> <span style="">
                         <%if @group.project.partnership_deadline == nil || @group.project.partnership_deadline == "" %>
                             Not Specified
                         <% else %>
@@ -34,7 +34,7 @@
                         <% end %>
                         <br><br>
                         <span style="font-size:13px; font-weight:bold; padding:0px;">
-                        Evaluation Deadline:</span> <span style="font-size:14px;">
+                        Evaluation Deadline:</span> <span style="">
                         <%if @group.project.evaluation_deadline == nil || @group.project.evaluation_deadline == "" %>
                             Not Specified
                         <% else %>
@@ -74,6 +74,9 @@
                 <td style="font-size:12px;" >You can't evaluate yourself</td>
         <% elsif (user.group_relations.find_by(group_id: @group.id).status == 1 || current_user.group_relations.find_by(group_id: @group.id).status == 1) %>
                 <td style="font-size:12px;" >Request Still Pending</td>
+        <% elsif (user.group_relations.find_by(group_id: @group.id).status == 0 &&
+         current_user.group_relations.find_by(group_id: @group.id).status == 2) %>
+           <td style="font-size:12px;" >Sent <%=@group.name%> a request</td>
         <% else %>
                 <% evaluated_left = User.find(@group.users.collect(&:id) - @group.eval_relations.where(reviewer_id:current_user.id).collect(&:user_id)) %>
                  <td style="font-size:12px;" ><%= evaluated_left.include?(user) ? '<a href="/evaluations" class="btn btn-primary btn-xs">Evaluate this Partner<span class=\"glyphicons glyphicons-remove\"></span></a>'.html_safe : 'Evaluation Completed' %></td>

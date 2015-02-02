@@ -58,11 +58,11 @@ def teammates?(user, user2)
 end
 
 
-# def in_group_for?(user, project)
-#    if project.group_relations.collect(&:user_id).include?(user.id)
-#     !user.group_relations.where(project_id: project.id, status:2).nil?
-#    end
-# end
+def in_group_for?(user, project)
+   if project.group_relations.collect(&:user_id).include?(user.id)
+    !user.group_relations.where(project_id: project.id, status:2).nil?
+   end
+end
 
 def previously_partnered?(user1, user2)
   if Project.find(current_user.current_project).allow_repeat && !(user1.groups & user2.groups).empty? 
