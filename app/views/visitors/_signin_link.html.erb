@@ -1,5 +1,5 @@
 		<% if @ucinetid.blank? %>
-			<%= link_to "<span class=\"glyphicons glyphicons-log-in\"></span>&emsp;&emsp;Login To PartnerUp".html_safe, request.ip == "127.0.0.1" ? "" : "https://login.uci.edu/" %><br>
+			<br>
 		<% else %>
 			<%= form_for(resource, url: user_session_path) do |f| %>
 		    <%= f.hidden_field :ucinetid, value: @ucinetid %> 
