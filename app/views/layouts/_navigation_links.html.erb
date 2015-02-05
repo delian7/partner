@@ -44,24 +44,37 @@
   </ul>
 </div>
 <%# NOTIFICATIONS %>
-	<% case current_user.role %>
-	<% when 0 %>
-	<% if current_user.group_relations.where(status:1).size != 0 %>
-		<div class="dropdown pull-right">
-			<a href="/">
-				<button class="btn btn-danger" type="button">Notifications&ensp;<span class="badge"><%= current_user.group_relations.where(status:1).size%></span></button>
-			</a></div>
-	<% end %>
-	<% when 1..2 %>
-	<% y = 0 %>
-	<% current_user.courses.each { |x| y += 1 if x.projects.empty? } %>
-		<% if y != 0 %>
-		<div class="dropdown pull-right">
-				<a href="/">
-					<button class="btn btn-danger" type="button">Notifications&ensp;<span class="badge"><%=y%></span></button>
-				</a></div>
+<% case current_user.role %>
+<% when 0 %>
+	<% request_count = 0 %>
+	<% current_user.group_relations.where(status: 1).uniq.each {|x| request_count+=1}%>
+	    <%@confirmed_groupids = current_user.group_relations.where(status:2).collect(&:group_id)%>
+     <% @confirmed_groups = []%>
+     <% @confirmed_groupids.each {|group| @confirmed_groups.push(Group.find_by_id(group))} %>
+     
+	<% @confirmed_groups.each do |group|%>
+		<% group.group_relations.each do |relation|%>
+			<% if relation.status == 0 %>
+				<% request_count += 1 %>
+			<%end%>
 		<% end %>
 	<% end %>
+	<% if request_count !=0 %>
+			<div class="dropdown pull-right">
+			<a href="/">
+				<button class="btn btn-danger" type="button">Notifications&ensp;<span class="badge"><%= request_count %></span></button>
+			</a></div>
+		<% end %>
+<% when 1..2 %>
+<% y = 0 %>
+<% current_user.courses.each { |x| y += 1 if x.projects.empty? } %>
+	<% if y != 0 %>
+	<div class="dropdown pull-right">
+			<a href="/">
+				<button class="btn btn-danger" type="button">Notifications&ensp;<span class="badge"><%=y%></span></button>
+			</a></div>
+	<% end %>
+<% end %>
 
 <% else %>
 <%# if the user is NOT signed in, show signin link %>

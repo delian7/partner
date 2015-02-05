@@ -19,32 +19,14 @@
         <tr>
             <td colspan="2">
                 <div style="float:left;padding:0px">
-                        <span style="font-size:15px; font-weight:bold;">Project:</span>
-                        <span style="font-size:15px;"><%= @group.project.name%></span>
-                        <span style="font-size:15px; font-weight:bold;"><br>
-                        Course:</span> <span style="font-size:15px;"><%= Course.find(@group.project.course_id).course_title%><br>
+                        <span style=" font-weight:bold;">Project:</span>
+                        <span style=""><%= @group.project.name%></span>
+                        <span style=" font-weight:bold;"><br>
+                        Course:</span> <span style=""><%= Course.find(@group.project.course_id).course_title%><br>
                         </span>
-                        <% if current_page? root_path%>
-                    </div>
-                     <div style="float:right;line-height: .5em;"><span style="font-size:13px; font-weight:bold; padding:0px;"><br>
-                        Partnership Deadline:</span> <span style="font-size:14px;">
-                        <%if @group.project.partnership_deadline == nil || @group.project.partnership_deadline == "" %>
-                            Not Specified
-                        <% else %>
-                            <%= @group.project.partnership_deadline.strftime("%m/%d/%y")%>
-                        <% end %>
-                        <br><br>
-                        <span style="font-size:13px; font-weight:bold; padding:0px;">
-                        Evaluation Deadline:</span> <span style="font-size:14px;">
-                        <%if @group.project.evaluation_deadline == nil || @group.project.evaluation_deadline == "" %>
-                            Not Specified
-                        <% else %>
-                            <%= @group.project.partnership_deadline.strftime("%m/%d/%y")%>
-                        <% end %>
-                <% else %>
                     </div>
                     <div style="float:right;line-height: .5em;"><span style="font-size:13px; font-weight:bold; padding:0px;"><br>
-                        Partnership Deadline:</span> <span style="font-size:14px;">
+                        Partnership Deadline:</span> <span style="">
                         <%if @group.project.partnership_deadline == nil || @group.project.partnership_deadline == "" %>
                             Not Specified
                         <% else %>
@@ -52,13 +34,12 @@
                         <% end %>
                         <br><br>
                         <span style="font-size:13px; font-weight:bold; padding:0px;">
-                        Evaluation Deadline:</span> <span style="font-size:14px;">
+                        Evaluation Deadline:</span> <span style="">
                         <%if @group.project.evaluation_deadline == nil || @group.project.evaluation_deadline == "" %>
                             Not Specified
                         <% else %>
                             <%= @group.project.partnership_deadline.strftime("%m/%d/%y")%>
                         <% end %>
-                <% end %>
                 </div>
             </td>
         </tr>
@@ -70,30 +51,36 @@
             <% end %>
             <td style="font-size:13px;font-weight:bold;"><strong>Name</strong></td>
             <td class='collapsable' style="font-size:13px;font-weight:bold;">Email</strong></td>
+            <% if current_page?(root_path)%>
             <td style="font-size:13px;font-weight:bold;">Phone</strong></td>
+            <% end %>
             <td style="font-size:13px;font-weight:bold;">Status</strong></td>
             <td style="font-size:13px;font-weight:bold;">Evaluated?</strong></td>
 
     <% members = @group.users.order(:last_name).uniq %><% members.each do |user| %>
         <tr style="<%= (user.group_relations.find_by(group_id: @group.id).status != 2) ? 'background-color:eee; opacity: 0.6;' : '' %>">
-            <% if current_page?(root_path) %>
+        <% if current_page?(root_path) %>
             <td style="font-size:12px;" class='collapsable'>
             <%= link_to (image_tag (user.avatar.url), style: "max-width: 45px;"), user %></td>
-            <% end %>
+        <% end %>
              <td style="font-size:12px;">
                 <%= link_to "#{user.first_name} #{user.last_name}", user %></td>
             <td style="font-size:12px;" class='collapsable'><%= user.email %></td>
+            <% if current_page?(root_path)%>
             <td style="font-size:12px;" class='collapsable'><%= number_to_phone(user.phone, area_code: true) if current_user.phone %></td>
-
-            <td style="font-size:12px;" ><%= (user.group_relations.find_by(group_id: @group.id).status == 2) ? 'Confirmed' : 'Requested'%></td>
-            <% if user == current_user %>
-                <td style="font-size:12px;" >You can't evaluate yourself</td>
-            <% elsif (user.group_relations.find_by(group_id: @group.id).status == 1) %>
-                <td style="font-size:12px;" >Request Still Pending</td>
-            <% else %>        
-                <% evaluated_left = User.find(@mygroup.users.collect(&:id) - @mygroup.eval_relations.where(reviewer_id:current_user.id).collect(&:user_id)) %>
-                 <td style="font-size:12px;" ><%= evaluated_left.include?(user) ? '<a href="/evaluations" class="btn btn-primary btn-xs">Evaluate this Partner<span class=\"glyphicons glyphicons-remove\"></span></a>'.html_safe : 'Evaluation Completed' %></td>
             <% end %>
+            <td style="font-size:12px;" ><%= (user.group_relations.find_by(group_id: @group.id).status == 2) ? 'Confirmed' : 'Requested'%></td>
+        <% if user == current_user %>
+                <td style="font-size:12px;" >You can't evaluate yourself</td>
+        <% elsif (user.group_relations.find_by(group_id: @group.id).status == 1 || current_user.group_relations.find_by(group_id: @group.id).status == 1) %>
+                <td style="font-size:12px;" >Request Still Pending</td>
+        <% elsif (user.group_relations.find_by(group_id: @group.id).status == 0 &&
+         current_user.group_relations.find_by(group_id: @group.id).status == 2) %>
+           <td style="font-size:12px;" >Sent <%=@group.name%> a request</td>
+        <% else %>
+                <% evaluated_left = User.find(@group.users.collect(&:id) - @group.eval_relations.where(reviewer_id:current_user.id).collect(&:user_id)) %>
+                 <td style="font-size:12px;" ><%= evaluated_left.include?(user) ? '<a href="/evaluations" class="btn btn-primary btn-xs">Evaluate this Partner<span class=\"glyphicons glyphicons-remove\"></span></a>'.html_safe : 'Evaluation Completed' %></td>
+        <% end %>
         </tr>
     <% end %>
     </table>

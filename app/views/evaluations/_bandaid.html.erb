@@ -20,7 +20,7 @@
 	</tr>
 
 	<% Project.find(current_user.current_project).evaluations.each do |evaluation| %>
-		<% avg = ((evaluation.effort + evaluation.reliability + evaluation.quality)/3) %>
+		<% avg = ((evaluation.effort + evaluation.reliability + evaluation.quality)/3) if evaluation.effort && evaluation.reliability && evaluation.quality %>
 		<tr> 
 			<td><%= evaluation.users.collect(&:first_name)[0] %> <%= evaluation.users.collect(&:last_name)[0] %></td>
 			<td><center><%= avg %> %</td>

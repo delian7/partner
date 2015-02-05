@@ -11,6 +11,7 @@ class UsersController < ApplicationController
   def index
     @users = User.all
     set_current_users_instance_variables
+
     
     if @myproject.nil?
       set_current_project_course(current_user, Project.find(0), Course.find(0))
@@ -40,7 +41,7 @@ class UsersController < ApplicationController
     authorize User.find(params[:id])
     current_user.update_attributes(secure_params)
     set_current_users_instance_variables
-    @current_projects = Project.where(course_id: @mycourse.id, active: true)
+    @current_projects = Project.where(course_id: @mycourse.id)
 
     if @current_projects.exists?
       current_user.update_attributes(current_project: @current_projects.first.id)
@@ -58,35 +59,35 @@ class UsersController < ApplicationController
     redirect_to :back
   end
 
-    # Start download of csv file of partner data
-  def export_organized
-      user = current_user
-      authorize user
-      roster_csv = CSV.generate do |csv|
-      csv << ["Project: " + Project.find_by_id(current_user.current_project).name, "Course: " + Course.find_by_id(current_user.current_course).course_title, "Downloaded by: " + current_user.first_name + " " + current_user.last_name]
+  #   # Start download of csv file of partner data
+  # def export_organized
+  #     user = current_user
+  #     authorize user
+  #     roster_csv = CSV.generate do |csv|
+  #     csv << ["Project: " + Project.find_by_id(current_user.current_project).name, "Course: " + Course.find_by_id(current_user.current_course).course_title, "Downloaded by: " + current_user.first_name + " " + current_user.last_name]
 
-    groupids = GroupRelation.where(project_id:current_user.current_project).collect(&:group_id).uniq
-    groupids.each do |group|
-    @group = Group.find(group)
-      csv << [@group.name]
+  #   groupids = GroupRelation.where(project_id:current_user.current_project).collect(&:group_id).uniq
+  #   groupids.each do |group|
+  #   @group = Group.find(group)
+  #     csv << [@group.name]
 
-    GroupRelation.where(group_id: group).collect(&:user_id).each do |i|
-    name = "#{user.first_name} #{user.last_name}"
-    user = User.find(i)
+  #   GroupRelation.where(group_id: group).collect(&:user_id).each do |i|
+  #   name = "#{user.first_name} #{user.last_name}"
+  #   user = User.find(i)
 
-    if GroupRelation.find_by(user_id: user.id, group_id: @group.id).nil?
-        @confirmed ="Request Pending"
-    elsif GroupRelation.find_by(user_id: user.id, group_id: @group.id).status == 2
-        @confirmed = "Confirmed"
-    else
-        @confirmed ="Request Pending"
-    end 
-    csv << [user.first_name, user.last_name, user.email, @confirmed]
-       end 
-      end    
-    end
-    send_data(roster_csv, type:  'text/csv', filename:  'groups.csv')
-  end
+  #   if GroupRelation.find_by(user_id: user.id, group_id: @group.id).nil?
+  #       @confirmed ="Request Pending"
+  #   elsif GroupRelation.find_by(user_id: user.id, group_id: @group.id).status == 2
+  #       @confirmed = "Confirmed"
+  #   else
+  #       @confirmed ="Request Pending"
+  #   end 
+  #   csv << [user.first_name, user.last_name, user.email, @confirmed]
+  #      end 
+  #     end    
+  #   end
+  #   send_data(roster_csv, type:  'text/csv', filename:  'groups.csv')
+  # end
 
       # Start download of csv file of partner data
   def export_horizontal
@@ -104,7 +105,7 @@ class UsersController < ApplicationController
       @group = Group.find(group)
       members = []
       members.push(@group.name)
-        GroupRelation.where(group_id: group).collect(&:user_id).each do |i|
+        GroupRelation.where(group_id: group, status:2).collect(&:user_id).each do |i|
         user = User.find(i)
         name = user.first_name + ", " + user.last_name
         members.push(name)

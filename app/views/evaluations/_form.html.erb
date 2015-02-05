@@ -7,6 +7,7 @@
 		<td><%= f.label 'Team Member: ' %></td>
 			<td colspan='2'>
 				<% evaluated_left = User.find(@mygroup.users.collect(&:id) - @mygroup.eval_relations.where(reviewer_id:current_user.id).collect(&:user_id)) %>
+				<% evaluated_left = evaluated_left - @mygroup.eval_relations.where(reviewer_id:current_user.id)%>
 				<% evaluated_left.delete(current_user)%>
 				<% if evaluated_left.empty?%>
 					<% msg ="Looks like you have no one left to Evaluate"%>
