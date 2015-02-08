@@ -1,19 +1,19 @@
 class RosterController < ApplicationController
-  
+
   def index
     @rosters = Roster.all
   end
-  
+
   def create
     @roster = Roster.new(roster_params)
-    
+
     if @roster.save
       redirect_to(:action => 'index')
     else
       render('new')
     end
   end
-  
+
   def destroy
     @roster = Roster.find(params[:id])
     @roster.destroy
@@ -23,7 +23,7 @@ class RosterController < ApplicationController
 
   def update
     @roster = Roster.find(params[:id])
-    
+
     if @roster.update_attributes(roster_params)
       flash[:notice] = "Roster updated successfully"
       redirect_to(:action => 'index')
@@ -43,11 +43,10 @@ class RosterController < ApplicationController
     end
     redirect_to(:action => 'index')
   end
-  
-  private 
-  
+
+  private
+
   def roster_params
     params.require(:roster).permit(:user_id, :course_id)
-  end 
-  
+  end
 end

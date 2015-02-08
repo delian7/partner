@@ -1,5 +1,4 @@
 class RegistrationsController < Devise::RegistrationsController
- 
   prepend_before_filter :require_no_authentication, only: [ :new, :create, :cancel ]
   prepend_before_filter :authenticate_scope!, only: [:edit, :update, :destroy]
 
@@ -19,8 +18,8 @@ class RegistrationsController < Devise::RegistrationsController
       if resource.active_for_authentication?
         set_flash_message :notice, :signed_up if is_flashing_format?
         sign_up(resource_name, resource)
-       # respond_with resource, location: after_sign_up_path_for(resource)
-       redirect_to(after_sign_up_path_for(resource))
+        # respond_with resource, location: after_sign_up_path_for(resource)
+        redirect_to(after_sign_up_path_for(resource))
       else
         set_flash_message :notice, :"signed_up_but_#{resource.inactive_message}" if is_flashing_format?
         expire_data_after_sign_in!
@@ -55,7 +54,7 @@ class RegistrationsController < Devise::RegistrationsController
       sign_in resource_name, resource, bypass: true
       respond_with resource, location: user_path(resource)
     else
-    #  clean_up_passwords resource
+      #  clean_up_passwords resource
       respond_with resource
     end
   end
@@ -133,23 +132,20 @@ class RegistrationsController < Devise::RegistrationsController
   # this method in your own RegistrationsController.
   def after_update_path_for(resource)
     signed_in_root_path(resource)
-
   end
-
 
   # Authenticates the current scope and gets the current resource from the session.
   def authenticate_scope!
     send(:"authenticate_#{resource_name}!", force: true)
     self.resource = send(:"current_#{resource_name}")
   end
- 
+
   def sign_up_params
     params.require(:user).permit(:name, :email)
   end
- 
+
   def account_update_params
     params.require(:user).permit(:name, :email, :avatar, :description, :phone, :availability)
   end
 
-  
 end

@@ -1,10 +1,10 @@
 class ProjectRelationsController < ApplicationController
- before_filter :authenticate_user!
+  before_filter :authenticate_user!
   # after_action :verify_authorized
 
-  def index
-    authorize current_user
-  end
+  # def index
+  #   authorize current_user
+  # end
 
   def create
     authorize current_user

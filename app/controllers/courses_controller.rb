@@ -2,7 +2,6 @@ class CoursesController < ApplicationController
   include CoursesHelper, UsersHelper, ParsingHelper
   before_filter :authenticate_user!
   #after_action :verify_authorized, except: [:show, :edit]
-
   require 'csv'
 
   def index
@@ -122,16 +121,13 @@ class CoursesController < ApplicationController
     redirect_to :back
   end
 
-
-
   private
 
   def course_params
     params.require(:course).permit(:course_title, :instructor, :id, :course_code)
   end
 
-  def secure_params
-    params.require(:user).permit(:current_course)
-  end
-
+  # def secure_params
+  #   params.require(:user).permit(:current_course)
+  # end
 end

@@ -50,7 +50,6 @@ class EvaluationsController < ApplicationController
     end
   end
 
-
   def remove
     authorize current_user
     if Evaluation.find_by_id(params[:id]) != nil
@@ -81,11 +80,9 @@ class EvaluationsController < ApplicationController
     end
   end
 
-
   private
 
   def evaluation_params
     params.require(:evaluation).permit(:evaluation_title, :group_id, :user_id, :user_id, :instructor, :id, :field1, :field2, :field3)
   end
-
 end
