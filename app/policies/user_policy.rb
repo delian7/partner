@@ -12,7 +12,7 @@ class UserPolicy
   def new?
     true
   end
-    def request_join?
+  def request_join?
     true
   end
   def show?
@@ -20,14 +20,14 @@ class UserPolicy
   end
   def remove?
     true
-  end  
+  end
   def disband?
     true
   end
-    def clear_partnerships?
+  def clear_partnerships?
     true
   end
-   def leave?
+  def leave?
     true
   end
   def profile?
@@ -46,18 +46,18 @@ class UserPolicy
   def set_current_project?
     true
   end
-def export_horizontal?
-  true
-end
-def export_organized?
-  true
-end
-def send_request?
-  true
-end
-def undo_request?
-  true
-end
+  def export_horizontal?
+    true
+  end
+  def export_organized?
+    true
+  end
+  def send_request?
+    true
+  end
+  def undo_request?
+    true
+  end
   def ignore?
     true
   end
@@ -67,9 +67,7 @@ end
   end
 
   def csv_import?
-true
+    true
   end
-
-
-
+  
 end

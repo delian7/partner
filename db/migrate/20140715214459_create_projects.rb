@@ -9,6 +9,6 @@ class CreateProjects < ActiveRecord::Migration
       t.date :partnership_deadline
       t.date :evaluation_deadline
     end
-   # add_index :projects, ["course_id"],["group_id"]
+    # add_index :projects, ["course_id"],["group_id"]
   end
 end
