@@ -4,21 +4,20 @@ class GroupRelationsController < ApplicationController
   before_filter :authenticate_user!
   # after_action :verify_authorized
   require 'csv'
-   
+
   def index
     # @user = User.find(params[:id])
     set_current_users_instance_variables
-    
     if @myproject.nil?
       set_current_project_course(current_user, Project.find(0), Course.find(0))
     end
-      # @allowed_project_size = @myproject.group_size
+    # @allowed_project_size = @myproject.group_size
   end
 
-def edit
+  def edit
     @group = Group.find(params[:id])
   end
-  
+
   def destroy
     @group = Group.find(params[:id])
     @group.destroy
@@ -28,7 +27,6 @@ def edit
 
   def update
     @group = GroupRelation.find(params[:id])
-    
     if @group.update_attributes(group_params)
       flash[:notice] = "Group updated successfully"
       redirect_to(:action => 'index')
@@ -71,9 +69,10 @@ def edit
   end
 
   private
-  def login_params
-    params.require(:grouprelation).permit(:id)
-  end
+  # def login_params
+  #   params.require(:grouprelation).permit(:id)
+  # end
+  
   def secure_params
     params.require(:grouprelation).permit(:id, :course_id, :group_id, :project_id, :user_id)
     params.require(:group).permit(:name)
