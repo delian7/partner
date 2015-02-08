@@ -6,7 +6,7 @@ class CreateCourses < ActiveRecord::Migration
       t.string  	 :quarter, default: ""
       t.string  	 :instructor, default: ""
 
-      	t.timestamps
+      t.timestamps
     end
   end
 end
