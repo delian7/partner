@@ -44,6 +44,12 @@ float: none;
 .navbar-custom .navbar-text {
   color: #ffffff;
 }
+/* set a max-width for horizontal fluid layout and make it centered */
+.container-fluid {
+  margin-right: auto;
+  margin-left: auto;
+  max-width: 1600px; /* or 950px */
+}
 .navbar-custom .navbar-nav > li > a {
   color: #ffffff;
 }
@@ -112,7 +118,7 @@ float: none;
   border-top-color: #ffffff;
   border-bottom-color: #ffffff;
 }
-@media (max-width: 767) {
+@media (max-width: 1200) {
   .navbar-custom .navbar-nav .open .dropdown-menu > li > a {
     color: #ffffff;
   }
@@ -166,6 +172,7 @@ float: none;
   clear: both;
   padding: 0px;
   margin: 0px;
+  float:left;
 }
 
 /*  COLUMN SETUP  */
@@ -193,26 +200,31 @@ float: none;
 /*  GRID OF THREE  */
 .span_3_of_3 {
   width: 100%;
+  display: block;
+  float:left;
 
 }
 .span_2_of_3 {
   width: 64%;
-  padding:10px;
+  padding:5px;
+  display: block;
+  float:left;
 }
 .span_1_of_3 {
-  width: 32%;
-  padding:10px;
+  width: 30%;
+  padding:5px;
+  float:left;
 }
 
 /*  GO FULL WIDTH AT LESS THAN 480 PIXELS */
 
-@media only screen and (max-width: 500px) {
+@media only screen and (max-width: 600px) {
   .col { 
     margin: 1% 0 1% 0%;
   }
 }
 
-@media only screen and (max-width: 500px) {
+@media only screen and (max-width: 600px) {
   .span_3_of_3 {
     width: 100%; 
   }
@@ -236,7 +248,7 @@ float: none;
 
 /*  GO FULL WIDTH AT LESS THAN 480 PIXELS */
 
-@media only screen and (max-width: 500px) {
+@media only screen and (max-width: 600px) {
   .span_2_of_2 {
     width: 100%; 
   }
