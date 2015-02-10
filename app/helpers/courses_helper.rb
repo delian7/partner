@@ -23,16 +23,16 @@ module CoursesHelper
     array.delete_if { |blanks| blanks.empty? }
   end
 
-  def csv_netids(student_data_array)
-    @student_netids = []
-    student_data_array.each do |i|
-      if i.size > 2
-        @netid = i[@mail_col].downcase
-        @netid.slice! "@uci.edu"
-        @student_netids.push(@netid)
-      end
-    end
-    @student_netids.push(current_user.ucinetid)
+  # def csv_netids(student_data_array)
+  #   @student_netids = []
+  #   student_data_array.each do |i|
+  #     if i.size > 2
+  #       @netid = i[@mail_col].downcase
+  #       @netid.slice! "@uci.edu"
+  #       @student_netids.push(@netid)
+  #     end
+  #   end
+  #   @student_netids.push(current_user.ucinetid)
   end
 
   def destroy_groups(course)
@@ -77,4 +77,4 @@ module CoursesHelper
       return false
     end
   end
-end
+
