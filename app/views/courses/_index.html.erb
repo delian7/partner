@@ -3,21 +3,19 @@
   <tr style="background-color:#eee">
     <th class='collapsable'><b>Course ID</th><th class='collapsable'><b>Course Name</th><th colspan='4' class='collapsable'><span class="glyphicons glyphicons-pushpin"></span>&ensp;Projects</th>
   </tr>          <tbody>
-
-<% case current_user.role%>
-	<% when 1..2 %>
-              <% current_user.courses.each do |course| %>
-              <% if course.id != 0 %>
-              <tr><%= render 'courses/course', course:course %></tr></div>
-              <% end %><% end %>
-
-	<% when 3 %>
-              <% Course.all.each do |course| %>
-              <% if course.id !=0%>
-              <tr><%= render 'courses/course', course:course %></tr></div>
-              <% end %><% end %>
-
-				
-<%end%>
-          </tbody>
-        </table>
+  <% case current_user.role%>
+  <% when 1..2 %>
+  <% current_user.courses.each do |course| %>
+  <% if course.id != 0 %>
+      <tr><%= render 'courses/course', course:course %></tr></div>
+  <% end %>
+  <% end %>
+  <% when 3 %>
+    <% Course.all.each do |course| %>
+      <% if course.id !=0%>
+        <tr><%= render 'courses/course', course:course %></tr></div>
+      <% end %>
+    <% end %>
+  <% end %>
+</tbody>
+</table>
