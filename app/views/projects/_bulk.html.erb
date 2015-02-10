@@ -1,0 +1,32 @@
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+<link rel="stylesheet" href="/resources/demos/style.css">
+<script>
+	$(function() {
+		$( "#datepicker" ).datepicker();
+	});
+</script>
+<div style="float:left;width:60%">
+	<table class="table" align="center">
+		<% @empty_courses = current_user.courses %>
+		<% @empty_courses.each {|course| @empty_courses = @empty_courses.unshift(course) if course.projects.empty?} %>
+		<%= render 'projects/courseloop'%>
+	</table>
+</div>
+<div style="float:left; width:40%">
+	<table class="table" style= "width:80%;" align="center">
+		<tr><th colspan='6'> Bulk Editor</th><tr>
+		<tr>
+			<td class='collapsable' style="font-size:12px;text-align:right">
+				Name: </td><td><input type="text" name="deadlines[]" id="text" value="">
+			</td></tr><tr>
+			<td class='collapsable' style="font-size:12px;text-align:right">
+				Evaluation Deadline: </td><td><input type="text" name="deadlines[]" id="datepicker" value="mm/dd/yyyy"></p>
+			</td></tr><tr>
+			<td class='collapsable' style="font-size:12px;text-align:right">
+				Partnership Deadline: </td><td><input type="text" name="deadlines[]" id="datepicker" value="mm/dd/yyyy">
+			</td></tr>
+		</tr>
+	</table>
+</div>
