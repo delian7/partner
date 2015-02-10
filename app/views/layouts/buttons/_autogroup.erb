@@ -1,8 +1,4 @@
   <%= form_for :project, :url => {action: 'autogroup', controller: 'projects', id: @myproject.id}, :html => { :style => 'padding: 10px!important; display:inline;'} do |f|%>
-    <div class="input-group" style="border-radius: 0px;-webkit-box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2); border: 1px solid #999;">
-      <%= f.select :name_gen, options_for_select([['Team 1, Team 2, Team 3...','number'], ['Random','random'], ['Team Bear, Team Cat....','creature'],['Team Red, Tean Cyan...','color'],['Horde, Champions of Cyrodil...','gamer']]), {}, {class: 'form-control', style: 'max-width:225px; display:inline; border-radius:0px!important;'} %>
-      <span class="input-group-btn">
-        <%= button_tag(type: 'submit', class: "btn btn-default", style: "border-radius:0px;", id: 'autogroup-btn') do %>
-      </span>Autogroup&nbsp;&nbsp;<span class="glyphicons glyphicons-random"></span> 
-      <% end %>
-    <% end %></div>
+      <%= f.hidden_field :name_gen, value: 'number' %>
+        <%= link_to_submit "Autogroup&nbsp;&nbsp;<span class=\"glyphicons glyphicons-random\"></span> ".html_safe%>
+    <% end %>

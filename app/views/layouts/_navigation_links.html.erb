@@ -1,84 +1,79 @@
 <%# adds navigation links to this file %>
 <% if user_signed_in? %>
 <%# renders appropriate list "li" depending on user "role", 0 is student, 1..2 is professor/ta, 3 is for admin %>
-	<% case current_user.role %>
-		<% when 0 %> 
-		<li role="presentation" class="<%= 'active' if current_page?(users_profile_path) %>"><%= link_to "<span class=\"glyphicons glyphicons-nameplate-alt\" style=\"font-size:23;\"></span>&emsp;&emsp;My Profile".html_safe, users_profile_path %></li>
-		<%# renders "find members" if group size is over 2 %>
-		<% if Project.find(current_user.current_project).group_size != 2 %>
-			<li role="presentation" class="<%= 'active' if current_page?(users_path) %>"><%= link_to "<span class=\"glyphicons glyphicons-address-book\" style=\"font-size:23;\"></span>&emsp;&emsp;Find Members".html_safe, users_path %></li>
-			<%# renders "find groups" if the user isn't already in a group%>
-			<% if current_user.groups.find_by(project_id: current_user.current_project).nil? %>
-			<li role="presentation" class="<%= 'active' if current_page?(groups_path) %>"><%= link_to "<span class=\"glyphicons glyphicons-group\" style=\"font-size:23;\"></span>&emsp;&emsp;Find Groups".html_safe, groups_path %></li>
-			<% end %>
-		<% else %>
-			<%# if the group size of this project is 2, then renders "find a partner" %>
-			<li role="presentation" class="<%= 'active' if current_page?(users_path) %>"><%= link_to "<span class=\"glyphicons glyphicons-address-book\" style=\"font-size:23;\"></span>&emsp;&emsp;Find a Partner".html_safe, users_path %></li>
-		<% end %>
-		<li role="presentation" class="<%= 'active' if current_page?(evaluations_path) %>"><%= link_to "<span class=\"glyphicons glyphicons-scale-classic\" style=\"font-size:23;\"></span>&emsp;&emsp;Evaluations".html_safe,  evaluations_path %></li>
-		<% when 1 .. 2 %>
-			<li role="presentation" class="<%= 'active' if current_page?(users_path) %>"><%= link_to "<span class=\"glyphicons glyphicons-user\" style=\"font-size:23;\"></span>&emsp;&emsp;Students".html_safe, users_path %></li>
-			<li role="presentation" class="<%= 'active' if current_page?(groups_path) %>"><%= link_to "<span class=\"glyphicons glyphicons-group\" style=\"font-size:23;\"></span>&emsp;&emsp;Groups".html_safe, groups_path %></li>
-			<li role="presentation" class="<%= 'active' if current_page?(projects_path) %>"><%= link_to "<span class=\"glyphicons glyphicons-pushpin\" style=\"font-size:23;\"></span>&emsp;&emsp;Projects".html_safe, projects_path %></li>
-			<li role="presentation" class="<%= 'active' if current_page?(courses_path) %>"><%= link_to "<span class=\"glyphicons glyphicons-education\" style=\"font-size:23;\"></span>&emsp;&emsp;Courses".html_safe,  courses_path %></li>
-			<li role="presentation" class="<%= 'active' if current_page?(evaluations_path) %>"><%= link_to "<span class=\"glyphicons glyphicons-scale-classic\" style=\"font-size:23;\"></span>&emsp;&emsp;Evaluations".html_safe,  evaluations_path %></li>		
-		<% when 3 %>
-			<li><%= link_to 'Control Panel', '/kayslegion' %></li>
-			<li role="presentation" class="<%= 'active' if current_page?(roster_path) %>"><%= link_to "<span class=\"glyphicons glyphicons-list-alt\" style=\"font-size:23;\"></span>&emsp;&emsp;Upload Roster".html_safe,  roster_path %></li>
-			<li role="presentation" class="<%= 'active' if current_page?(users_path) %>"><%= link_to "<span class=\"glyphicons glyphicons-address-book\" style=\"font-size:23;\"></span>&emsp;&emsp;Students".html_safe, users_path %></li>
-			<li role="presentation" class="<%= 'active' if current_page?(groups_path) %>"><%= link_to "<span class=\"glyphicons glyphicons-group\" style=\"font-size:23;\">&emsp;&emsp;Groups".html_safe, groups_path %></li>
-			<li role="presentation" class="<%= 'active' if current_page?(projects_path) %>"><%= link_to "<span class=\"glyphicons glyphicons-pushpin\" style=\"font-size:23;\"></span>&emsp;&emsp;Projects".html_safe, projects_path %></li>
-			<li role="presentation" class="<%= 'active' if current_page?(courses_path) %>"><%= link_to "<span class=\"glyphicons glyphicons-dashboard\" style=\"font-size:23;\"></span>&emsp;&emsp;Courses".html_safe,  courses_path %></li>
-		<%end%>
+<% case current_user.role %>
+<% when 0 %>
+<li role="presentation" class="<%= 'active' if current_page?(users_profile_path) %>"><%= link_to "<span class=\"glyphicons glyphicons-nameplate-alt\" style=\"font-size:18;\"></span>&emsp;&emsp;My Profile".html_safe, users_profile_path %></li>
+<%# renders "find members" if group size is over 2 %>
+<% if Project.find(current_user.current_project).group_size != 2 %>
+<li role="presentation" class="<%= 'active' if current_page?(users_path) %>"><%= link_to "<span class=\"glyphicons glyphicons-address-book\" style=\"font-size:18;\"></span>&emsp;&emsp;Find Members".html_safe, users_path %></li>
+<%# renders "find groups" if the user isn't already in a group%>
+<% if current_user.groups.find_by(project_id: current_user.current_project).nil? %>
+<li role="presentation" class="<%= 'active' if current_page?(groups_path) %>"><%= link_to "<span class=\"glyphicons glyphicons-group\" style=\"font-size:18;\"></span>&emsp;&emsp;Find Groups".html_safe, groups_path %></li>
+<% end %>
+<% else %>
+<%# if the group size of this project is 2, then renders "find a partner" %>
+<li role="presentation" class="<%= 'active' if current_page?(users_path) %>"><%= link_to "<span class=\"glyphicons glyphicons-address-book\" style=\"font-size:18;\"></span>&emsp;&emsp;Find a Partner".html_safe, users_path %></li>
+<% end %>
+<li role="presentation" class="<%= 'active' if current_page?(evaluations_path) %>"><%= link_to "<span class=\"glyphicons glyphicons-scale-classic\" style=\"font-size:18;\"></span>&emsp;&emsp;Evaluations".html_safe,  evaluations_path %></li>
+<% when 1 .. 2 %>
+<li role="presentation" class="<%= 'active' if current_page?(groups_path) %>"><%= link_to "<span class=\"glyphicons glyphicons-group\" style=\"font-size:18;\"></span>&emsp;&emsp;Change Groups".html_safe, groups_path %></li>
+<li role="presentation" class="<%= 'active' if current_page?(projects_path) %>"><%= link_to "<span class=\"glyphicons glyphicons-pushpin\" style=\"font-size:18;\"></span>&emsp;&emsp;Edit Projects".html_safe, projects_path %></li>
+<li role="presentation" class="<%= 'active' if current_page?(courses_path) %>"><%= link_to "<span class=\"glyphicons glyphicons-education\" style=\"font-size:18;\"></span>&emsp;&emsp;View All Courses".html_safe,  courses_path %></li>
+<li role="presentation" class="<%= 'active' if current_page?(evaluations_path) %>"><%= link_to "<span class=\"glyphicons glyphicons-scale-classic\" style=\"font-size:18;\"></span>&emsp;&emsp;Evaluations".html_safe,  evaluations_path %></li>
+<% when 3 %>
+<li><%= link_to 'Control Panel', '/kayslegion' %></li>
+<li role="presentation" class="<%= 'active' if current_page?(roster_path) %>"><%= link_to "<span class=\"glyphicons glyphicons-list-alt\" style=\"font-size:18;\"></span>&emsp;&emsp;Upload Roster".html_safe,  roster_path %></li>
+<li role="presentation" class="<%= 'active' if current_page?(users_path) %>"><%= link_to "<span class=\"glyphicons glyphicons-address-book\" style=\"font-size:18;\"></span>&emsp;&emsp;Students".html_safe, users_path %></li>
+<li role="presentation" class="<%= 'active' if current_page?(groups_path) %>"><%= link_to "<span class=\"glyphicons glyphicons-group\" style=\"font-size:18;\">&emsp;&emsp;Groups".html_safe, groups_path %></li>
+<li role="presentation" class="<%= 'active' if current_page?(projects_path) %>"><%= link_to "<span class=\"glyphicons glyphicons-pushpin\" style=\"font-size:18;\"></span>&emsp;&emsp;Projects".html_safe, projects_path %></li>
+<li role="presentation" class="<%= 'active' if current_page?(courses_path) %>"><%= link_to "<span class=\"glyphicons glyphicons-dashboard\" style=\"font-size:18;\"></span>&emsp;&emsp;Courses".html_safe,  courses_path %></li>
+<%end%>
 <%# the drop down menu on the right %>
 <div class="dropdown pull-right">
-  <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="background-color:transparent; background-image:none; border:1px solid transparent; text-shadow: 0 0px; box-shadow: 0 0px;">
-    <span class="glyphicons glyphicons-cogwheel" style="font-size:23px;"></span>
-    <span class="caret"></span>
-  </button>
-  <ul class="dropdown-menu pull-right" role="menu">
-  	<li role="presentation"><%= link_to "<span class=\"glyphicons glyphicons-user\"></span>&emsp;#{current_user.first_name} #{current_user.last_name}".html_safe, users_profile_path %></li>
-    <li role="presentation"><%= link_to "<span class=\"glyphicons glyphicons-edit\"></span>&emsp;Edit Account".html_safe, edit_user_registration_path %></li>
-    <li role="presentation" class="divider"></li>
-    <li role="presentation"><%= link_to "<span class=\"glyphicons glyphicons-log-out\"></span>&emsp;Sign out".html_safe, destroy_user_session_path, :method => :delete %></li>
-  </ul>
+	<button class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="background-color:transparent; background-image:none; border:1px solid transparent; text-shadow: 0 0px; box-shadow: 0 0px;">
+	<span class="glyphicons glyphicons-cogwheel" style="font-size:23px;"></span>
+	<span class="caret"></span>
+	</button>
+	<ul class="dropdown-menu pull-right" role="menu">
+		<li role="presentation"><%= link_to "<span class=\"glyphicons glyphicons-user\"></span>&emsp;#{current_user.first_name} #{current_user.last_name}".html_safe, users_profile_path %></li>
+		<li role="presentation"><%= link_to "<span class=\"glyphicons glyphicons-edit\"></span>&emsp;Edit Account".html_safe, edit_user_registration_path %></li>
+		<li role="presentation" class="divider"></li>
+		<li role="presentation"><%= link_to "<span class=\"glyphicons glyphicons-log-out\"></span>&emsp;Sign out".html_safe, destroy_user_session_path, :method => :delete %></li>
+	</ul>
 </div>
 <%# NOTIFICATIONS %>
 <% case current_user.role %>
 <% when 0 %>
-	<% request_count = 0 %>
-	<% current_user.group_relations.where(status: 1).uniq.each {|x| request_count+=1}%>
-	    <%@confirmed_groupids = current_user.group_relations.where(status:2).collect(&:group_id)%>
-     <% @confirmed_groups = []%>
-     <% @confirmed_groupids.each {|group| @confirmed_groups.push(Group.find_by_id(group))} %>
-     
-	<% @confirmed_groups.each do |group|%>
-		<% group.group_relations.each do |relation|%>
-			<% if relation.status == 0 %>
-				<% request_count += 1 %>
-			<%end%>
-		<% end %>
+<% request_count = 0 %>
+<% current_user.group_relations.where(status: 1).uniq.each {|x| request_count+=1}%>
+<%@confirmed_groupids = current_user.group_relations.where(status:2).collect(&:group_id)%>
+<% @confirmed_groups = []%>
+<% @confirmed_groupids.each {|group| @confirmed_groups.push(Group.find_by_id(group))} %>
+<% @confirmed_groups.each do |group|%>
+<% group.group_relations.each do |relation|%>
+<% if relation.status == 0 %>
+<% request_count += 1 %>
+<%end%>
+<% end %>
+<% end %>
+<% if request_count !=0 %>
+<div class="dropdown">
+	<a href="/">
+		<button class="btn btn-danger" type="button"><span class="badge"><%= request_count %></span></button>
+	</a></div>
 	<% end %>
-	<% if request_count !=0 %>
-			<div class="dropdown pull-right">
-			<a href="/">
-				<button class="btn btn-danger" type="button">Notifications&ensp;<span class="badge"><%= request_count %></span></button>
-			</a></div>
-		<% end %>
-<% when 1..2 %>
-<% y = 0 %>
-<% current_user.courses.each { |x| y += 1 if x.projects.empty? } %>
+	<% when 1..2 %>
+	<% y = 0 %>
+	<% current_user.courses.each { |x| y += 1 if x.projects.empty? } %>
 	<% if y != 0 %>
 	<div class="dropdown pull-right">
-			<a href="/">
-				<button class="btn btn-danger" type="button">Notifications&ensp;<span class="badge"><%=y%></span></button>
-			</a></div>
-	<% end %>
-<% end %>
-
-<% else %>
-<%# if the user is NOT signed in, show signin link %>
-	  <li style="height: 50px;"><%= render 'visitors/signin_link'%></li>
-<% end %>
-
-
+		<a href="/">
+			<button class="btn btn-danger" type="button"><span class="badge"><%=y%></span></button>
+		</a></div>
+		<% end %>
+		<% end %>
+		<% else %>
+		<%# if the user is NOT signed in, show signin link %>
+		<li style="height: 50px;"><%= render 'visitors/signin_link'%></li>
+		<% end %>
