@@ -16,13 +16,13 @@ class CoursesController < ApplicationController
     @course = Course.find(params[:id])
   end
 
-  def show
-    @course = Course.find(params[:id])
-    unless user_signed_in?
-      authorize current_user
-      redirect_to :back, :alert => "Access denied."
-    end
-  end
+  # def show
+  #   @course = Course.find(params[:id])
+  #   unless user_signed_in?
+  #     authorize current_user
+  #     redirect_to :back, :alert => "Access denied."
+  #   end
+  # end
 
   def update
     authorize current_user
@@ -33,7 +33,6 @@ class CoursesController < ApplicationController
       redirect_to :back, :alert => "Course could not be updated"
     end
   end
-
 
   def remove
     authorize current_user
@@ -73,8 +72,22 @@ class CoursesController < ApplicationController
     # variables for counting how many roster relations made
     msg = ""
     add, removal = [0, 0]
-    params[:files].each_with_index do |file,index|
-      csv = open_and_parse_csv(index)
+
+    csv_text = File.open(params[:files][0].tempfile, :headers => true)
+    if params[:files]
+      # params[:files].each_with_index do |file,index|
+      csv = open_and_parse_csv(0)
+      csv = CSV.parse(csv_text)
+      csv = remove_nils(csv)
+      start_course_index = csv.find_index{|each| each[0].include?("Quarter,")}
+
+      data_slice(csv, 0, start_course_index)
+      start_student_index = csv.find_index{|each| each.include?("Student#")}
+      student_length = csv.length - start_student_index
+
+      course_csv = data_slice(csv, 0, start_student_index)
+      @course_data = get_course_data(course_csv)
+      @student_data = csv
       # enrolls = enrolled_students(@course_code)
       #makes new course and project if doesnt exist
       if Course.where(course_code: @course_code, quarter: @quarter)[0].nil?
@@ -116,18 +129,22 @@ class CoursesController < ApplicationController
         end
       end
       msg = msg + "CSV Import Successful, for <b>#{@course_title}</b>. #{add} students added to this class, #{removal} students removed from this class<br>"
+      flash[:notice] = msg.html_safe
     end
-    flash[:notice] = msg.html_safe
-    redirect_to :back
+    else
+      msg = msg + "Select a File to upload."
+      flash[:alert] = msg.html_safe
+
+      redirect_to :back
+    end
+
+    private
+
+    def course_params
+      params.require(:course).permit(:course_title, :instructor, :id, :course_code)
+    end
+
+    # def secure_params
+    #   params.require(:user).permit(:current_course)
+    # end
   end
-
-  private
-
-  def course_params
-    params.require(:course).permit(:course_title, :instructor, :id, :course_code)
-  end
-
-  # def secure_params
-  #   params.require(:user).permit(:current_course)
-  # end
-end

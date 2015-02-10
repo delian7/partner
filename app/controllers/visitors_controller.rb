@@ -1,5 +1,5 @@
 class VisitorsController < ApplicationController
-  helper_method :course_ids, :confirmed, :my_partner_for,:teammates?, :in_group_for?, :classmates?, :same?, :is_student?
+  helper_method :teammates?, :in_group_for?, :classmates?
   include UsersHelper
 
   def index

@@ -37,7 +37,7 @@ class ProjectsController < ApplicationController
     else
       flash[:error] = "Group size is too small, it could not be reduced"
     end
-    redirect_to(action: 'index')
+    redirect_to :back
   end
 
   def increase_groupsize
@@ -50,7 +50,7 @@ class ProjectsController < ApplicationController
     else
       flash[:error] = "Group size is too large, it could not be increased"
     end
-    redirect_to(action: 'index')
+    redirect_to :back
   end
 
   def edit
@@ -96,7 +96,7 @@ class ProjectsController < ApplicationController
     end
 
     while !students.empty?
-      name = group_namer(params[:project][:name_gen])
+      name = group_namer('number')
       newgroup = Group.create(name: name, project_id: @project.id,course_id: @project.course_id)
       students.sample(@project.group_size).collect(&:id).each do |student|
         GroupRelation.create(course_id: @project.course_id, group_id: newgroup.id, user_id: student, project_id: @project.id)
@@ -144,7 +144,7 @@ class ProjectsController < ApplicationController
     else
       flash[:error] = "Unable to clear group relations."
     end
-    redirect_to :back
+    redirect_to(action: 'index')
   end
 
 
