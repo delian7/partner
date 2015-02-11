@@ -22,6 +22,7 @@ $(document).ready( function() {
         } else {
             if( log ) alert(log);
         }
+        
     });
 });
 
@@ -38,9 +39,8 @@ $(document).ready( function() {
   <div class="fileupload fileupload-new" data-provides="fileupload">
   <div class="input-group" style="float :left;">
                 <span class="input-group-btn">
-                        <div class="hovershow btn btn-info btn-file" >
-                        Browse...<input id="fileupload" type="file" name="files[]" multiple><br><br>
-                        <div class="hovershow hover" style="background-color:whitesmoke; font-weight:bold;padding:10px;color:black;border:1px darkgray solid;">ASDFASDFAFS</div></div>
+                        <span class="btn btn-info btn-file" >
+                        Browse...<input id="fileupload" type="file" name="files[]" data-toggle="tooltip" data-placement="bottom" title="Tooltip on bottom" multiple><br><br>
                 </span>
                 <input type="text" class="form-control" style= "background-color:white" readonly>
             </div>

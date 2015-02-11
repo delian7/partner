@@ -21,8 +21,6 @@
 	      </div>
 	      <div class="modal-body">
 					<%= form_for :project, url: {action: 'create'}, html: { multipart: true } do |f| %>
-						<div style="font-size:45px; font-weight:bold;">Create Project<br></div>
-						<br />
 						<%= render partial: 'form', locals: {f: f} %>
 				
 	      </div>

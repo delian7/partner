@@ -28,29 +28,22 @@
 	<% end %>
 <% case current_user.role %>
 <% when 1 .. 3 %>
-	<li role="presentation" class="<%= 'active' if current_page?(roster_path) %>">
+	<li role="presentation" class="<%= 'active' if current_page?(roster_path) %> dropdown">
 		<%= link_to roster_path do %>
 		<span class="glyphicons glyphicons-upload"></span> Add a Roster		
 		<% end %>	
 	</li>
 	
-	
-	<li role="presentation" class="<%= 'active' if current_page?(groups_path) %>">
-		<%= link_to groups_path, :'data-toggle' => 'dropdown', class: 'btn-small dropdown-toggle' do %>
-		<span class="glyphicons glyphicons-group"></span> Groups
-		
-		<ul class="dropdown-menu" role="menu">
-	    <li class="nav-header">Groups</li>
-			
-	    <li class="dropdown-link"><a href="#">View Groups</a></a></li>
-	    <li class="dropdown-link"><a href="#">Edit Groups</a></a></li>
-			<li class="divider"></li>
-	    <li class="dropdown-link"><a href="#">Download Groups</a></a></li>
-			
-		</ul>
-		
-		<% end %>
-	</li>
+
+<li class="dropdown <%= 'active' if current_page?(groups_path) %>">
+  <a href="#" data-toggle="dropdown" class="dropdown-toggle"><span class="glyphicons glyphicons-group"></span> Groups <b class="caret" style="color:black"></b></a>
+  <ul class="dropdown-menu" id="menu1">
+    <li><%= link_to "View Groups", groups_path %></li>
+    <li><%= link_to "Edit Groups", groups_path %></li>
+    <li class="divider"></li>
+    <li><%= link_to "Download CSV", groups_path%></li>
+</li>
+</ul>
 	<li role="presentation" class="<%= 'active' if current_page?(projects_path) %>">
 		<%= link_to projects_path do %>
 		<span class="glyphicons glyphicons-pushpin"></span> Edit Projects
