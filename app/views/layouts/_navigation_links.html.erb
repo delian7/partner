@@ -3,65 +3,78 @@
 <%# renders appropriate list "li" depending on user "role", 0 is student, 1..2 is professor/ta, 3 is for admin %>
 <% case current_user.role %>
 <% when 0 %>
-<li role="presentation" class="<%= 'active' if current_page?(users_profile_path) %>">
-	<%= link_to users_profile_path do %>
-	<span class="glyphicons glyphicons-nameplate-alt"></span> My Profile
+	<li role="presentation" class="<%= 'active' if current_page?(users_profile_path) %>">
+		<%= link_to users_profile_path do %>
+		<span class="glyphicons glyphicons-nameplate-alt"></span> My Profile
+		<% end %>
+	</li>
+	<li role="presentation" class="<%= 'active' if current_page?(users_path) %>">
+		<%= link_to users_path do %>
+		<span class="glyphicons glyphicons-address-book"></span> <%= (Project.find(current_user.current_project).group_size != 2) ? 'Find Members' : 'Find a Partner' %>
+		<% end %>
+	</li>
+	<li role="presentation" class="<%= 'active' if current_page?(groups_path) %>">
+		<%= link_to groups_path do %>
+		<span class="glyphicons glyphicons-group"></span> Find a Group
+		<% end %>
+	</li>
+	<li role="presentation" class="<%= 'active' if current_page?(evaluations_path) %>">
+		<%= link_to evaluations_path do %>
+		<span class="glyphicons glyphicons-scale-classic"></span> Evaluate
+		<% end %>
+	</li>
+	<% when 3 %>
+		<li><%= link_to 'Control Panel', '/kayslegion' %></li>
 	<% end %>
-</li>
-<li role="presentation" class="<%= 'active' if current_page?(users_path) %>">
-	<%= link_to users_path do %>
-	<span class="glyphicons glyphicons-address-book"></span> <%= (Project.find(current_user.current_project).group_size != 2) ? 'Find Members' : 'Find a Partner' %>
-	<% end %>
-</li>
-<li role="presentation" class="<%= 'active' if current_page?(groups_path) %>">
-	<%= link_to groups_path do %>
-	<span class="glyphicons glyphicons-group"></span> Find a Group
-	<% end %>
-</li>
-<li role="presentation" class="<%= 'active' if current_page?(evaluations_path) %>">
-	<%= link_to evaluations_path do %>
-	<span class="glyphicons glyphicons-scale-classic"></span> Evaluate
-	<% end %>
-</li>
-<% when 3 %>
-	<li><%= link_to 'Control Panel', '/kayslegion' %></li>
-<% end %>
 <% case current_user.role %>
 <% when 1 .. 3 %>
-<li role="presentation" class="<%= 'active' if current_page?(roster_path) %>">
-	<%= link_to roster_path do %>
-	<span class="glyphicons glyphicons-upload"></span> Add a Roster
-	<% end %>
-</li>
-<li role="presentation" class="<%= 'active' if current_page?(groups_path) %>">
-	<%= link_to groups_path do %>
-	<span class="glyphicons glyphicons-group"></span> Change Groups
-	<% end %>
-</li>
-<li role="presentation" class="<%= 'active' if current_page?(projects_path) %>">
-	<%= link_to projects_path do %>
-	<span class="glyphicons glyphicons-pushpin"></span> Edit Projects
-	<% end %>
-</li>
-<li role="presentation" class="<%= 'active' if current_page?(evaluations_path) %>">
-	<%= link_to evaluations_path do %>
-	<span class="glyphicons glyphicons-scale-classic"></span> Evaluate
-	<% end %>
-</li>
-<%end%>
-<%# the drop down menu on the right %>
-<div class="dropdown pull-right">
-	<button class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="background-color:transparent; background-image:none; border:0px solid transparent; text-shadow: 0 0px; box-shadow: 0 0px;">
-	<span class="glyphicons glyphicons-cogwheel" style="font-size:20px;"></span>
-	<span class="caret"></span>
-	</button>
-	<ul class="dropdown-menu pull-right" role="menu">
-		<li role="presentation"><%= link_to "<span class=\"glyphicons glyphicons-user\"></span>&emsp;#{current_user.first_name} #{current_user.last_name}".html_safe, users_profile_path %></li>
-		<li role="presentation"><%= link_to "<span class=\"glyphicons glyphicons-edit\"></span>&emsp;Edit Account".html_safe, edit_user_registration_path %></li>
-		<li role="presentation" class="divider"></li>
-		<li role="presentation"><%= link_to "<span class=\"glyphicons glyphicons-log-out\"></span>&emsp;Sign out".html_safe, destroy_user_session_path, :method => :delete %></li>
-	</ul>
-</div>
+	<li role="presentation" class="<%= 'active' if current_page?(roster_path) %>">
+		<%= link_to roster_path do %>
+		<span class="glyphicons glyphicons-upload"></span> Add a Roster		
+		<% end %>	
+	</li>
+	
+	
+	<li role="presentation" class="<%= 'active' if current_page?(groups_path) %>">
+		<%= link_to groups_path, :'data-toggle' => 'dropdown', class: 'btn-small dropdown-toggle' do %>
+		<span class="glyphicons glyphicons-group"></span> Groups
+		
+		<ul class="dropdown-menu" role="menu">
+	    <li class="nav-header">Groups</li>
+			
+	    <li class="dropdown-link"><a href="#">View Groups</a></a></li>
+	    <li class="dropdown-link"><a href="#">Edit Groups</a></a></li>
+			<li class="divider"></li>
+	    <li class="dropdown-link"><a href="#">Download Groups</a></a></li>
+			
+		</ul>
+		
+		<% end %>
+	</li>
+	<li role="presentation" class="<%= 'active' if current_page?(projects_path) %>">
+		<%= link_to projects_path do %>
+		<span class="glyphicons glyphicons-pushpin"></span> Edit Projects
+		<% end %>
+	</li>
+	<li role="presentation" class="<%= 'active' if current_page?(evaluations_path) %>">
+		<%= link_to evaluations_path do %>
+		<span class="glyphicons glyphicons-scale-classic"></span> Evaluate
+		<% end %>
+	</li>
+	<%end%>
+	<%# the drop down menu on the right %>
+	<div class="dropdown pull-right">
+		<button class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="background-color:transparent; background-image:none; border:0px solid transparent; text-shadow: 0 0px; box-shadow: 0 0px;">
+		<span class="glyphicons glyphicons-cogwheel" style="font-size:20px;"></span>
+		<span class="caret"></span>
+		</button>
+		<ul class="dropdown-menu pull-right" role="menu">
+			<li role="presentation"><%= link_to "<span class=\"glyphicons glyphicons-user\"></span>&emsp;#{current_user.first_name} #{current_user.last_name}".html_safe, users_profile_path %></li>
+			<li role="presentation"><%= link_to "<span class=\"glyphicons glyphicons-edit\"></span>&emsp;Edit Account".html_safe, edit_user_registration_path %></li>
+			<li role="presentation" class="divider"></li>
+			<li role="presentation"><%= link_to "<span class=\"glyphicons glyphicons-log-out\"></span>&emsp;Sign out".html_safe, destroy_user_session_path, :method => :delete %></li>
+		</ul>
+	</div>
 <%# NOTIFICATIONS %>
 <% case current_user.role %>
 <% when 0 %>
