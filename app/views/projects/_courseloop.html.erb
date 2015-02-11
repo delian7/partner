@@ -1,17 +1,14 @@
 <% @empty_courses.uniq.each do |course| %>
-<tr style='background-color:#eee;'>
-	<th style="height:20px; padding:7px 10px 3px 10px;" colspan="3"><span style="font-size:17px; font-weight:bold;"><%= course.course_title%></span></th>
-	<th style="height:20px; padding:7px 10px 3px 10px;"><%=  link_to "<span class=\"glyphicons glyphicons-plus\"></span>&nbsp;&nbsp;Add New Project".html_safe,  {action: 'new', controller: 'projects', id: course}, class: "btn btn-primary btn-sm", id: "add-new-project", style: "float:right;margin-bottom:10px;" %></th>
-</tr>
-<% if course.projects.empty? %>
-<tr style= "background-color:#ED8080; "><td style= "padding:0px;"><%=  link_to (new_project_path(id: course)), style: "color:#fff; text-align:left; width:100%;", class: "btn btn-danger" do %><b>Alert:</b> There is no active project for this course. Students are not able to partner up. <% end %> </td>
-</tr>
-<% end %>
-<tr>
-<th style="padding:7px 10px 3px 10px; font-size:11px;">Select Project(s):</th>
-<th style="padding:7px 10px 3px 10px; font-size:11px;"><span class="glyphicons glyphicons-pushpin"></span>&emsp;Project Title</th>
-<th class='collapsable' style="padding:7px 10px 3px 10px; font-size:11px;"><span class="glyphicons glyphicons-calendar"></span>&emsp;Partnership Deadline</th>
-<th class='collapsable' style="padding:7px 10px 3px 10px; font-size:11px;"><span class="glyphicons glyphicons-calendar"></span>&emsp;Evaluation Deadline</th>
-</tr></b><tr><%= render "projects/projectloop", course: course%>
-</tr>
+	<div class="panel-heading"><b><%= course.course_title%></b>
+	</div>
+	<table class="table">
+	<% if course.projects.empty? %>
+		<tr style= "background-color:#ED8080; "><td style= "padding:0px;"><%=  link_to new_project_path, style: "color:#fff; text-align:left; width:100%;", class: "btn btn-danger" do %><b>Alert:</b> There is no active project for this course. Students are not able to partner up. <% end %> </td>
+	</tr>
+	</table>
+	<% else %>
+		<%= render "projects/projectloop", course: course %>
+		<tr></tr>
+	</table>
+	<% end %>
 <% end %>

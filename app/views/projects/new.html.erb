@@ -1,8 +1,8 @@
 <span style="font-weight:bold;font-size:25px;"><%= link_to "<span class=\"glyphicon glyphicon-chevron-left\"></span>&nbsp;&nbsp;<b>Back</b>".html_safe, :back, class: "btn btn-default btn-md" %></span><br>
 <div class="jumbotron", style="max-width: 500px; margin:auto; padding:50px">
 
-	<%= form_for(:project, url: {action: 'create'}) do |f| %>
+	<%= form_for :project, url: {action: 'create'}, html: { multipart: true } do |f| %>
 		<div style="font-size:45px; font-weight:bold;">Create Project<br></div><br>
-		<%= render(partial: 'form', locals: {f: f}) %>
+		<%= render partial: 'form', locals: {f: f} %>
 	<% end %>
 </div>

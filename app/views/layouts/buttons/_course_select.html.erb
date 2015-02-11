@@ -5,7 +5,7 @@
 		<h5 class="panel-title">Select a Course and Project</h5>
 	</div>
 	<div class="panel-body" style='padding:0px'>
-		<% @current_projects = Project.where(course_id: Course.find(current_user.current_course).id) %>
+		<% @current_projects = Course.find(current_user.current_course).projects %>
 		<div class="btn-group-vertical" style="float:right; width:100%;padding:10px;margin:0px">
 			<div class="input-group" style="padding: 0px 0px 0px 0px">
 				<span class="input-group-addon" style="padding: 0px 20px 0px 20px;font-weight:bold; font-size:14px;">Course:</span>
@@ -16,10 +16,10 @@
 				<% end %>
 				<!-- setting current_project (if more than one exist)	 -->
 			</div>
+			<% if !@current_projects.empty? %>
 			<!-- setting current course & project (if there's only one project)-->
 			<div class="input-group" style="padding: 0px 0px 0px 0px">
 				<span class="input-group-addon" style="padding: 0px 20px 0px 20px;font-weight:bold; font-size:14px;">Project:</span>
-				<% if !@current_projects.empty? %>
 				<%= form_for :user, url: set_current_project_user_path(current_user.id), html: { style: 'display:inline;'} do |f|%>
 				<%= f.select :current_project, options_from_collection_for_select(@current_projects,
 				'id', 'name', current_user.current_project), {},

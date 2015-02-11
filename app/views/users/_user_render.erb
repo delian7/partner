@@ -1,7 +1,7 @@
-<% @users = Course.find(current_user.current_course).users.order(:last_name) %>
+<% @users = User.all.order(:last_name) %>
 <% @users.each do |user| %>
 	<% @user = User.find(user) %>
-	<% if (classmates?(@user, @mycourse) && current_user.id != @user.id && @user.role == 0 && !in_group_for?(@user, @myproject)) && !(previously_partnered?(@user, current_user)) %>
+	<% if (classmates?(@user, @mycourse) && (current_user.id != @user.id) && (@user.role == 0) && !in_group_for?(@user, @myproject)) && !(previously_partnered?(@user, current_user)) %>
 		<tr>
 		<td class='collapsable'><%= link_to (image_tag @user.avatar.url, :style => 'max-width: 45px;'), @user %></td> 
 		<td><%= link_to "#{@user.first_name} #{@user.last_name}", @user %> </td>

@@ -42,19 +42,20 @@ class ApplicationController < ActionController::Base
   end
   # checks to make sure that the users current_course and current_project both exist, if they don't then sets it to default 0
   def nil_check
-    if Project.where(course_id: 0).empty?
-      proj = Project.create(id: 0, course_id: 0)
-    end
     if Project.where(id: 0).empty?
-      proj = Project.find_by(course_id: 0)
+      proj = Project.create(name: "")
       proj.id = 0
       proj.save
+    else
+      proj = Project.find_by_id(0)
     end
     if Course.where(id: 0).empty?
       course = Course.create(course_title: "")
       course.id = 0
       course.course_title= ""
       course.save
+    else
+      proj = Project.find_by_id(0)
     end
     if user_signed_in? && (Course.find_by_id(current_user.current_course).nil? || Project.find_by_id(current_user.current_project).nil?)
       current_user.current_project = 0

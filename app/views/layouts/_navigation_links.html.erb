@@ -17,6 +17,7 @@
 <% end %>
 <li role="presentation" class="<%= 'active' if current_page?(evaluations_path) %>"><%= link_to "<span class=\"glyphicons glyphicons-scale-classic\" style=\"font-size:18;\"></span>&emsp;&emsp;Evaluations".html_safe,  evaluations_path %></li>
 <% when 1 .. 2 %>
+<li role="presentation" class="<%= 'active' if current_page?(roster_path) %>"><%= link_to "<span class=\"glyphicons glyphicons-upload\" style=\"font-size:18;\"></span>&emsp;&emsp;Add a Roster".html_safe, roster_path %></li>
 <li role="presentation" class="<%= 'active' if current_page?(groups_path) %>"><%= link_to "<span class=\"glyphicons glyphicons-group\" style=\"font-size:18;\"></span>&emsp;&emsp;Change Groups".html_safe, groups_path %></li>
 <li role="presentation" class="<%= 'active' if current_page?(projects_path) %>"><%= link_to "<span class=\"glyphicons glyphicons-pushpin\" style=\"font-size:18;\"></span>&emsp;&emsp;Edit Projects".html_safe, projects_path %></li>
 <li role="presentation" class="<%= 'active' if current_page?(courses_path) %>"><%= link_to "<span class=\"glyphicons glyphicons-education\" style=\"font-size:18;\"></span>&emsp;&emsp;View All Courses".html_safe,  courses_path %></li>
@@ -31,8 +32,8 @@
 <%end%>
 <%# the drop down menu on the right %>
 <div class="dropdown pull-right">
-	<button class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="background-color:transparent; background-image:none; border:1px solid transparent; text-shadow: 0 0px; box-shadow: 0 0px;">
-	<span class="glyphicons glyphicons-cogwheel" style="font-size:23px;"></span>
+	<button class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="background-color:transparent; background-image:none; border:0px solid transparent; text-shadow: 0 0px; box-shadow: 0 0px;">
+	<span class="glyphicons glyphicons-cogwheel" style="font-size:20px;"></span>
 	<span class="caret"></span>
 	</button>
 	<ul class="dropdown-menu pull-right" role="menu">
@@ -46,21 +47,21 @@
 <% case current_user.role %>
 <% when 0 %>
 <% request_count = 0 %>
-<% current_user.group_relations.where(status: 1).uniq.each {|x| request_count+=1}%>
-<%@confirmed_groupids = current_user.group_relations.where(status:2).collect(&:group_id)%>
-<% @confirmed_groups = []%>
+<% current_user.group_relations.where(status: 1).uniq.each {|x| request_count+=1} %>
+<% @confirmed_groupids = current_user.group_relations.where(status:2).collect(&:group_id) %>
+<% @confirmed_groups = [] %>
 <% @confirmed_groupids.each {|group| @confirmed_groups.push(Group.find_by_id(group))} %>
-<% @confirmed_groups.each do |group|%>
-<% group.group_relations.each do |relation|%>
+<% @confirmed_groups.each do |group| %>
+<% group.group_relations.each do |relation| %>
 <% if relation.status == 0 %>
 <% request_count += 1 %>
-<%end%>
+<% end %>
 <% end %>
 <% end %>
 <% if request_count !=0 %>
 <div class="dropdown">
 	<a href="/">
-		<button class="btn btn-danger" type="button"><span class="badge"><%= request_count %></span></button>
+		<button class="btn btn-danger" type="button"><span class="badge"><%= request_count %></span> Notifications</button>
 	</a></div>
 	<% end %>
 	<% when 1..2 %>
@@ -69,7 +70,7 @@
 	<% if y != 0 %>
 	<div class="dropdown pull-right">
 		<a href="/">
-			<button class="btn btn-danger" type="button"><span class="badge"><%=y%></span></button>
+			<button class="btn btn-danger" type="button"><span class="badge"><%=y%></span> Notifications</button>
 		</a></div>
 		<% end %>
 		<% end %>

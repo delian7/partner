@@ -1,23 +1,11 @@
 <% course.projects.each do |project| %>
-<td class='collapsable' style="padding:10px 10px 0px 10px;">
-	<%= form_for(:project, url: {action: 'update', id: 0}, html: {style: "margin-bottom:0em;"})  do |f| %>
-	<center>
-	<%= f.check_box :allow_repeat %>
-	<% end %></center>
-</td>
-<td style="padding:10px 10px 0px 10px;">
-	<%= project.name %>
-</td><% if project.id != 0 %>
-<td class='collapsable' style="padding:7px 10px 3px 10px; font-size:12px;"><center>
-	<%= form_for(:project, url: {action: 'update', id: project.id}, html: {style: "margin-bottom:0em;"}) do |f| %>
-	<%= f.date_field :partnership_deadline, {onchange: 'this.form.submit();', value: project.partnership_deadline, style: "line-height: 10px;"} %>
-	<% end %>
-</center></td>
-<td class='collapsable' style="padding:7px 10px 3px 10px; font-size:12px;"><center>
-	<%= form_for(:project, url: {action: 'update', id: project.id}, html: {style: "margin-bottom:0em;"}) do |f| %>
-	<%= f.date_field :evaluation_deadline, {onchange: 'this.form.submit();', value: project.evaluation_deadline, style: "line-height: 10px;"} %>
-	<% end %>
-</center></td>
+<tr>
+	<td style="padding:1px;">
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<%= project.name %>
+	</td>
+	<td>
+		<%=  link_to remove_project_path(project), style: "color:#fff; float:right;", class: "btn btn-danger btn-xs" do %>Delete<% end %> 
+	</td>
 </tr>
-<% end %>
 <% end %>

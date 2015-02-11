@@ -9,7 +9,7 @@ module UsersHelper
   # end
 
   def set_current_users_instance_variables
-    if signed_in?
+    if user_signed_in?
       #making variables so easier to find the users current project and course
       if Project.find_by_id(current_user.current_project).nil? || Course.find_by_id(current_user.current_course).nil?
         current_user.current_project = "0"

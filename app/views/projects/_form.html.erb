@@ -1,64 +1,69 @@
 <div style="line-height:2; max-width:400px;">
-<% if !@project.nil? %>
+	<% if !@project.nil? %>
 	<% repeat = Project.find_by_id(@project.id).allow_repeat %>
-<% else %>
+	<% else %>
+	<% end %>
+	<table style="width:100%">
+		<tr>
+			<td><%= f.label 'Project Name: ' %></td>
+			<td colspan='2'><%= f.text_field(:name, class: "form-control") %></td>
+		</tr>
+	</table>
+	<table style="width:100%">
+		<% oneweeklater = Time.now + (7*24*60*60) %>
+		<tr>
+			<td><span class="glyphicons glyphicons-calendar"></span></td>
+			<td><%= f.label 'Evaluation Date:'%></td>
+			<td><input type="text" name="evaluation_deadline" value="<%= oneweeklater.strftime("%m/%d/%Y")%>"></p>
+		</td>
+	</tr><tr>
+	<% twoweekslater = oneweeklater + (7*24*60*60) %>
+	<td><span class="glyphicons glyphicons-calendar"></span></td>
+	<td><%= f.label 'Partnership Deadline:'%></td>
+	<td><input type="text" name="partnership_deadline" value="<%= twoweekslater.strftime("%m/%d/%Y")%>">
+</td>
+</tr>
+</table>
+<table style="width:100%;padding:1px;margin-top:15px">
+<tr>
+<td style="padding:1px 1px 0px 1px"><span class="glyphicons glyphicons-education"></span>&nbsp;<%= f.label 'Course(s):', {style:"margin:0px;padding:0px"}  %></td>
+<% current_user.courses.each do |course|%>
+<td style="padding:1px"><input type="checkbox" name="courses[]" checked="true" value="<%= course.id %>"></td>
+<td style="padding:1px"><%= course.course_title %></td>
+</tr><tr><td></td>
+<% end %>
+</table>
+<% if current_page? (new_project_path) %>
+<table style="width:100%;padding:1px;margin-top:15px">
+<tr>
+	<td><input type="radio" name="limit_scope" checked="false" value="true"></td>
+</td>
+<td style="padding:1px 1px 0px 1px"><span class="glyphicons glyphicons-random"></span><b>&emsp;Joined Course Project: </b></td>
+</tr><tr>
+<td><input type="radio" name="limit_scope" checked="true" value="false"></td>
+<td style="padding:1px 1px 0px 1px"><span class="glyphicons glyphicons-random"></span><b>&emsp;Keep Courses Separate: </b></td>
+</table>
 <% end %>
 <table style="width:100%">
-	<tr>
-		<td><%= f.label 'Project Name: ' %></td>
-		<td colspan='2'><%= f.text_field(:name, class: "form-control") %></td>
-	</tr>
+<tr>
+<td><span class="glyphicons glyphicons-group"></span></td>
+<td><%= f.label 'Group Size of Project: ' %></td>
+<td><%= f.select :group_size, [['2 people','2'], ['3 people','3'], ['4 people','4'], ['5 people','5'], ['6 people','6']], {}, {class: "form-control"} %></td>
+</tr>
 </table>
 <table style="width:100%">
-	<tr>
-		<td><span class="glyphicons glyphicons-calendar"></span></td>
-		<td><%= f.label 'Project Due Date:'%></td>
-		<td><%= f.date_field :end_date%></td>
-	</tr>
-</table>
-	<table style="width:100%">
-	<tr>
-		<td><span class="glyphicons glyphicons-education"></span></td>
-		<td>	<%= f.label 'Course:' %></td>
-		<td>
-			<% if current_page? new_project_path %>
-			<%= f.select :course_id, options_from_collection_for_select(current_user.courses, 'id', 'course_title', params[:id]), {}, {class: "form-control"} %>
-
-			<% elsif current_page? edit_project_path %>
-				<% if Course.find_by_id(Project.find_by_id(params[:id]).course_id).projects.empty? %>
-					<%= f.select :course_id, options_from_collection_for_select(current_user.courses, 'id', 'course_title'), {}, {class: "form-control"} %>
-				<% else %>
-				<%= f.select :course_id, options_from_collection_for_select(current_user.courses, 'id', 'course_title', Project.find_by_id(params[:id]).course_id), {}, {class: "form-control"} %>
-				<% end %>
-			<% end %>
-		</td>
-	</tr>
-</table>
-
-	
-	<table style="width:100%">
-	<tr>
-		<td><span class="glyphicons glyphicons-group"></span></td>
-		<td><%= f.label 'Group Size of Project: ' %></td>
-		<td><%= f.select :group_size, [['2 people','2'], ['3 people','3'], ['4 people','4'], ['5 people','5'], ['6 people','6']], {}, {class: "form-control"} %></td>
-	</tr>
-</table>
-<table style="width:100%">
-	<tr>
-		<td><span class="glyphicons glyphicons-retweet-2"></span></td>
-		<td colspan='2'><%= f.label 'Unique Partners for every Project?' %></td>
-	</tr>
+<tr>
+<td><span class="glyphicons glyphicons-retweet-2"></span></td>
+<td colspan='2'><%= f.label 'Unique Partners for every Project?' %></td>
+</tr>
 </table><table style="width:100%">
-	<tr>
-	   <td style="text-align:right; <%= 'background:#ddd' if repeat == true %>"><%= f.radio_button :allow_repeat, true, checked: repeat == true %> </td>
-	  <td style="<%= 'background:#ddd' if repeat == true %>"><span class="glyphicons glyphicons-ok-2" style="color:green;"></span>&ensp;Allow Repeats</td>
-	</tr><tr>
-	  <td style="text-align:right; <%= 'background:#ddd' if repeat == false %>"><%= f.radio_button :allow_repeat, false, checked: repeat == false %> </td>
-	  <td style="<%= 'background:#ddd' if repeat == false %>"><span class="glyphicons glyphicons-ban" style="color:red;"></span>&ensp;Restrict Repeats</td>
-	</tr>
+<tr>
+<td style="text-align:right; <%= 'background:#ddd' if repeat == true %>"><%= f.radio_button :allow_repeat, true, checked: repeat == true %> </td>
+<td style="<%= 'background:#ddd' if repeat == true %>"><span class="glyphicons glyphicons-ok-2" style="color:green;"></span>&ensp;Allow Repeats</td>
+</tr><tr>
+<td style="text-align:right; <%= 'background:#ddd' if repeat == false %>"><%= f.radio_button :allow_repeat, false, checked: repeat == false %> </td>
+<td style="<%= 'background:#ddd' if repeat == false %>"><span class="glyphicons glyphicons-ban" style="color:red;"></span>&ensp;Restrict Repeats</td>
+</tr>
 </table><br>
-
-
-	<%= f.submit("Save Project", id: 'save-project', class: 'btn btn-primary') %>
-
+<%= f.submit("Save Project", id: 'save-project', class: 'btn btn-primary') %>
 </div>

@@ -1,11 +1,14 @@
 <!-- How many files are selected or file name-->
-
 <script>
 $(document).on('change', '.btn-file :file', function() {
   var input = $(this),
       numFiles = input.get(0).files ? input.get(0).files.length : 1,
       label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
-  input.trigger('fileselect', [numFiles, label]);
+      input.trigger('fileselect', [numFiles, label]);
+    if($('#fileupload').val() !=  "") 
+         $('#csvbutton').attr('disabled', false);    
+    else
+         $('#csvbuton').attr('disabled', true);   
 });
 
 $(document).ready( function() {
@@ -21,6 +24,7 @@ $(document).ready( function() {
         }
     });
 });
+
 </script>  
 
 <div class="jumbotron", style="max-width: 500px; margin:auto; padding:20px 20px 0px 20px;">
@@ -34,15 +38,16 @@ $(document).ready( function() {
   <div class="fileupload fileupload-new" data-provides="fileupload">
   <div class="input-group" style="float :left;">
                 <span class="input-group-btn">
-                    <span class="btn btn-info btn-file">
-                      Browse...<input id="fileupload" type="file" name="files[]" multiple>
-                    </span>
+                        <div class="hovershow btn btn-info btn-file" >
+                        Browse...<input id="fileupload" type="file" name="files[]" multiple><br><br>
+                        <div class="hovershow hover" style="background-color:whitesmoke; font-weight:bold;padding:10px;color:black;border:1px darkgray solid;">ASDFASDFAFS</div></div>
                 </span>
                 <input type="text" class="form-control" style= "background-color:white" readonly>
             </div>
         </span>
     </div><div class="form-group" style="text-align:center;float:center; ">
-       <button type= "submit" class="btn btn-primary btn-xl" onclick= 'this.form.submit();'><span class="glyphicons glyphicons-upload"></span>Upload CSV File</button>
+      <button type= "submit" class="btn btn-primary btn-xl" onclick= 'this.form.submit();' id="csvbutton" disabled="disabled" %>
+   <span class="glyphicons glyphicons-upload"></span>Upload CSV File</button>
        </div>
  </div> </div></div>
  <% end %> 

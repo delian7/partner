@@ -3,13 +3,14 @@
   <div class="col span_1_of_3">
     <span style="font-size:50px; font-weight:bold;"><% (@myproject.group_size == 2) ? 'Partnership' : 'Group' %>
     </span><br><span style="font-size:25px; font-weight:bold;"><%=@group.name%></font><br></span>
+    <% if (current_user.groups.include? @group) || (current_user.role != 0) %>
+    <%= link_to "<span class=\"glyphicons glyphicons-pencil\"></span>&nbsp;&nbsp;Edit Group Name".html_safe,  {action: 'edit'}, class: "btn btn-success btn-xs", style: "margin-bottom:10px;" %>
+  <% end %>
     <span style="font-size:20px; font-weight:bold;">  <br>Project:</span>
     <span style="font-size:18px;"><%=@myproject.name%></span>
     <span style="font-size:20px; font-weight:bold;">  <br>Course:</span>
     <span style="font-size:18px;"><%=@myproject.course_id%><br></span>
-    <% if (current_user.groups.include? @group) || (current_user.role != 0) %>
-    <%= link_to "<span class=\"glyphicons glyphicons-pencil\"></span>&nbsp;&nbsp;Edit Group Name".html_safe,  {action: 'edit'}, class: "btn btn-success btn-md", style: "float:right;margin-bottom:10px;" %>
-  <% end %></div>
+    </div>
 </div>
 <div class="col span_2_of_3">
   <span style="font-size:50px; font-weight:bold;">
