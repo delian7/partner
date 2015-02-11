@@ -37,7 +37,8 @@ class UsersController < ApplicationController
     authorize User.find(params[:id])
     current_user.update_attributes(secure_params)
     set_current_users_instance_variables
-    @current_projects = Project.where(course_id: @mycourse.id)
+    # @current_projects = Project.where(course_id: @mycourse.id)
+    @current_projects = 
 
     if @current_projects.exists?
       current_user.update_attributes(current_project: @current_projects.first.id)

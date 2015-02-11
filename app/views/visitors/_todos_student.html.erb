@@ -1,0 +1,14 @@
+<% @is_current_user_confirmed =  %>
+<% if !@is_current_user_confirmed %>
+<!-- checking if group's name is nil, make one for them -->
+<div class="content-box" style="border-color:#ccc">
+  <div style='text-align:center;margin-top:7px;margin-bottom:3px;'>
+    <% current_user.courses %>
+  </div>
+  <hr style="margin-top:7px;margin-bottom:3px;">
+
+
+
+  </table>
+  <% end %>
+</div>

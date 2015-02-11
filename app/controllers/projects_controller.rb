@@ -8,7 +8,7 @@ class ProjectsController < ApplicationController
   def create
     if params[:courses]
       # make one project with lots of relations (project belonging to multiple courses)
-      if params[:joined]
+      if params[:limit_scope]
         @project = Project.new(project_params)
         @project.save
         params[:courses].each do |course|
@@ -27,10 +27,10 @@ class ProjectsController < ApplicationController
           current_user.current_project = @project.id
           current_user.current_course = params[:courses][0]
           current_user.save
-          redirect_to :back
         end
       end
       flash[:notice] = "Project Created"
+      redirect_to :back
     else
       flash[:alert] = "You must choose a Course to add this project to."
       redirect_to :back

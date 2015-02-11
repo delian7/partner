@@ -1,7 +1,4 @@
-<% is_current_user_requested = (group.group_relations.find_by(user_id: current_user.id, group_id: group.id).status == 1) if group.group_relations.find_by(user_id: current_user.id, group_id: group.id) %>
-<% is_current_user_confirmed = (group.group_relations.find_by(user_id: current_user.id, group_id: group.id).status == 2) %>
-<% are_there_any_users_sending_requests = (group.group_relations.find_by(status: 0) != nil) %>
-<% if (is_current_user_requested) || (is_current_user_confirmed && are_there_any_users_sending_requests) %>
+<% if (@is_current_user_requested) || (@is_current_user_confirmed && @are_there_any_users_sending_requests) %>
 <!-- checking if group's name is nil, make one for them -->
 <% group.name != nil ? groupname = group.name : groupname = group.users.pluck(:first_name).to_sentence %>
 <div class="content-box" style="border-color:#ccc">
