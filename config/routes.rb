@@ -78,7 +78,6 @@ Rails.application.routes.draw do
       get :clear_partnerships
     end
     collection do
-      get :new
     end
   end
 
