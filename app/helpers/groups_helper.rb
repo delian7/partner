@@ -11,8 +11,15 @@ module GroupsHelper
   #     end
   #   end
   # end
+  def group_namer(namegen, project)
+    @groupname = namer(namegen, project)
+    while !project.groups.collect(&:name).include? (@groupname)
+      @groupname = namer(namegen, project)
+    end
+    return @groupname
+  end
 
-  def group_namer(namegen)
+  def namer(namegen, project)
     case namegen
     when "number"
       @groupname = "Team #{Group.where(project_id: @project.id).size + 1}"

@@ -1,3 +1,4 @@
+<% if signed_in?%>
 <div class="section group">
   <div class="col span_1_of_3">
   	<%= image_tag current_user.avatar.url, style: "width:90%;"%><br><br>
@@ -20,3 +21,4 @@
 	</table>
   </div>
 </div>
+<% end %>

@@ -8,8 +8,8 @@
 <% case current_user.role %>
 <% when 0 %>
 	<% if current_user.group_relations.empty? %>
-	    <span style="font-size:20px; font-weight:normal;">You don't
-	    have any requests</span>
+	    <span style="font-weight:normal;">You don't
+	    have any new notifications</span>
 	<% else %>
 		<% current_user.groups.order(:project_id).uniq.each do |group| %>
 				<%= render 'visitors/notification_student', group: group%>
@@ -20,8 +20,8 @@
 		<%= render 'visitors/notification_professor', course: course %>
 		<% end %> 
 	<% if @notifications == false %>
-		<span style="font-size:20px; font-weight:normal;">You don't
-	    have any requests</span>
+		<span style="font-weight:normal;">You don't
+	    have any new notifications</span>
 	<% end %>
 <% end %>
 </div>

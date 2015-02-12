@@ -4,26 +4,18 @@
   </div>
   <div class="panel-body">
 
-
-
 <%@notifications = false%>
 <% case current_user.role %>
 <% when 0 %>
 	<% if current_user.group_relations.empty? %>
-	    <span style="font-size:20px; font-weight:normal;">You don't
-	    have any requests</span>
+	    <span style="font-weight:normal;">Looks like you're all caught up!</span>
 	<% else %>
-		<% current_user.groups.order(:project_id).uniq.each do |group| %>
-				<%= render 'visitors/todos_student', group: group%>
-		<% end %>
+				<%= render 'visitors/todos_student'%>
 	<% end %>
 <% when 1..3 %>
-   		<% current_user.courses.each do |course|%>
-		<%= render 'visitors/todos_professor', course: course %>
-		<% end %> 
+		<%= render 'visitors/todos_professor'%>
 	<% if @notifications == false %>
-		<span style="font-size:20px; font-weight:normal;">You don't
-	    have any requests</span>
+	    <span style="font-weight:normal;">Looks like you're all caught up!</span>
 	<% end %>
 <% end %>
 </div>

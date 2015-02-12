@@ -41,7 +41,7 @@ class UsersController < ApplicationController
     current_user.update_attributes(secure_params)
     set_current_users_instance_variables
     # @current_projects = Project.where(course_id: @mycourse.id)
-    @current_projects = 
+    @current_projects = Course.find_by_id(current_user.current_course).projects
 
     if @current_projects.exists?
       current_user.update_attributes(current_project: @current_projects.first.id)

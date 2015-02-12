@@ -1,4 +1,6 @@
-<% @is_current_user_confirmed =  %>
+
+		<% current_user.groups.order(:project_id).uniq.each do |group| %>
+		<% @is_current_user_confirmed =  %>
 <% if !@is_current_user_confirmed %>
 <!-- checking if group's name is nil, make one for them -->
 <div class="content-box" style="border-color:#ccc">
@@ -11,4 +13,4 @@
 
   </table>
   <% end %>
-</div>
+</div>		<% end %>

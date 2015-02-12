@@ -1,5 +1,13 @@
-	<% if course.projects.empty?%>
-	<div class="content-box"><h3 style="font-size:20px; padding:5px;font-weight:bold;"><center><%= link_to course.course_title, projects_path %></center></h3>
-		 <%=  link_to new_project_path, style: "color:#fff; text-align:left; padding:10px;white-space: normal;", class: "btn btn-danger" do %><span style="font-weight:bold;"><span class="glyphicons glyphicons-warning-sign" style="font-size:18px; line-height:1.5"></span><span style="font-size:18px; line-height:2">&ensp;Alert:</span><br></span><span style="font-size:13px;">There is no active project for this course.<br>Students are not able to partner up.<%@notifications = true%><% end %></span>
+<% current_user.courses.each do |course|%>
+<% @is_current_user_confirmed =  %>
+<% if !@is_current_user_confirmed %>
+<!-- checking if group's name is nil, make one for them -->
+<div class="content-box" style="border-color:#ccc">
+	<div style='text-align:center;margin-top:7px;margin-bottom:3px;'>
+		<% current_user.courses %>
 	</div>
-	<%end%>
+	<hr style="margin-top:7px;margin-bottom:3px;">
+</table>
+<% end %>
+</div>
+<% end %>
