@@ -5,21 +5,6 @@ max-width: 150px;
 img#non-responsive {
 margin: 0px 0px 0px 0px;
 }
-.hovershow .hover .btn .btn-info .btn-file{
-    display: none;
-}
-.hovershow:hover .hover .btn .btn-info .btn-file{
-    display: inline;
-    color: #333;
-    background-color: #fff;
-    border-color: #ccc;
-}
-.hovershow .hover{
-    display: none;
-}
-.hovershow:hover .hover{
-    display: inline;
-}
 
 .order{
   display: inline;
