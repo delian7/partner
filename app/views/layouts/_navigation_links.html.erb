@@ -62,7 +62,11 @@
 		<span class="caret"></span>
 		</button>
 		<ul class="dropdown-menu pull-right" role="menu">
-			<li role="presentation"><%= link_to "<span class=\"glyphicons glyphicons-user\"></span>&emsp;#{current_user.first_name} #{current_user.last_name}".html_safe, users_profile_path %></li>
+			<li role="presentation">				
+				<%= link_to '#', data: { toggle: 'modal', target: '#myModal'} do %>
+					<span class="glyphicons glyphicons-user"></span> &emsp;<%= "#{current_user.first_name} #{current_user.last_name}" %>
+				<%end %>
+			</li>
 			<li role="presentation"><%= link_to "<span class=\"glyphicons glyphicons-edit\"></span>&emsp;Edit Account".html_safe, edit_user_registration_path %></li>
 			<li role="presentation" class="divider"></li>
 			<li role="presentation"><%= link_to "<span class=\"glyphicons glyphicons-log-out\"></span>&emsp;Sign out".html_safe, destroy_user_session_path, :method => :delete %></li>
@@ -103,3 +107,25 @@
 		<%# if the user is NOT signed in, show signin link %>
 		<li style="height: 50px;"><%= render 'visitors/signin_link'%></li>
 		<% end %>
+		
+
+<!-- Profile Page Modal -->
+<div class="modal fade" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel"><span class="glyphicons glyphicons-nameplate-alt"></span> My Profile</h4>
+      </div>
+      <div class="modal-body">
+				<%= render 'users/profile' %>
+			
+      </div>
+      <div class="modal-footer">
+        <%= link_to edit_user_registration_path, class: "btn btn-large btn-success" do %>
+					<span class="glyphicons glyphicons-pencil"></span> Edit Profile
+				<% end %>
+      </div>
+    </div>
+  </div>
+</div>
