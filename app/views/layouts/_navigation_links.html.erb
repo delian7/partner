@@ -64,12 +64,20 @@
 		<ul class="dropdown-menu pull-right" role="menu">
 			<li role="presentation">				
 				<%= link_to '#', data: { toggle: 'modal', target: '#myModal'} do %>
-					<span class="glyphicons glyphicons-user"></span> &emsp;<%= "#{current_user.first_name} #{current_user.last_name}" %>
+					<span class="glyphicons glyphicons-user"></span>&emsp;<%= "#{current_user.first_name} #{current_user.last_name}" %>
 				<%end %>
 			</li>
-			<li role="presentation"><%= link_to "<span class=\"glyphicons glyphicons-edit\"></span>&emsp;Edit Account".html_safe, edit_user_registration_path %></li>
+			<li role="presentation">
+				<%= link_to edit_user_registration_path do %>
+				<span class="glyphicons glyphicons-edit"></span>&emsp;Edit Profile
+				<% end %>
+			</li>
 			<li role="presentation" class="divider"></li>
-			<li role="presentation"><%= link_to "<span class=\"glyphicons glyphicons-log-out\"></span>&emsp;Sign out".html_safe, destroy_user_session_path, :method => :delete %></li>
+			<li role="presentation">
+				<%= link_to destroy_user_session_path, :method => :delete do %>
+					<span class="glyphicons glyphicons-log-out"></span>&emsp;Logout
+				<% end %>
+			</li>
 		</ul>
 	</div>
 <%# NOTIFICATIONS %>
