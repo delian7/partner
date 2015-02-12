@@ -1,11 +1,9 @@
-<div style="line-height:2; max-width:400px;">
-	<% if !@project.nil? %>
-	<% repeat = Project.find_by_id(@project.id).allow_repeat %>
-	<% else %>
-	<% end %>
+<div style="line-height:1.5;">
+	<% repeat = Project.find_by_id(@project.id).allow_repeat if !@project.nil? %>
 	
 	<table style="width:100%">
 		<tr>
+			<td><span class="glyphicons glyphicons-pushpin"></span></td>
 			<td><%= f.label 'Project Name: ' %></td>
 			<td colspan='2'><%= f.text_field(:name, class: "form-control") %></td>
 		</tr>
@@ -18,8 +16,8 @@
 			<td><%= f.label 'Evaluation Date:'%></td>
 			<td><input type="text" name="evaluation_deadline" value="<%= oneweeklater.strftime("%m/%d/%Y")%>"></p></td>
 		</tr>
-		<tr>
 			<% twoweekslater = oneweeklater + (7*24*60*60) %>
+		<tr>
 			<td><span class="glyphicons glyphicons-calendar"></span></td>
 			<td><%= f.label 'Partnership Deadline:'%></td>
 			<td><input type="text" name="partnership_deadline" value="<%= twoweekslater.strftime("%m/%d/%Y")%>"></td>
@@ -42,36 +40,39 @@
 		<tr><td></td>
 		<% end %>
 	</table>
+
+
 	<table style="width:100%;padding:1px;margin-top:15px">
-		<td><span class="glyphicons glyphicons-retweet-2"></span></td>
-		<td colspan='2'><%= f.label 'What is the scope of groups?' %></td>
+		<td><span class="glyphicons glyphicons-random"></span></td>
+		<td colspan='2'><b>What is the scope of groups?</b></td>
 		<tr>
-			<td></td><td><input type="radio" name="limit_scope" checked="false" value="true"></td>
-			<td style="padding:1px 1px 0px 1px"><span class="glyphicons glyphicons-random"></span><b>&emsp;Joint Course Project: </b></td>
+			<td></td><td style="padding:5px 10px 5px 10px;"><input type="radio" name="limit_scope" checked="false" value="true"></td>
+			<td style="padding:5px 10px 5px 10px;"><span class="glyphicons glyphicons-handshake"></span>&emsp;Joint Course Project: </td>
 		</tr>
 		<tr>
-			<td></td><td><input type="radio" name="limit_scope" checked="true" value="false"></td>
-			<td style="padding:1px 1px 0px 1px"><span class="glyphicons glyphicons-transfer"></span><b>&emsp;Keep Groups Separate by Course: </b></td>
-		</table>
-		<table style="width:100%">
-			<tr>
-				<td><span class="glyphicons glyphicons-retweet-2"></span></td>
-				<td colspan='2'><%= f.label 'Unique Partners for every Project?' %></td>
-			</tr>
-		</table>
+			<td></td><td style="padding:5px 10px 5px 10px;"><input type="radio" name="limit_scope" checked="true" value="false"></td>
+			<td style="padding:5px 10px 5px 10px;"><span class="glyphicons glyphicons-transfer"></span>&emsp;Keep Groups Separate by Course: </td>
+	</table>
+
+
+
+	<table style="width:100%;padding:1px;margin-top:15px">
+		<tr>
+			<td><span class="glyphicons glyphicons-retweet-2"></span></td>
+			<td colspan='2'> <b>Unique Partners for every Project?</b></td>
+		</tr>
+	</table>
+	<table style="width:100%">
+		<tr>
+			<td style="padding:5px 10px 5px 10px;text-align:right; <%= 'background:#ddd' if repeat == true %>"><%= f.radio_button :allow_repeat, true, checked:((repeat == true) || (repeat==nil)) %> </td>
+			<td style="padding:5px 10px 5px 10px;<%= 'background:#ddd' if repeat == true %>"><span class="glyphicons glyphicons-ok-2" style="color:green;"></span>&ensp;Allow Repeats</td>
+		</tr>
+		<tr>
+			<td style="padding:5px 10px 5px 10px;text-align:right; <%= 'background:#ddd' if repeat == false %>"><%= f.radio_button :allow_repeat, false, checked: (repeat == false) %> </td>
+			<td style="padding:5px 10px 5px 10px;<%= 'background:#ddd' if repeat == false %>"><span class="glyphicons glyphicons-ban" style="color:red;"></span>&ensp;Restrict Repeats</td>
+		</tr>
+	</table>
 		
-		<table style="width:100%">
-			<tr>
-				<td style="text-align:right; <%= 'background:#ddd' if repeat == true %>"><%= f.radio_button :allow_repeat, true, checked:((repeat == true) || (repeat==nil)) %> </td>
-				<td style="<%= 'background:#ddd' if repeat == true %>"><span class="glyphicons glyphicons-ok-2" style="color:green;"></span>&ensp;Allow Repeats</td>
-			</tr>
-			<tr>
-				<td style="text-align:right; <%= 'background:#ddd' if repeat == false %>"><%= f.radio_button :allow_repeat, false, checked: (repeat == false) %> </td>
-				<td style="<%= 'background:#ddd' if repeat == false %>"><span class="glyphicons glyphicons-ban" style="color:red;"></span>&ensp;Restrict Repeats</td>
-			</tr>
-		</table>
-		
-		<br />
 		
 		
 	</div>
