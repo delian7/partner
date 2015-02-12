@@ -36,19 +36,24 @@
 	
 
 <li class="dropdown <%= 'active' if current_page?(groups_path) %>">
-  <a href="#" data-toggle="dropdown" class="dropdown-toggle"><span class="glyphicons glyphicons-group"></span> Groups <b class="caret" style="color:black"></b></a>
-  <ul class="dropdown-menu" id="menu1">
+  <%= link_to '#', data: {toggle: 'dropdown'}, class: 'dropdown-toggle' do %><span class="glyphicons glyphicons-group"></span> Groups <b class="caret" style="color:black"></b><% end %>
+  <ul class="dropdown-menu">
     <li><%= link_to "View Groups", groups_path %></li>
     <li><%= link_to "Edit Groups", groups_path %></li>
     <li class="divider"></li>
     <li><%= link_to "Download CSV", groups_path%></li>
+	</ul>
 </li>
-</ul>
-	<li role="presentation" class="<%= 'active' if current_page?(projects_path) %>">
-		<%= link_to projects_path do %>
-		<span class="glyphicons glyphicons-pushpin"></span> Edit Projects
-		<% end %>
+	
+	<li class="dropdown <%= 'active' if current_page?(projects_path) %>">
+	  <%= link_to projects_path, data: {toggle: 'dropdown'}, class: 'dropdown-toggle' do %><span class="glyphicons glyphicons-pushpin"></span> Projects <b class="caret" style="color:black"></b><% end %>
+	  <ul class="dropdown-menu">
+	    <li><%= link_to "Create a New Project", projects_path %></li>
+			<li><%= link_to "View Current Projects", projects_path %></li>
+		</ul>
 	</li>
+	
+	
 	<li role="presentation" class="<%= 'active' if current_page?(evaluations_path) %>">
 		<%= link_to evaluations_path do %>
 		<span class="glyphicons glyphicons-scale-classic"></span> Evaluate
@@ -63,7 +68,7 @@
 		</button>
 		<ul class="dropdown-menu pull-right" role="menu">
 			<li role="presentation">				
-				<%= link_to '#', data: { toggle: 'modal', target: '#myModal'} do %>
+				<%= link_to '#', data: { toggle: 'modal', target: '#profile-page-modal'} do %>
 					<span class="glyphicons glyphicons-user"></span>&emsp;<%= "#{current_user.first_name} #{current_user.last_name}" %>
 				<%end %>
 			</li>
@@ -118,7 +123,7 @@
 		
 
 <!-- Profile Page Modal -->
-<div class="modal fade" id="myModal">
+<div class="modal fade" id="profile-page-modal">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
