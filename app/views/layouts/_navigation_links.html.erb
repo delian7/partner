@@ -34,17 +34,6 @@
 		<% end %>	
 	</li>
 	
-
-<li class="dropdown <%= 'active' if current_page?(groups_path) %>">
-  <%= link_to '#', data: {toggle: 'dropdown'}, class: 'dropdown-toggle' do %><span class="glyphicons glyphicons-group"></span> Groups <b class="caret" style="color:black"></b><% end %>
-  <ul class="dropdown-menu">
-    <li><%= link_to "View Groups", groups_path %></li>
-    <li><%= link_to "Edit Groups", groups_path %></li>
-    <li class="divider"></li>
-    <li><%= link_to "Download CSV", groups_path%></li>
-	</ul>
-</li>
-	
 	<li class="dropdown <%= 'active' if current_page?(projects_path) %>">
 	  <%= link_to projects_path, data: {toggle: 'dropdown'}, class: 'dropdown-toggle' do %><span class="glyphicons glyphicons-pushpin"></span> Projects <b class="caret" style="color:black"></b><% end %>
 	  <ul class="dropdown-menu">
@@ -52,7 +41,16 @@
 			<li><%= link_to "View Current Projects", projects_path %></li>
 		</ul>
 	</li>
-	
+
+	<li class="dropdown <%= 'active' if current_page?(groups_path) %>">
+	  <%= link_to '#', data: {toggle: 'dropdown'}, class: 'dropdown-toggle' do %><span class="glyphicons glyphicons-group"></span> Groups <b class="caret" style="color:black"></b><% end %>
+	  <ul class="dropdown-menu">
+	    <li><%= link_to "View Groups", groups_path %></li>
+	    <li><%= link_to "Edit Groups", groups_path %></li>
+	    <li class="divider"></li>
+	    <li><%= link_to "Download CSV", groups_path%></li>
+		</ul>
+	</li>	
 	
 	<li role="presentation" class="<%= 'active' if current_page?(evaluations_path) %>">
 		<%= link_to evaluations_path do %>
