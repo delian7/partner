@@ -1,6 +1,54 @@
-<%= link_to '#', class: "info-popover", title: "How to populate class data?", :"data-content" => "<b>hello popover world</b>", :"data-trigger" => 'focus' do %>
+<%= link_to '#', class: "info-popover", title: "How to populate class data?", data: { content: "<b>hello popover world</b>", trigger: 'focus'} do %>
 	<span class="glyphicons glyphicons-circle-info"></span>
 <% end %>
 
-<%= link_to '#', class: "btn btn-lg btn-danger info-popover", title: "How to populate class data?", :"data-content" => "<b>hello popover world</b>" do %>Indissmissable Popup
+<%= link_to '#', class: "btn btn-lg btn-danger info-popover", title: "How to populate class data?", data: { content: "<b>hello popover world</b>" } do %>Indissmissable Popup
 <% end %>
+
+<!-- Button trigger modal -->
+<%= link_to 'Add a New Project', '#', class: 'btn btn-primary btn-lg', data: { toggle: 'modal', target: '#myModal'}%>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Add a New Project</h4>
+      </div>
+      <div class="modal-body">
+				HELLO!!
+			
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+       	<button type="button" class="btn btn-default" data-dismiss="modal">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Button trigger modal -->
+<%= link_to 'Upload Roster', '#', class: 'btn btn-primary btn-lg', data: { toggle: 'modal', target: '#upload-roster'}%>
+
+<!-- Modal -->
+<div class="modal fade" id="upload-roster">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Add a New Project</h4>
+      </div>
+      <div class="modal-body">
+				HELLO!!
+			
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+       	<button type="button" class="btn btn-default" data-dismiss="modal">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+
