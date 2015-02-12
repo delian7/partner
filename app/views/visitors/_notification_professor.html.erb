@@ -1,5 +1,24 @@
-	<% if course.projects.empty?%>
-	<div class="content-box"><h3 style="font-size:20px; padding:5px;font-weight:bold;"><center><%= link_to course.course_title, projects_path %></center></h3>
-		 <%=  link_to new_project_path, style: "color:#fff; text-align:left; padding:10px;white-space: normal;", class: "btn btn-danger" do %><span style="font-weight:bold;"><span class="glyphicons glyphicons-warning-sign" style="font-size:18px; line-height:1.5"></span><span style="font-size:18px; line-height:2">&ensp;Alert:</span><br></span><span style="font-size:13px;">There is no active project for this course.<br>Students are not able to partner up.<%@notifications = true%><% end %></span>
+<div class="modal fade" id="create-project">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">	<% if course.projects.empty?%>
+	<div class="content-box"><h3 style="font-size:20px; margin-top:5px;font-weight:bold;"><center><%= link_to course.course_title, projects_path %></center></h3>
+		 <span style: "color:#fff; text-align:left; padding:10px;white-space: normal;", class: "btn btn-danger" do><span style="font-weight:bold;"><span class="glyphicons glyphicons-warning-sign" style="font-size:18px; line-height:1.5"></span><span style="font-size:18px; line-height:2">&ensp;Alert:</span><br></span><span style="font-size:13px;">There is no active project for this course.<br>Students are not able to partner up.<%@notifications = true%></span>
 	</div>
 	<%end%>
+</h4>
+      </div>
+      <div class="modal-body">
+				<%= form_for :project, url: {action: 'create', controller: 'projects'}, html: { multipart: true } do |f| %>
+					<%= render partial: 'projects/form', locals: {f: f} %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+       	<%= f.submit("Save Project", id: 'save-project', class: 'btn btn-primary') %>
+				<% end %>
+      </div>
+    </div>
+  </div>
+</div>

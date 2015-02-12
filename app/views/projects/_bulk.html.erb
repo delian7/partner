@@ -23,7 +23,6 @@
       <div class="modal-body">
 				<%= form_for :project, url: {action: 'create'}, html: { multipart: true } do |f| %>
 					<%= render partial: 'form', locals: {f: f} %>
-			
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

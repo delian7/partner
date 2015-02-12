@@ -106,7 +106,7 @@ class ProjectsController < ApplicationController
     end
     end
     while !students.empty?
-      name = group_namer('creature', @project)
+      name = group_namer('number', @project)
       newgroup = Group.create(name: name, project_id: @project.id)
       students.sample(@project.group_size).collect(&:id).each do |student|
         GroupRelation.create(group_id: newgroup.id, user_id: student, project_id: @project.id)
