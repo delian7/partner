@@ -103,7 +103,7 @@
 <% if request_count !=0 %>
 <div class="dropdown">
 	<a href="/">
-		<button class="btn btn-danger" type="button"><span class="badge"><%= request_count %></span> Notifications</button>
+		<% button_tag 'Notifications', class: "btn btn-danger" do %><span class="badge"><%= request_count %></span><% end %> Notifications</button>
 	</a></div>
 	<% end %>
 	<% when 1..2 %>
