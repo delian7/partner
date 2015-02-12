@@ -34,12 +34,14 @@
 		<% end %>	
 	</li>
 	
+
 	<li class="dropdown <%= 'active' if current_page?(projects_path) %>">
-	  <%= link_to projects_path, data: {toggle: 'dropdown'}, class: 'dropdown-toggle' do %><span class="glyphicons glyphicons-pushpin"></span> Projects <b class="caret" style="color:black"></b><% end %>
+	  <%= link_to projects_path, data: {toggle: 'dropdown'}, class: 'dropdown-toggle' do %><span class="glyphicons glyphicons-pushpin"></span> Projects <span class="caret" style="color:black"></span><% end %>
 	  <ul class="dropdown-menu">
 	    <li><%= link_to "Create a New Project", projects_path %></li>
 			<li><%= link_to "View Current Projects", projects_path %></li>
 		</ul>
+
 	</li>
 
 	<li class="dropdown <%= 'active' if current_page?(groups_path) %>">
