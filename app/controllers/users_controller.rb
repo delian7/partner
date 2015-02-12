@@ -6,6 +6,9 @@ class UsersController < ApplicationController
   # after_action :verify_authorized, except: [:show, :index]
   require 'csv'
 
+
+  def profile 
+  end 
   def index
     @users = User.all
     set_current_users_instance_variables
