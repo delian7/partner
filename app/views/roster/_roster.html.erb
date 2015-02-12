@@ -28,28 +28,40 @@ $(document).ready( function() {
 
 </script>  
 
-<div class="jumbotron", style="max-width: 500px; margin:auto; padding:20px 20px 0px 20px;">
-<%= form_for :roster, url: {controller: "courses", action: "csv_import"}, html: { multipart: true } do |f| %>
- <div class="form-group">
-  <label for="dump_file">
-<div style="font-size:30px; font-weight:bold;"><span class="glyphicons glyphicons-disk-import"></span>&emsp;Import WebRoster
-  </label>
-</div>
- <div class="form-group">
-  <div class="fileupload fileupload-new" data-provides="fileupload">
-  <div class="input-group" style="float :left;">
-                <span class="input-group-btn">
-                        <span class="btn btn-info btn-file" >
-                        Browse...<input id="fileupload" type="file" name="files[]" data-toggle="tooltip" data-placement="bottom" title="Tooltip on bottom" multiple><br><br>
-                </span>
-                <input type="text" class="form-control" style= "background-color:white" readonly>
-            </div>
+<div class="jumbotron" style="max-width: 500px; margin:auto; padding:20px 20px 0px 20px;">
+	
+	<%= link_to '#', class: "info-popover", title: "Uploading Multiple Rosters", style: 'float:right', data: { content: "Click 'Browse' and then cmd-click(Mac) or ctrl-click(Windows) on multiple files to upload multiple rosters", trigger: 'hover', delay: {show: 300, hide: 100}} do %>
+		<span class="glyphicons glyphicons-circle-info"></span>
+	<% end %>
+	
+		
+	<%= form_for :roster, url: {controller: "courses", action: "csv_import"}, html: { multipart: true } do |f| %>
+ 	<div class="form-group">
+  	<label for="dump_file">
+			<div style="font-size:30px; font-weight:bold;"><span class="glyphicons glyphicons-disk-import"></span>&emsp;Import WebRoster</div>	
+  	</label>
+	  <div class="form-group">
+  	<div class="fileupload fileupload-new" data-provides="fileupload">
+  		<div class="input-group" style="float :left;">
+      	<span class="input-group-btn">
+        	<span class="btn btn-info btn-file" >Browse...<input id="fileupload" type="file" name="files[]" data-toggle="tooltip" data-placement="bottom" multiple><br></span>
         </span>
-    </div><div class="form-group" style="text-align:center;float:center; ">
-      <button type= "submit" class="btn btn-primary btn-xl" onclick= 'this.form.submit();' id="csvbutton" disabled="disabled" %>
-   <span class="glyphicons glyphicons-upload"></span>Upload CSV File</button>
-       </div>
- </div> </div></div>
- <% end %> 
+        <input type="text" class="form-control" style= "background-color:white" readonly>
+      </div>
+        
+    </div>
+		
+	<div class="form-group" style="text-align:center;float:center; ">
+			
+			<%= button_tag 'Upload', class: 'btn btn-primary btn-xl', id: 'csvbutton', disabled: 'disabled' do %>
+       <span class="glyphicons glyphicons-upload"></span>Upload CSV File
+			<% end %>
+   <% end %>     
+	</div>
+		
+  </div> 
+  </div>
+</div>
+ 
 
  
