@@ -3,11 +3,6 @@
 <%# renders appropriate list "li" depending on user "role", 0 is student, 1..2 is professor/ta, 3 is for admin %>
 <% case current_user.role %>
 <% when 0 %>
-	<li role="presentation" class="<%= 'active' if current_page?(users_profile_path) %>">
-		<%= link_to users_profile_path do %>
-		<span class="glyphicons glyphicons-nameplate-alt"></span> My Profile
-		<% end %>
-	</li>
 	<li role="presentation" class="<%= 'active' if current_page?(users_path) %>">
 		<%= link_to users_path do %>
 		<span class="glyphicons glyphicons-address-book"></span> <%= (Project.find(current_user.current_project).group_size != 2) ? 'Find Members' : 'Find a Partner' %>

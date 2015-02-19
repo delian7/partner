@@ -22,7 +22,7 @@ module GroupsHelper
   def group_namer(namegen, project)
     case namegen
     when "number"
-      @groupname = "Team #{Group.where(project_id: @project.id).size + 1}"
+      @groupname = "Team #{Group.where(project_id: project.id).size + 1}"
     when "random"
       @groupname = "Team #{Faker::Team.random.titlecase}"
     when "creature"

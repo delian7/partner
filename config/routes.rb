@@ -58,6 +58,7 @@ Rails.application.routes.draw do
   resources :courses do
     member do
       get :edit
+      get :show
       post :update
       get :remove
     end
@@ -72,6 +73,7 @@ Rails.application.routes.draw do
       post :update
       get :remove
       get :reduce_groupsize
+      get :show
       get :increase_groupsize
       get :autogroup
       post :autogroup

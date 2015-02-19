@@ -16,13 +16,13 @@ class CoursesController < ApplicationController
     @course = Course.find(params[:id])
   end
 
-  # def show
-  #   @course = Course.find(params[:id])
-  #   unless user_signed_in?
-  #     authorize current_user
-  #     redirect_to :back, :alert => "Access denied."
-  #   end
-  # end
+  def show
+    @course = Course.find(params[:id])
+    unless user_signed_in?
+      authorize current_user
+      redirect_to :back, :alert => "Access denied."
+    end
+  end
 
   def update
     authorize current_user

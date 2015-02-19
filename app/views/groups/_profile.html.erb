@@ -17,8 +17,7 @@ have a partner yet for <%= Project.find(current_user.current_project).name %></s
                 <span style=" font-weight:bold;">Project:</span>
                 <span style=""><%= @group.project.name%></span>
                 <span style=" font-weight:bold;"><br>
-                Course:</span> <span style=""><%= Course.find(@group.project.course_id).course_title%><br>
-                </span>
+                Course:</span> <%= ((@group.project.courses)&(current_user.courses))[0].course_title%><br>
             </div>
             <div style="float:right;line-height: .5em;"><span style="font-size:13px; font-weight:bold; padding:0px;"><br>
                 Partnership Deadline:</span> <span style="">

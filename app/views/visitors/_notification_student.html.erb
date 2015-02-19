@@ -14,7 +14,7 @@
   <span style="font-size:12px;"> <%= group.project.name %></span>
   <span style="font-size:13px;font-weight:bold;">  <br>
   Course:</span>
-  <span style="font-size:12px;"> <%= Course.find(group.project.course_id).course_title %><br>
+  <span style="font-size:12px;"> <%= group.project.courses[0].course_title %><br>
   </span>
   <table class="table" style="width: 95%!important;">
     <td><strong>Name</strong></td>
