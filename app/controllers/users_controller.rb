@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_filter :authenticate_user!
+  # before_filter :authenticate_user!
   # before_filter :admin_only, :except => :show
   helper_method :teammates?, :in_group_for?, :classmates?, :previously_partnered?
   include UsersHelper, GroupsHelper
@@ -59,36 +59,6 @@ class UsersController < ApplicationController
     redirect_to :back
   end
 
-  #   # Start download of csv file of partner data
-  # def export_organized
-  #     user = current_user
-  #     authorize user
-  #     roster_csv = CSV.generate do |csv|
-  #     csv << ["Project: " + Project.find_by_id(current_user.current_project).name, "Course: " + Course.find_by_id(current_user.current_course).course_title, "Downloaded by: " + current_user.first_name + " " + current_user.last_name]
-
-  #   groupids = GroupRelation.where(project_id:current_user.current_project).collect(&:group_id).uniq
-  #   groupids.each do |group|
-  #   @group = Group.find(group)
-  #     csv << [@group.name]
-
-  #   GroupRelation.where(group_id: group).collect(&:user_id).each do |i|
-  #   name = "#{user.first_name} #{user.last_name}"
-  #   user = User.find(i)
-
-  #   if GroupRelation.find_by(user_id: user.id, group_id: @group.id).nil?
-  #       @confirmed ="Request Pending"
-  #   elsif GroupRelation.find_by(user_id: user.id, group_id: @group.id).status == 2
-  #       @confirmed = "Confirmed"
-  #   else
-  #       @confirmed ="Request Pending"
-  #   end
-  #   csv << [user.first_name, user.last_name, user.email, @confirmed]
-  #      end
-  #     end
-  #   end
-  #   send_data(roster_csv, type:  'text/csv', filename:  'groups.csv')
-  # end
-
   # Start download of csv file of partner data
   def export_groups
     authorize current_user
@@ -111,7 +81,6 @@ class UsersController < ApplicationController
           name = user.last_name + ", " + user.first_name
           members.push(name)
         end
-        # csv << [members[0], members[1], members[2], members[3], members[4], members[5], members[6], members[7]]
         csv << members
       end
     end
@@ -129,9 +98,9 @@ class UsersController < ApplicationController
       csv << ["Project: #{myproject.name}", "Course: #{mycourse.course_title}", "Quarter: #{mycourse.quarter}"]
       csv << ["Instructor: " + mycourse.instructor, "Downloaded by: " + current_user.first_name + " " + current_user.last_name, "Date: #{Time.now.strftime("%m/%d/%Y")}"]
       csv << ["Time: #{Time.now.strftime("%I:%M %p")}", "Total Teams: #{myproject.groups.uniq.size}", "Total Students: #{mycourse.users.where(role:0).size}"]
-     csv << ["Ungrouped: " , "Grouped"]
+      csv << ["Ungrouped: " , "Grouped"]
       GroupRelation.where(project_id: myproject.id, status:2).collect(&:user_id).uniq.each do |id|
-        if User.find_by_id(id).role ==0
+        if User.find_by_id(id).role == 0
           grouped.push(User.find_by_id(id))
         end
       end
@@ -146,6 +115,13 @@ class UsersController < ApplicationController
           name = i.last_name + ", " + i.first_name
           secondname = ungrouped[count].last_name + ", " + ungrouped[count].first_name if count < ungrouped.size()
           count < ungrouped.size() ? csv << [secondname, name] : csv << [name]
+        end
+      else
+        ungrouped.each do |i|
+          count += 1
+          name = i.last_name + ", " + i.first_name
+          secondname = grouped[count].last_name + ", " + grouped[count].first_name if count < grouped.size()
+          count < grouped.size() ? csv << [secondname, name] : csv << ["",name]
         end
       end
     end
@@ -164,14 +140,12 @@ class UsersController < ApplicationController
       if @mygroup.nil?
         newgroup = Group.create(name: @groupname, course_id: @mycourse.id, project_id: @myproject.id)
         #create relation for current user
-        current_user_relation = GroupRelation.create(user_id: current_user.id,
-                                                     project_id: @myproject.id, status: 2, group_id: newgroup.id)
+        current_user_relation = GroupRelation.create(user_id: current_user.id, project_id: @myproject.id, status: 2, group_id: newgroup.id)
       else
         newgroup = Group.find_by_id(@mygroup)
       end
       # create relation for user who is being requested (status=1, requested)
-      user_relation = GroupRelation.create(user_id: user.id, project_id: @myproject.id,
-                                           status: 1, group_id: newgroup.id)
+      user_relation = GroupRelation.create(user_id: user.id, project_id: @myproject.id, status: 1, group_id: newgroup.id)
       flash[:notice] = "Requested <b>#{user.first_name} #{user.last_name}</b> to your group: <b>#{newgroup.name}</b> "
     end
     redirect_to users_path
