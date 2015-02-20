@@ -1,13 +1,13 @@
 <% if @ucinetid.blank? %>
-<%= link_to (request.ip == "127.0.0.1") ? "" : "https://login.uci.edu/" do %>
+	<%= link_to (request.ip == "127.0.0.1") ? "" : "https://login.uci.edu/" do %>
 		<span class="glyphicons glyphicons-log-in"></span> Login
-		<% end %>
+	<% end %>
 
 <% else %>
 	<%= form_for(resource, url: user_session_path) do |f| %>
     	<%= f.hidden_field :ucinetid, value: @ucinetid %> 
-    	<%= link_to_submit do %>
-		<span class="glyphicons glyphicons-log-in"></span> Login
+    	<%= link_to submit do %>
+			<span class="glyphicons glyphicons-log-in"></span> Login
 		<% end %>
 	<% end %>
 <% end %>
