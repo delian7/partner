@@ -3,7 +3,7 @@
 <!-- Edit Modal would not populate existing record information  -->
 <% @project = project %>
 <!-- Edit Modal -->
-<div class="modal fade" id="edit-project">
+<div class="modal fade" id="edit-<%= project.id%>">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -12,8 +12,7 @@
       </div>
       <div class="modal-body">
 				<%= form_for :project, url: {controller: 'projects', action: 'update', id: project.id} do |f| %>	
-						<%= render partial: 'projects/form', locals: {f: f, project: project} %>	
-						<%= link_to project.name, edit_project_path(project.id) %>	
+						<%= render partial: 'projects/form', locals: {f: f, project: project} %>
       </div>
       <div class="modal-footer">
 				<%=  link_to remove_project_path(project.id), class: "btn btn-danger", style: 'left:auto', data: { confirm: delete_confirm} do %>
