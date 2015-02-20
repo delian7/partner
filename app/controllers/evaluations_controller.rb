@@ -16,10 +16,6 @@ class EvaluationsController < ApplicationController
     @evaluation = Evaluation.find(params[:id])
   end
 
-  # def profile
-  #   authorize current_user
-  # end
-
   # def show
   #   @evaluation = Evaluation.find(params[:id])
   #   unless user_signed_in?
