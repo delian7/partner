@@ -2,7 +2,6 @@
 <% project = Project.find(current_user.current_project)%>
 <%= project.group_size == 2 ? "a Partner" : "Members"%> </span><br><br>
 <% current_user.groups.order(:project_id).uniq.each do |group| %>
-
 <% if project.group_relations.find_by(user_id: current_user.id, group_id: group.id)%>
 <% is_current_user_requested = project.group_relations.find_by(user_id: current_user.id, group_id: group.id)%>
 <% if is_current_user_requested.status == 1 %>
@@ -31,37 +30,35 @@
 	<div class="panel-heading"><h4><%= Course.find_by_id(current_user.current_course).course_title %>, <%= project.name %></h4>
 	</div>
 	<div class="panel-body">
-		This is a list of all the available partners for <%= Course.find_by_id(current_user.current_course).course_title %>.<br><br>  
-
+		This is a list of all the available partners for <%= Course.find_by_id(current_user.current_course).course_title %>.<br><br>
 		If you would like to change your course you can do so in the "Change Course and Project" on the top right. <br><br>
-
 		<% project.group_size.times do %>
-	    	<span class="glyphicons glyphicons-user"></span>
-	    <% end %>
-	    &emsp;Your group size should be <%= project.group_size %>.
+		<span class="glyphicons glyphicons-user"></span>
+		<% end %>
+		&emsp;Your group size should be <%= project.group_size %>.
 		<br><br>
-		 <%= project.allow_repeat ? '<span class="glyphicons glyphicons-ok-2" style="color:green;"></span>&emsp; You ARE '.html_safe : '<span class="glyphicons glyphicons-ban" style="color:red;"></span>&emsp; You ARE NOT '.html_safe %> allowed to repeat partners from your previous assignments.
+		<%= project.allow_repeat ? '<span class="glyphicons glyphicons-ok-2" style="color:green;"></span>&emsp; You ARE '.html_safe : '<span class="glyphicons glyphicons-ban" style="color:red;"></span>&emsp; You ARE NOT '.html_safe %> allowed to repeat partners from your previous assignments.
 	</div>
-		<table class="table">
-			<tr style="background-color:#eee">
+	<table class="table">
+		<tr style="background-color:#eee">
 			<th><b>Name</th>
 			<th class='collapsable'><b>Email</th>
 			<th colspan="2" style="max-width:100px;"><b>
 			<% allowed_size <= mygroupsize ? "Confirmed?" :  "Request"%></th></b>
 		</tr>
+		<!-- Render every user -->
+		<%= render 'users/user_render'%>
+		<% end %>
+		<% end %>
+		<% end %>
+		<% if current_user.groups.order(:project_id).empty?%>
+		<tr style="background-color:#eee">
+			<th colspan="2"><b>Name</th>
+			<th class='collapsable'><b>Email</th>
+			<th colspan="2" style="max-width:100px;"><b>
+			</tr>
 			<!-- Render every user -->
 			<%= render 'users/user_render'%>
 			<% end %>
-			<% end %>
-			<% end %>
-			<% if current_user.groups.order(:project_id).empty?%>
-			<tr style="background-color:#eee">
-				<th colspan="2"><b>Name</th>
-				<th class='collapsable'><b>Email</th>
-				<th colspan="2" style="max-width:100px;"><b>
-				</tr>
-				<!-- Render every user -->
-				<%= render 'users/user_render'%>
-				<% end %>
-			</table>
-		</div></div>  </div>  </div>
+		</table>
+	</div></div>  </div>  </div>

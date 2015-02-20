@@ -137,7 +137,7 @@ class ProjectsController < ApplicationController
     else
       flash[:error] = "Project could not be deleted"
     end
-    redirect_to(action: 'index')
+    redirect_to groups_path
   end
 
   def clear_partnerships
@@ -154,7 +154,7 @@ class ProjectsController < ApplicationController
     else
       flash[:error] = "Unable to clear group relations."
     end
-    redirect_to(action: 'index')
+    redirect_to groups_path
   end
 
 

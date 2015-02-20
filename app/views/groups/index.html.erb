@@ -1,7 +1,6 @@
-
-		<% case current_user.role %>
-		<% when 0 %>
-			<%= render 'groups/student_find_group' %>
-		<% when 1 .. 3 %>
-			<%= render'groups/professor_groups' %>
-		<% end %>
+<% case current_user.role %>
+<% when 0 %>
+	<%= render 'groups/student_find_group' %>
+<% when 1 .. 3 %>
+	<%= render'groups/professor_groups' %>
+<% end %>
