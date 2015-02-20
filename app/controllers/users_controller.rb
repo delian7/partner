@@ -114,7 +114,7 @@ class UsersController < ApplicationController
         csv << members
       end
     end
-    send_data(roster_csv, type:  'text/csv', filename:  '#{mycourse.course_code}_groups.csv')
+    send_data(roster_csv, type:  'text/csv', filename: "#{mycourse.course_code}_groups.csv")
   end
   # Start download of csv file of partner data
   def export_ungrouped
