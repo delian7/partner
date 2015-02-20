@@ -97,8 +97,9 @@ class UsersController < ApplicationController
     roster_csv = CSV.generate do |csv|
       header=[]
       header.push()
-      csv << ["Project: #{myproject.name}", "Course: #{mycourse.course_title}", "Total Teams: #{myproject.groups.uniq.size}", "Total Students: #{mycourse.users.where(role:0).size}"]
-      csv << ["Instructor: " + mycourse.instructor, "Downloaded by: " + current_user.first_name + " " + current_user.last_name, "Date: #{Time.now.strftime("%m/%d/%Y")}", "Time: #{Time.now.strftime("%I:%M %p")}"]
+      csv << ["Project: #{myproject.name}", "Course: #{mycourse.course_title}", "Quarter: #{mycourse.quarter}"]
+      csv << ["Instructor: " + mycourse.instructor, "Downloaded by: " + current_user.first_name + " " + current_user.last_name, "Date: #{Time.now.strftime("%m/%d/%Y")}"]
+      csv << ["Time: #{Time.now.strftime("%I:%M %p")}", "Total Teams: #{myproject.groups.uniq.size}", "Total Students: #{mycourse.users.where(role:0).size}"]
 
       groupids = GroupRelation.where(project_id:current_user.current_project).collect(&:group_id).uniq
       groupids.each do |group|
@@ -125,9 +126,10 @@ class UsersController < ApplicationController
     myproject= Project.find_by_id(current_user.current_project)
 
     roster_csv = CSV.generate do |csv|
-      csv << ["Project: #{myproject.name}", "Course: #{mycourse.course_title}", "Total Teams: #{myproject.groups.uniq.size}", "Total Students: #{mycourse.users.where(role:0).size}"]
-      csv << ["Instructor: " + mycourse.instructor, "Downloaded by: " + current_user.first_name + " " + current_user.last_name, "Date: #{Time.now.strftime("%m/%d/%Y")}", "Time: #{Time.now.strftime("%I:%M %p")}"]
-      csv << ["Ungrouped: " , "Grouped"]
+      csv << ["Project: #{myproject.name}", "Course: #{mycourse.course_title}", "Quarter: #{mycourse.quarter}"]
+      csv << ["Instructor: " + mycourse.instructor, "Downloaded by: " + current_user.first_name + " " + current_user.last_name, "Date: #{Time.now.strftime("%m/%d/%Y")}"]
+      csv << ["Time: #{Time.now.strftime("%I:%M %p")}", "Total Teams: #{myproject.groups.uniq.size}", "Total Students: #{mycourse.users.where(role:0).size}"]
+     csv << ["Ungrouped: " , "Grouped"]
       GroupRelation.where(project_id: myproject.id, status:2).collect(&:user_id).uniq.each do |id|
         if User.find_by_id(id).role ==0
           grouped.push(User.find_by_id(id))
