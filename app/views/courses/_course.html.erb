@@ -9,7 +9,7 @@
 	  <td class='collapsable' width='30%'>
 	    <% projects.each do |project| %>
 	    	<span class="glyphicons glyphicons-pushpin" style="font-size:10px;"></span>&ensp;
-				<%= link_to project.name, '#', data: { toggle: 'modal', target: '#edit-project'}%>
+				<%= link_to project.name, '#', data: { toggle: 'modal', target: "#edit-#{project.id}"}%>
 				<br />				
 				<%= render template: 'projects/modals/edit-project', locals: {project: project, course: course} %>
 		</td>
