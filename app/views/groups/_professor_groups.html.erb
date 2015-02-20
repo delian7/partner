@@ -1,20 +1,20 @@
 <div class="section-group">
-  <div class="span_2_of_3">
+  <div class="span_2_of_3"><span style="font-size:30px;font-weight:bold;">Groups for <%= @myproject.name %></span>
     <div class="btn-toolbar" role="toolbar" aria-label="...">  <br>
-      <button disabled='true'>
+      <button disabled='true' class="btn btn-default">
       <span style="font-size:14px;">Group Size: <span style="font-weight:bold;"><%= @myproject.group_size %><br>
       <% @myproject.group_size.times do |o|%>
       <%=  link_to "<span class=\"glyphicons glyphicons-user\" style=\"font-size:14px;\"></span>".html_safe, reduce_groupsize_project_path(@myproject.id), class: "groupsize_changes"%>
       <% end %>
-      <% if @myproject.group_size < 7 %>
-      <%=  link_to "<span class=\"glyphicons glyphicons-plus\" style=\"font-size:14px;\"></span>".html_safe, increase_groupsize_project_path(@myproject.id), style: "color:green"%>
-      <% else %>
-      <%=  link_to "<span class=\"glyphicons glyphicons-minus\" style=\"font-size:14px;\"></span>".html_safe, reduce_groupsize_project_path(@myproject.id), style: "color:red"%>
-      <% end %></button>
-      <button type="button" class="btn btn-primary"><%= link_to "Autogroup&nbsp;&nbsp;<span class=\"glyphicons glyphicons-random\"></span>".html_safe, autogroup_project_path(@myproject.id), style:"color:white" %></button>
-      <button type="button" class="btn btn-warning"><%= link_to "<span class=\"glyphicons glyphicons-disk-export\"></span>&nbsp;&nbsp;Export Table".html_safe, export_groups_users_path(current_user), style:"color:white" %></button>
-      <button type="button" class="btn btn-warning"><%= link_to "<span class=\"glyphicons glyphicons-disk-export\"></span>&nbsp;&nbsp;Export Table".html_safe, export_ungrouped_users_path(current_user), style:"color:white" %></button>
-      <button type="button" class="btn btn-danger btn-xs"><%= link_to "<span class=\"glyphicons glyphicons-warning-sign\"></span>&nbsp;&nbsp;Reset Groups".html_safe, clear_partnerships_project_path(@myproject.id), style:"color:white" %></button>
+        <% if @myproject.group_size < 7 %>
+        <%=  link_to "<span class=\"glyphicons glyphicons-plus\" style=\"font-size:14px;\"></span>".html_safe, increase_groupsize_project_path(@myproject.id), style: "color:green"%>
+        <% else %>
+        <%=  link_to "<span class=\"glyphicons glyphicons-minus\" style=\"font-size:14px;\"></span>".html_safe, reduce_groupsize_project_path(@myproject.id), style: "color:red"%>
+        <% end %>
+      </button>
+      <button type="button" class="btn btn-primary btn-lg"><%= link_to "Autogroup&nbsp;&nbsp;<span class=\"glyphicons glyphicons-random\"></span>".html_safe, autogroup_project_path(@myproject.id), style:"color:white" %></button>
+      <button type="button" class="btn btn-warning"><%= link_to "<span class=\"glyphicons glyphicons-disk-export\"></span>&nbsp;&nbsp;Export Groups".html_safe, export_groups_users_path(current_user), style:"color:white" %></button>
+      <button type="button" class="btn btn-warning"><%= link_to "<span class=\"glyphicons glyphicons-disk-export\"></span>&nbsp;&nbsp;Export Leftover Students".html_safe, export_ungrouped_users_path(current_user), style:"color:white" %></button>
     </div>
   </div>
   <div class="span_1_of_3">
@@ -45,4 +45,4 @@
     <td class='collapsable'><%= render 'layouts/buttons/team_select', user: @user%></td>
   </tr>
   <% end %></table></div><div class="panel-body"></div>
-  <% end %>
+  <% end %> <button type="button" class="btn btn-danger btn-xs"><%= link_to "<span class=\"glyphicons glyphicons-warning-sign\"></span>&nbsp;&nbsp;Reset Groups".html_safe, clear_partnerships_project_path(@myproject.id), style:"color:white" %></button>
