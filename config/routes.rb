@@ -33,8 +33,8 @@ Rails.application.routes.draw do
 
     end
     collection do
-      get :export_organized
-      get :export_horizontal
+      get :export_ungrouped
+      get :export_groups
     end
   end
 

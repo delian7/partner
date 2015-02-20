@@ -7,8 +7,8 @@ class UsersController < ApplicationController
   require 'csv'
 
 
-  def profile 
-  end 
+  def profile
+  end
   def index
     @users = User.all
     set_current_users_instance_variables
@@ -90,15 +90,15 @@ class UsersController < ApplicationController
   # end
 
   # Start download of csv file of partner data
-  def export_horizontal
-    user = current_user
-    authorize user
+  def export_groups
+    authorize current_user
+    mycourse = Course.find_by_id(current_user.current_course)
+    myproject= Project.find_by_id(current_user.current_project)
     roster_csv = CSV.generate do |csv|
       header=[]
       header.push()
-      csv << ["Project: #{Project.find_by_id(current_user.current_project).name}", "Course: #{Course.find_by_id(current_user.current_course).course_title}", "Total Teams: #{Project.find_by_id(current_user.current_project).groups.uniq.size}", "Total Students: #{Course.find_by_id(current_user.current_course).users.where(role:0).size}"]
-      csv << ["Instructor: " + Course.find_by_id(current_user.current_course).instructor, "Downloaded by: " + current_user.first_name + " " + current_user.last_name, "Date: #{Time.now.strftime("%m/%d/%Y")}", "Time: #{Time.now.strftime("%I:%M %p")}"]
-
+      csv << ["Project: #{myproject.name}", "Course: #{mycourse.course_title}", "Total Teams: #{myproject.groups.uniq.size}", "Total Students: #{mycourse.users.where(role:0).size}"]
+      csv << ["Instructor: " + mycourse.instructor, "Downloaded by: " + current_user.first_name + " " + current_user.last_name, "Date: #{Time.now.strftime("%m/%d/%Y")}", "Time: #{Time.now.strftime("%I:%M %p")}"]
 
       groupids = GroupRelation.where(project_id:current_user.current_project).collect(&:group_id).uniq
       groupids.each do |group|
@@ -107,14 +107,47 @@ class UsersController < ApplicationController
         members.push(@group.name)
         GroupRelation.where(group_id: group, status:2).collect(&:user_id).each do |i|
           user = User.find(i)
-          name = user.first_name + ", " + user.last_name
+          name = user.last_name + ", " + user.first_name
           members.push(name)
         end
         # csv << [members[0], members[1], members[2], members[3], members[4], members[5], members[6], members[7]]
         csv << members
       end
     end
-    send_data(roster_csv, type:  'text/csv', filename:  'groups.csv')
+    send_data(roster_csv, type:  'text/csv', filename:  '#{mycourse.course_code}_groups.csv')
+  end
+  # Start download of csv file of partner data
+  def export_ungrouped
+    authorize current_user
+    grouped=[]
+    users=[]
+    mycourse = Course.find_by_id(current_user.current_course)
+    myproject= Project.find_by_id(current_user.current_project)
+
+    roster_csv = CSV.generate do |csv|
+      csv << ["Project: #{myproject.name}", "Course: #{mycourse.course_title}", "Total Teams: #{myproject.groups.uniq.size}", "Total Students: #{mycourse.users.where(role:0).size}"]
+      csv << ["Instructor: " + mycourse.instructor, "Downloaded by: " + current_user.first_name + " " + current_user.last_name, "Date: #{Time.now.strftime("%m/%d/%Y")}", "Time: #{Time.now.strftime("%I:%M %p")}"]
+      csv << ["Ungrouped: " , "Grouped"]
+      GroupRelation.where(project_id: myproject.id, status:2).collect(&:user_id).uniq.each do |id|
+        if User.find_by_id(id).role ==0
+          grouped.push(User.find_by_id(id))
+        end
+      end
+      mycourse.users.each do |id|
+        users.push(id)
+      end
+      ungrouped = users - grouped
+      count = 0
+      if grouped.size() >= ungrouped.size()
+        grouped.each do |i|
+          count += 1
+          name = i.last_name + ", " + i.first_name
+          secondname = ungrouped[count].last_name + ", " + ungrouped[count].first_name if count < ungrouped.size()
+          count < ungrouped.size() ? csv << [secondname, name] : csv << [name]
+        end
+      end
+    end
+    send_data(roster_csv, type:  'text/csv', filename:  "#{mycourse.course_code}_leftover_students.csv")
   end
 
   def send_request

@@ -12,7 +12,8 @@
       <%=  link_to "<span class=\"glyphicons glyphicons-minus\" style=\"font-size:14px;\"></span>".html_safe, reduce_groupsize_project_path(@myproject.id), style: "color:red"%>
       <% end %></button>
       <button type="button" class="btn btn-primary"><%= link_to "Autogroup&nbsp;&nbsp;<span class=\"glyphicons glyphicons-random\"></span>".html_safe, autogroup_project_path(@myproject.id), style:"color:white" %></button>
-      <button type="button" class="btn btn-warning"><%= link_to "<span class=\"glyphicons glyphicons-disk-export\"></span>&nbsp;&nbsp;Export Table".html_safe, export_horizontal_users_path(current_user), style:"color:white" %></button>
+      <button type="button" class="btn btn-warning"><%= link_to "<span class=\"glyphicons glyphicons-disk-export\"></span>&nbsp;&nbsp;Export Table".html_safe, export_groups_users_path(current_user), style:"color:white" %></button>
+      <button type="button" class="btn btn-warning"><%= link_to "<span class=\"glyphicons glyphicons-disk-export\"></span>&nbsp;&nbsp;Export Table".html_safe, export_ungrouped_users_path(current_user), style:"color:white" %></button>
       <button type="button" class="btn btn-danger btn-xs"><%= link_to "<span class=\"glyphicons glyphicons-warning-sign\"></span>&nbsp;&nbsp;Reset Groups".html_safe, clear_partnerships_project_path(@myproject.id), style:"color:white" %></button>
     </div>
   </div>
