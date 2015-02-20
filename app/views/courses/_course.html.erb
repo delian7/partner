@@ -1,16 +1,25 @@
+<% delete_confirm = 'Are you sure you want to delete this course? You will permanently lose all information associated with this course.'%>
+<% projects = course.projects.uniq %>
+
 <% case @current_user.role %>
 <% when 0..3 %>
-<tr>
+	<tr>
 	  <td class='collapsable'><%= course.course_code %></td>
-      <td><%= course.course_title %></td>
-      <td class='collapsable' width='30%'>
-      	<% projects = course.projects.uniq %>
-      	<% projects.each do |project| %>
-      	<span class="glyphicons glyphicons-pushpin" style="font-size:10px;"></span>&ensp;<%= link_to project.name, edit_project_path(project.id) %><br>
-      	<% end %>
-
-      </td>
-	    <td style="padding:0px;margin:0px">
-    	 <%=  link_to "<span class=\"glyphicons glyphicons-remove-2\"></span>&nbsp;&nbsp;Delete".html_safe, remove_course_path(course.id), data: { confirm: "Are you sure you want to delete this course? You will permanently lose all information associated with this course."}, class: "btn btn-danger btn-sm" %></td>
-    </tr>
+	  <td><%= course.course_title %></td>
+	  <td class='collapsable' width='30%'>
+	    <% projects.each do |project| %>
+	    	<span class="glyphicons glyphicons-pushpin" style="font-size:10px;"></span>&ensp;
+				<%= link_to project.name, '#', data: { toggle: 'modal', target: '#edit-project'}%>
+				<br />				
+				<%= render template: 'projects/modals/edit-project', locals: {project: project, course: course} %>
+		</td>
+		<td>
+				<%=  link_to remove_project_path(project.id), class: "btn btn-danger", data: { confirm: delete_confirm} do %>
+					<span class=\"glyphicons glyphicons-remove-2\"></span> Delete Course
+				<% end %>
+		</td>		
+			<% end %>
+	  
+	</tr>
 <% end %>
+

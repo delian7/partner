@@ -1,12 +1,10 @@
-<span style="font-size:40px; font-weight:bold;"><span class="glyphicons glyphicons-nameplate-alt" style="font-size:50;"></span>&emsp;My Profile</span><br>
-
-<div class="section group">
+<% if signed_in?%>
+<div class="section group" style="margin:auto;float:center; width:50%;">
   <div class="col span_1_of_3">
-  	<%= image_tag current_user.avatar.url, style: "width:90%;"%><br><br><center>
-  	<%= link_to "<span class=\"glyphicons glyphicons-pencil\"></span>&nbsp;&nbsp;Edit Profile".html_safe, edit_user_registration_path, style: 'max-width:200px; padding:10px;', class: "btn btn-success"  %></center>
+  	<%= image_tag current_user.avatar.url, style: "width:80%;"%><br><br>
   </div>
   <div class="col span_2_of_3">
-		<h2>Profile Page of <strong><%= current_user.first_name%> <%=current_user.last_name %></h2></strong>
+		<h3>Profile Page of <strong><%= current_user.first_name%> <%=current_user.last_name %></h3></strong>
 	<table style = "width:75%;">
 		<tr><td style = "text-align:right;padding:7px;"><span style="font-weight:bold;">Name:</span> </td>
 		<td style="padding:7px;"> <%= current_user.first_name%> <%=current_user.last_name %></td></tr>
@@ -23,3 +21,4 @@
 	</table>
   </div>
 </div>
+<% end %>

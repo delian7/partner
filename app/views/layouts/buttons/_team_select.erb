@@ -1,16 +1,16 @@
 <% if GroupRelation.where(user_id: @user.id, project_id:@myproject, status: 2).empty? %>
-	<%= form_for(:group, url: {:action => 'update_relation',:controller => 'groups', :id => user.id}, html: { style: 'display:inline;'}) do |f|%>
-		<%= f.select :id, options_from_collection_for_select(Group.where(project_id: @myproject), 'id', 'name'), {include_blank: true}, {class: 'form-control', id: "", style: 'width:70%; display:inline; height:25px;', onchange: 'this.form.submit();'} %>
+	<%= form_for(:group, url: {:action => 'update_relation',:controller => 'groups', :id => user.id}, html: { style: 'display:inline;margin:0px'}) do |f|%>
+		<%= f.select :id, options_from_collection_for_select(Group.where(project_id: @myproject), 'id', 'name'), {include_blank: true}, {class: 'form-control', id: "", style: 'margin:0pxwidth:70%; display:inline; height:25px;padding:0px', onchange: 'this.form.submit();'} %>
 	<% end %>
 <% else%>
 	<% groups = GroupRelation.where(user_id: @user.id, project_id:@myproject, status: 2).collect(&:group_id).compact%>
 	<% groups.each do |group|%>
-		<%= form_for(:group, url: {action: 'update_relation',controller:'groups', id: user.id}, style: { style: 'display:inline;'}) do |f|%>
+		<%= form_for(:group, url: {action: 'update_relation',controller:'groups', id: user.id}, html: { style: 'display:inline;margin:0px;padding:0px'}) do |f|%>
 			<% if !groups.empty? %>
-				<%= f.select :id, options_from_collection_for_select(Group.where(project_id: @myproject), 'id', 'name', Group.find(group).id), {}, {class: 'form-control', style: 'width:70%; display:inline; height:25px;', id: "team-select", onchange: 'this.form.submit();'} %>
+				<%= f.select :id, options_from_collection_for_select(Group.where(project_id: @myproject), 'id', 'name', Group.find(group).id), {}, {class: 'form-control', style: 'margin:0pxwidth:70%; display:inline; height:25px;padding:0px', id: "team-select", onchange: 'this.form.submit();'} %>
 				<%= f.hidden_field :old, value: GroupRelation.find_by(user_id: user.id, project_id:@myproject, status: 2).group_id %>
 			<% else %>
-				<%= f.select :id, options_from_collection_for_select(Group.where(project_id: @myproject), 'id', 'name'), {include_blank: true}, {class: 'form-control', style: 'width:70%; display:inline; height:25px;', onchange: 'this.form.submit();'} %>
+				<%= f.select :id, options_from_collection_for_select(Group.where(project_id: @myproject), 'id', 'name'), {include_blank: true}, {class: 'form-control', style: 'width:70%; display:inline; height:25px;margin:0px;padding:0px', onchange: 'this.form.submit();'} %>
 			<% end %>
 		<% end %>
 	<% end %>

@@ -7,7 +7,7 @@ class CreateGroups < ActiveRecord::Migration
       t.belongs_to :project
       t.belongs_to :course
 
-        t.timestamps
+      t.timestamps
     end
   end
 end

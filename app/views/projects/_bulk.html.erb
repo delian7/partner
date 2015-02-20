@@ -1,0 +1,13 @@
+<% @empty_courses = current_user.courses %>
+<% @empty_courses.each {|course| @empty_courses = @empty_courses.unshift(course) if course.projects.empty?} %>
+
+<div class="panel panel-default" style="float:left;width:100%">
+	<%= render 'projects/courseloop', local: @empty_courses%>
+</div>
+	<div style="float:right;display:block">
+	<%= link_to 'Add a New Project', '#', class: 'btn btn-primary btn-lg', data: { toggle: 'modal', target: '#create-project'}%>
+	</div>  
+</div>
+
+
+<%= render template: 'projects/modals/new-project'%>

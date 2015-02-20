@@ -14,14 +14,14 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string     :description,               default: "", limit: 500
       t.string     :availability,               default: "", limit: 500
 
-     ## Trackable
+      ## Trackable
       t.integer    :sign_in_count, default: 0, null: false
       t.datetime   :current_sign_in_at
       t.datetime   :last_sign_in_at
       t.string     :current_sign_in_ip
       t.string     :last_sign_in_ip
- 
-     # t.string   :auth_host
+
+      # t.string   :auth_host
       t.integer    :age_in_seconds
       t.attachment :avatar
       t.timestamps

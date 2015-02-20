@@ -4,7 +4,6 @@ class CreateGroupRelations < ActiveRecord::Migration
 	  t.belongs_to  :group
 	  t.belongs_to  :user
     t.belongs_to  :project
-    t.belongs_to  :course
 	  t.datetime :accepted_at
 	  t.integer :status, default: 2, null: false
     end

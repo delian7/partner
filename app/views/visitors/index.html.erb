@@ -1,33 +1,26 @@
 <% if user_signed_in? %>
-	<div class="col span_1_of_3">
-  	<%= render "visitors/welcomemsg" %>
-  	<!-- pending requests/notifications here-->
-  	<%= render "visitors/notifications"%>
+  <div class="col span_1_of_3">
+    <!-- pending requests/notifications here-->
+    <%= render "visitors/notifications"%>
   </div>
-	<div class="col span_2_of_3">
-	<% case current_user.role %>
-	  <% when 0 %>
-	  <%= render 'visitors/mygroups'%>
-		<!-- if the user is a Professor or a T/A -->
-		<% when 1..2 %><p>
-			 <center>
-			 	<%= render 'roster/roster' %>
-			 	<hr>
-			 </center>
-				<%= render 'courses/index' %>
-		<!-- if the user is an admin -->
-		<% when 3 %>
-
-	<% end %>
-	<% else%> 
-		<div class="col span_2_of_3" style="text-align:center;">
-  	<%= render "visitors/welcomemsg" %>
-  	<h4>There are currently <strong><%= User.count %></strong> registered users</h4>
-  	<!-- pending requests/notifications here-->
+  <div class="col span_2_of_3">
+    <% case current_user.role %>
+    <% when 0 %>
+    <%= render 'visitors/to_dos'%>
+    <%= render 'visitors/mygroups'%>
+    <!-- if the user is a Professor or a T/A -->
+    <% when 1..2 %>
+      <%= render 'visitors/to_dos'%>
+      <!-- if the user is an admin -->
+      <% when 3 %>
+    <% end %>
+  <% else%>
+    <div class="col span_2_of_3" style="text-align:center;">
+      <%= render "visitors/welcomemsg" %>
+      <h4>There are currently <strong><%= User.count %></strong> registered users</h4>
+      <!-- pending requests/notifications here-->
+    </div>
+    <div class="col span_1_of_3">
+      <%= render 'visitors/signin_select'%>
+    <% end %>
   </div>
-		<div class="col span_1_of_3">
-			<%= render 'visitors/signin_select'%>
-<% end %>
-		</div>
-
-

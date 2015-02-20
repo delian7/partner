@@ -1,6 +1,6 @@
 class GroupsController < ApplicationController
   include UsersHelper, GroupsHelper
-  helper_method :course_ids, :requested?, :requester?, :my_partner_for,:teammates?, :in_group_for?, :classmates?, :same?, :is_student?, :get_status
+  helper_method :teammates?, :in_group_for?, :classmates?
   before_filter :authenticate_user!
   # after_action :verify_authorized
   require 'csv'
@@ -143,9 +143,7 @@ class GroupsController < ApplicationController
       other_requests.each do |other_request|
         other_request.destroy
       end
-      
       redirect_to :back
-
       requested.save ? flash[:notice] = "You are now in group: <b>#{group.name}</b>"  : flash[:notice] = "There was a problem, try again" 
     else
       redirect_to :back, flash[:error] = "Your Professor specified this project is an individual task. If this is incorrect, please contact your professor." 
@@ -154,13 +152,15 @@ class GroupsController < ApplicationController
 
   def request_join
     group = Group.find(params[:id])
+    project = Project.find_by_id(current_user.current_project)
     authorize current_user
     set_current_users_instance_variables
-    allowed_group_size = Project.find_by_id(current_user.current_project).group_size
-  
-    if allowed_group_size >= group.users.size
+    allowed_group_size = project.group_size
+    if !Grouprelation.find_by(group_id:group.id, user_id:current_user.id, status:2).nil?
+      flash[:error] = "You are already in a group"
+    elsif allowed_group_size >= group.users.size
       #create relation for current user
-      current_user_relation = GroupRelation.create(course_id: @mycourse.id, user_id: current_user.id, 
+      current_user_relation = GroupRelation.create(user_id: current_user.id, 
       project_id: @myproject.id, status: 0, group_id: group.id)
       flash[:notice] = "Sent request to join <b>#{group.name}</b> "
     else 
