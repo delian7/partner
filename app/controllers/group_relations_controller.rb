@@ -1,6 +1,6 @@
 class GroupRelationsController < ApplicationController
   include UsersHelper
-  helper_method :course_ids, :requested?, :requester?, :my_partner_for,:teammates?, :in_group_for?, :classmates?, :same?, :is_student?, :user_netid
+  helper_method :teammates?, :in_group_for?, :classmates?
   before_filter :authenticate_user!
   # after_action :verify_authorized
   require 'csv'

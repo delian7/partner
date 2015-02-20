@@ -46,10 +46,10 @@ class UserPolicy
   def set_current_project?
     true
   end
-  def export_horizontal?
+  def export_groups?
     true
   end
-  def export_organized?
+  def export_ungrouped?
     true
   end
   def send_request?

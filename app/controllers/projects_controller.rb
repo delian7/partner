@@ -5,25 +5,35 @@ class ProjectsController < ApplicationController
     @projects = Project.all
   end
 
-  # def show
-  #   @project = Project.find(params[:id])
-  # end
-
-  # def new
-  # end
-
   def create
-    @project = Project.new(project_params)
-
-    if @project.save
-      current_user.current_project = @project.id
-      current_user.current_course = params[:project][:course_id]
-      current_user.save
-      relation = ProjectRelation.create(course_id: params[:project][:course_id], project_id: @project.id)
-      relation.save
-      redirect_to(:action => 'index')
+    if params[:courses]
+      # make one project with lots of relations (project belonging to multiple courses)
+      if params[:limit_scope]
+        @project = Project.new(project_params)
+        @project.save
+        params[:courses].each do |course|
+          relation = ProjectRelation.create(course_id: course, project_id: @project.id)
+          relation.save
+        end
+        # make many projects with one relation each (individuals with identical)
+      else
+        params[:courses].each do |course|
+          @project = Project.new(project_params)
+          @project.save
+          relation = ProjectRelation.create(course_id: course, project_id: @project.id)
+          relation.save
+        end
+        if @project.save
+          current_user.current_project = @project.id
+          current_user.current_course = params[:courses][0]
+          current_user.save
+        end
+      end
+      flash[:notice] = "Project Created"
+      redirect_to :back
     else
-      render('new')
+      flash[:alert] = "You must choose a Course to add this project to."
+      redirect_to :back
     end
   end
 
@@ -37,7 +47,7 @@ class ProjectsController < ApplicationController
     else
       flash[:error] = "Group size is too small, it could not be reduced"
     end
-    redirect_to(action: 'index')
+    redirect_to :back
   end
 
   def increase_groupsize
@@ -50,12 +60,11 @@ class ProjectsController < ApplicationController
     else
       flash[:error] = "Group size is too large, it could not be increased"
     end
-    redirect_to(action: 'index')
+    redirect_to :back
   end
 
   def edit
     @project = Project.find(params[:id])
-
   end
 
   def destroy
@@ -88,18 +97,19 @@ class ProjectsController < ApplicationController
   def autogroup
     students, groups = [], []
     @project = Project.find(params[:id])
-    @course = @project.course
-    @project.course.users.each do |user|
+    @courses = @project.courses
+    @courses.each do |course|
+      course.users.each do |user|
       if User.find(user).role == 0 && GroupRelation.where(user_id: user, project_id: @project).empty?
         students.push(user)
       end
     end
-
+    end
     while !students.empty?
-      name = group_namer(params[:project][:name_gen])
-      newgroup = Group.create(name: name, project_id: @project.id,course_id: @project.course_id)
+      name = group_namer('number', @project)
+      newgroup = Group.create(name: name, project_id: @project.id)
       students.sample(@project.group_size).collect(&:id).each do |student|
-        GroupRelation.create(course_id: @project.course_id, group_id: newgroup.id, user_id: student, project_id: @project.id)
+        GroupRelation.create(group_id: newgroup.id, user_id: student, project_id: @project.id)
         groups.push(student)
         students.delete_if{ |student| groups.include?(student.id)}
       end
@@ -127,7 +137,7 @@ class ProjectsController < ApplicationController
     else
       flash[:error] = "Project could not be deleted"
     end
-    redirect_to(action: 'index')
+    redirect_to groups_path
   end
 
   def clear_partnerships
@@ -144,7 +154,7 @@ class ProjectsController < ApplicationController
     else
       flash[:error] = "Unable to clear group relations."
     end
-    redirect_to :back
+    redirect_to groups_path
   end
 
 

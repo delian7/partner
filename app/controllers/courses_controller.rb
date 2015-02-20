@@ -34,7 +34,6 @@ class CoursesController < ApplicationController
     end
   end
 
-
   def remove
     authorize current_user
     if Course.find_by_id(params[:id]) != nil
@@ -69,7 +68,7 @@ class CoursesController < ApplicationController
     # enrolls = Course.find(@course_code).users.pluck(:ucinetid)
   end
 
-  def csv_import
+    def csv_import
     # variables for counting how many roster relations made
     msg = ""
     add, removal = [0, 0]
@@ -120,6 +119,7 @@ class CoursesController < ApplicationController
     flash[:notice] = msg.html_safe
     redirect_to :back
   end
+
 
   private
 

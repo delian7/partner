@@ -1,4 +1,8 @@
-<div class="jumbotron" style= "padding:23px 0px 0px 0px;"><span style="font-size:40px; font-weight:bold;"><center>Current Groups</center></span><br><br>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h2 class="panel-title"><span class="glyphicons glyphicons-notes-2"></span>&emsp;&emsp;Current Groups</h2>
+  </div>
+  <div class="panel-body">
 	<%if current_user.groups.empty?%>
 		<div style= "padding:0px 0px 20px 25px;">
 			<span style="font-size:25px; font-weight:bold; ">Sorry,</span>
@@ -15,6 +19,7 @@
 			</center>
   	<% end %>
 	<% end %>
+</div>
 </div>
 
  

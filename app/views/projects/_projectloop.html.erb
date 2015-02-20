@@ -1,0 +1,11 @@
+<% course.projects.each do |project| %>
+<tr>
+	<td style="padding:1px;">
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<%= project.name %>
+	</td>
+	<td>
+		<%=  link_to remove_project_path(project), style: "color:#fff; float:right;", class: "btn btn-danger btn-xs" do %>Delete<% end %> 
+	</td>
+</tr>
+<% end %>

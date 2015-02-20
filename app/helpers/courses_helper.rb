@@ -1,10 +1,11 @@
 module CoursesHelper
 
   def make_default_project(courseid)
-    if !Project.where(course_id: courseid).empty?
-      @proj = Project.find_by(course_id: courseid)
+    twoweekslater  = Time.now + (2*7*24*60*60)
+    if !Course.find_by_id(courseid).projects.empty?
+      @proj = Course.find_by_id(courseid).projects[0]
     else
-      @proj = Project.create(name: "#{@word1} #{@word2} - New Project", course_id: courseid, group_size: 2)
+      @proj = Project.create(name: "#{@word1} #{@word2} - New Project", group_size: 2, partnership_deadline: twoweekslater, evaluation_deadline:twoweekslater + (2*7*24*60*60), allow_repeat:true)
     end
     ProjectRelation.create(course_id: courseid, project_id: @proj.id)
     return @proj
@@ -23,23 +24,25 @@ module CoursesHelper
     array.delete_if { |blanks| blanks.empty? }
   end
 
-  def csv_netids(student_data_array)
-    @student_netids = []
-    student_data_array.each do |i|
-      if i.size > 2
-        @netid = i[@mail_col].downcase
-        @netid.slice! "@uci.edu"
-        @student_netids.push(@netid)
-      end
-    end
-    @student_netids.push(current_user.ucinetid)
+  # def csv_netids(student_data_array)
+  #   @student_netids = []
+  #   student_data_array.each do |i|
+  #     if i.size > 2
+  #       @netid = i[@mail_col].downcase
+  #       @netid.slice! "@uci.edu"
+  #       @student_netids.push(@netid)
+  #     end
+  #   end
+  #   @student_netids.push(current_user.ucinetid)
   end
 
   def destroy_groups(course)
-    course.groups.each do |group|
-      group.destroy
-    end
+    course.projects.each do |project|
+      project.groups.each do |group|
+        group.destroy
+      end
     destroy_group_relations(course)
+    end
   end
 
   def destroy_projects(course)
@@ -77,4 +80,4 @@ module CoursesHelper
       return false
     end
   end
-end
+

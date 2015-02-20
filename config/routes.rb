@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   get 'groups/profile'
   get 'users/profile'
   get 'roster', to: 'roster#index'
+  get 'playground', to: 'visitors#playground'
   post 'courses/csv_import'
 
 
@@ -32,8 +33,8 @@ Rails.application.routes.draw do
 
     end
     collection do
-      get :export_organized
-      get :export_horizontal
+      get :export_ungrouped
+      get :export_groups
     end
   end
 
@@ -57,6 +58,7 @@ Rails.application.routes.draw do
   resources :courses do
     member do
       get :edit
+      get :show
       post :update
       get :remove
     end
@@ -71,6 +73,7 @@ Rails.application.routes.draw do
       post :update
       get :remove
       get :reduce_groupsize
+      get :show
       get :increase_groupsize
       get :autogroup
       post :autogroup
