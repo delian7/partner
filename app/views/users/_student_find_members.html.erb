@@ -1,25 +1,28 @@
 <span style="font-size:40px; font-weight:bold;"><span class="glyphicons glyphicons-address-book" style="font-size:50px"></span>&ensp;Find <%= @myproject.group_size == 2 ? "a Partner" : "Members"%> </span><br><br>
-<% current_user.groups.order(:project_id).uniq.each do |group| %>
 <!-- if student in group -->
-	<% if @myproject.group_relations.find_by(user_id: current_user.id, group_id: group.id) %>
-		<% is_current_user_requested = @myproject.group_relations.find_by(user_id: current_user.id, group_id: group.id)%>
+	<% if !@myproject.group_relations.find_by(user_id: current_user.id).nil? %>
+		<% project_status = current_user.group_relations.find_by(project_id: @myproject.id)%>
 		<!-- student requested -->
-		<% if is_current_user_requested.status == 1 %>
+		<% if project_status == 1 %>
 			<% msg ="You have pending requests, please respond to these before requesting more people."%>
-			<div class="alert alert-warning">
-				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-			<%= content_tag :div, msg.html_safe, id: "flash_success" %></div>
-			<%= render 'visitors/notification_student', group: group %>
+			<div class="alert alert-info">
+		<% else %>
+			<% msg ="You are already in a group :)"%>
+			<div class="alert alert-success">
 		<% end %>
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+			<%= content_tag :div, msg.html_safe, id: "flash_success" %>
+		</div>
+			<%= render 'visitors/notification_student'%>
 		<!-- if student not in group -->
 	<% else %>
-		<% !@mygroup.nil? ? mygroupsize = @mygroup.group_relations.size : mygroupsize = 0 %>
+		<% !@mygroup.nil? ? @mygroupsize = @mygroup.group_relations.size : @mygroupsize = 0 %>
 		<!-- Room in group?-->
-		<% allowed_size = @myproject.group_size %>
+		<% @allowed_size = @myproject.group_size %>
 		<!-- if group is full -->
-		<% if (allowed_size <= mygroupsize) %>
-			<% msg ="#{@mygroup.name} is full.  <br>You have <span style= 'font-size: 18px; font-weight:bold;'>#{mygroupsize}</span> members out of the <span style= 'font-size: 18px; font-weight:bold;'>#{allowed_size}</span> members allowed in your group."%>
-			<div class="alert alert-warning">
+		<% if (@allowed_size <= @mygroupsize) %>
+			<% msg ="#{@mygroup.name} is full.  <br>You have <span style= 'font-size: 18px; font-weight:bold;'>#{@mygroupsize}</span> members out of the <span style= 'font-size: 18px; font-weight:bold;'>#{@allowed_size}</span> members allowed in your group."%>
+			<div class="alert alert-info">
 				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 			<%= content_tag :div, msg.html_safe, id: "flash_success" %></div>
 		<!-- if partnership deadline passed -->
@@ -30,31 +33,10 @@
 			<%= content_tag :div, msg.html_safe, id: "error" %></div>
 		<!-- good to go -->
 		<% else %>
-			<div class="panel panel-default">
-				<div class="panel-heading"><h4><%= @mycourse.course_title %>, <%= @myproject.name %></h4>
-				</div>
-				<div class="panel-body">
-					This is a list of all the available partners for <%= @mycourse.course_title %>.<br><br>
-					If you would like to change your course you can do so in the "Change Course and Project" on the top right. <br><br>
-					<% @myproject.group_size.times do %>
-						<span class="glyphicons glyphicons-user"></span>
-					<% end %>
-					&emsp;Your group size should be <%= @myproject.group_size %>.
-					<br><br>
-					<%= @myproject.allow_repeat ? '<span class="glyphicons glyphicons-ok-2" style="color:green;"></span>&emsp; You ARE '.html_safe : '<span class="glyphicons glyphicons-ban" style="color:red;"></span>&emsp; You ARE NOT '.html_safe %> allowed to repeat partners from your previous assignments.
-				</div>
-				<table class="table">
-					<tr style="background-color:#eee">
-						<th><b>Name</th>
-						<th class='collapsable'><b>Email</th>
-						<th colspan="2" style="max-width:100px;"><b>
-						<% allowed_size <= mygroupsize ? "Confirmed?" :  "Request"%></th></b>
-					</tr>
 					<!-- Render every user -->
-					<%= render 'users/user_render'%>
+					<%= render 'users/user_render', locals: {allowed: @allowed_size, mygroup: @mygroupsize}%>
 		<% end %>
 	<% end %>
-<% end %></div>
-
+	</div>
 		</table>
 		</div>
