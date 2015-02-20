@@ -46,7 +46,8 @@ Rails.application.routes.draw do
       get :leave
       get :request_join
       get :disband
-
+      get :show
+      get :update
       get :confirm
       post :update_relation
       post :new_relation
