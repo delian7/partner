@@ -1,80 +1,64 @@
 <% if @group.nil? %>
-<span style="font-size:25px; font-weight:bold;">Sorry,</span><br>
-<span style="font-weight:normal;">it looks like you don't
-have a partner yet for <%= Project.find(current_user.current_project).name %></span>
+    <span style="font-size:25px; font-weight:bold;">Sorry,</span><br>
+    <span style="font-weight:normal;">it looks like you don't
+    have a partner yet for <%= Project.find(current_user.current_project).name %></span>
 <% else %>
-<% !@group.name.nil? ? groupname = @group.name : groupname = @group.users.pluck(:first_name).to_sentence %>
-<table class="table" style="width:100%!important; padding:5px;">
-    <tr>
-        <td><span style="font-size:25px; font-weight:bold;"><%= link_to groupname, @group%></span></td>
-        <td width="20%">
-            <% if current_page?(root_path)%>
-            <%= link_to "<span class=\"glyphicons glyphicons-remove\"></span>&nbsp;&nbsp;<b>Leave Group</b>".html_safe, leave_group_path(@group), data: { confirm: "Are you sure you want to leave the group #{@group.name}?"},  class: "btn btn-danger btn-xs" %>
-        <% end %></td>
-    </tr><tr>
-        <td colspan="2">
-            <div style="float:left;padding:0px">
-                <span style=" font-weight:bold;">Project:</span>
-                <span style=""><%= @group.project.name%></span>
-                <span style=" font-weight:bold;"><br>
-                Course:</span> <%= ((@group.project.courses)&(current_user.courses))[0].course_title%><br>
+    <% !@group.name.nil? ? groupname = @group.name : groupname = @group.users.pluck(:first_name).to_sentence %>
+<div class="panel panel-default">
+  <!-- Default panel contents -->
+  <div class="panel-heading"><span style="font-size:25px; font-weight:bold;"><%= link_to groupname, @group%></span>
+
+    <% if current_page?(root_path)%><%= link_to "<span class=\"glyphicons glyphicons-remove\"></span>&nbsp;&nbsp;<b>Leave Group</b>".html_safe, leave_group_path(@group), data: { confirm: "Are you sure you want to leave the group #{@group.name}?"},  class: "btn btn-danger btn-xs", style: "float:right" %></div>
+        <div class="panel-body">
+            <div style="float:left;">
+                <span style="font-weight:bold;">Project:<%= @group.project.name%>
+                <br>Course:</span> <%= ((@group.project.courses)&(current_user.courses))[0].course_title%>
             </div>
-            <div style="float:right;line-height: .5em;"><span style="font-size:13px; font-weight:bold; padding:0px;"><br>
-                Partnership Deadline:</span> <span style="">
-                <%if @group.project.partnership_deadline == nil || @group.project.partnership_deadline == "" %>
-                Not Specified
-                <% else %>
-                <%= @group.project.partnership_deadline.strftime("%m/%d/%y")%>
-                <% end %>
-                <br><br>
-                <span style="font-size:13px; font-weight:bold; padding:0px;">
-                Evaluation Deadline:</span> <span style="">
-                <%if @group.project.evaluation_deadline == nil || @group.project.evaluation_deadline == "" %>
-                Not Specified
-                <% else %>
-                <%= @group.project.partnership_deadline.strftime("%m/%d/%y")%>
-                <% end %>
+            <div style="float:right;">
+                <span style="font-weight:bold;">Partnership Deadline:</span>
+                <%= (@group.project.partnership_deadline.nil? || @group.project.partnership_deadline == "") ? "Not Specified" : @group.project.partnership_deadline.strftime("%m/%d/%y") %>
+                <br>
+                <span style="font-weight:bold;">Evaluation Deadline:</span>
+                 <%= (@group.project.evaluation_deadline.nil? || @group.project.evaluation_deadline == "") ? "Not Specified" : @group.project.evaluation_deadline.strftime("%m/%d/%y") %>
             </div>
-        </td>
-    </tr>
-</table>
-<table class="table" style="width: 100%!important;padding:0px;">
+  </div>
+    <% end %>
+    <table class="table">
     <tr>
-        <% if current_page?(root_path) %>
-        <td></td>
-        <% end %>
-        <td style="font-size:13px;font-weight:bold;"><strong>Name</strong></td>
-        <td class='collapsable' style="font-size:13px;font-weight:bold;">Email</strong></td>
+        <td style="font-weight:bold;">Name</td>
+        <td class='collapsable' style="font-weight:bold;">Email</td>
         <% if current_page?(root_path)%>
-        <td style="font-size:13px;font-weight:bold;">Phone</strong></td>
+            <td style="font-weight:bold;">Phone</td>
         <% end %>
-        <td style="font-size:13px;font-weight:bold;">Status</strong></td>
-        <td style="font-size:13px;font-weight:bold;">Evaluated?</strong></td>
-        <% members = @group.users.order(:last_name).uniq %><% members.each do |user| %>
-        <tr style="<%= (user.group_relations.find_by(group_id: @group.id).status != 2) ? 'background-color:eee; opacity: 0.6;' : '' %>">
-            <% if current_page?(root_path) %>
-            <td style="font-size:12px;" class='collapsable'>
-            <%= link_to (image_tag (user.avatar.url), style: "max-width: 45px;"), user %></td>
-            <% end %>
+        <td style="font-weight:bold;">Status</td>
+        <td style="font-weight:bold;">Evaluated?</td></tr>
+        <% members = @group.users.order(:last_name).uniq %>
+        <% members.each do |user| %>
+            <tr style="<%= (user.group_relations.find_by(group_id: @group.id).status != 2) ? 'background-color:eee; opacity: 0.6;' : '' %>">
             <td style="font-size:12px;">
             <%= link_to "#{user.first_name} #{user.last_name}", user %></td>
             <td style="font-size:12px;" class='collapsable'><%= user.email %></td>
             <% if current_page?(root_path)%>
-            <td style="font-size:12px;" class='collapsable'><%= number_to_phone(user.phone, area_code: true) if current_user.phone %></td>
+                <td style="font-size:12px;" class='collapsable'><%= number_to_phone(user.phone, area_code: true) if current_user.phone %></td>
             <% end %>
             <td style="font-size:12px;" ><%= (user.group_relations.find_by(group_id: @group.id).status == 2) ? 'Confirmed' : 'Requested'%></td>
+            <!-- if group member is yourself -->
             <% if user == current_user %>
-            <td style="font-size:12px;" >You can't evaluate yourself</td>
+                <td style="font-size:12px;" >You can't evaluate yourself</td>
+            <!-- If you sent request or are requested a member -->
             <% elsif (user.group_relations.find_by(group_id: @group.id).status == 1 || current_user.group_relations.find_by(group_id: @group.id).status == 1) %>
-            <td style="font-size:12px;" >Request Still Pending</td>
+                <td style="font-size:12px;" >Request Still Pending</td>
+                <!-- If you sent a request to join this group -->
             <% elsif (user.group_relations.find_by(group_id: @group.id).status == 0 &&
-            current_user.group_relations.find_by(group_id: @group.id).status == 2) %>
-            <td style="font-size:12px;" >Sent <%=@group.name%> a request</td>
+                current_user.group_relations.find_by(group_id: @group.id).status == 2) %>
+                <td style="font-size:12px;" >Sent <%=@group.name%> a request</td>
+            <!-- if they're confirmd member of group -->
             <% else %>
-            <% evaluated_left = User.find(@group.users.collect(&:id) - @group.eval_relations.where(reviewer_id:current_user.id).collect(&:user_id)) %>
-            <td style="font-size:12px;" ><%= evaluated_left.include?(user) ? '<a href="/evaluations" class="btn btn-primary btn-xs">Evaluate this Partner<span class=\"glyphicons glyphicons-remove\"></span></a>'.html_safe : 'Evaluation Completed' %></td>
+            <!-- show either eval form or "evaluation completed" depending if it's complete -->
+                <% evaluated_left = User.find(@group.users.collect(&:id) - @group.eval_relations.where(reviewer_id:current_user.id).collect(&:user_id)) %>
+                <td style="font-size:12px;" ><%= evaluated_left.include?(user) ? '<a href="/evaluations" class="btn btn-primary btn-xs">Evaluate this Partner<span class=\"glyphicons glyphicons-remove\"></span></a>'.html_safe : 'Evaluation Completed' %></td>
             <% end %>
-        </tr>
+            </tr>
         <% end %>
-    </table>
+    </table></div>
     <% end %>
