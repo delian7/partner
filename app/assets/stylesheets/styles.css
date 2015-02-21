@@ -155,10 +155,6 @@ float: none;
   color: #ffffff;
 }
 
-
-
-
-
 .radio input[type="radio"],
 .radio-inline input[type="radio"],
 .checkbox input[type="checkbox"],
@@ -167,12 +163,15 @@ float: none;
   margin-left: 0px;
 }
 
+
+
+
 /*  SECTIONS  */
 .section {
   clear: both;
   padding: 0px;
-  margin: 0px;
-  float:left;
+  margin:auto; 
+  float:center;
 }
 
 /*  COLUMN SETUP  */
@@ -241,7 +240,7 @@ float: none;
 
 
 .span_2_of_2 {
-  width: 100%;
+  width: 49.2%;
 }
 
 .span_1_of_2 {
@@ -259,18 +258,10 @@ float: none;
   }
 }
 
-
-
 @media only screen and (max-width: 600px) {
      .collapsable {display:none; }
 }
 
-
-
-body {
-    padding-top: 60px;
-    padding-bottom: 40px;
-}
 
 .sidebar-nav {
     padding: 9px 0;
