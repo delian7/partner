@@ -1,26 +1,8 @@
-    <% if course.projects.empty?%>
-    <div style= "color:#fff; text-align:left; padding:10px;white-space: normal;", class= "btn btn-danger" data-toggle="modal" data-target="#create-project"><span class="glyphicons glyphicons-warning-sign" style="font-size:18px; line-height:1.5"></span><span style="font-size:18px; line-height:2">&ensp;Alert:</span><br></span><span style="font-size:13px;">There is no active project for <%= course.course_title %>.<br>Students are not able to partner up.</span></div><% @notifications = true %>
+<% if course.projects.empty?%>
+    <div style= "text-align:left;white-space:normal;margin:4px;", class= "btn alert-danger" data-toggle="modal" data-target="#create-<%= course.id%>">
+      <span class="glyphicons glyphicons-warning-sign"></span>
+      <span style="font-size:18px;">&ensp;Alert:</span></span>
+      <span style="font-size:13px;">There is no active project for <%= course.course_title %>.<br>
+        Students are not able to partner up.</span></div><% @notifications = true %>
+    <%= render template: "projects/modals/new-project", locals: {course: course}%>
 <% end %>
-
-<div class="modal fade" id="create-project">
-  <div class="modal-dialog">
-    <div class="modal-content">
-
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Add a New Project to <%= course.course_title %>
-
-      </h4>
-    </div>
-    <div class="modal-body">
-      <%= form_for :project, url: {action: 'create', controller: 'projects'}, html: { multipart: true } do |f| %>
-      <%= render partial: 'projects/form', locals: {f: f} %>
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      <%= f.submit("Save Project", id: 'save-project', class: 'btn btn-primary') %>
-      <% end %>
-    </div>
-  </div>
-</div>
-</div>

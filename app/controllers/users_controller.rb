@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  # before_filter :authenticate_user!
+  before_filter :authenticate_user!
   # before_filter :admin_only, :except => :show
   helper_method :teammates?, :in_group_for?, :classmates?, :previously_partnered?
   include UsersHelper, GroupsHelper

@@ -56,29 +56,17 @@
 	</li>
 	<% end %>
 	<%# the drop down menu on the right %>
-	<div class="dropdown pull-right">
-		<button class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="background-color:transparent; background-image:none; border:0px solid transparent; text-shadow: 0 0px; box-shadow: 0 0px;">
-		<span class="glyphicons glyphicons-cogwheel" style="font-size:20px;"></span>
-		<span class="caret"></span>
-		</button>
-		<ul class="dropdown-menu pull-right" role="menu">
+	<div class="dropdown pull-right" style="margin:5px;">
 			<li role="presentation">				
-				<%= link_to '#', data: { toggle: 'modal', target: '#profile-page-modal'} do %>
+				<%= link_to '#', data: { toggle: 'modal', target: '#profile-page-modal'}, style:"color:white" do %>
 					<span class="glyphicons glyphicons-user"></span>&emsp;<%= "#{current_user.first_name} #{current_user.last_name}" %>
-				<%end %>
-			</li>
-			<li role="presentation">
-				<%= link_to edit_user_registration_path do %>
-				<span class="glyphicons glyphicons-edit"></span>&emsp;Edit Profile
 				<% end %>
 			</li>
-			<li role="presentation" class="divider"></li>
 			<li role="presentation">
-				<%= link_to destroy_user_session_path, :method => :delete do %>
+				<%= link_to destroy_user_session_path, :method => :delete, style:"color:white" do %>
 					<span class="glyphicons glyphicons-log-out"></span>&emsp;Logout
 				<% end %>
 			</li>
-		</ul>
 	</div>
 <%# NOTIFICATIONS %>
 <% case current_user.role %>

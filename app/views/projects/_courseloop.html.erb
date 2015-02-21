@@ -3,10 +3,15 @@
 	</div>
 	<table class="table">
 	<% if course.projects.empty? %>
-
-
-			<tr style= "background-color:#ED8080; "><td style= "padding:0px;">	<%= link_to '#', class: 'btn btn-danger', style: "color:#fff; text-align:left; width:100%;", data: { toggle: 'modal', target: '#create-project'} do %><b>Alert:</b> There is no active project for this course. Students are not able to partner up. <% end %> </td>
-
+		<tr style= "background-color:#ED8080; width:100% " class= "btn alert-danger" data-toggle="modal" data-target="#create-<%= course.id%>">
+			<td>	
+		    <span class="glyphicons glyphicons-warning-sign"></span>
+		    <span style="font-size:18px;">&ensp;Alert:</span></span>
+		    <span style="font-size:13px;">There is no active project for <%= course.course_title %>.<br>
+        Students are not able to partner up.</span>
+        <% @notifications = true %>
+    <%= render template: "projects/modals/new-project", locals: {course: course}%>
+		</td>
 	</tr>
 	</table>
 	<% else %>

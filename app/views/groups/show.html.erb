@@ -9,7 +9,7 @@
     <span style="font-size:20px; font-weight:bold;">  <br>Project:</span>
     <span style="font-size:18px;"><%=@myproject.name%></span>
     <span style="font-size:20px; font-weight:bold;">  <br>Course:</span>
-    <span style="font-size:18px;"><%=@myproject.course_id%><br></span>
+    <span style="font-size:18px;"><%= @myproject.courses.collect(&:course_title).uniq.to_sentence%><br></span>
     </div>
 </div>
 <div class="col span_2_of_3">
