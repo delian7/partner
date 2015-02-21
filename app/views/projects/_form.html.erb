@@ -1,6 +1,6 @@
-<div style="line-height:1.5;">
+<div>
 	<% repeat = Project.find_by_id(@project.id).allow_repeat if !@project.nil? %>
-	
+
 	<table style="width:100%">
 		<tr>
 			<td><span class="glyphicons glyphicons-pushpin"></span></td>
@@ -30,6 +30,9 @@
 			<td><%= f.select :group_size, [['2 people','2'], ['3 people','3'], ['4 people','4'], ['5 people','5'], ['6 people','6']], {}, {class: "form-control"} %></td>
 		</tr>
 	</table>
+
+<% if current_page?(root_path)%>
+
 	<table style="width:100%;padding:1px;margin-top:15px">
 		<tr>
 			<td style="padding:1px 1px 0px 1px"><span class="glyphicons glyphicons-education"></span>&nbsp;<%= f.label 'Course(s):', {style:"margin:0px;padding:0px"}  %></td>
@@ -54,12 +57,12 @@
 			<td style="padding:5px 10px 5px 10px;"><span class="glyphicons glyphicons-transfer"></span>&emsp;Keep Groups Separate by Course: </td>
 	</table>
 
-
+<% end %>
 
 	<table style="width:100%;padding:1px;margin-top:15px">
 		<tr>
 			<td><span class="glyphicons glyphicons-retweet-2"></span></td>
-			<td colspan='2'> <b>Unique Partners for every Project?</b></td>
+			<td colspan='2'> <b>Allow students to have repeats for this project?</b></td>
 		</tr>
 	</table>
 	<table style="width:100%">
