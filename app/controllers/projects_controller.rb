@@ -137,7 +137,7 @@ class ProjectsController < ApplicationController
     else
       flash[:error] = "Project could not be deleted"
     end
-    redirect_to groups_path
+    redirect_to projects_path
   end
 
   def clear_partnerships

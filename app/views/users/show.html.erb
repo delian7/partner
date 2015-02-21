@@ -1,19 +1,13 @@
-<span style="font-weight:bold;font-size:25px;"><%= link_to "<span class=\"glyphicons glyphicons-chevron-left\"></span>&nbsp;&nbsp;<b>Back</b>".html_safe, :back, class: "btn btn-default btn-md" %></span>
-
 <div class="section group">
-  <div class="col span_1_of_3"><%= image_tag (@user.avatar.url), :style => "width:100%;"%></div>
-  <div class="col span_2_of_3">
-		
-<span style="font-weight:bold;font-size:45px;"><%= @user.first_name%> <%= @user.last_name%></b></span>
-		<p><b>Name:</b> <%= @user.first_name%> <%=@user.last_name %></p>
-		<p><b>Email:</b> <%= @user.email if @user.email %></p>
-		<p><b>Phone:</b> <%= number_to_phone(@user.phone, area_code: true) if @user.phone%></p>
-	
-		<p><b>Description:</b> <%= @user.description if @user.description %></p>
-		<p><b>Availability:</b> <%= @user.availability if @user.availability%></p>
-		<p><b>Last Sign In:</b> <%= @user.last_sign_in_at.strftime('%A, %B') if @user.last_sign_in_at %> <%= @user.last_sign_in_at.strftime('%e ').to_i.ordinalize if @user.last_sign_in_at %><%= @user.last_sign_in_at.strftime(' %Y, at %I:%M%P') if @user.last_sign_in_at %></p>
-
+	<div class="col span_1_of_3"><%= image_tag (@user.avatar.url),style: "float:right;"%></div>
+	<div class="col span_2_of_3">
+		<span style="font-weight:bold;font-size:40px;"><%= @user.first_name%> <%= @user.last_name%></span><br>
+		<span style="font-weight:bold;">Name:</span> <%= @user.first_name%> <%=@user.last_name %><br>
+		<span style="font-weight:bold;">Email:</span> <%= @user.email if @user.email %><br>
+		<span style="font-weight:bold;">Phone:</span> <%= number_to_phone(@user.phone, area_code: true) if @user.phone%><br>
+		<span style="font-weight:bold;">Description:</span> <%= @user.description if @user.description %><br>
+		<span style="font-weight:bold;">Availability:</span> <%= @user.availability if @user.availability%><br>
+		<span style="font-weight:bold;">Last Sign In:</span> <%= @user.last_sign_in_at.strftime('%A, %B') if @user.last_sign_in_at %> <%= @user.last_sign_in_at.strftime('%e ').to_i.ordinalize if @user.last_sign_in_at %><%= @user.last_sign_in_at.strftime(' %Y, at %I:%M%P') if @user.last_sign_in_at %>
 		<br>
-		
 	</div>
 </div>

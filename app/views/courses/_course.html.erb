@@ -6,20 +6,19 @@
 	<tr>
 	  <td class='collapsable'><%= course.course_code %></td>
 	  <td><%= course.course_title %></td>
-	  <td class='collapsable' width='30%'>
+	  <td class='collapsable'>
 	    <% projects.each do |project| %>
-	    	<span class="glyphicons glyphicons-pushpin" style="font-size:10px;"></span>&ensp;
-				<%= link_to project.name, '#', data: { toggle: 'modal', target: "#edit-#{project.id}"}%>
-				<br />				
-				<%= render template: 'projects/modals/edit-project', locals: {project: project, course: course} %>
+	    	<span class="glyphicons glyphicons-pushpin"></span>&ensp;
+			<%= link_to project.name, '#', data: { toggle: 'modal', target: "#edit-#{project.id}"}%>
+			<%= render template: 'projects/modals/edit-project', locals: {project: project, course: course} %>
+			<br>
+		<% end %>
+			<span class= "btn btn-primary btn-sm" data-toggle="modal" data-target="#create-<%= course.id%>">+ Add New Project</span>
+			<%= render template: "projects/modals/new-project", locals: {course: course}%>
+			</td>	
 		</td>
-		<td>
-				<%=  link_to remove_project_path(project.id), class: "btn btn-danger", data: { confirm: delete_confirm} do %>
-					<span class=\"glyphicons glyphicons-remove-2\"></span> Delete Course
-				<% end %>
-		</td>		
-			<% end %>
-	  
 	</tr>
 <% end %>
 
+
+    

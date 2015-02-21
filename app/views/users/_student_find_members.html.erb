@@ -22,21 +22,17 @@
 		<!-- if group is full -->
 		<% if (@allowed_size <= @mygroupsize) %>
 			<% msg ="#{@mygroup.name} is full.  <br>You have <span style= 'font-size: 18px; font-weight:bold;'>#{@mygroupsize}</span> members out of the <span style= 'font-size: 18px; font-weight:bold;'>#{@allowed_size}</span> members allowed in your group."%>
-			<div class="alert alert-info">
-				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+			<div class="alert alert-info"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 			<%= content_tag :div, msg.html_safe, id: "flash_success" %></div>
 		<!-- if partnership deadline passed -->
 		<% elsif ((@myproject.partnership_deadline) && (@myproject.partnership_deadline < Date.today)) %>
 			<% msg ="Partnership Deadline has passed. Contact your Professor."%>
-			<div class="alert alert-danger">
-				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+			<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 			<%= content_tag :div, msg.html_safe, id: "error" %></div>
 		<!-- good to go -->
 		<% else %>
-					<!-- Render every user -->
-					<%= render 'users/user_render', locals: {allowed: @allowed_size, mygroup: @mygroupsize}%>
+			<!-- Render every user -->
+			<%= render 'users/user_render', locals: {allowed: @allowed_size, mygroup: @mygroupsize}%>
 		<% end %>
 	<% end %>
 	</div>
-		</table>
-		</div>

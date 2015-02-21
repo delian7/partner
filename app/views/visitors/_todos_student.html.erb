@@ -1,19 +1,14 @@
-<% current_user.groups.order(:project_id).uniq.each do |group| %>
-<% @is_current_user_confirmed =  %>
-	<% if !@is_current_user_confirmed %>
-<!-- checking if group's name is nil, make one for them -->
-		<div class="content-box" style="border-color:#ccc">
-			<div style='text-align:center;margin-top:7px;margin-bottom:3px;'>
-				<% current_user.projects.each do |project| %>
-					<% if project.partnership_deadline < Date.today%>
-						The partnership deadline for <%= project.name %> is coming on <% project.partnership_deadline%>
-					<% elsif project.evaluation_deadline < Date.today%>
-						The evaluation deadline for <%= project.name %> is coming on <% project.evaluation_deadline%>
-					<% end %>
-				<% end %>
-
-			</div>
-		<hr style="margin-top:7px;margin-bottom:3px;">
-		</div>	
+<% current_user.courses.each do |course| %>
+	<% course.projects.each do |project| %>
+		<h4><%= project.name%></h4>
+			<% if project.partnership_deadline > Date.today %>
+				The partnership deadline for <%= project.name %> is coming on <%= project.partnership_deadline.strftime("%m/%d/%y") %>
+				<hr style="margin:5px;">
+			<% elsif project.evaluation_deadline > Date.today %>
+				The evaluation deadline is coming on <%= project.evaluation_deadline.strftime("%m/%d/%y") %>, You have <%= (project.evaluation_deadline - Date.today).to_i %> days left
+				<hr style="margin:5px;">
+			<% else %>
+			    Looks like you're all caught up!
+			<% end %>
 	<% end %>
 <% end %>
