@@ -31,13 +31,13 @@
 		</tr>
 	</table>
 
-<% if current_page?(root_path)%>
+<% if !edit_path %>
 
 	<table style="width:100%;padding:1px;margin-top:15px">
 		<tr>
 			<td style="padding:1px 1px 0px 1px"><span class="glyphicons glyphicons-education"></span>&nbsp;<%= f.label 'Course(s):', {style:"margin:0px;padding:0px"}  %></td>
 			<% current_user.courses.each do |course|%>
-			<td style="padding:1px"><input type="checkbox" name="courses[]" checked="true" value="<%= course.id %>"></td>
+			<td style="padding:1px"><input type="checkbox" name="courses[]" checked="<%= true if (course == @course) %>" value="<%= course.id %>"></td>
 			<td style="padding:1px"><%= course.course_title %></td>
 		</tr>
 		<tr><td></td>

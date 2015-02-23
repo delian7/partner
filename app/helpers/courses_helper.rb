@@ -16,24 +16,13 @@ module CoursesHelper
     user.current_course = course.id
     user.save
   end
+end
 
   def remove_nils(array)
     # remove all nils from array of arrays
     array.each { |nils|  nils.compact! }
     # delete all empty arrays
     array.delete_if { |blanks| blanks.empty? }
-  end
-
-  # def csv_netids(student_data_array)
-  #   @student_netids = []
-  #   student_data_array.each do |i|
-  #     if i.size > 2
-  #       @netid = i[@mail_col].downcase
-  #       @netid.slice! "@uci.edu"
-  #       @student_netids.push(@netid)
-  #     end
-  #   end
-  #   @student_netids.push(current_user.ucinetid)
   end
 
   def destroy_groups(course)

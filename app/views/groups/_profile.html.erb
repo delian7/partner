@@ -1,9 +1,11 @@
-<% if @group.nil? %>
-
+<% if @group.nil? %><br><br>
+<div class="panel panel-info" style="margin-bottom:7px;">
+  <!-- Default panel contents -->
+  <div class="panel-heading">
     <span style="font-size:20px; font-weight:bold;">Sorry,</span>&nbsp;it looks like you don't
     have a partner yet for <%= Project.find(current_user.current_project).name %></span>
-
-<% else %>
+</div>
+<% else %><br><br>
     <% !@group.name.nil? ? groupname = @group.name : groupname = @group.users.pluck(:first_name).to_sentence %>
 <div class="panel panel-info" style="margin-bottom:7px;">
   <!-- Default panel contents -->

@@ -1,14 +1,24 @@
-<div class="panel panel-default">
-	<div class="panel-heading"><h4>asdf</h4></div>
-	<div class="panel-body">asdf</div>
+<div class="panel panel-primary">
+	<div class="panel-heading"><h4><span class="glyphicons glyphicons-user"></span>&emsp;Enrolled Students for</h4></div>
+	<div class="panel-body">
+		<div class="col span_2_of_3">
+			asdfasdf
+		</div>
+		<div class="col span_1_of_3">
+			<%= render 'layouts/buttons/course_select'%>
+		</div>
+	</div>
 	<table class="table">
-		<th class='collapsable'></th>
-		<th style="max-width:100px; text-align: left;"><strong><span class="glyphicons glyphicons-envelope"></span>&emsp;Email</strong></th>
+		<tr style="background-color:#f5f5f5">
+			<th>Name</th>
+			<th style="max-width:100px; text-align: left;"><span class="glyphicons glyphicons-envelope"></span>&emsp;Email</th>
+			<th>Partnered?</th>
 			<% if Project.find(current_user.current_project).group_size > 2 %>
-			<th style="text-align: left;" class='collapsable'><strong><span class="glyphicons glyphicons-group"></span>&emsp;Group</strong></th>
+				<th style="text-align: left;" class='collapsable'><span class="glyphicons glyphicons-group"></span>&emsp;Group</th>
 			<% else %>
-			<th style="text-align: left;" class='collapsable'><strong><span class="glyphicons glyphicons-parents"></span>&emsp;Partner</strong></th>
+				<th style="text-align: left;" class='collapsable'><span class="glyphicons glyphicons-parents"></span>&emsp;Partner</th>
 			<% end %>
+		</tr>
 			<%@users = Course.find(current_user.current_course).users.order(:last_name)%>
 			<% @users.each do |user| %>
 			<% @user = User.find(user) %>
@@ -16,6 +26,7 @@
 			<tr>
 				<td><%= link_to "#{@user.first_name} #{@user.last_name}", @user %> </td>
 				<td><%= @user.email %></td>
+				<td style="text-align: center;"><%= GroupRelation.find_by(status:2, project: @myproject, user_id: @user).nil? ? "<span class=\"glyphicons glyphicons-ban\" style=\"color:red\"></span>".html_safe : "<span class=\"glyphicons glyphicons-ok-2\" style=\"color:green\"></span>".html_safe %></td>
 				<td class='collapsable'>
 					<%= render 'layouts/buttons/team_select', user: @user%>
 				</tr>

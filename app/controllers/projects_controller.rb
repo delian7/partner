@@ -71,7 +71,7 @@ class ProjectsController < ApplicationController
     @project = Project.find(params[:id])
     @project.destroy
     @project.save
-    redirect_to(:action => 'index')
+    redirect_to courses_path
   end
 
   def update
@@ -87,10 +87,10 @@ class ProjectsController < ApplicationController
         end
       end
       flash[:notice] = "Project updated successfully"
-      redirect_to(:action => 'index')
+    redirect_to courses_path
     else
       flash[:error] = "Project could not be updated"
-      render('edit')
+    redirect_to courses_path
     end
   end
 
@@ -137,7 +137,7 @@ class ProjectsController < ApplicationController
     else
       flash[:error] = "Project could not be deleted"
     end
-    redirect_to projects_path
+    redirect_to courses_path
   end
 
   def clear_partnerships

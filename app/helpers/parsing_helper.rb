@@ -23,7 +23,7 @@ module ParsingHelper
 
   #gets the course title without the unit information
   def course_unit_parse(txt)
-    m = regexecute('(.*),(.*),.* (.*)')
+    m = regexecute('(.*),(.*),.*, (.*)')
     if m.match(txt)
       @word1, @word2, @word3 = m.match(txt)[1], m.match(txt)[2], m.match(txt)[3]
       return @word1 + ","+ @word2 + ", "+ @word3

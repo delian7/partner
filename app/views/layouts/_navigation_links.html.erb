@@ -29,13 +29,10 @@
 		<% end %>	
 	</li>
 
-	<li class="dropdown <%= 'active' if (current_page?(projects_path) || current_page?(courses_path)) %>">
-	  <%= link_to projects_path, data: {toggle: 'dropdown'}, class: 'dropdown-toggle' do %><span class="glyphicons glyphicons-education"></span> Courses <span class="halflings halflings-triangle-bottom" style="font-size:8px;line-height: 2.2;"></span><% end %>
-	  <ul class="dropdown-menu">
-	    <li><%= link_to "My Courses", courses_path %></li>
-			<li><%= link_to "My Projects", projects_path %></li>
-		</ul>
-
+	<li role="presentation" class="<%= 'active' if current_page?(courses_path) %> dropdown">
+		<%= link_to courses_path do %>
+		<span class="glyphicons glyphicons-education"></span> Courses
+		<% end %>	
 	</li>
 
 	<li class="dropdown <%= 'active' if current_page?(groups_path) %>">

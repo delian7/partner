@@ -1,13 +1,13 @@
 <!-- selecting course that users will add groups to -->
 <!-- if the user is signed in and their enrolled in at least one course on roster -->
-<div class="panel panel-primary">
+<div class="panel panel-primary" style="margin:0px">
 	<div class="panel-heading">
 		<h5 class="panel-title">Select a Course and Project</h5>
 	</div>
 	<div class="panel-body" style='padding:0px'>
 		<% @current_projects = Course.find(current_user.current_course).projects %>
 		<div class="btn-group-vertical" style="float:right; width:100%;padding:10px;margin:0px">
-			<div class="input-group" style="padding: 0px 0px 0px 0px">
+			<div class="input-group" style="padding: 0px">
 				<span class="input-group-addon" style="padding: 0px 20px 0px 20px;font-weight:bold; font-size:14px;">Course:</span>
 				<%= form_for :user, url: set_current_course_user_path(current_user.id), html: { style: 'display:inline;'}  do |f|%>
 				<%= f.select :current_course, options_from_collection_for_select(current_user.courses,
