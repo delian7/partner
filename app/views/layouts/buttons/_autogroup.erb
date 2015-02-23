@@ -1,4 +1,0 @@
-  <%= form_for :project, :url => {action: 'autogroup', controller: 'projects', id: @myproject.id}, :html => { :style => 'padding: 10px!important; display:inline;'} do |f|%>
-      <%= f.hidden_field :name_gen, value: 'number' %>
-        <%= link_to_submit "Autogroup&nbsp;&nbsp;<span class=\"glyphicons glyphicons-random\"></span> ".html_safe%>
-    <% end %>
