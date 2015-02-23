@@ -58,7 +58,7 @@ section {
   padding-bottom: 40px;
 }
 
-.well, .authform form, .authform fieldset {
+.authform form, .authform fieldset {
   min-height: 20px;
   padding: 10% 5% 10% 5%;
   margin-bottom: 20px;
