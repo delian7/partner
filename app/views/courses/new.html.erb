@@ -1,7 +1,0 @@
-<span style="font-weight:bold;font-size:25px;"><%= link_to "<span class=\"glyphicons glyphicons-chevron-left\"></span>&nbsp;&nbsp;<b>Back</b>".html_safe, :back, class: "btn btn-default btn-md" %></span><br>
-<div class="authform form", style="max-width: 5000px; line-height:3; padding: 1% 1% 1% 1%!important;margin:auto;">
-	<%= form_for(:course, url: {action: 'create'}) do |f| %>
-		<h2>Create a Project</h2>
-		<%= render(partial: 'form', locals: {f: f}) %>
-	<% end %>
-</div>
