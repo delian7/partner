@@ -1,31 +1,21 @@
-<div class="panel panel-default">
-	<div class="panel-heading"><h4><%= @mycourse.course_title %>, <%= @myproject.name %></h4>
-	</div>
-	<div class="panel-body">
-		This is a list of all the available partners for <%= @mycourse.course_title %>.<br><br>
-		If you would like to change your course you can do so in the "Change Course and Project" on the top right. <br><br>
-		<% @myproject.group_size.times do %>
-		<span class="glyphicons glyphicons-user"></span>
-		<% end %>
-		&emsp;Your group size should be <%= @myproject.group_size %>.
-		<br><br>
-		<%= @myproject.allow_repeat ? '<span class="glyphicons glyphicons-ok-2" style="color:green;"></span>&emsp; You ARE '.html_safe : '<span class="glyphicons glyphicons-ban" style="color:red;"></span>&emsp; You ARE NOT '.html_safe %> allowed to repeat partners from your previous assignments.
-	</div>
-	<table class="table">
-		<tr style="background-color:#eee">
-			<th><b>Name</th>
-			<th class='collapsable'><b>Email</th>
-			<th colspan="2" style="max-width:100px;"><b>
-			<% @allowed_size <= @mygroupsize ? "Confirmed?" :  "Request"%></th></b>
+	<table class="table table-condensed">
+		<tr class="active">
+			<td></td>
+			<th>Name</th>
+			<th class='collapsable'>Email</th>
+			<th class='collapsable'>Availability</th>
+			<th colspan="2" style="max-width:100px;">
+			<% @allowed_size <= @mygroupsize ? "Confirmed?" :  "Request"%></th>
 		</tr>
 		<% @users = User.all.order(:last_name) %>
 		<% @users.each do |user| %>
 		<% @user = User.find(user) %>
 		<% if (classmates?(@user, @mycourse) && (current_user.id != @user.id) && (@user.role == 0) && !in_group_for?(@user, @myproject)) && !(previously_partnered?(@user, current_user)) %>
 		<tr>
-			<!-- 		<td class='collapsable'><%= link_to (image_tag @user.avatar.url, :style => 'max-width: 45px;'), @user %></td>  -->
+			<td class='collapsable'><%= link_to (image_tag @user.avatar.url, :style => 'max-width: 45px;'), @user %></td>
 			<td><%= link_to "#{@user.first_name} #{@user.last_name}", @user %> </td>
 			<td class='collapsable'><%= @user.email %></td>
+			<td class='collapsable'><%= user.availability %></td>
 			<% if current_user.role == 0 %><%= render 'layouts/buttons/button_render', user: @user %><% end %>
 		</tr>
 		<% end %>

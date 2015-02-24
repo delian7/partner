@@ -16,5 +16,4 @@ class CoursePolicy
   def update?
     true
   end
-
 end

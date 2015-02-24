@@ -1,14 +1,11 @@
 <div class="well well-lg" style="max-width: 600px; margin:auto; ">
   
-  <%= link_to '#', class: "info-popover", title: "Uploading Multiple Rosters", style: 'float:right', data: { content: "Click 'Browse' and then cmd-click(Mac) or ctrl-click(Windows) on multiple files to upload multiple rosters", trigger: 'hover', delay: {show: 300, hide: 100}} do %>
-  <span class="glyphicons glyphicons-circle-info"></span>
-  <% end %>
-  
+  <%= link_to '#', class: "info-popover", title: "Uploading Multiple Rosters", data: { content: "Click 'Browse' and then cmd-click(Mac) or ctrl-click(Windows) on multiple files to upload multiple rosters", trigger: 'hover', delay: {show: 700, hide: 100}} do %>
+
   
   <%= form_for :roster, url: {controller: "courses", action: "csv_import"}, html: { multipart: true } do |f| %>
   <div class="form-group">
-    <label for="dump_file" style="font-size:30px; font-weight:bold;">
-      <span class="glyphicons glyphicons-disk-import"></span>&emsp;Import WebRoster
+    <label for="dump_file">
     </label>
     <div class="form-group">
       <div class="fileupload fileupload-new" data-provides="fileupload">
@@ -19,11 +16,12 @@
             </span>
               <input type="text" class="form-control" style= "background-color:white" placeholder="Click Browse to Select your CSV files" readonly>
             <span class="input-group-addon">
-              <button type="Upload" id="csvbutton" data-loading-text="Loading..." disabled='disabled' class="btn btn-primary" autocomplete="off"><span class="glyphicons glyphicons-upload"></span>Upload CSV File</button>
+              <button type="Upload" id="csvbutton" data-loading-text="<span class='glyphicon glyphicon-refresh glyphicon-refresh-animate'></span>&emsp;Loading..." disabled='disabled' class="btn btn-primary" autocomplete="off"><span class="glyphicons glyphicons-upload"></span>&ensp;Upload CSV File</button>
             </span>
+
           </div>
           <% end %>
         </div></span>
       </div>
       
-    </div>
+    </div>  <% end %>

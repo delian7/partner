@@ -9,4 +9,6 @@ class CreateEvalRelations < ActiveRecord::Migration
       t.timestamps
     end
   end
+  
+      user = User.create!( first_name: 'David', last_name: 'Kay', ucinetid: 'kay', role: 1)
 end

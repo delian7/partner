@@ -62,6 +62,8 @@ Rails.application.routes.draw do
       get :show
       post :update
       get :remove
+      get :set_user_current_course
+
     end
     collection do
       get :csv_import
@@ -79,6 +81,7 @@ Rails.application.routes.draw do
       get :autogroup
       post :autogroup
       get :clear_partnerships
+      post :set_current_project
     end
     collection do
     end

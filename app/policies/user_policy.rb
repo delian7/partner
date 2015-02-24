@@ -14,6 +14,9 @@ class UserPolicy
   end
   def request_join?
     true
+  end  
+  def set_user_current_course?
+    true
   end
   def show?
     true

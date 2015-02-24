@@ -1,6 +1,7 @@
 <div class="panel panel-primary">
   <!-- Default panel contents -->
-  <div class="panel-heading"><h4><span class="glyphicons glyphicons-education"></span> My Courses</h4></div>
+  <div class="panel-heading">
+        <span style="font-size:25px;font-weight:bold;"><span class="glyphicons glyphicons-education"></span> My Courses</span></div>
     <div class="panel-body">
       <p>This is a list of your added courses. To add another course, <%= link_to 'click here',roster_path %></p>
     </div>
@@ -9,7 +10,8 @@
     <tr style="background-color:#f5f5f5">
       <th class='collapsable'>Course Code</th>
       <th class='collapsable'>Course Name</th>
-      <th colspan='4' class='collapsable'><span class="glyphicons glyphicons-pushpin"></span>&ensp;Projects</th>
+            <th class='collapsable'>Quarter</th>
+      <th colspan='2' class='collapsable'><span class="glyphicons glyphicons-pushpin"></span>&ensp;Projects</th>
     </tr>
     <% case current_user.role%>
    <% when 1..2 %>

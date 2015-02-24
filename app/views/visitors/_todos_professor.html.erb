@@ -1,8 +1,13 @@
-<% @is_current_user_confirmed =  %>
-<% if !@is_current_user_confirmed %>
-<!-- checking if group's name is nil, make one for them -->
-	<div style='text-align:center;margin-top:7px;margin-bottom:3px;'>
-		<% current_user.courses %>
-</table>
+<p>
+
+<% current_user.courses.each do |course| %>
+	
+	<%= link_to set_user_current_course_course_path(course.id), class:"btn btn-primary" do %>
+		<span class="glyphicons glyphicons-group"></span> Find a Group
+	<% end %>
+
+
 <% end %>
-</div>
+
+
+</p>
