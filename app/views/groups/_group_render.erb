@@ -1,4 +1,4 @@
-<table class="table" style="width: 95%!important;">
+<table class="table table-condensed">
 	<% if @myproject.groups.collect(&:name).include?('Team 10')||@myproject.groups.collect(&:name).include?('Team 11') %>
 	<% groups = @myproject.groups.uniq %>
 	<% else %>
@@ -6,7 +6,7 @@
 	<% end %>
 	<% groups.each do |group| %>
 	<% @group = Group.find(group) %>
-	<tr>
+	<tr class="info active">
 		<td colspan="3"><span style="font-size:20px; font-weight:bold;"><%= link_to @group.name, @group %></span></td>
 		<td><%= link_to("<span class=\"glyphicons glyphicons-send\"></span>&nbsp;&nbsp;Request to join".html_safe, request_join_group_path(@group.id), class: 'btn btn-success')%></td>
 	</tr>

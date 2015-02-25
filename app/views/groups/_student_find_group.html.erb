@@ -1,13 +1,24 @@
-<div class="section-group">
-	<div class="span_2_of_3">
-			<span class="glyphicons glyphicons-group" style="font-size:25px; font-weight:bold;">&emsp;Groups</span>
-				<table class="table" align="center">
+<div class="panel panel-primary">
+	<div class="panel-heading">Find <%= @myproject.group_size == 2 ? "a Partner" : "Members"%> for <%= render "layouts/buttons/course_select" %> <%= render "layouts/buttons/project_select" %>
+	</div>
+	<div class="panel-body">
+		<div class="col-xs-8">
+		<p>
+		This is a list of all the available partners for <%= @mycourse.course_title %>.<br><br>
+		If you would like to change your course you can do so in the "Change Course and Project" on the top right. </p>
+		<% @myproject.group_size.times do %>
+			<span class="glyphicons glyphicons-user"></span>
+		<% end %>
+		&emsp;Your group size should be <%= @myproject.group_size %>.
+		<br><br>
+		<%= @myproject.allow_repeat ? '<span class="glyphicons glyphicons-ok-2" style="color:green;"></span>&emsp; You ARE '.html_safe : '<span class="glyphicons glyphicons-ban" style="color:red;"></span>&emsp; You ARE NOT '.html_safe %> allowed to repeat partners from your previous assignments.
+		</div>
+	<div class="col-xs-4">
+		<% @group = current_user.groups.find_by(project_id: current_user.current_project)%>
+		<%= render 'groups/profile', group: @group %>
+	</div></div>
+			<table class="table table-condensed" align="center">
 			<%= render 'groups/group_render'%>
 		</table>
 	</div><!-- start group sidebar -->
-  <div style="float:left;width:30%">
-		<%= render 'layouts/buttons/course_select'%>
-		 <% @group = current_user.groups.find_by(project_id: current_user.current_project) %>
-		<%= render 'groups/profile', group: @group %>
-	</div>
 </div>
