@@ -140,7 +140,4 @@ end
     params.require(:course).permit(:course_title, :instructor, :id, :course_code, :quarter)
   end
 
-  # def secure_params
-  #   params.require(:user).permit(:current_course)
-  # end
 end

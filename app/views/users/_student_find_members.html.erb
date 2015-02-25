@@ -20,24 +20,6 @@
 
 
 
-	<% if !@group.nil? %>
-		<% project_status = current_user.group_relations.find_by(project_id: @myproject.id)%>
-		<!-- student requested -->
-		<% if project_status == 1 %>
-		</div></div>
-			<% msg ="You have pending requests, please respond to these before requesting more people."%>
-			<div class="alert alert-info">
-		<% else %>
-		</div></div>
-			<% msg ="You are already in a group :)"%>
-			<div class="alert alert-success">
-		<% end %>
-			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-			<%= content_tag :div, msg.html_safe, id: "flash_success" %>
-		</div>
-			<%= render 'visitors/notification_student'%>
-		<!-- if student not in group -->
-	<% else %>
 
 <!-- if student in group -->
 
@@ -57,10 +39,27 @@
 			<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 			<%= content_tag :div, msg.html_safe, id: "error" %></div>
 		<!-- good to go -->
+			<% if !@group.nil? %>
+		<% project_status = current_user.group_relations.find_by(project_id: @myproject.id)%>
+		<!-- student requested -->
+		<% if project_status == 1 %>
+		</div></div>
+			<% msg ="You have pending requests, please respond to these before requesting more people."%>
+			<div class="alert alert-info">
+		<% else %>
+		</div></div>
+			<% msg ="You are already in a group :)"%>
+			<div class="alert alert-success">
+		<% end %>
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+			<%= content_tag :div, msg.html_safe, id: "flash_success" %>
+		</div>
+			<%= render 'visitors/notification_student'%>
+		<!-- if student not in group -->
+		<% end%>
 		<% else %>
 		</div>
 			<!-- Render every user -->
 			<%= render 'users/user_render', locals: {allowed: @allowed_size, mygroup: @mygroupsize}%>
 		<% end %>
-	<% end %>
 	</div>

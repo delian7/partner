@@ -1,44 +1,43 @@
 <div class="panel panel-primary">
   <div class="panel-heading">
-        <span style="font-size:25px;font-weight:bold;"><span class="glyphicons glyphicons-group"></span>&emsp;Groups for <%= render "layouts/buttons/course_select"%><%= render "layouts/buttons/project_select"%></span>
-          <div style="float:right; padding-left:10px" class="collapsable" >
-           <%= link_to "Autogroup&nbsp;&nbsp;<span class=\"glyphicons glyphicons-random\"></span>".html_safe, autogroup_project_path(@myproject.id), class:"btn btn-info" %>
-         </div>
-  <div class="collapsable" style="float:right;background-color:#fff;color:black;padding:2px;margin:0px;border-radius:4px">
-          Group Size: <%= @myproject.group_size %><br>
-          <% @myproject.group_size.times do |o|%>
-            <%=  link_to "<span class=\"glyphicons glyphicons-user\" style=\"font-size:14px;\"></span>".html_safe, reduce_groupsize_project_path(@myproject.id), class: "groupsize_changes"%>
-          <% end %>
-          <% if @myproject.group_size < 7 %>
-          <%=  link_to "<span class=\"glyphicons glyphicons-plus\" style=\"font-size:14px;\"></span>".html_safe, increase_groupsize_project_path(@myproject.id), style: "color:green"%>
-          <% else %>
-          <%=  link_to "<span class=\"glyphicons glyphicons-minus\" style=\"font-size:14px;\"></span>".html_safe, reduce_groupsize_project_path(@myproject.id), style: "color:red"%>
-          <% end %>
-        </div>
-
-  </div><div class="panel-body">
-  </span>
-  <% (@myproject.groups.collect(&:name).include?("Team 10") || @myproject.groups.include?("Team 11")) ? ids = Group.where(project_id: @myproject) : ids = Group.where(project_id: @myproject).order(:name).uniq%>
-  <% ids.each do |group| %>
+    <span style="font-size:25px;font-weight:bold;"><span class="glyphicons glyphicons-group"></span>&emsp;Groups for <%= render "layouts/buttons/course_select"%><%= render "layouts/buttons/project_select"%></span>
+    <div style="float:right; padding-left:10px" class="collapsable" >
+      <%= link_to "Autogroup&nbsp;&nbsp;<span class=\"glyphicons glyphicons-random\"></span>".html_safe, autogroup_project_path(@myproject.id), class:"btn btn-info" %>
+    </div>
+    <div class="collapsable" style="float:right;background-color:#fff;color:black;padding:2px;margin:0px;border-radius:4px">
+      Group Size: <%= @myproject.group_size %><br>
+      <% @myproject.group_size.times do |o|%>
+      <%=  link_to "<span class=\"glyphicons glyphicons-user\" style=\"font-size:14px;\"></span>".html_safe, reduce_groupsize_project_path(@myproject.id), class: "groupsize_changes"%>
+      <% end %>
+      <% if @myproject.group_size < 7 %>
+      <%=  link_to "<span class=\"glyphicons glyphicons-plus\" style=\"font-size:14px;\"></span>".html_safe, increase_groupsize_project_path(@myproject.id), style: "color:green"%>
+      <% else %>
+      <%=  link_to "<span class=\"glyphicons glyphicons-minus\" style=\"font-size:14px;\"></span>".html_safe, reduce_groupsize_project_path(@myproject.id), style: "color:red"%>
+      <% end %>
+    </div>
+  </div>
+</span><div class="panel-body" style="display:none;">
+<% (@myproject.groups.collect(&:name).include?("Team 10") || @myproject.groups.include?("Team 11")) ? ids = Group.where(project_id: @myproject) : ids = Group.where(project_id: @myproject).order(:name).uniq%>
+<% ids.each do |group| %>
 <% @group = Group.find(group) %></div>
 <div class="panel panel-info">
-  <div class="panel-heading">
-    <%= link_to @group.name, @group, style:"font-size:19px" %><%=  link_to "Delete #{@group.name} &nbsp;<span class=\"glyphicons glyphicons-remove-2\"></span>".html_safe, disband_group_path(group), data: { confirm: "Are you sure? This will permanently delete this group and you will lose all evaluation information."},  id: "disband-group-btn", style:"float:right", class: "btn-danger btn-xs"%>
-  </div>
-  <table class="table table-hover table-condensed" align="center">
-    <% @group.users.each do |user| %>
-    <tr>
-      <% @user = user %>
-      <td id='name'><%= link_to "#{user.first_name} #{user.last_name}", user %></td>
-      <td class='collapsable'><%= user.email %></td>
-      <td>
-        <% if GroupRelation.find_by(user_id: user.id, group_id: @group.id).status != 2 %>
-        Request Pending
-        <% else %>
-        Confirmed <span class="glyphicons glyphicons-ok-2" style="color:green; font-size:20px; margin:0px"></span>
-        <% end %>
-      </td>
-      <td class='collapsable'><%= render 'layouts/buttons/team_select', user: @user%></td>
-    </tr>
-    <% end %></table>
-    <% end %> </div><button type="button" class="btn btn-danger btn-xs"><%= link_to "<span class=\"glyphicons glyphicons-warning-sign\"></span>&nbsp;&nbsp;Reset Groups".html_safe, clear_partnerships_project_path(@myproject.id), style:"color:white" %></button>
+<div class="panel-heading">
+  <%= link_to @group.name, @group, style:"font-size:19px" %><%=  link_to "Delete #{@group.name} &nbsp;<span class=\"glyphicons glyphicons-remove-2\"></span>".html_safe, disband_group_path(group), data: { confirm: "Are you sure? This will permanently delete this group and you will lose all evaluation information."},  id: "disband-group-btn", style:"float:right", class: "btn-danger btn-xs"%>
+</div>
+<table class="table table-hover table-condensed" align="center">
+  <% @group.users.each do |user| %>
+  <tr>
+    <% @user = user %>
+    <td id='name'><%= link_to "#{user.first_name} #{user.last_name}", user %></td>
+    <td class='collapsable'><%= user.email %></td>
+    <td>
+      <% if GroupRelation.find_by(user_id: user.id, group_id: @group.id).status != 2 %>
+      Request Pending
+      <% else %>
+      Confirmed <span class="glyphicons glyphicons-ok-2" style="color:green; font-size:20px; margin:0px"></span>
+      <% end %>
+    </td>
+    <td class='collapsable'><%= render 'layouts/buttons/team_select', user: @user%></td>
+  </tr>
+<% end %></table>
+<% end %> </div><button type="button" class="btn btn-danger btn-xs"><%= link_to "<span class=\"glyphicons glyphicons-warning-sign\"></span>&nbsp;&nbsp;Reset Groups".html_safe, clear_partnerships_project_path(@myproject.id), style:"color:white" %></button>
