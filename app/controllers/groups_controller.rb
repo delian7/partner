@@ -1,7 +1,7 @@
 class GroupsController < ApplicationController
   include UsersHelper, GroupsHelper
   helper_method :teammates?, :in_group_for?, :classmates?
-  before_filter :authenticate_user!
+  # before_filter :authenticate_user!
   # after_action :verify_authorized
   require 'csv'
    
