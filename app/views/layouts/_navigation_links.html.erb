@@ -5,17 +5,12 @@
 <% when 0 %>
 	<li role="presentation" class="<%= 'active' if current_page?(users_path) %>">
 		<%= link_to users_path do %>
-		<span class="glyphicons glyphicons-address-book"></span> <%= (Project.find(current_user.current_project).group_size != 2) ? 'Find Members' : 'Find a Partner' %>
+		<span class="glyphicons glyphicons-address-book"></span>&emsp;<%= (Project.find(current_user.current_project).group_size != 2) ? 'Find Members' : 'Find a Partner' %>
 		<% end %>
 	</li>
 	<li role="presentation" class="<%= 'active' if current_page?(groups_path) %>">
 		<%= link_to groups_path do %>
-		<span class="glyphicons glyphicons-group"></span> Find a Group
-		<% end %>
-	</li>
-	<li role="presentation" class="<%= 'active' if current_page?(evaluations_path) %>">
-		<%= link_to evaluations_path do %>
-		<span class="glyphicons glyphicons-scale-classic"></span> Evaluate
+		<span class="glyphicons glyphicons-group"></span>&emsp;Find a Group
 		<% end %>
 	</li>
 	<% when 3 %>
@@ -25,38 +20,35 @@
 <% when 1 .. 3 %>
 	<li role="presentation" class="<%= 'active' if current_page?(roster_path) %>">
 		<%= link_to '', data: { toggle: 'modal', target: '#roster-upload'} do %>
-		<span class="glyphicons glyphicons-upload"></span> Add a Roster	
-
+			<span class="glyphicons glyphicons-upload"></span>&emsp;Add a Roster	
 		<% end %>	
 		<%= render template: "roster/modals/roster-modal"%>	
 	</li>
-
-
 	<li role="presentation" class="<%= 'active' if current_page?(courses_path) %> dropdown">
 		<%= link_to courses_path do %>
-		<span class="glyphicons glyphicons-education"></span> Courses
+		<span class="glyphicons glyphicons-education"></span>&emsp;Courses
 		<% end %>	
 	</li>
 
 	<li class="dropdown <%= 'active' if current_page?(groups_path) %>">
-	  <%= link_to '#', data: {toggle: 'dropdown'}, class: 'dropdown-toggle' do %><span class="glyphicons glyphicons-group"></span> Groups <span class="halflings halflings-triangle-bottom" style="font-size:8px;line-height: 2.2;"></span><% end %>
+	  <%= link_to '#', data: {toggle: 'dropdown'}, class: 'dropdown-toggle' do %><span class="glyphicons glyphicons-group"></span>&emsp;Groups <span class="halflings halflings-triangle-bottom" style="font-size:8px;line-height: 2.2;"></span><% end %>
 	  <ul class="dropdown-menu">
 	    <li><%= link_to "Edit Groups", groups_path %></li>
 	    <li class="divider"></li>
-	    <li><%= link_to "Export Groups as CSV", export_groups_users_path(current_user)%></li>
-	    <li><%= link_to "Export Leftover Students as CSV", export_ungrouped_users_path(current_user)%></li>
+	    <li></li>
+	    <li></li>
 		</ul>
 	</li>	
 	
 		<li role="presentation" class="<%= 'active' if current_page?(users_path) %>">
 		<%= link_to users_path do %>
-		<span class="glyphicons glyphicons-user"></span> Students
+		<span class="glyphicons glyphicons-user"></span>&emsp;Students
 		<% end %>
 	</li>
 
 	<li role="presentation" class="<%= 'active' if current_page?(evaluations_path) %>">
 		<%= link_to evaluations_path do %>
-		<span class="glyphicons glyphicons-scale-classic"></span> <%= current_user.role == 0 ? 'Evaluate' : 'Evaluations'%>
+		<span class="glyphicons glyphicons-scale-classic"></span>&emsp;<%= current_user.role == 0 ? 'Evaluate' : 'Evaluations'%>
 		<% end %>
 	</li>
 	<% end %>

@@ -1,65 +1,60 @@
 <div class="panel panel-primary">
-	<div class="panel-heading">Find <%= @myproject.group_size == 2 ? "a Partner" : "Members"%> for <%= render "layouts/buttons/course_select" %> <%= render "layouts/buttons/project_select" %>
+	<div class="panel-heading">
+		<h2><span class="glyphicons glyphicons-address-book"></span>&emsp;Find <%= @myproject.group_size == 2 ? "a Partner" : "Members"%> for 
+			<%= render "layouts/buttons/course_select" %> <%= render "layouts/buttons/project_select" %>
+		</h2>
 	</div>
 	<div class="panel-body">
 		<div class="col-xs-8">
 		<p>
 		This is a list of all the available partners for <%= @mycourse.course_title %>.<br><br>
-		If you would like to change your course you can do so in the "Change Course and Project" on the top right. </p>
-		<% @myproject.group_size.times do %>
+		If you would like to change your course you can do so in the "Change Course and Project" on the top right. </p><br><b>
+		<span class='well well-sm'><% @myproject.group_size.times do %>
 			<span class="glyphicons glyphicons-user"></span>
 		<% end %>
-		&emsp;Your group size should be <%= @myproject.group_size %>.
+		&emsp;Your group size should be <%= @myproject.group_size %>.</span>
 		<br><br>
-		<%= @myproject.allow_repeat ? '<span class="glyphicons glyphicons-ok-2" style="color:green;"></span>&emsp; You ARE '.html_safe : '<span class="glyphicons glyphicons-ban" style="color:red;"></span>&emsp; You ARE NOT '.html_safe %> allowed to repeat partners from your previous assignments.
+		<span class='well well-sm'><%= @myproject.allow_repeat ? '<span class="glyphicons glyphicons-ok-2" style="color:green;"></span>&emsp; You ARE '.html_safe : '<span class="glyphicons glyphicons-ban" style="color:red;"></span>&emsp; You ARE NOT '.html_safe %> allowed to repeat partners from your previous assignments.</span>
+		</div></b>
+		<div class="col-xs-4">
+			<% @group = current_user.groups.find_by(project_id: current_user.current_project)%>
+			<%= render 'groups/profile', group: @group %>
 		</div>
-	<div class="col-xs-4">
-		<% @group = current_user.groups.find_by(project_id: current_user.current_project)%>
-		<%= render 'groups/profile', group: @group %>
-	</div>
-
-
-
-
+	
 <!-- if student in group -->
+<% !@mygroup.nil? ? @mygroupsize = @mygroup.group_relations.size : @mygroupsize = 0 %>
+<!-- Room in group?-->
+<% @allowed_size = @myproject.group_size %>
+<!-- if group is full -->
 
-		<% !@mygroup.nil? ? @mygroupsize = @mygroup.group_relations.size : @mygroupsize = 0 %>
-		<!-- Room in group?-->
-		<% @allowed_size = @myproject.group_size %>
-		<!-- if group is full -->
-		<% if (@allowed_size <= @mygroupsize) %>
-		</div></div>
-			<% msg ="#{@mygroup.name} is full.  <br>You have <span style= 'font-size: 18px; font-weight:bold;'>#{@mygroupsize}</span> members out of the <span style= 'font-size: 18px; font-weight:bold;'>#{@allowed_size}</span> members allowed in your group."%>
-			<div class="alert alert-info"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-			<%= content_tag :div, msg.html_safe, id: "flash_success" %></div>
-		<!-- if partnership deadline passed -->
-		<% elsif ((@myproject.partnership_deadline) && (@myproject.partnership_deadline < Date.today)) %>
-		</div></div>
-			<% msg ="Partnership Deadline has passed. Contact your Professor."%>
-			<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-			<%= content_tag :div, msg.html_safe, id: "error" %></div>
-		<!-- good to go -->
-			<% if !@group.nil? %>
+<% if (@allowed_size <= @mygroupsize) %>
+	<% msg ="#{@mygroup.name} is full.  <br>You have <span style= 'font-size: 18px; font-weight:bold;'>#{@mygroupsize}</span> members out of the <span style= 'font-size: 18px; font-weight:bold;'>#{@allowed_size}</span> members allowed in your group."%>
+	<div class="alert alert-info"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+	<%= content_tag :div, msg.html_safe, id: "flash_success" %></div>
+	<!-- if partnership deadline passed -->
+<% elsif ((@myproject.partnership_deadline) && (@myproject.partnership_deadline < Date.today)) %>
+	<% msg ="Partnership Deadline has passed. Contact your Professor."%>
+	<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+	<%= content_tag :div, msg.html_safe, id: "error" %></div>
+	<!-- good to go -->
+	<% if !@group.nil? %>
 		<% project_status = current_user.group_relations.find_by(project_id: @myproject.id)%>
 		<!-- student requested -->
 		<% if project_status == 1 %>
-		</div></div>
 			<% msg ="You have pending requests, please respond to these before requesting more people."%>
 			<div class="alert alert-info">
 		<% else %>
-		</div></div>
 			<% msg ="You are already in a group :)"%>
 			<div class="alert alert-success">
 		<% end %>
-			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-			<%= content_tag :div, msg.html_safe, id: "flash_success" %>
+		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		<%= content_tag :div, msg.html_safe, id: "flash_success" %>
 		</div>
-			<%= render 'visitors/notification_student'%>
+		<%= render 'visitors/notification_student'%>
 		<!-- if student not in group -->
-		<% end%>
-		<% else %>
-		</div>
-			<!-- Render every user -->
-			<%= render 'users/user_render', locals: {allowed: @allowed_size, mygroup: @mygroupsize}%>
-		<% end %>
-	</div>
+	<% end%>
+<% else %>
+	<!-- Render every user -->
+	<%= render 'users/user_render', locals: {allowed: @allowed_size, mygroup: @mygroupsize}%>
+<% end %></div>
+</div>
