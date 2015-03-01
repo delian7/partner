@@ -5,7 +5,9 @@ max-width: 150px;
 img#non-responsive {
 margin: 0px 0px 0px 0px;
 }
-
+#csvbutton{
+  margin-top:15px;
+}
 .order{
   display: inline;
 }
@@ -29,8 +31,17 @@ float: none;
 }
 
 .navbar-custom {
-  background-color: #3e97db;
-  border: 0px;
+background: #337ab7; /* Old browsers */
+/* IE9 SVG, needs conditional override of 'filter' to 'none' */
+background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzMzN2FiNyIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjYxJSIgc3RvcC1jb2xvcj0iIzNmODBiNSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9Ijk3JSIgc3RvcC1jb2xvcj0iIzMzN2FiNyIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KICA8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSJ1cmwoI2dyYWQtdWNnZy1nZW5lcmF0ZWQpIiAvPgo8L3N2Zz4=);
+background: -moz-linear-gradient(top,  #337ab7 0%, #3f80b5 61%, #337ab7 97%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#337ab7), color-stop(61%,#3f80b5), color-stop(97%,#337ab7)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  #337ab7 0%,#3f80b5 61%,#337ab7 97%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  #337ab7 0%,#3f80b5 61%,#337ab7 97%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  #337ab7 0%,#3f80b5 61%,#337ab7 97%); /* IE10+ */
+background: linear-gradient(to bottom,  #337ab7 0%,#3f80b5 61%,#337ab7 97%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#337ab7', endColorstr='#337ab7',GradientType=0 ); /* IE6-8 */
+border: 1px solid #275E8C;
 }
 .navbar-custom .navbar-brand {
   color: #ffffff;
@@ -55,16 +66,16 @@ float: none;
 }
 .navbar-custom .navbar-nav > li > a:hover,
 .navbar-custom .navbar-nav > li > a:focus {
-  background-color: #2787d1;
+  background-color: #275E8C
 
 }
 .navbar-custom .navbar-nav > .active > a,
 .navbar-custom .navbar-nav > .active > a:hover,
 .navbar-custom .navbar-nav > .active > a:focus {
-  color: #000;
-  background-color: #fff;
-  border-top-left-radius: 9px;
-  border-top-right-radius: 9px;
+color: #D4E4F1;
+background-color: #043C6A;
+  /*border-top-left-radius: 9px;*/
+  /*border-top-right-radius: 9px;*/
 
 }
 .navbar-custom .navbar-nav > .disabled > a,
