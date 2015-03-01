@@ -28,7 +28,7 @@ class UserPolicy
     true
   end
   def clear_partnerships?
-    true
+    user.role !=0
   end
   def leave?
     true
@@ -50,10 +50,10 @@ class UserPolicy
     true
   end
   def export_groups?
-    true
+    user.role !=0
   end
   def export_ungrouped?
-    true
+    user.role !=0
   end
   def send_request?
     true
@@ -64,13 +64,11 @@ class UserPolicy
   def ignore?
     true
   end
-
   def confirm?
     true
   end
-
   def csv_import?
-    true
+    user.role !=0
   end
   
 end
