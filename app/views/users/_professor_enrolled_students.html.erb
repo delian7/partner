@@ -1,15 +1,8 @@
 <div class="panel panel-primary">
-	<div class="panel-heading"><h4><span class="glyphicons glyphicons-user"></span>&emsp;Enrolled Students for</h4></div>
-	<div class="panel-body">
-		<div class="col span_2_of_3">
-			asdfasdf
-		</div>
-		<div class="col span_1_of_3">
-			<%= render 'layouts/buttons/course_select'%>
-		</div>
-	</div>
-	<table class="table">
-		<tr style="background-color:#f5f5f5">
+	<div class="panel-heading">
+        <h2><span class="glyphicons glyphicons-user"></span>&emsp;Enrolled Students for &emsp;<%= render "layouts/buttons/course_select"%></h2></div>
+	<table class="table table-condensed">
+		<tr class="active info">
 			<th>Name</th>
 			<th style="max-width:100px; text-align: left;"><span class="glyphicons glyphicons-envelope"></span>&emsp;Email</th>
 			<th>Partnered?</th>

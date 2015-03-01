@@ -1,35 +1,7 @@
 <!-- selecting course that users will add groups to -->
 <!-- if the user is signed in and their enrolled in at least one course on roster -->
-<div class="panel panel-primary" style="margin:0px">
-	<div class="panel-heading">
-		<h5 class="panel-title">Select a Course and Project</h5>
-	</div>
-	<div class="panel-body" style='padding:0px'>
-		<% @current_projects = Course.find(current_user.current_course).projects %>
-		<div class="btn-group-vertical" style="float:right; width:100%;padding:10px;margin:0px">
-			<div class="input-group" style="padding: 0px">
-				<span class="input-group-addon" style="padding: 0px 20px 0px 20px;font-weight:bold; font-size:14px;">Course:</span>
-				<%= form_for :user, url: set_current_course_user_path(current_user.id), html: { style: 'display:inline;'}  do |f|%>
-				<%= f.select :current_course, options_from_collection_for_select(current_user.courses,
-				'id', 'course_title', current_user.current_course), {},
-				{class: 'form-control', style: 'display:inline;', onchange: 'this.form.submit();' } %>
-				<% end %>
-				<!-- setting current_project (if more than one exist)	 -->
-			</div>
-			<% if !@current_projects.empty? %>
-			<!-- setting current course & project (if there's only one project)-->
-			<div class="input-group" style="padding: 0px 0px 0px 0px">
-				<span class="input-group-addon" style="padding: 0px 20px 0px 20px;font-weight:bold; font-size:14px;">Project:</span>
-				<%= form_for :user, url: set_current_project_user_path(current_user.id), html: { style: 'display:inline;'} do |f|%>
-				<%= f.select :current_project, options_from_collection_for_select(@current_projects,
-				'id', 'name', current_user.current_project), {},
-				{class: "form-control", style: 'display:inline;', onchange: 'this.form.submit();'} %>
-				<% end %>
-				<% end %>
-				<% if current_page?(groups_path) && (current_user.role === (1..3)) %>
-				<%=link_to "<span class=\"glyphicons glyphicons-disk-export\"></span>&nbsp;&nbsp;Export Table".html_safe, export_csv_users_path(current_user), class: "btn btn-warning btn-lg", style: "float:right" %>&nbsp;&nbsp;
-				<% end %>
-			</div>
-		</div>
-	</div>
-</div>
+<% @current_projects = Course.find(current_user.current_course).projects %>
+	<%= form_for :user, url: set_current_course_user_path(current_user.id), html: { style: 'display:inline;'}  do |f|%>
+		<%= f.select :current_course, options_from_collection_for_select(current_user.courses, 'id', 'course_title', current_user.current_course), {}, {class: 'form-control', style: 'display:inline;max-width:250px;', onchange: 'this.form.submit();' } %>
+<% end %>
+<!-- setting current_project (if more than one exist)	 -->

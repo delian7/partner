@@ -40,8 +40,8 @@ module UsersHelper
   end
 
   def set_current_project_course(user, project, course)
-    user.current_project = project.id
-    user.current_course = course.id
+    (user.current_project = project.id) if !project.nil?
+    (user.current_course = course.id) if !course.nil?
     user.save
   end
 

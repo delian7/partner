@@ -5,7 +5,7 @@ module CoursesHelper
     if !Course.find_by_id(courseid).projects.empty?
       @proj = Course.find_by_id(courseid).projects[0]
     else
-      @proj = Project.create(name: "#{@word1} #{@word2} - New Project", group_size: 2, partnership_deadline: twoweekslater, evaluation_deadline:twoweekslater + (2*7*24*60*60), allow_repeat:true)
+      @proj = Project.create(name: "#{@course_code} - Project", group_size: 2, partnership_deadline: twoweekslater, evaluation_deadline:twoweekslater + (2*7*24*60*60), allow_repeat:true)
     end
     ProjectRelation.create(course_id: courseid, project_id: @proj.id)
     return @proj

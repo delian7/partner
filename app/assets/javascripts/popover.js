@@ -3,8 +3,13 @@ $(function() {
         html: true
     })
 });
-
-
+$(function() {
+    $('.export-popover').popover({
+        html: true,
+        title: "Export CSV of",
+        content: "<a href='/users/export_ungrouped.1'>Ungrouped Students</a><br><a href='/users/export_groups.1'>Partnerships and Groups</a>"
+    })
+});
 
 $(document).on('change', '.btn-file :file', function() {
     var input = $(this),
@@ -28,6 +33,6 @@ $(document).ready(function() {
         }
     });
     $('#csvbutton').on('click', function() {
-        $(this).button('loading') // button text will be "finished!"
+        $(this).button('loading') 
     })
 });

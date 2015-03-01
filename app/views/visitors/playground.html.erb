@@ -52,3 +52,12 @@
   </div>
 </div>
 
+
+<% current_user.courses.each do |course| %>
+  
+  <%= link_to set_user_current_course_course_path(course.id), class:"btn btn-primary" do %>
+    <span class="glyphicons glyphicons-group"></span> Find a Group
+  <% end %>
+
+
+<% end %>

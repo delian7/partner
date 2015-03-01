@@ -61,7 +61,9 @@ dfn {
   font-style: italic;
 }
 h1 {
-  margin: .67em 0;
+  /*margin: .67em 0;*/
+
+  margin: 0;
   font-size: 2em;
 }
 mark {
@@ -325,7 +327,9 @@ img {
   height: auto;
 }
 .img-rounded {
-  border-radius: 6px;
+  border-radius: 3px;
+  max-width: 45px;
+
 }
 .img-thumbnail {
   display: inline-block;
@@ -344,8 +348,8 @@ img {
   border-radius: 50%;
 }
 hr {
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   border: 0;
   border-top: 1px solid #eee;
 }
@@ -381,9 +385,16 @@ h6,
 .h5,
 .h6 {
   font-family: inherit;
-  font-weight: 500;
-  line-height: 1.1;
+  font-weight: bold;
+  line-height: 1;
   color: inherit;
+  -webkit-margin-before: .2em;
+  -webkit-margin-after: .2em;
+  -webkit-margin-start: 0em;
+  -webkit-margin-end: 0px;
+}
+.h3{
+    -webkit-margin-start: 1em;
 }
 h1 small,
 h2 small,
@@ -418,9 +429,9 @@ h1,
 h2,
 .h2,
 h3,
-.h3 {
+.h3 {/*
   margin-top: 20px;
-  margin-bottom: 10px;
+  margin-bottom: 10px;*/
 }
 h1 small,
 .h1 small,
@@ -441,9 +452,9 @@ h4,
 h5,
 .h5,
 h6,
-.h6 {
+.h6 {/*
   margin-top: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 10px;*/
 }
 h4 small,
 .h4 small,
@@ -1508,7 +1519,7 @@ th {
   background-color: #f9f9f9;
 }
 .table-hover > tbody > tr:hover {
-  background-color: #f5f5f5;
+  background-color: #eee;
 }
 table col[class*="col-"] {
   position: static;
@@ -1533,14 +1544,14 @@ table th[class*="col-"] {
 .table > thead > tr.active > th,
 .table > tbody > tr.active > th,
 .table > tfoot > tr.active > th {
-  background-color: #f5f5f5;
+  background-color: #eee;
 }
 .table-hover > tbody > tr > td.active:hover,
 .table-hover > tbody > tr > th.active:hover,
 .table-hover > tbody > tr.active:hover > td,
 .table-hover > tbody > tr:hover > .active,
 .table-hover > tbody > tr.active:hover > th {
-  background-color: #e8e8e8;
+  background-color: #eee;
 }
 .table > thead > tr > td.success,
 .table > tbody > tr > td.success,
@@ -2065,6 +2076,7 @@ select[multiple].form-group-lg .form-control {
   .form-inline .input-group .input-group-btn,
   .form-inline .input-group .form-control {
     width: auto;
+
   }
   .form-inline .input-group > .form-control {
     width: 100%;
@@ -2878,8 +2890,10 @@ tbody.collapse.in {
   position: relative;
   z-index: 2;
   float: left;
-  width: 100%;
-  margin-bottom: 0;
+  background-color:white;
+  margin-top:5px;
+  margin-bottom:5px;
+  width:300px;
 }
 .input-group-lg > .form-control,
 .input-group-lg > .input-group-addon,
@@ -4000,11 +4014,15 @@ a.badge:focus {
 .nav-pills > li > a > .badge {
   margin-left: 3px;
 }
+
 .jumbotron {
   padding: 30px 15px;
   margin-bottom: 30px;
   color: inherit;
   background-color: #eee;
+  padding:15px 0px 15px 0px;
+  margin:0px;
+  color:black;
 }
 .jumbotron h1,
 .jumbotron .h1 {
@@ -4440,7 +4458,7 @@ a.list-group-item-danger.active:focus {
 }
 .panel {
   margin-bottom: 20px;
-  background-color: #fff;
+  background-color: #fefefe;
   border: 1px solid transparent;
   border-radius: 4px;
   -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
@@ -5710,35 +5728,7 @@ button.close {
     display: none !important;
   }
 }
-/*# sourceMappingURL=bootstrap.css.map */
-
-
-/*
- *		BOOTSTRAP HELPER
- */
-.btn .glyphicons,
-.btn .halflings,
-.btn .filetypes,
-.btn .social{
-	margin-right:.3em;
-}
-.dropdown-menu li .glyphicons,
-.dropdown-menu li .halflings,
-.dropdown-menu li .filetypes,
-.dropdown-menu li .social{
-	margin-right:.3em;
-}
-.list-group .list-group-item .glyphicons,
-.list-group .list-group-item .halflings,
-.list-group .list-group-item .filetypes,
-.list-group .list-group-item .social{
-	margin-right:.5em;
-}
-
-a.btn 
-{
-line-height: 1.28;
-}
+/*# sourceMappingURL=bootstrap.css.map 
 
 
 

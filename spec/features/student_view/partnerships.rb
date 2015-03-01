@@ -8,11 +8,12 @@ feature 'partnership requests' do
   before(:each) do
     professor = FactoryGirl.create(:professor)
     login_as(professor, :scope => :user)
-    visit(roster_path)
-    first_week_roster = Rails.root + "SQL\ and\ CSVs/rspec_csvs/5\ students.csv"
-    attach_file('upload_roster', first_week_roster)
-    click_button 'Upload CSV File'
+    visit (root_path)
+    first_week_roster = Rails.root + "SQL\ and\ CSVs/rspec_csvs/first_week_roster.csv"
+    attach_file('fileupload', first_week_roster)
+    find_button('csvbutton', disabled: true).click
   end
+
   
   scenario 'should be recieved by receiving student' do
     student1 = FactoryGirl.create(:student1)

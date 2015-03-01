@@ -1,17 +1,3 @@
-class Array
-  def safe_transpose(csv)
-    require 'csv'
-    result = []
-    max_size = self.max { |a,b| a.size <=> b.size }.size
-    max_size.times do |i|
-      result[i] = Array.new(2)
-      self.each_with_index { |r,j| r[i].nil? ? (result[i][j] = r[i]) : (result[i][j] = (r[i].first_name + " " + r[i].last_name)) }
-    end
-    result
-  end
-end
-
-
 class UsersController < ApplicationController
   before_filter :authenticate_user!
   # before_filter :admin_only, :except => :show
@@ -104,19 +90,22 @@ class UsersController < ApplicationController
   # Start download of csv file of partner data
   def export_ungrouped
     authorize current_user
-    grouped=[]
-    users=[]
+    # mycourse = Course.find_by_id(params[:id])
+
     mycourse = Course.find_by_id(current_user.current_course)
     myproject= Project.find_by_id(current_user.current_project)
 
     roster_csv = CSV.generate do |csv|
+        mycourse.projects.each do |myproject|
+    grouped=[]
+    users=[]
       csv << ["Project: #{myproject.name}", "Course: #{mycourse.course_title}", "Quarter: #{mycourse.quarter}"]
       csv << ["Instructor: " + mycourse.instructor, "Downloaded by: " + current_user.first_name + " " + current_user.last_name, "Date: #{Time.now.strftime("%m/%d/%Y")}"]
       csv << ["Time: #{Time.now.strftime("%I:%M %p")}", "Total Teams: #{myproject.groups.uniq.size}", "Total Students: #{mycourse.users.where(role:0).size}"]
       csv << ["Grouped: " , "Ungrouped:"]
       GroupRelation.where(project_id: myproject.id, status:2).collect(&:user_id).uniq.each do |id|
         if User.find_by_id(id).role == 0
-          grouped.push(User.find_by_id(id))
+          grouped.push(User.find_by_id(id)) if !grouped.include?(User.find_by_id(id))
         end
       end
       mycourse.users.each do |id|
@@ -124,27 +113,28 @@ class UsersController < ApplicationController
       end
       ungrouped = users - grouped
 
-      array = [grouped, ungrouped]
-
-
-
-      csv << array.safe_transpose(csv)
-
-      # if grouped.size() >= ungrouped.size()
-      #   grouped.each do |i|
-      #     name = i.last_name + ", " + i.first_name
-      #     secondname = ungrouped[count].last_name + ", " + ungrouped[count].first_name if count < ungrouped.size()
-      #     count < ungrouped.size() ? csv << [secondname, name] : csv << [name]
-      #   end
-      # else
-      #   ungrouped.each do |i|
-      #     name = i.last_name + ", " + i.first_name
-      #     secondname = grouped[count].last_name + ", " + grouped[count].first_name if count < grouped.size()
-      #     count < grouped.size() ? csv << [secondname, name] : csv << ["",name]
-      #   end
-      # end
+      count = 0
+      if grouped.size() >= ungrouped.size()
+        grouped.each do |i|
+          count+=1
+          name = i.last_name + ", " + i.first_name
+          secondname = ungrouped[count].last_name + ", " + ungrouped[count].first_name if count < ungrouped.size()
+          count < ungrouped.size() ? csv << [name,secondname] : csv << [name]
+        end
+      else
+        ungrouped.each do |i|
+          count+=1
+          name = i.last_name + ", " + i.first_name
+          secondname = grouped[count].last_name + ", " + grouped[count].first_name if count < grouped.size()
+          count < grouped.size() ? csv << [secondname,name] : csv << ["",name]
+        end
+      end
     end
-    send_data(roster_csv, type:  'text/csv', filename:  "#{mycourse.course_code}_leftover_students.csv")
+
+          end 
+      send_data(roster_csv, type:  'text/csv', filename:  "#{Date.today}_leftover_students.csv")
+
+
   end
 
   def send_request

@@ -1,15 +1,14 @@
-<div class="section-group">
-	<div style="float:left;width:70%">
-		<span style="font-size:40px; font-weight:bold;"><span class="glyphicons glyphicons-scale-classic"></span>&emsp;Evaluations</span>
-	</div>
-	<div style="float:left;width:30%">
-		<!-- Start Table Header -->
-		<%= render 'layouts/buttons/course_select'%>
-	</div>
-</div>
-<table class="table" style= "border:1px grey!important;">
+<div class="panel panel-primary">
+  <!-- Default panel contents -->
+  <div class="panel-heading">
+       <h2><span class="glyphicons glyphicons-scale-classic"></span>&emsp;Evaluations&emsp;
+		<%= render 'layouts/buttons/course_select'%></h2>
+  </div>
+  <!-- Table -->
+
+<table class="table table-condensed table-hover" >
 	<!-- goes throguh all users courses, then for every course, pushes all projects to array @projs-->
-	<tr>
+	<tr class="active info">
 		<th>Student</th>
 		<th>Average</th>
 		<th>Effort</th>
@@ -28,7 +27,4 @@
 		<td><center><%= evaluation.groups.collect(&:name)[0] %></td>
 	</tr>
 	<% end %>
-	<tr>
-		<td colspan="9" style="height:50px;"></td>
-	</tr>
 </table>

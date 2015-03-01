@@ -16,14 +16,6 @@ class EvaluationsController < ApplicationController
     @evaluation = Evaluation.find(params[:id])
   end
 
-  # def show
-  #   @evaluation = Evaluation.find(params[:id])
-  #   unless user_signed_in?
-  #     authorize current_user
-  #     redirect_to :back, :alert => "Access denied."
-  #   end
-  # end
-
   def create
     @evaluation = Evaluation.new(evaluation_params)
     set_current_users_instance_variables
@@ -46,36 +38,6 @@ class EvaluationsController < ApplicationController
       redirect_to :back, alert: "Evaluation could not be updated"
     end
   end
-
-  # def remove
-  #   authorize current_user
-  #   if Evaluation.find_by_id(params[:id]) != nil
-  #     @evaluation = Evaluation.find(params[:id])
-  #     @evaluation.users.each do |user|
-  #       set_current_project_evaluation(user, Project.find_by_id(0), Evaluation.find_by_id(0))
-  #     end
-  #     destroy_roster_relations(@evaluation)
-  #     destroy_project_relations(@evaluation)
-  #     @evaluation.destroy
-  #     @evaluation.save ? flash[:notice] = "Success!  Evaluation has been deleted" : flash[:error] = "Evaluation could not be deleted"
-  #     redirect_to(action:'index')
-  #   end
-  # end
-
-  # def destroy
-  #   authorize current_user
-  #   if Evaluation.find_by_id(params[:id]) != nil
-  #     @evaluation = Evaluation.find(params[:id])
-  #     @evaluation.users.each do |user|
-  #       set_current_project_evaluation(user, Project.find_by_id(0), Evaluation.find_by_id(0))
-  #     end
-  #     destroy_roster_relations(@evaluation)
-  #     destroy_project_relations(@evaluation)
-  #     @evaluation.destroy
-  #     @evaluation.save ? flash[:notice] = "Success!  Evaluation has been deleted" : flash[:error] = "Evaluation could not be deleted"
-  #     redirect_to(action: 'index')
-  #   end
-  # end
 
   private
 

@@ -53,7 +53,7 @@ class CoursesController < ApplicationController
 
   # opens and parses CSV, removes the nils values, to get the student data and course data seperately.
   def open_and_parse_csv(index)
-    csv_text = File.open(params[:files][index].tempfile, :headers => true)
+    csv_text = File.open(params[:files][index].tempfile, headers: true)
     csv = CSV.parse(csv_text)
     csv = remove_nils(csv)
     start_course_index = csv.find_index{|each| each[0].include?("Quarter,")}
@@ -119,15 +119,25 @@ class CoursesController < ApplicationController
     flash[:notice] = msg.html_safe
     redirect_to :back
   end
+  def set_user_current_course
+    authorize current_user
+    course = Course.find(params[:id])
+    # current_user.update_attributes(secure_params)
+    set_current_users_instance_variables
+    # @current_projects = Project.where(course_id: @mycourse.id)
 
+    if !course.nil?
+      current_user.update_attributes(current_project: course.id)
+    else
+      current_user.update_attributes(current_project: 0)
+    end
+    redirect_to :back
+end
 
   private
 
   def course_params
-    params.require(:course).permit(:course_title, :instructor, :id, :course_code)
+    params.require(:course).permit(:course_title, :instructor, :id, :course_code, :quarter)
   end
 
-  # def secure_params
-  #   params.require(:user).permit(:current_course)
-  # end
 end
