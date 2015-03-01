@@ -90,10 +90,10 @@ class UsersController < ApplicationController
   # Start download of csv file of partner data
   def export_ungrouped
     authorize current_user
-    mycourse = Course.find_by_id(params[:id])
+    # mycourse = Course.find_by_id(params[:id])
 
-    # mycourse = Course.find_by_id(current_user.current_course)
-    # myproject= Project.find_by_id(current_user.current_project)
+    mycourse = Course.find_by_id(current_user.current_course)
+    myproject= Project.find_by_id(current_user.current_project)
 
     roster_csv = CSV.generate do |csv|
         mycourse.projects.each do |myproject|
@@ -105,7 +105,7 @@ class UsersController < ApplicationController
       csv << ["Grouped: " , "Ungrouped:"]
       GroupRelation.where(project_id: myproject.id, status:2).collect(&:user_id).uniq.each do |id|
         if User.find_by_id(id).role == 0
-          grouped.push(User.find_by_id(id))
+          grouped.push(User.find_by_id(id)) if !grouped.include?(User.find_by_id(id))
         end
       end
       mycourse.users.each do |id|
@@ -113,7 +113,6 @@ class UsersController < ApplicationController
       end
       ungrouped = users - grouped
 
-      # csv << array.safe_transpose(csv)
       count = 0
       if grouped.size() >= ungrouped.size()
         grouped.each do |i|
@@ -123,8 +122,8 @@ class UsersController < ApplicationController
           count < ungrouped.size() ? csv << [name,secondname] : csv << [name]
         end
       else
-        count+=1
         ungrouped.each do |i|
+          count+=1
           name = i.last_name + ", " + i.first_name
           secondname = grouped[count].last_name + ", " + grouped[count].first_name if count < grouped.size()
           count < grouped.size() ? csv << [secondname,name] : csv << ["",name]
