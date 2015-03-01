@@ -137,8 +137,12 @@ class GroupsController < ApplicationController
     project = Project.find_by_id(current_user.current_project)
     allowed_group_size = project.group_size
   
-    if allowed_group_size >= 2
+    if GroupRelation.find_by(user_id: current_user.id, group_id: group.id).status == 1
       requested = GroupRelation.find_by(user_id: current_user.id, group_id: group.id)
+      requested.status = 2
+
+    elsif GroupRelation.find_by(user_id: current_user.id, group_id: group.id).status == 2
+      requested = GroupRelation.find_by(group_id: group.id, status:0)
       requested.status = 2
       
       # "other_requests" are request excluding the one being confirmed (for the same project)
@@ -150,7 +154,7 @@ class GroupsController < ApplicationController
         other_request.destroy
       end
       redirect_to :back
-      requested.save ? flash[:notice] = "You are now in group: <b>#{group.name}</b>"  : flash[:notice] = "There was a problem, try again" 
+      requested.save ? flash[:notice] = "Successfully added to group: <b>#{group.name}</b>"  : flash[:notice] = "There was a problem, try again" 
     else
       redirect_to :back, flash[:error] = "Your Professor specified this project is an individual task. If this is incorrect, please contact your professor." 
     end
@@ -162,7 +166,7 @@ class GroupsController < ApplicationController
     authorize current_user
     set_current_users_instance_variables
     allowed_group_size = project.group_size
-    if !Grouprelation.find_by(group_id:group.id, user_id:current_user.id, status:2).nil?
+    if !GroupRelation.find_by(group_id:group.id, user_id:current_user.id, status:2).nil?
       flash[:error] = "You are already in a group"
     elsif allowed_group_size >= group.users.size
       #create relation for current user
