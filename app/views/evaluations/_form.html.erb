@@ -1,7 +1,6 @@
 <div class="authform", style="max-width: 500px; margin:auto;">
 	<% if !@mygroup.nil?%>
-	<%= form_for(:evaluation, url: {action: 'create'}) do |f| %>
-	<div style="font-size:30px; font-weight:bold;">New Evaluation<br></div><br>
+	<%= form_for(:evaluation, url: {action: 'create', controller:'evaluations'}) do |f| %>
 	<table style="width:100%">
 		<tr>
 			<td><%= f.label 'Team Member: ' %></td>
