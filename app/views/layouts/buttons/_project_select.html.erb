@@ -1,5 +1,6 @@
 <!-- selecting course that users will add groups to -->
 <!-- if the user is signed in and their enrolled in at least one course on roster -->
+<% @current_projects = Course.find(current_user.current_course).projects %>
 <% if !@current_projects.empty? %>
 <!-- setting current course & project (if there's only one project)-->
 	<%= form_for :user, url: set_current_project_user_path(current_user.id), html: { style: 'display:inline;'} do |f|%>
