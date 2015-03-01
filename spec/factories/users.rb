@@ -14,7 +14,7 @@ FactoryGirl.define do
   
   factory :student2, class: User do
     first_name "Christina"
-    email "cryder@uci.edu"
+    email "ryderc@uci.edu"
     role '0'
     id 101
   end

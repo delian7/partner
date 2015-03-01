@@ -7,21 +7,20 @@ Warden.test_mode!
 
 feature 'course projects:' do
   
-  
   before(:each) do
-      professor = FactoryGirl.create(:professor)
-      login_as(professor, :scope => :user)
-      visit(roster_path)
-      first_week_roster = Rails.root + "SQL\ and\ CSVs/rspec_csvs/first_week_roster.csv"
-      attach_file('roster_upload', first_week_roster)
-      page.find('#upload-roster').click
+    professor = FactoryGirl.create(:professor)
+    login_as(professor, :scope => :user)
+    visit (root_path)
+    first_week_roster = Rails.root + "SQL\ and\ CSVs/rspec_csvs/first_week_roster.csv"
+    attach_file('fileupload', first_week_roster)
+    find_button('csvbutton', disabled: true).click
   end
   
-  scenario 'only professor should be able to go to the project page' do #TODO:only professor
-    visit(projects_path)
-    page.body
-    expect(page).to have_content 'Add New Project'
-  end  
+  # scenario 'only professor should be able to go to the project page' do #TODO:only professor
+  #   visit(projects_path)
+  #   page.body
+  #   expect(page).to have_content 'Add New Project'
+  # end  
   
   scenario 'creating test project and deleting the test project' do
     
