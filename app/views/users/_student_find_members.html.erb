@@ -1,22 +1,22 @@
 <div class="panel panel-primary">
 	<div class="panel-heading">
 		<h2><span class="glyphicons glyphicons-address-book"></span>&emsp;Find <%= @myproject.group_size == 2 ? "a Partner" : "Members"%> for 
-			<%= render "layouts/buttons/course_select" %> <%= render "layouts/buttons/project_select" %>
+			<span class="col-sm-3" style="float:none"><%= render "layouts/buttons/course_select" %> </span>
+			<span class="col-sm-3" style="float:none"><%= render "layouts/buttons/project_select" %></span>
 		</h2>
 	</div>
 	<div class="panel-body">
-		<div class="col-xs-8">
+		<div class="col-sm-8">
 		<p>
 		This is a list of all the available partners for <%= @mycourse.course_title %>.<br><br>
 		If you would like to change your course you can do so in the "Change Course and Project" on the top right. </p><br><b>
-		<span class='well well-sm'><% @myproject.group_size.times do %>
+		<div class='well well-sm'><% @myproject.group_size.times do %>
 			<span class="glyphicons glyphicons-user"></span>
 		<% end %>
-		&emsp;Your group size should be <%= @myproject.group_size %>.</span>
-		<br><br>
-		<span class='well well-sm'><%= @myproject.allow_repeat ? '<span class="glyphicons glyphicons-ok-2" style="color:green;"></span>&emsp; You ARE '.html_safe : '<span class="glyphicons glyphicons-ban" style="color:red;"></span>&emsp; You ARE NOT '.html_safe %> allowed to repeat partners from your previous assignments.</span>
+		&emsp;Your group size should be <%= @myproject.group_size %>.</div>
+		<div class='well well-sm'><%= @myproject.allow_repeat ? '<span class="glyphicons glyphicons-ok-2" style="color:green;"></span>&emsp; You ARE '.html_safe : '<span class="glyphicons glyphicons-ban" style="color:red;"></span>&emsp; You ARE NOT '.html_safe %> allowed to repeat partners from your previous assignments.</div>
 		</div></b>
-		<div class="col-xs-4">
+		<div class="col-sm-4">
 			<% @group = current_user.groups.find_by(project_id: current_user.current_project)%>
 			<%= render 'groups/profile', group: @group %>
 		</div>
@@ -28,7 +28,7 @@
 <!-- if group is full -->
 
 <% if (@allowed_size <= @mygroupsize) %>
-	<% msg ="#{@mygroup.name} is full.  <br>You have <span style= 'font-size: 18px; font-weight:bold;'>#{@mygroupsize}</span> members out of the <span style= 'font-size: 18px; font-weight:bold;'>#{@allowed_size}</span> members allowed in your group."%>
+	<% msg ="<u><a href=\"/groups/#{@mygroup.id}\">#{@mygroup.name}</u></a> is full.  <br>You have <span style= 'font-size: 18px; font-weight:bold;'>#{@mygroupsize}</span> members out of the <span style= 'font-size: 18px; font-weight:bold;'>#{@allowed_size}</span> members allowed in your group."%>
 	<div class="alert alert-info"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 	<%= content_tag :div, msg.html_safe, id: "flash_success" %></div>
 	<!-- if partnership deadline passed -->
@@ -56,5 +56,9 @@
 <% else %>
 	<!-- Render every user -->
 	<%= render 'users/user_render', locals: {allowed: @allowed_size, mygroup: @mygroupsize}%>
+	<% if !@available%>
+		<div class="well">Sorry, it looks like no one is available! Contact your professor for instructions.</div>
+	<% end %>
+	</div>
 <% end %></div>
 </div>

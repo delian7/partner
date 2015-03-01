@@ -1,9 +1,9 @@
 <% if user_signed_in? %>
-  <div class="col-xs-4">
+  <div class="col-sm-4">
     <!-- pending requests/notifications here-->
     <%= render "visitors/notifications"%>
   </div>
-  <div class="col-xs-8">
+  <div class="col-sm-8">
     <% case current_user.role %>
     <% when 0 %>
     <%= render 'visitors/to_dos'%>
@@ -15,12 +15,12 @@
       <% when 3 %>
     <% end %>
   <% else%>
-    <div class="col-xs-8" style="text-align:center;">
+    <div class="col-sm-8" style="text-align:center;">
       <%= render "visitors/welcomemsg" %>
       <h4>There are currently <strong><%= User.count %></strong> registered users</h4>
       <!-- pending requests/notifications here-->
     </div>
-   <div class="col-xs-4">
+   <div class="col-sm-4">
       <%= render 'visitors/signin_select'%>
     <% end %>
   </div>

@@ -1,13 +1,16 @@
 <div class="panel panel-primary">
   <div class="panel-heading">
-    <h2><span class="glyphicons glyphicons-group"></span>&emsp;Groups for <%= render "layouts/buttons/course_select"%><%= render "layouts/buttons/project_select"%></h2>    </div>
+    <h2><span class="glyphicons glyphicons-group"></span>&emsp;Groups for
+     <span class="col-sm-3" style="float:none"><%= render "layouts/buttons/course_select"%></span>
+     <span class="col-sm-3" style="float:none"><%= render "layouts/buttons/project_select"%></span></h2>
+   </div>
     <div class="panel-body">
-      <div class="col-xs-8">
+      <div class="col-sm-6">
         <%= link_to '#', class: 'export-popover btn btn-primary', data: {placement:'bottom', trigger:'focus' } do %>
             Export Table
         <% end %>
       </div>
-      <div class="col-xs-2">
+      <div class="col-sm-4">
         Group Size: <%= @myproject.group_size %><br>
         <% @myproject.group_size.times do |o|%>
         <%=  link_to "<span class=\"glyphicons glyphicons-user\" style=\"font-size:14px;\"></span>".html_safe, reduce_groupsize_project_path(@myproject.id), class: "groupsize_changes"%>
@@ -18,7 +21,7 @@
         <%=  link_to "<span class=\"glyphicons glyphicons-minus\" style=\"font-size:14px;\"></span>".html_safe, reduce_groupsize_project_path(@myproject.id), style: "color:red"%>
         <% end %>
       </div>
-      <div class="col-xs-2">
+      <div class="col-sm-2">
         <%= link_to "Autogroup&nbsp;&nbsp;<span class=\"glyphicons glyphicons-random\"></span>".html_safe, autogroup_project_path(@myproject.id), id:"autogroup-btn", class:"btn btn-info"%>
       </div>
     </span>

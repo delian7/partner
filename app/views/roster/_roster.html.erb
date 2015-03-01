@@ -1,3 +1,4 @@
+<% if current_user.role !=0 %>
   <%= link_to '#', class: "info-popover", title: "Uploading Multiple Rosters", style: 'float:right', data: { content: "Click 'Browse' and then cmd-click(Mac) or ctrl-click(Windows) on multiple files to upload multiple rosters", trigger: 'hover', delay: {show: 300, hide: 100}} do %>
     <span class="glyphicons glyphicons-circle-info"></span>
   <% end %>
@@ -29,4 +30,5 @@
   </div> 
   </div>
 
+<% end %>
  

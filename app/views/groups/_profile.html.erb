@@ -60,7 +60,8 @@
                 <% else %>
                     <!-- show either eval form or "evaluation completed" depending if it's complete -->
                     <% evaluated_left = User.find(@group.users.collect(&:id) - @group.eval_relations.where(reviewer_id:current_user.id).collect(&:user_id)) %>
-                    <td style="font-size:12px;" data-toggle="modal" data-target="#evaluate-<%= @group.id%>"><%= evaluated_left.include?(user) ? '<span class="btn btn-primary btn-xs">Evaluate this Partner<span class=\"glyphicons glyphicons-remove\"></span>'.html_safe : 'Evaluation Completed' %>
+                    <td style="font-size:12px;" data-toggle="modal" data-target="#evaluate-<%= @group.id%>">
+                        <%= evaluated_left.include?(user) ? '<span class="btn btn-primary btn-xs">Evaluate this Partner</span>'.html_safe : 'Evaluation Completed' %>
                         <%= render template: "evaluations/modals/new-evaluation", locals: {group: @group}%>
                         </td>
                 <% end %>

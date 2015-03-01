@@ -2,7 +2,7 @@
   <!-- Default panel contents -->
   <div class="panel-heading">
        <h2><span class="glyphicons glyphicons-scale-classic"></span>&emsp;Evaluations&emsp;
-		<%= render 'layouts/buttons/course_select'%></h2>
+		<span class="col-lg-3" style="float:none"><%= render 'layouts/buttons/course_select'%><span></h2>
   </div>
   <!-- Table -->
 
@@ -11,20 +11,23 @@
 	<tr class="active info">
 		<th>Student</th>
 		<th>Average</th>
-		<th>Effort</th>
-		<th>Quality</th>
-		<th>Reliability</th>
-		<th>Group</th>
-	</tr>
+		<th class='collapsable'>Effort</th>
+		<th class='collapsable'>Quality</th>
+		<th class='collapsable'>Reliability</th>
+		<th class='collapsable'>Group</th>
+	</tr><% exists = false %>
 	<% Project.find(current_user.current_project).evaluations.each do |evaluation| %>
-	<% avg = ((evaluation.effort + evaluation.reliability + evaluation.quality)/3) if evaluation.effort && evaluation.reliability && evaluation.quality %>
-	<tr>
-		<td><%= evaluation.users.collect(&:first_name)[0] %> <%= evaluation.users.collect(&:last_name)[0] %></td>
-		<td><center><%= avg %> %</td>
-		<td><center><%= evaluation.effort %> %</td>
-		<td><center><%= evaluation.quality %> %</td>
-		<td><center><%= evaluation.reliability %> %</td>
-		<td><center><%= evaluation.groups.collect(&:name)[0] %></td>
-	</tr>
+		<% avg = ((evaluation.effort + evaluation.reliability + evaluation.quality)/3) if evaluation.effort && evaluation.reliability && evaluation.quality %><% exists = true%>
+		<tr>
+			<td><%= evaluation.users.collect(&:first_name)[0] %> <%= evaluation.users.collect(&:last_name)[0] %></td>
+			<td><center><%= avg %> %</td>
+			<td><center><%= evaluation.effort %> %</td>
+			<td class='collapsable'><center><%= evaluation.quality %> %</td>
+			<td class='collapsable'><center><%= evaluation.reliability %> %</td>
+			<td class='collapsable'><center><%= evaluation.groups.collect(&:name)[0] %></td>
+		</tr>
 	<% end %>
 </table>
+	<% if !exists %>
+	<div class= "well">Looks like no one has submitted an evaluation yet</div>
+	<% end %>

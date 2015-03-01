@@ -1,4 +1,5 @@
-<% current_user.courses.each do |course| %>
+<div class="panel-body">
+	<% current_user.courses.each do |course| %>
 	<% course.projects.each do |project| %>
 		<h4><%= project.name%></h4>
 			<% if project.partnership_deadline > Date.today %>

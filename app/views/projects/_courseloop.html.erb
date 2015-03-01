@@ -10,7 +10,7 @@
 		    <span style="font-size:13px;">There is no active project for <%= course.course_title %>.<br>
         Students are not able to partner up.</span>
         <% @notifications = true %>
-    <%= render template: "projects/modals/new-project", locals: {course: course}%>
+    	<%= render template: "projects/modals/new-project", locals: {course: course}%>
 		</td>
 	</tr>
 	</table>

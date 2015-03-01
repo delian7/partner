@@ -1,17 +1,22 @@
+<% if current_user.role !=0 %>
 <div class="panel panel-primary">
   <!-- Default panel contents -->
   <div class="panel-heading">
         <h2><span class="glyphicons glyphicons-education"></span>&emsp;Courses</span><h2></div>
     <div class="panel-body">
-      <p>This is a list of your added courses. To add another course, <%= link_to 'click here',roster_path %></p>
+      <p>This is a list of your added courses. To add another course,     <%= link_to '', data: { toggle: 'modal', target: '#roster-upload'} , class: "btn btn-default" do %>
+      click here
+    <% end %></p>
     </div>
   <!-- Table -->
   <table class="table">
     <tr class="info active">
       <th class='collapsable'>Course Code</th>
-      <th class='collapsable'>Course Name</th>
+      <th>Course Name</th>
             <th class='collapsable'>Quarter</th>
-      <th colspan='2' class='collapsable'><span class="glyphicons glyphicons-pushpin"></span>&ensp;Projects</th>
+      <th><span class="glyphicons glyphicons-pushpin"></span>&ensp;Projects</th>
+
+      <th class='collapsable'></th>
     </tr>
     <% case current_user.role%>
    <% when 1..2 %>
@@ -33,3 +38,4 @@
 <% end %>
 </table>
 </div>
+<% end %>

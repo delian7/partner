@@ -29,16 +29,11 @@
 		<span class="glyphicons glyphicons-education"></span>&emsp;Courses
 		<% end %>	
 	</li>
-
-	<li class="dropdown <%= 'active' if current_page?(groups_path) %>">
-	  <%= link_to '#', data: {toggle: 'dropdown'}, class: 'dropdown-toggle' do %><span class="glyphicons glyphicons-group"></span>&emsp;Groups <span class="halflings halflings-triangle-bottom" style="font-size:8px;line-height: 2.2;"></span><% end %>
-	  <ul class="dropdown-menu">
-	    <li><%= link_to "Edit Groups", groups_path %></li>
-	    <li class="divider"></li>
-	    <li></li>
-	    <li></li>
-		</ul>
-	</li>	
+	<li role="presentation" class="<%= 'active' if current_page?(groups_path) %> dropdown">
+		<%= link_to groups_path do %>
+		<span class="glyphicons glyphicons-group"></span>&emsp;Groups
+		<% end %>	
+	</li>
 	
 		<li role="presentation" class="<%= 'active' if current_page?(users_path) %>">
 		<%= link_to users_path do %>
