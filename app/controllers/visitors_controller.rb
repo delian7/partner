@@ -1,6 +1,6 @@
 class VisitorsController < ApplicationController
   helper_method :teammates?, :in_group_for?, :classmates?
-  include UsersHelper
+  include UsersHelper, GroupsHelper
 
   def index
     @users = User.all

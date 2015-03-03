@@ -30,6 +30,16 @@ feature 'autogroup:' do
     expect(page).to have_selector('table', count: @number_of_groups - 1)
   end
 
+  scenario 'should be no duplicate students' do
+    # all(:xpath, '//*[(@id = "disband-group-btn")]')[0].click
+    names = []
+    # expect(page).to have_selector('table', count: @number_of_groups - 1)
+    page.all('tr td#name').each do |tr|
+      return false if names.include? tr.text
+      names.push(tr.text)
+    end
+  end
+
   scenario 'disbanning all groups should reduce number of groups to 0' do
     click_link('disband-all-btn')
     # count set to 1 to account for table header

@@ -1,6 +1,7 @@
 <div class="panel-body">
 	<% current_user.courses.each do |course| %>
 	<% course.projects.each do |project| %>
+	<% if !project.partnership_deadline.nil? && !project.evaluation_deadline.nil? %>
 		<h4><%= project.name%></h4>
 			<% if project.partnership_deadline > Date.today %>
 				The partnership deadline for <%= project.name %> is coming on <%= project.partnership_deadline.strftime("%m/%d/%y") %>
@@ -11,5 +12,6 @@
 			<% else %>
 			    Looks like you're all caught up!
 			<% end %>
+		<% end %>
 	<% end %>
 <% end %>

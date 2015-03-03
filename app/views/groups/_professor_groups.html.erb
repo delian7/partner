@@ -32,7 +32,7 @@
     <div class="panel-heading">
       <h4><%= link_to @group.name, @group %><%=  link_to "Delete #{@group.name} &nbsp;<span class=\"glyphicons glyphicons-remove-2\"></span>".html_safe, disband_group_path(group), data: { confirm: "Are you sure? This will permanently delete this group and you will lose all evaluation information."},  id: "disband-group-btn", style:"float:right", class: "btn-danger btn-xs"%></h4>
     </div>
-    <table class="table table-hover table-condensed" id="group_table" align="center">
+    <table class="table table-condensed table-hover" id="group_table" align="center">
       <% @group.users.each do |user| %>
       <tr>
         <% @user = user %>

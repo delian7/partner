@@ -6,18 +6,16 @@ Rails.application.routes.draw do
   get 'users/profile'
   get 'roster', to: 'roster#index'
   get 'playground', to: 'visitors#playground'
+  get 'eval_gen', to: 'users#eval_gen'
+  get 'phone_gen', to: 'users#phone_gen'
+  get 'avatar_gen', to: 'users#avatar_gen'
+  get 'avail_gen', to: 'users#avail_gen'
+  get 'desc_gen', to: 'users#desc_gen'
   post 'courses/csv_import'
 
 
   devise_for :users, :controllers => {:registrations => "registrations"}
   root :to => "visitors#index"
-
-  resources :evaluations do
-    member do
-    end
-    collection do
-    end
-  end
 
   resources :users do
     member do
@@ -33,6 +31,12 @@ Rails.application.routes.draw do
 
     end
     collection do
+      get :desc_gen
+      get :avail_gen
+      get :avatar_gen
+      get :phone_gen
+      get :eval_gen
+
       get :export_ungrouped
       get :export_groups
     end
@@ -103,6 +107,7 @@ Rails.application.routes.draw do
       get :remove
     end
     collection do
+      get :export_evals
     end
   end
 

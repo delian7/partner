@@ -10,6 +10,13 @@ $(function() {
         content: "<a href='/users/export_ungrouped.1'>Ungrouped Students</a><br><a href='/users/export_groups.1'>Partnerships and Groups</a>"
     })
 });
+$(function() {
+    $('.export-eval-popover').popover({
+        html: true,
+        title: "Export CSV of",
+        content: "<a href='/evaluations/export_evals.1'>Student Evaluations</a>"
+    })
+});
 
 $(document).on('change', '.btn-file :file', function() {
     var input = $(this),
@@ -26,11 +33,6 @@ $(document).ready(function() {
     $('.btn-file :file').on('fileselect', function(event, numFiles, label) {
         var input = $(this).parents('.input-group').find(':text'),
             log = numFiles > 1 ? numFiles + ' files selected' : label;
-        if (input.length) {
-            input.val(log);
-        } else {
-            if (log) alert(log);
-        }
     });
     $('#csvbutton').on('click', function() {
         $(this).button('loading') 

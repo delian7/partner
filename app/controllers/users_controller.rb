@@ -160,6 +160,41 @@ class UsersController < ApplicationController
     redirect_to users_path
   end
 
+  def eval_gen
+    User.all.each do |user|
+      eval_generator(user)
+    end
+    redirect_to users_path
+  end
+
+  def phone_gen
+    User.all.each do |user|
+      phone_generator(user)
+    end
+    redirect_to root_path
+  end
+
+  def avatar_gen
+    User.all.each do |user|
+      avatar_generator(user)
+    end
+    redirect_to users_path
+  end
+  
+  def avail_gen
+    User.all.each do |user|
+      availability_generator(user)
+    end
+    redirect_to users_path
+  end    
+  
+  def desc_gen
+    User.all.each do |user|
+      description_generator(user)
+    end
+    redirect_to users_path
+  end
+
   private
 
   def admin_only

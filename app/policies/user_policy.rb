@@ -12,6 +12,9 @@ class UserPolicy
   def new?
     true
   end
+    def export_evals?
+    true
+  end
   def request_join?
     true
   end  

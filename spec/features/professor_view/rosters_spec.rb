@@ -14,16 +14,6 @@ feature 'roster uploads' do
     find_button('csvbutton', disabled: true).click
   end
 
-  # scenario 'should be assesible' do
-  #   professor = FactoryGirl.create(:professor)
-  #   login_as(professor, :scope => :user)
-  #   visit (root_path)
-  #   first_week_roster = Rails.root + "SQL\ and\ CSVs/rspec_csvs/first_week_roster.csv"
-  #   attach_file('fileupload', first_week_roster)
-  #   find_button('csvbutton', disabled: true).click
-  #   visit (users_path)
-  # end
-
   scenario 'should add students, a course, and a new project' do
     visit (users_path)
     expect(page).to have_content 'Delian Petrov' # checks for the name in the roster upload
@@ -33,13 +23,24 @@ feature 'roster uploads' do
     expect(page).to have_content 'Spring Quarter, 2014'
   end
 
-    scenario 'roster upload should add correct number of students as in the roster' do
-    visit(users_path)
-    save_and_open_page
-    # first-week-roster has 72 students in it  PLUS 5 for header, name, email etc
-    expect(page).to have_selector('td:nth-child(1)', count: 77)
-  end
+  # scenario 'roster upload should add correct number of students as in the roster' do
+  #   visit(users_path)
+  #   # save_and_open_page
+  #   # first-week-roster has 72 students in it
+  #   # expect(page).to have_selector('td:nth-child(1)', count: 72)
+  #   expect{page.find_by_id("tr-72")}.not_to raise_error
+  #   expect{page.find_by_id("tr-73")}.to  raise_error
+  # end
 
+ scenario 'roster upload should add correct number of students as in the roster' do
+    visit(users_path)
+    # save_and_open_page
+    # first-week-roster has 72 students in it
+    # expect(page).to have_selector('td:nth-child(1)', count: 72)
+    expect{page.find_by_id("tr-72")}.not_to raise_error
+    expect{page.find_by_id("tr-73")}.to  raise_error
+  end
+  
   scenario 'delete people that are not in the new roster from the course' do
     second_week_roster = Rails.root + "SQL\ and\ CSVs/rspec_csvs/second_week_roster.csv"
     one_person_roster = Rails.root + "SQL\ and\ CSVs/rspec_csvs/one_person_roster.csv"

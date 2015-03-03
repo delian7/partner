@@ -3,7 +3,7 @@
         <!-- Default panel contents -->
         <div class="panel-heading">
             <span style="font-size:20px; font-weight:bold;">Sorry,</span> it looks like you don't
-            have a partner yet for <%= Project.find(current_user.current_project).name %>
+            have a <%= @myproject.group_size == 2 ? "partner" : "group"%> yet for <%= Project.find(current_user.current_project).name %>
     </div>
 <% else %>
     <% !@group.name.nil? ? groupname = @group.name : groupname = @group.users.pluck(:first_name).to_sentence %>
@@ -27,7 +27,7 @@
                 <%= (@group.project.evaluation_deadline.nil? || @group.project.evaluation_deadline == "") ? "Not Specified" : @group.project.evaluation_deadline.strftime("%m/%d/%y") %>
             </div>
     <% end %>
-    <table class="table table-condensed">
+    <table class="table table-condensed table-hover">
         <tr>
             <td style="font-weight:bold;">Name</td>
             <% if current_page?(root_path)%>
@@ -48,10 +48,10 @@
                     <td style="font-size:12px;" ><%= (user.group_relations.find_by(group_id: @group.id).status == 2) ? 'Confirmed' : 'Requested'%></td>
                     <!-- if group member is yourself -->
                 <% if user == current_user %>
-                    <td style="font-size:12px;" >You can't evaluate yourself</td>
+                    <td style="font-size:12px;" >That's you!</td>
                     <!-- If you sent request or are requested a member -->
                 <% elsif (user.group_relations.find_by(group_id: @group.id).status == 1 || current_user.group_relations.find_by(group_id: @group.id).status == 1) %>
-                    <td style="font-size:12px;" >Request Still Pending</td>
+                    <td style="font-size:12px;" >Request Pending</td>
                     <!-- If you sent a request to join this group -->
                 <% elsif (user.group_relations.find_by(group_id: @group.id).status == 0 &&
                     current_user.group_relations.find_by(group_id: @group.id).status == 2) %>
@@ -60,8 +60,12 @@
                 <% else %>
                     <!-- show either eval form or "evaluation completed" depending if it's complete -->
                     <% evaluated_left = User.find(@group.users.collect(&:id) - @group.eval_relations.where(reviewer_id:current_user.id).collect(&:user_id)) %>
-                    <td style="font-size:12px;" data-toggle="modal" data-target="#evaluate-<%= @group.id%>">
-                        <%= evaluated_left.include?(user) ? '<span class="btn btn-primary btn-xs">Evaluate this Partner</span>'.html_safe : 'Evaluation Completed' %>
+                    <td>
+                        <% if evaluated_left.include?(user) %>
+                            <span class="btn btn-primary btn-xs" data-toggle="modal" data-target="#evaluate-<%= @group.id%>">Evaluate</span>
+                            <% else %>
+                            Completed
+                            <% end %>
                         <%= render template: "evaluations/modals/new-evaluation", locals: {group: @group}%>
                         </td>
                 <% end %>
@@ -69,4 +73,5 @@
             <% end %>
         </table>
     </div>
-    <% end %></div></div>
+    <% end %>
+</div>

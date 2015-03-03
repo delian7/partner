@@ -65,7 +65,7 @@ module UsersHelper
   end
 
   def previously_partnered?(user1, user2)
-    if Project.find(current_user.current_project).allow_repeat && !(user1.groups & user2.groups).empty?
+    if !Project.find(current_user.current_project).allow_repeat && !(user1.groups & user2.groups).empty?
       (user1.groups & user2.groups).each do |group|
         if group.course == Course.find(current_user.current_course)
           return true

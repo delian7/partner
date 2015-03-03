@@ -13,14 +13,14 @@
 		<% oneweeklater = Time.now + (7*24*60*60) %>
 		<tr>
 			<td><span class="glyphicons glyphicons-calendar"></span></td>
-			<td><%= f.label 'Evaluation Date:'%></td>
-			<td><input type="text" name="evaluation_deadline" value="<%= oneweeklater.strftime("%m/%d/%Y")%>"></p></td>
+			<td><%= f.label 'Partnership Deadline:'%></td>
+			<td><input type="text" name="partnership_deadline" value="<%= oneweeklater.strftime("%m/%d/%Y")%>"></td>
 		</tr>
 			<% twoweekslater = oneweeklater + (7*24*60*60) %>
 		<tr>
 			<td><span class="glyphicons glyphicons-calendar"></span></td>
-			<td><%= f.label 'Partnership Deadline:'%></td>
-			<td><input type="text" name="partnership_deadline" value="<%= twoweekslater.strftime("%m/%d/%Y")%>"></td>
+			<td><%= f.label 'Evaluation Date:'%></td>
+			<td><input type="text" name="evaluation_deadline" value="<%= twoweekslater.strftime("%m/%d/%Y")%>"></p></td>
 		</tr>
 	</table>
 	<table style="width:100%">

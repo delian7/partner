@@ -7,12 +7,6 @@ class GroupsController < ApplicationController
    
   def index
     set_current_users_instance_variables
-      current_user.groups.order(:project_id).uniq.each do |group| 
-    @is_current_user_grouped = !group.group_relations.find_by(user_id: current_user.id, group_id: group.id).nil?
-    @is_current_user_requested = (group.group_relations.find_by(user_id: current_user.id, group_id: group.id).status == 1) if group.group_relations.find_by(user_id: current_user.id, group_id: group.id)
-    @is_current_user_confirmed = (group.group_relations.find_by(user_id: current_user.id, group_id: group.id).status == 2) 
-    @are_there_any_users_sending_requests = (group.group_relations.find_by(status: 0) != nil) 
-  end 
   end
 
   def edit
@@ -139,7 +133,9 @@ class GroupsController < ApplicationController
   
     if GroupRelation.find_by(user_id: current_user.id, group_id: group.id).status == 1
       requested = GroupRelation.find_by(user_id: current_user.id, group_id: group.id)
-      requested.status = 2
+      requested.status = 2      
+      redirect_to root_path
+      requested.save ? flash[:notice] = "Successfully added to group: <b>#{group.name}</b>"  : flash[:notice] = "There was a problem, try again" 
 
     elsif GroupRelation.find_by(user_id: current_user.id, group_id: group.id).status == 2
       requested = GroupRelation.find_by(group_id: group.id, status:0)
@@ -153,10 +149,10 @@ class GroupsController < ApplicationController
       other_requests.each do |other_request|
         other_request.destroy
       end
-      redirect_to :back
+      redirect_to root_path
       requested.save ? flash[:notice] = "Successfully added to group: <b>#{group.name}</b>"  : flash[:notice] = "There was a problem, try again" 
     else
-      redirect_to :back, flash[:error] = "Your Professor specified this project is an individual task. If this is incorrect, please contact your professor." 
+      redirect_to root_path, flash[:error] = "Your Professor specified this project is an individual task. If this is incorrect, please contact your professor." 
     end
   end
 

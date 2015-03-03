@@ -8,13 +8,7 @@
 <% case current_user.role %>
 <% when 0 %>
  <div class="panel-body">
-	<% if current_user.group_relations.empty? %>
-	    <p>You don't have any new notifications</p>
-	<% else %>
-		<% current_user.groups.order(:project_id).uniq.each do |group| %>
-				<%= render 'visitors/notification_student', group: group%>
-		<% end %>
-	<% end %>
+			<%= render 'visitors/notification_student' %>
 <% when 1..3 %>
  <div class="panel-body">
    		<% current_user.courses.each do |course| %>
@@ -25,9 +19,6 @@
 	    have any new notifications</p>
 	<% end %>
 <% end %>
-</div>
-
-
 
   </div>
 </div>

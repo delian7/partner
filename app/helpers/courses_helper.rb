@@ -18,55 +18,66 @@ module CoursesHelper
   end
 end
 
-  def remove_nils(array)
-    # remove all nils from array of arrays
-    array.each { |nils|  nils.compact! }
-    # delete all empty arrays
-    array.delete_if { |blanks| blanks.empty? }
-  end
+def remove_nils(array)
+  # remove all nils from array of arrays
+  array.each { |nils|  nils.compact! }
+  # delete all empty arrays
+  array.delete_if { |blanks| blanks.empty? }
+end
 
-  def destroy_groups(course)
-    course.projects.each do |project|
-      project.groups.each do |group|
-        group.destroy
-      end
+def destroy_groups(course)
+  course.projects.each do |project|
+    project.groups.each do |group|
+      group.destroy
+    end
     destroy_group_relations(course)
-    end
   end
+end
 
-  def destroy_projects(course)
-    course.projects.each do |project|
-      destroy_project_relations(course)
-      destroy_groups(course)
-      project.destroy
-    end
+def destroy_projects(course)
+  course.projects.each do |project|
+    destroy_project_relations(course)
+    destroy_groups(course)
+    project.destroy
   end
+end
 
-  def destroy_group_relations(course)
-    course.group_relations.each do |relation|
+def destroy_group_relations(course)
+  course.group_relations.each do |relation|
+    relation.destroy
+  end
+end
+
+def destroy_project_relations(course)
+  course.project_relations.each do |relation|
+    relation.destroy
+  end
+end
+
+def remove_student_from_course(course, user)
+  course.projects.each do |project|
+    user.group_relations.where(user_id: user.id, project_id: project.id).each do |relation|
       relation.destroy
-    end
-  end
-
-  def destroy_project_relations(course)
-    course.project_relations.each do |relation|
-      relation.destroy
-    end
-  end
-
-  def destroy_roster_relations(course)
-    course.rosters.each do |relation|
-      relation.destroy
-    end
-  end
-
-  def in_new_roster?(ucinetid)
-    if User.find_by(ucinetid: ucinetid) != nil
-      @student_netids = csv_netids(@student_data)
-      @student_netids.each do |enrolled_student_netid|
-        return true if ucinetid == enrolled_student_netid
+      if Group.where(id: relation.group_id).size.nil?
+        Group.find_by(id: relation.group_id).destroy
       end
-      return false
     end
   end
+  Roster.find_by(user_id: user.id, course_id: @course.id).destroy
+end
 
+def destroy_roster_relations(course)
+  course.rosters.each do |relation|
+    relation.destroy
+  end
+end
+
+def in_new_roster?(ucinetid)
+  if User.find_by(ucinetid: ucinetid) != nil
+    @student_netids = csv_netids(@student_data)
+    @student_netids.each do |enrolled_student_netid|
+      return true if ucinetid == enrolled_student_netid
+    end
+    return false
+  end
+end

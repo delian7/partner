@@ -57,11 +57,34 @@ class ApplicationController < ActionController::Base
     else
       proj = Project.find_by_id(0)
     end
-    if user_signed_in? && (Course.find_by_id(current_user.current_course).nil? || Project.find_by_id(current_user.current_project).nil?)
-      current_user.current_project = 0
-      current_user.current_course = 0
-      current_user.save
+    if user_signed_in?
+      mycourse = Course.find_by_id(current_user.current_course)
+      myproject = Project.find_by_id(current_user.current_project)
+      if mycourse.nil?
+        if current_user.courses[0].nil?
+          current_user.current_project = 0
+          current_user.current_course = 0
+          current_user.save
+        else
+          current_user.current_course = current_user.courses[0].id if !current_user.courses[0].nil?
+          current_user.save
+        end
+      elsif myproject.nil?
+        if !mycourse.projects.include? (myproject)
+          current_user.current_project = mycourse.projects[0].id if !mycourse.projects[0].nil?
+          current_user.save
+        end
+      end
+      if (current_user.current_course == 0) || (current_user.current_project == 0)
+        if mycourse.nil?
+        else
+          current_user.current_project = mycourse.projects[0].id if !mycourse.projects[0].nil?
+          current_user.current_course = current_user.courses[0].id if !current_user.courses[0].nil?
+          current_user.save
+        end
+      end
     end
+
   end
 
   protected

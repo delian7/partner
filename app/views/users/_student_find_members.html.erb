@@ -8,8 +8,8 @@
 	<div class="panel-body">
 		<div class="col-sm-8">
 		<p>
-		This is a list of all the available partners for <%= @mycourse.course_title %>.<br><br>
-		If you would like to change your course you can do so in the "Change Course and Project" on the top right. </p><br><b>
+		This is a list of all the available partners for <%= @mycourse.course_title %>.<br>
+		If you would like to change your course you can do so in the "Change Course and Project" on the top right. </p><b>
 		<div class='well well-sm'><% @myproject.group_size.times do %>
 			<span class="glyphicons glyphicons-user"></span>
 		<% end %>
@@ -28,6 +28,7 @@
 <!-- if group is full -->
 
 <% if (@allowed_size <= @mygroupsize) %>
+</div>
 	<% msg ="<u><a href=\"/groups/#{@mygroup.id}\">#{@mygroup.name}</u></a> is full.  <br>You have <span style= 'font-size: 18px; font-weight:bold;'>#{@mygroupsize}</span> members out of the <span style= 'font-size: 18px; font-weight:bold;'>#{@allowed_size}</span> members allowed in your group."%>
 	<div class="alert alert-info"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 	<%= content_tag :div, msg.html_safe, id: "flash_success" %></div>

@@ -1,31 +1,42 @@
 <% @myproject.groups.collect(&:name).include?('Team 10')||@myproject.groups.collect(&:name).include?('Team 11') ? groups = @myproject.groups.uniq : groups = @myproject.groups.order(:name).uniq %>
-<% if @group.nil?%>
+<% if @group.nil?%><% count = 0 %>
 	<% groups.each do |group| %>
-		<% if @group!= group %>
-		<table class="table table-condensed">
+	<% count += 1 %>
+		<% if @group!= group && (group.group_relations.size < @myproject.group_size) %>
+		<table class="table table-condensed table-hover">
 		<% @group = Group.find(group) %>
-		<tr class="info active">
-			<th colspan="4"><h3><%= link_to @group.name, @group %></h3></th>
-			<td><%= link_to("<span class=\"glyphicons glyphicons-send\"></span>&nbsp;&nbsp;Request to join".html_safe, request_join_group_path(@group.id), class: 'btn btn-success')%></td>
+		<tr class="info active" id="tr-<%= count%>">
+			<th class='collapsable'></th><th class='collapsable'></th><th><h3><%= link_to @group.name, @group %></h3></th><th class='collapsable'></th></th>
+			<td style="text-align:right"><%= link_to("<span class=\"glyphicons glyphicons-send\"></span>&nbsp;&nbsp;Request to join".html_safe, request_join_group_path(@group.id), class: 'btn btn-success')%></td><th class='collapsable'></th>
 		</tr>
+		 <tr>
+		 	<td class='collapsable'></td>
+		 	<td class='collapsable'></td>
+            <td style="font-weight:bold;">Name</td>
+            <td class='collapsable' style="font-weight:bold;">Email</td>
+            <td class='collapsable' style="font-weight:bold;">Availability</td>
+            <td style="font-weight:bold;text-align:right;">Status</td>
+            <td></td>
+        </tr>
 		<% members = group.users.order(:last_name).uniq %>
 		<% members.each do |user| %>
 			<% if GroupRelation.find_by(user_id: user.id, group_id: @group.id).status == 2 %>
 				<tr>
-					<td></td>
+					<td class='collapsable'></td>
 					<td class='collapsable'><%= link_to (image_tag (user.avatar.url), class:"img-rounded"), user %></td>
-					<td><%= link_to "#{user.first_name} #{user.last_name}", user %> </td>
+					<td id='name'><%= link_to "#{user.first_name} #{user.last_name}", user %> </td>
 					<td class='collapsable'><%= user.email %></td>
-					<td>Confirmed&nbsp;&nbsp;<span class="glyphicons glyphicons-ok" style="color:green; font-size:20px;"></span></td>
+					<td class='collapsable'><%= user.availability %></td>
+					<td style="text-align:right">Confirmed&nbsp;&nbsp;<span class="glyphicons glyphicons-ok" style="color:green; font-size:20px;"></span></td>
 				<% else %>
 					<tr class = "active" style= "opacity: 0.6;"><td></td>
 					<td class='collapsable'><%= link_to (image_tag (user.avatar.url), class:"img-rounded"), user %></td>
 					<td><%= link_to "#{user.first_name} #{user.last_name}", user %> </td>
 					<td class='collapsable'><%= user.email %></td>
-					<td>Pending </td></tr>
+					<td class='collapsable'><%= user.availability %></td>
+					<td style="text-align:right">Pending </td></tr>
 				<% end %>
 			<% end %>
-			<tr> &nbsp;</tr>
 		</table>
 		<% end %>
 	<% end %>

@@ -5,21 +5,38 @@
 		<span class="col-lg-3" style="float:none"><%= render 'layouts/buttons/course_select'%><span></h2>
   </div>
   <!-- Table -->
+  <div class="panel-body">
+  	      <div class="col-sm-6">
+        <%= link_to '#', class: 'export-eval-popover btn btn-primary', data: {placement:'bottom', trigger:'focus' } do %>
+            Export Table
+        <% end %>
+      </div>
+      <div class="col-sm-4">
+
+      </div>
+      <div class="col-sm-2">
+
+      </div>
+  </div>
 
 <table class="table table-condensed table-hover" >
 	<!-- goes throguh all users courses, then for every course, pushes all projects to array @projs-->
 	<tr class="active info">
 		<th>Student</th>
+		<th>Reviewer</th>
 		<th>Average</th>
 		<th class='collapsable'>Effort</th>
 		<th class='collapsable'>Quality</th>
 		<th class='collapsable'>Reliability</th>
 		<th class='collapsable'>Group</th>
-	</tr><% exists = false %>
+	</tr>
+	<% exists = false %>
 	<% Project.find(current_user.current_project).evaluations.each do |evaluation| %>
-		<% avg = ((evaluation.effort + evaluation.reliability + evaluation.quality)/3) if evaluation.effort && evaluation.reliability && evaluation.quality %><% exists = true%>
+		<% avg = ((evaluation.effort + evaluation.reliability + evaluation.quality)/3) if evaluation.effort && evaluation.reliability && evaluation.quality %>
+		<% exists = true%>
 		<tr>
 			<td><%= evaluation.users.collect(&:first_name)[0] %> <%= evaluation.users.collect(&:last_name)[0] %></td>
+			<td><%= User.find_by_id(evaluation.eval_relations[0].reviewer_id).first_name %> <%= User.find_by_id(evaluation.eval_relations[0].reviewer_id).last_name %></td>
 			<td><center><%= avg %> %</td>
 			<td><center><%= evaluation.effort %> %</td>
 			<td class='collapsable'><center><%= evaluation.quality %> %</td>

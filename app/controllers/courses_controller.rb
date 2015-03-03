@@ -89,9 +89,12 @@ class CoursesController < ApplicationController
 
 
       # for every 'row' or array in studentdata array, excluding row 1 and the last two
-      @student_data[1..-2].each do |i|
+      @student_data[1..-1].each do |i|
         get_student_data(i, @student_data)
         # if i student exists, find them
+        # if @netid == "xjacobs"
+        #   asdf.asdf
+        # end
         if !User.find_by(ucinetid: @netid).nil?
           @user = User.find_by(ucinetid: @netid)
         else
@@ -108,7 +111,9 @@ class CoursesController < ApplicationController
       # removes students if they are not enrolled in the newest roster
       Course.where(course_code: @course_code, quarter: @quarter)[0].users.pluck(:ucinetid).each do |enrolled_netid|
         if enrolled?(enrolled_netid, @course) && !in_new_roster?(enrolled_netid)
-          Roster.find_by(user_id: User.find_by(ucinetid: enrolled_netid).id, course_id: @course.id).destroy
+          remove_student_from_course(@course, User.find_by(ucinetid: enrolled_netid))
+          # Roster.find_by(user_id: User.find_by(ucinetid: enrolled_netid).id, course_id: @course.id).destroy
+          # GroupRelation.find_by(user_id: User.find_by(ucinetid: enrolled_netid).id, course_id: @course.id).each do {|relation| relation.destroy}
           removal+=1
         else
           set_current_project_course(@user, @proj, @course)
@@ -119,6 +124,7 @@ class CoursesController < ApplicationController
     flash[:notice] = msg.html_safe
     redirect_to :back
   end
+
   def set_user_current_course
     authorize current_user
     course = Course.find(params[:id])
