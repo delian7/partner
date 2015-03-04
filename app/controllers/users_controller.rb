@@ -96,43 +96,45 @@ class UsersController < ApplicationController
     myproject= Project.find_by_id(current_user.current_project)
 
     roster_csv = CSV.generate do |csv|
-        mycourse.projects.each do |myproject|
-    grouped=[]
-    users=[]
-      csv << ["Project: #{myproject.name}", "Course: #{mycourse.course_title}", "Quarter: #{mycourse.quarter}"]
-      csv << ["Instructor: " + mycourse.instructor, "Downloaded by: " + current_user.first_name + " " + current_user.last_name, "Date: #{Time.now.strftime("%m/%d/%Y")}"]
-      csv << ["Time: #{Time.now.strftime("%I:%M %p")}", "Total Teams: #{myproject.groups.uniq.size}", "Total Students: #{mycourse.users.where(role:0).size}"]
-      csv << ["Grouped: " , "Ungrouped:"]
-      GroupRelation.where(project_id: myproject.id, status:2).collect(&:user_id).uniq.each do |id|
-        if User.find_by_id(id).role == 0
-          grouped.push(User.find_by_id(id)) if !grouped.include?(User.find_by_id(id))
+      mycourse.projects.each do |myproject|
+        grouped=[]
+        users=[]
+        csv << ["Project: #{myproject.name}", "Course: #{mycourse.course_title}", "Quarter: #{mycourse.quarter}"]
+        csv << ["Instructor: " + mycourse.instructor, "Downloaded by: " + current_user.first_name + " " + current_user.last_name, "Date: #{Time.now.strftime("%m/%d/%Y")}"]
+        csv << ["Time: #{Time.now.strftime("%I:%M %p")}", "Total Teams: #{myproject.groups.uniq.size}", "Total Students: #{mycourse.users.where(role:0).size}"]
+        csv << ["Grouped: " , "Ungrouped:"]
+        GroupRelation.where(project_id: myproject.id, status:2).collect(&:user_id).uniq.each do |id|
+          if User.find_by_id(id).role == 0
+            grouped.push(User.find_by_id(id)) if !grouped.include?(User.find_by_id(id))
+          end
         end
-      end
-      mycourse.users.each do |id|
-        users.push(id)
-      end
-      ungrouped = users - grouped
+        mycourse.users.each do |id|
+          if id.role == 0
+            users.push(id)
+          end
+        end
+        ungrouped = users - grouped
 
-      count = 0
-      if grouped.size() >= ungrouped.size()
-        grouped.each do |i|
-          count+=1
-          name = i.last_name + ", " + i.first_name
-          secondname = ungrouped[count].last_name + ", " + ungrouped[count].first_name if count < ungrouped.size()
-          count < ungrouped.size() ? csv << [name,secondname] : csv << [name]
-        end
-      else
-        ungrouped.each do |i|
-          count+=1
-          name = i.last_name + ", " + i.first_name
-          secondname = grouped[count].last_name + ", " + grouped[count].first_name if count < grouped.size()
-          count < grouped.size() ? csv << [secondname,name] : csv << ["",name]
+        count = -1
+        if grouped.size() >= ungrouped.size()
+          grouped.each do |i|
+            count+=1
+            name = i.last_name + ", " + i.first_name
+            secondname = ungrouped[count].last_name + ", " + ungrouped[count].first_name if count < ungrouped.size()
+            count < ungrouped.size() ? csv << [name,secondname] : csv << [name]
+          end
+        else
+          ungrouped.each do |i|
+            count+=1
+            name = i.last_name + ", " + i.first_name
+            secondname = grouped[count].last_name + ", " + grouped[count].first_name if count < grouped.size()
+            count <= grouped.size() ? csv << [secondname,name] : csv << ["",name]
+          end
         end
       end
+
     end
-
-          end 
-      send_data(roster_csv, type:  'text/csv', filename:  "#{Date.today}_leftover_students.csv")
+    send_data(roster_csv, type:  'text/csv', filename:  "#{Date.today}_leftover_students.csv")
 
 
   end
@@ -180,19 +182,29 @@ class UsersController < ApplicationController
     end
     redirect_to users_path
   end
-  
+
   def avail_gen
     User.all.each do |user|
       availability_generator(user)
     end
     redirect_to users_path
-  end    
-  
+  end
+
   def desc_gen
     User.all.each do |user|
       description_generator(user)
     end
     redirect_to users_path
+  end
+  
+  def gen
+    User.all.each do |user|
+      description_generator(user)
+      availability_generator(user)
+      avatar_generator(user)
+      eval_generator(user)
+      phone_generator(user)
+    end
   end
 
   private

@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   get 'avatar_gen', to: 'users#avatar_gen'
   get 'avail_gen', to: 'users#avail_gen'
   get 'desc_gen', to: 'users#desc_gen'
+  get 'gen', to: 'users#gen'
   post 'courses/csv_import'
 
 
@@ -36,6 +37,7 @@ Rails.application.routes.draw do
       get :avatar_gen
       get :phone_gen
       get :eval_gen
+      get :gen
 
       get :export_ungrouped
       get :export_groups
