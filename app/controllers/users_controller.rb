@@ -196,7 +196,7 @@ class UsersController < ApplicationController
     end
     redirect_to users_path
   end
-  
+
   def gen
     User.all.each do |user|
       description_generator(user)
@@ -205,6 +205,7 @@ class UsersController < ApplicationController
       eval_generator(user)
       phone_generator(user)
     end
+    redirect_to users_path
   end
 
   private
