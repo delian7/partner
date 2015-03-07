@@ -1,14 +1,19 @@
-<div class="jumbotron", style="max-width: 350px; padding:23px;background-image: none; text-align:center;">
-
+<div class="jumbotron", style="padding:20px;background-image: none; text-align:center;">
 <% if @ucinetid.blank? %>
+<p style="font-size:12px">
+You are not signed in to Webauth.
+</p>
+
 <%= link_to (request.ip == "127.0.0.1") ? "" : "https://login.uci.edu/", class:"btn btn-primary" do %>
 		<span class="glyphicons glyphicons-log-in"></span> Login to WebAuth
 		<% end %>
 
 <% else %>
+<p style="font-size:12px">
+You are signed in to Webauth as <b><%= @ucinetid %></b><br>If this is incorrect, <a targer="blank" href="http://login.uci.edu/ucinetid/webauth_logout">click here to logout</a></p>
 	<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
     	<%= f.hidden_field :ucinetid, value: @ucinetid %> 
-    	<%= f.submit "Log In to PartnerUp", class:"btn btn-primary" %>
+    	<%= f.submit "Login as... #{@ucinetid}", class:"btn btn-primary" %>
 	<% end %>
 <% end %>
 </div>
