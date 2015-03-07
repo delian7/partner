@@ -139,28 +139,7 @@ class UsersController < ApplicationController
 
   end
 
-  def send_request
-    user = User.find(params[:id])
-    authorize user
-    set_current_users_instance_variables
 
-    if @current_group_size >= @allowed_group_size
-      flash[:error] = "Unable to send request, you have too many pending requests."
-    else
-      @allowed_group_size > 2 ? group_namer("random", @myproject) : group_namer("partner", @myproject)
-      if @mygroup.nil?
-        newgroup = Group.create(name: @groupname, course_id: @mycourse.id, project_id: @myproject.id)
-        #create relation for current user
-        current_user_relation = GroupRelation.create(user_id: current_user.id, project_id: @myproject.id, status: 2, group_id: newgroup.id)
-      else
-        newgroup = Group.find_by_id(@mygroup)
-      end
-      # create relation for user who is being requested (status=1, requested)
-      user_relation = GroupRelation.create(user_id: user.id, project_id: @myproject.id, status: 1, group_id: newgroup.id)
-      flash[:notice] = "Requested <b>#{user.first_name} #{user.last_name}</b> to your group: <b>#{newgroup.name}</b> "
-    end
-    redirect_to users_path
-  end
 
   def eval_gen
     User.all.each do |user|

@@ -1,11 +1,14 @@
+<div class="jumbotron", style="max-width: 350px; padding:23px;background-image: none; text-align:center;">
+
 <% if @ucinetid.blank? %>
-<%= link_to (request.ip == "127.0.0.1") ? "" : "https://login.uci.edu/" do %>
-		<span class="glyphicons glyphicons-log-in"></span> Login
+<%= link_to (request.ip == "127.0.0.1") ? "" : "https://login.uci.edu/", class:"btn btn-primary" do %>
+		<span class="glyphicons glyphicons-log-in"></span> Login to WebAuth
 		<% end %>
 
 <% else %>
 	<%= form_for(resource, url: user_session_path) do |f| %>
     	<%= f.hidden_field :ucinetid, value: @ucinetid %> 
-    	<%= f.submit "Log In", class:"btn btn-primary" %>
+    	<%= f.submit "Log In to PartnerUp", class:"btn btn-primary" %>
 	<% end %>
 <% end %>
+</div>

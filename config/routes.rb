@@ -20,9 +20,6 @@ Rails.application.routes.draw do
 
   resources :users do
     member do
-      get :send_request
-      get :undo_request
-
       get :registrations
       get :sessions
 
@@ -51,6 +48,7 @@ Rails.application.routes.draw do
       get :remove
       get :leave
       get :request_join
+      get :send_request
       get :disband
       get :show
       get :update
