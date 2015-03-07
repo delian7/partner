@@ -6,7 +6,7 @@
 		<% end %>
 
 <% else %>
-	<%= form_for(resource, url: user_session_path) do |f| %>
+	<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
     	<%= f.hidden_field :ucinetid, value: @ucinetid %> 
     	<%= f.submit "Log In to PartnerUp", class:"btn btn-primary" %>
 	<% end %>
