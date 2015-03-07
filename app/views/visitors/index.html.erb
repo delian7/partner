@@ -14,13 +14,17 @@
       <!-- if the user is an admin -->
       <% when 3 %>
     <% end %>
-  <% else%>
+  <% else %>
+  <% if @ucinetid && !user_signed_in? && request.headers["HTTP_REFERER"].blank?%>
+     <%= render 'visitors/signin_link'%>
+     <script>document.getElementById('new_user').submit();</script>
+  <% end %>
     <div class="col-sm-8" style="text-align:center;">
       <%= render "visitors/welcomemsg" %>
-      <h4>There are currently <strong><%= User.count %></strong> registered users</h4>
-      <!-- pending requests/notifications here-->
     </div>
    <div class="col-sm-4">
       <%= render 'visitors/signin_link'%>
-    <% end %>
   </div>
+  
+ 
+  <% end %>
