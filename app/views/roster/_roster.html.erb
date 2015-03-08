@@ -21,7 +21,7 @@
     
   <div class="form-group" style="text-align:center;">
       
-      <%= button_tag 'Upload', class: 'btn btn-primary btn-xl', id: 'csvbutton', disabled: 'disabled' do %>
+      <%= button_tag 'Upload', class: 'btn btn-primary btn-xl', id: 'csvbutton', disabled: 'disabled', data: { "loading-text" => "<span class=\"glyphicon glyphicon-refresh spin\"></span>&ensp; Loading..." } do %>
        <span class="glyphicons glyphicons-upload"></span>Upload CSV File
       <% end %>
    <% end %>     
