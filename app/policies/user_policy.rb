@@ -27,6 +27,9 @@ class UserPolicy
   def remove?
     true
   end
+  def export_eval_summary?
+    true
+  end
   def disband?
     true
   end

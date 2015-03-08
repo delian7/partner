@@ -108,6 +108,7 @@ Rails.application.routes.draw do
     end
     collection do
       get :export_evals
+      get :export_eval_summary
     end
   end
 

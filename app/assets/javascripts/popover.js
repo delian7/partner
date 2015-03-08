@@ -14,7 +14,7 @@ $(function() {
     $('.export-eval-popover').popover({
         html: true,
         title: "Export CSV of",
-        content: "<a href='/evaluations/export_evals.1'>Student Evaluations</a>"
+        content: "<a href='/evaluations/export_evals.1'>Student Evaluation Data</a><br><a href='/evaluations/export_eval_summary.1'>Evaluation Summary Data</a>"
     })
 });
 
