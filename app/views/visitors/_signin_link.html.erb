@@ -7,13 +7,15 @@ You are not signed in to Webauth.
 <%= link_to (request.ip == "127.0.0.1") ? "" : "https://login.uci.edu/", class:"btn btn-primary" do %>
 		<span class="glyphicons glyphicons-log-in"></span> Login to WebAuth
 		<% end %>
-
+<% if request.ip == "127.0.0.1" %>
+	<%= render "visitors/signin_select" %>
+<% end %>
 <% else %>
 <p style="font-size:12px">
-You are signed in to Webauth as <b><%= @ucinetid %></b><br>If this is incorrect, <a targer="blank" href="http://login.uci.edu/ucinetid/webauth_logout">click here to logout</a></p>
+You are signed in to Webauth as <b>Kay</b><br>If this is incorrect, <a targer="blank" href="http://login.uci.edu/ucinetid/webauth_logout">click here to logout</a></p>
 	<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
     	<%= f.hidden_field :ucinetid, value: @ucinetid %> 
-    	<%= f.submit "Login as... #{@ucinetid}", class:"btn btn-primary" %>
+    	<%= f.submit "Login as... Kay", class:"btn btn-primary" %>
 	<% end %>
 <% end %>
 </div>
