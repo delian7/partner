@@ -28,7 +28,7 @@ class EvaluationsController < ApplicationController
       redirect_to :back, alert: "Evaluation could not be saved"
     end
   end
-  
+
   def update
     authorize current_user
     @evaluation = Evaluation.find(params[:id])
@@ -73,18 +73,21 @@ class EvaluationsController < ApplicationController
       csv << ["Time: #{Time.now.strftime("%I:%M %p")}", "Total Teams: #{myproject.groups.uniq.size}", "Total Students: #{mycourse.users.where(role:0).size}"]
       csv << ["Student", "Average"]
 avg=0
+user=current_user
       myproject.evaluations.each do |eval|
         eval.eval_relations.each do |relation|
-          if user == User.find_by_id(relation.user_id)
-            avg = avg+(eval.effort.to_f + eval.reliability.to_f + eval.quality.to_f)/3
-          else 
-            user = User.find_by_id(relation.user_id)
-            avg=0
-            avg = (eval.effort.to_f + eval.reliability.to_f + eval.quality.to_f)/3
+        if user == User.find_by_id(relation.user_id)
+          avg = avg + ((eval.effort.to_f + eval.reliability.to_f + eval.quality.to_f)/3).ceil
+        else
+          avg=avg/Group.find_by_id(relation.group_id).users.size
           csv << [user.first_name + " " + user.last_name, avg]
+          avg=0
+          user = User.find_by_id(relation.user_id)
+          avg = ((eval.effort.to_f + eval.reliability.to_f + eval.quality.to_f)/3).ceil
         end 
       end
     end
+  end
     send_data(roster_csv, type:  'text/csv', filename: "#{mycourse.course_code}_eval_summary.csv")
   end
 
