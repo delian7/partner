@@ -6,7 +6,6 @@ class GroupRelationsController < ApplicationController
   require 'csv'
 
   def index
-    # @user = User.find(params[:id])
     set_current_users_instance_variables
     if @myproject.nil?
       set_current_project_course(current_user, Project.find(0), Course.find(0))
@@ -14,16 +13,16 @@ class GroupRelationsController < ApplicationController
     # @allowed_project_size = @myproject.group_size
   end
 
-  def edit
-    @group = Group.find(params[:id])
-  end
+  # def edit
+  #   @group = Group.find(params[:id])
+  # end
 
-  def destroy
-    @group = Group.find(params[:id])
-    @group.destroy
-    @group.save
-    redirect_to(:action => 'index')
-  end
+  # def destroy
+  #   @group = Group.find(params[:id])
+  #   @group.destroy
+  #   @group.save
+  #   redirect_to(:action => 'index')
+  # end
 
   def update
     @group = GroupRelation.find(params[:id])
@@ -69,9 +68,6 @@ class GroupRelationsController < ApplicationController
   end
 
   private
-  # def login_params
-  #   params.require(:grouprelation).permit(:id)
-  # end
   
   def secure_params
     params.require(:grouprelation).permit(:id, :course_id, :group_id, :project_id, :user_id)

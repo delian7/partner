@@ -22,11 +22,8 @@ Rails.application.routes.draw do
     member do
       get :registrations
       get :sessions
-
-
       post :set_current_course
       post :set_current_project
-
     end
     collection do
       get :desc_gen
@@ -54,7 +51,6 @@ Rails.application.routes.draw do
       get :update
       get :confirm
       post :update_relation
-      post :new_relation
     end
     collection do
     end
@@ -65,8 +61,6 @@ Rails.application.routes.draw do
       get :edit
       get :show
       post :update
-      get :remove
-      get :set_user_current_course
 
     end
     collection do

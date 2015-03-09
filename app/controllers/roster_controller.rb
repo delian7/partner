@@ -14,13 +14,6 @@ class RosterController < ApplicationController
     end
   end
 
-  def destroy
-    @roster = Roster.find(params[:id])
-    @roster.destroy
-    @roster.save
-    redirect_to(:action => 'index')
-  end
-
   def update
     @roster = Roster.find(params[:id])
 

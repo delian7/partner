@@ -31,12 +31,6 @@ class UsersController < ApplicationController
     end
   end
 
-  def destroy
-    user = User.find(params[:id])
-    user.destroy
-    redirect_to users_path, :notice => "User deleted."
-  end
-
   def set_current_course
     authorize User.find(params[:id])
     current_user.update_attributes(secure_params)
@@ -135,10 +129,7 @@ class UsersController < ApplicationController
 
     end
     send_data(roster_csv, type:  'text/csv', filename:  "#{Date.today}_leftover_students.csv")
-
-
   end
-
 
 
   def eval_gen

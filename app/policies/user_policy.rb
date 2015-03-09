@@ -12,12 +12,12 @@ class UserPolicy
   def new?
     true
   end
-    def export_evals?
+  def export_evals?
     true
   end
   def request_join?
     true
-  end  
+  end
   def set_user_current_course?
     true
   end
@@ -76,5 +76,5 @@ class UserPolicy
   def csv_import?
     user.role !=0
   end
-  
+
 end

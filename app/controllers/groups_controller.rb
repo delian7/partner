@@ -13,21 +13,6 @@ class GroupsController < ApplicationController
     @group = Group.find(params[:id])
   end
 
-  def create
-    if !params[:group][:name].nil?
-      @group = Group.create(name: params[:group][:name], course_id: current_user.current_course, project_id: current_user.current_project)
-    end
-    @group.save
-    redirect_to(:action => 'index')
-  end
-
-  def destroy
-    @group = Group.find(params[:id])
-    @group.destroy
-    @group.save
-    redirect_to(:action => 'index')
-  end
-
   def update_relation
     user = User.find_by_id(params[:id])
     if !params[:group][:old].nil?
@@ -78,30 +63,9 @@ class GroupsController < ApplicationController
     redirect_to(:action => 'index')
   end
 
-  def profile
-    set_current_users_instance_variables
-    if user_signed_in?
-      authorize current_user
-    else
-      redirect_to :back, :alert => "Access denied."
-    end
-  end
-
   def show
     @group = Group.find(params[:id])
     authorize current_user
-
-  end
-
-  def destroy
-    user = User.find(params[:id])
-    authorize user
-    unless user == current_user
-      user.destroy
-      redirect_to users_path, :notice => "User deleted."
-    else
-      redirect_to users_path, :notice => "Can't delete yourself."
-    end
   end
 
   def leave

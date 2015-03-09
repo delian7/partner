@@ -63,17 +63,6 @@ class ProjectsController < ApplicationController
     redirect_to :back
   end
 
-  def edit
-    @project = Project.find(params[:id])
-  end
-
-  def destroy
-    @project = Project.find(params[:id])
-    @project.destroy
-    @project.save
-    redirect_to courses_path
-  end
-
   def update
     @project = Project.find(params[:id])
 

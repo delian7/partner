@@ -16,21 +16,13 @@ class CoursesController < ApplicationController
     @course = Course.find(params[:id])
   end
 
-  def show
-    @course = Course.find(params[:id])
-    unless user_signed_in?
-      authorize current_user
-      redirect_to :back, :alert => "Access denied."
-    end
-  end
-
   def update
     authorize current_user
     @course = Course.find(params[:id])
     if @course.update_attributes(course_params)
-      redirect_to :back, :notice => "Course updated successfully"
+      redirect_to :back, notice: "Course updated successfully"
     else
-      redirect_to :back, :alert => "Course could not be updated"
+      redirect_to :back, alert: "Course could not be updated"
     end
   end
 
@@ -68,7 +60,7 @@ class CoursesController < ApplicationController
     # enrolls = Course.find(@course_code).users.pluck(:ucinetid)
   end
 
-    def csv_import
+  def csv_import
     # variables for counting how many roster relations made
     msg = ""
     add, removal = [0, 0]
@@ -124,21 +116,6 @@ class CoursesController < ApplicationController
     flash[:notice] = msg.html_safe
     redirect_to :back
   end
-
-  def set_user_current_course
-    authorize current_user
-    course = Course.find(params[:id])
-    # current_user.update_attributes(secure_params)
-    set_current_users_instance_variables
-    # @current_projects = Project.where(course_id: @mycourse.id)
-
-    if !course.nil?
-      current_user.update_attributes(current_project: course.id)
-    else
-      current_user.update_attributes(current_project: 0)
-    end
-    redirect_to :back
-end
 
   private
 
