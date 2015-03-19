@@ -31,6 +31,7 @@
                 <span style="font-weight:bold;">Evaluation Deadline:</span>
                 <%= (@group.project.evaluation_deadline.nil? || @group.project.evaluation_deadline == "") ? "Not Specified" : @group.project.evaluation_deadline.strftime("%m/%d/%y") %>
             </div>
+    <% else %> </div>
     <% end %>
     <table class="table table-condensed table-hover">
         <tr class="active" >
@@ -81,6 +82,6 @@
             </tr>
             <% end %>
         </table>
-    </div>
+  
     <% end %>
 </div>
