@@ -20,6 +20,7 @@ db/*.sqlite3
 /db/*.sqlite3-journal
 /log/*
 /tmp/*
+secrets.yml
 public/*
 
 # various artifacts
