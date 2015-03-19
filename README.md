@@ -180,5 +180,5 @@ Documentation and Support
 
 Credits
 -------
-<img src="http://i58.tinypic.com/264l3pj.png" style="max-width:50px;">
+<img src="http://i58.tinypic.com/264l3pj.png" style="max-width:200px;">
 
