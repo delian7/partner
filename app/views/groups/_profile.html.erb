@@ -10,7 +10,12 @@
     <div class="panel panel-info">
     <!-- Default panel contents -->
     <div class="panel-heading">
-        <span style="font-size:18px; font-weight:bold;"><%= link_to groupname, @group%></span>
+        <span style="font-size:18px; font-weight:bold;">
+        <%= link_to '#', data: { toggle: 'modal', target: "#show-#{@group.id}"} do %>
+                <%= @group.name %>
+        <% end %></span>
+                        <%= render template: "groups/modals/show", locals: {group: @group}%></td>
+                    </div>
     <% if current_page?(root_path)%>
         <%= link_to "<span class=\"glyphicons glyphicons-remove\"></span>&nbsp;&nbsp;<b>Leave Group</b>".html_safe, leave_group_path(@group), data: { confirm: "Are you sure you want to leave the group #{@group.name}?"},  class: "btn btn-danger btn-xs", style: "float:right" %>
         </div>
@@ -28,7 +33,7 @@
             </div>
     <% end %>
     <table class="table table-condensed table-hover">
-        <tr>
+        <tr class="active" >
             <td style="font-weight:bold;">Name</td>
             <% if current_page?(root_path)%>
             <td class='collapsable' style="font-weight:bold;">Email</td>
@@ -38,9 +43,13 @@
             <td style="font-weight:bold;">Evaluated?</td></tr>
             <% members = @group.users.order(:last_name).uniq %>
             <% members.each do |user| %>
+            <% @user = user %>
             <tr style="<%= (user.group_relations.find_by(group_id: @group.id).status != 2) ? 'background-color:eee; opacity: 0.6;' : '' %>">
                 <td style="font-size:12px;">
-                <%= link_to "#{user.first_name} #{user.last_name}", user %></td>
+                    <%= link_to '#', data: { toggle: 'modal', target: "#show-#{user.id}"} do %>
+                <%= user.first_name %> <%= user.last_name %>
+                <% end %>
+                        <%= render template: "users/modals/show", locals: {user: @user}%></td>
                 <% if current_page?(root_path)%>
                     <td style="font-size:12px;" class='collapsable'><%= user.email %></td>
                     <td style="font-size:12px;" class='collapsable'><%= number_to_phone(user.phone, area_code: true) if current_user.phone %></td>
@@ -60,7 +69,7 @@
                 <% else %>
                     <!-- show either eval form or "evaluation completed" depending if it's complete -->
                     <% evaluated_left = User.find(@group.users.collect(&:id) - @group.eval_relations.where(reviewer_id:current_user.id).collect(&:user_id)) %>
-                    <td>
+                    <td style="font-size:12px;">
                         <% if evaluated_left.include?(user) %>
                             <span class="btn btn-primary btn-xs" data-toggle="modal" data-target="#evaluate-<%= @group.id%>">Evaluate</span>
                             <% else %>

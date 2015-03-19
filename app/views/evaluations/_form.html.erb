@@ -13,7 +13,7 @@
 						<%= content_tag :div, msg.html_safe, id: "error" %>
 					</div>
 				<% else %>
-					<%= f.select :user, options_for_select(evaluated_left.collect {|p| [ p.first_name + " " + p.last_name, p.id ]}),  {include_blank: true}, {class: 'form-control', style: 'width:70%; display:inline; height:29px;' }  %>
+					<%= f.select :user, options_for_select(evaluated_left.collect {|p| [ p.first_name + " " + p.last_name, p.id ]}),  {include_blank: false}, {class: 'form-control', style: 'width:70%; display:inline; height:29px;' }  %>
 				<% end %>
 			</td>
 		</tr>

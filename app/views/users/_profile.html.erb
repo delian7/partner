@@ -1,24 +1,16 @@
-<% if signed_in?%>
+<% if !current_user.nil?%>
 <div class="section group">
-  <div class="col-sm-3">
-  	<%= image_tag current_user.avatar.url, style:"width:100%"%><br><br>
-  </div>
-  <div class="col-sm-8">
-		<span style="font-weight:bold;font-size:25px;"><%= current_user.first_name%> <%=current_user.last_name %></span></h4>
-	<table>
-		<tr><td style = "text-align:right;font-weight:bold;">Name: </td>
-		<td> <%= current_user.first_name%> <%=current_user.last_name %></td></tr>
-		<tr><td style = "text-align:right;font-weight:bold;">Email: </td>
-		<td> <%= current_user.email if current_user.email %></td></tr>
-		<tr><td style = "text-align:right;font-weight:bold;">Description: </td>
-		<td> <%= current_user.description if current_user.description %></td></tr>
-		<tr><td style = "text-align:right;font-weight:bold;">Phone: </td>
-		<td> <%= number_to_phone(current_user.phone, area_code: true) if current_user.phone %></td></tr>
-		<tr><td style = "text-align:right;font-weight:bold;">Availability: </td>
-		 <td><%= current_user.availability if current_user.availability%></td></tr>
-		<tr><td style = "text-align:right;font-weight:bold;">Last Sign In:</td>
-			<td> <%= current_user.last_sign_in_at.strftime('%A, %B') if current_user.last_sign_in_at %> <%= current_user.last_sign_in_at.strftime('%e ').to_i.ordinalize if current_user.last_sign_in_at %><%= current_user.last_sign_in_at.strftime(' %Y, at %I:%M%P') if current_user.last_sign_in_at %></td></tr>
-	</table>
-  </div>
+	<div class="col span_1_of_3">
+		<br><%= image_tag (current_user.avatar.url),style: "text-align:left;float:right; max-width:90%;", class:"img-rounded"%></div>
+	<div class="col span_2_of_3">
+		<span style="font-weight:bold;font-size:40px;"><%= current_user.first_name%> <%= current_user.last_name%></span><br>
+		<span style="font-weight:bold;">Name:</span> <%= current_user.first_name%> <%=current_user.last_name %><br>
+		<span style="font-weight:bold;">Email:</span> <%= current_user.email if current_user.email %><br>
+		<span style="font-weight:bold;">Phone:</span> <%= number_to_phone(current_user.phone, area_code: true) if current_user.phone%><br>
+		<span style="font-weight:bold;">Description:</span> <%= current_user.description if current_user.description %><br>
+		<span style="font-weight:bold;">Availability:</span> <%= current_user.availability if current_user.availability%><br>
+		<span style="font-weight:bold;">Last Sign In:</span> <%= current_user.last_sign_in_at.strftime('%A, %B') if current_user.last_sign_in_at %> <%= current_user.last_sign_in_at.strftime('%e ').to_i.ordinalize if current_user.last_sign_in_at %><%= current_user.last_sign_in_at.strftime(' %Y, at %I:%M%P') if current_user.last_sign_in_at %>
+		<br>
+	</div>
 </div>
-<% end %>
+<%end%>

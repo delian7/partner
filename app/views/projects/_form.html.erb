@@ -1,5 +1,6 @@
 <div>
-	<% repeat = Project.find_by_id(@project.id).allow_repeat if !@project.nil? %>
+	<% project = Project.find_by_id(@project.id) if !@project.nil?%>
+	<% repeat = project.allow_repeat if !@project.nil? %>
 
 	<table style="width:100%">
 		<tr>
@@ -31,33 +32,7 @@
 		</tr>
 	</table>
 
-<% if !edit_path %>
-
-	<table style="width:100%;padding:1px;margin-top:15px">
-		<tr>
-			<td style="padding:1px 1px 0px 1px"><span class="glyphicons glyphicons-education"></span>&nbsp;<%= f.label 'Course(s):', {style:"margin:0px;padding:0px"}  %></td>
-			<% current_user.courses.each do |course|%>
-			<td style="padding:1px"><input type="checkbox" name="courses[]" "<%=  "checked=true" if (course == @course) %>" value="<%= course.id %>"></td>
-			<td style="padding:1px"><%= course.course_title %></td>
-		</tr>
-		<tr><td></td>
-			<% end %>
-	</table>
-
-
-	<table style="width:100%;padding:1px;margin-top:15px">
-		<td><span class="glyphicons glyphicons-random"></span></td>
-		<td colspan='2'><b>What is the scope of groups?</b></td>
-		<tr>
-			<td></td><td style="padding:5px 10px 5px 10px;"><input type="radio" name="limit_scope" checked="false" value="true"></td>
-			<td style="padding:5px 10px 5px 10px;"><span class="glyphicons glyphicons-handshake"></span>&emsp;Joint Course Project: </td>
-		</tr>
-		<tr>
-			<td></td><td style="padding:5px 10px 5px 10px;"><input type="radio" name="limit_scope" checked="true" value="false"></td>
-			<td style="padding:5px 10px 5px 10px;"><span class="glyphicons glyphicons-transfer"></span>&emsp;Keep Groups Separate by Course: </td>
-	</table>
-<% else %>
-<% end %>
+<input type="checkbox" name="courses[]" checked='true' value="<%= @course.id %>" hidden='true'>
 
 	<table style="width:100%;padding:1px;margin-top:15px">
 		<tr>

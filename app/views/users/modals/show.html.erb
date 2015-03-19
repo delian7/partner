@@ -1,0 +1,19 @@
+<!-- Profile Page Modal -->
+<div class="modal fade" id="show-<%= user.id%>">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel"><span class="glyphicons glyphicons-nameplate-alt"></span>&nbsp;<%= @user.first_name %> <%=@user.last_name%></h4>
+      </div>
+      <div class="modal-body">
+				<%= render 'users/show', locals: {user:@user} %>
+      </div>
+      <div class="modal-footer">
+        <%= link_to edit_user_registration_path, class: "btn btn-large btn-success" do %>
+					<span class="glyphicons glyphicons-pencil"></span> Edit Profile
+				<% end %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -82,9 +82,9 @@ class GroupsController < ApplicationController
         current_user.group_relations.find_by(group_id: group.id).destroy
       end
       # Delete relation for user
-      group.users.each do |user|
-        ChangeMailer.send_change_message(user.email).deliver if user!=current_user
-      end
+      # group.users.each do |user|
+      #   ChangeMailer.send_change_message(user.email).deliver if user!=current_user
+      # end
       flash[:notice] = "Group Relation successfully reset."
     else
       flash[:error] = "Unable to reset Group Relation."
@@ -136,9 +136,9 @@ class GroupsController < ApplicationController
       current_user_relation = GroupRelation.create(user_id: current_user.id,
                                                    project_id: @myproject.id, status: 0, group_id: group.id)
       flash[:notice] = "Sent request to join <b>#{group.name}</b> "
-      group.users.each do |user|
-        ChangeMailer.send_change_message(user.email).deliver
-      end
+      # group.users.each do |user|
+      #   ChangeMailer.send_change_message(user.email).deliver
+      # end
     else
       flash[:error] = "<b>#{group.name}</b> is full"
     end
@@ -163,7 +163,7 @@ class GroupsController < ApplicationController
       end
       # create relation for user who is being requested (status=1, requested)
       user_relation = GroupRelation.create(user_id: user.id, project_id: @myproject.id, status: 1, group_id: newgroup.id)
-      ChangeMailer.send_change_message(user.email).deliver
+      # ChangeMailer.send_change_message(user.email).deliver
       flash[:notice] = "Requested <b>#{user.first_name} #{user.last_name}</b> to your group: <b>#{newgroup.name}</b> "
     end
     redirect_to users_path
