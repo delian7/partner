@@ -176,11 +176,9 @@ Documentation and Support
 
 ### Issues
 
-+ Report bug not working at the moment
-+ Partnerships down for database updates
 + Email down for now, but functionality still there. Used In the groups controller, ChangeMailer.
 
 Credits
 -------
-<img src="http://i58.tinypic.com/264l3pj.png" style="max-width:200px;">
+<img src="http://i58.tinypic.com/264l3pj.png" style="max-width:50px;">
 
