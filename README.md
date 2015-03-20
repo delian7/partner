@@ -165,7 +165,6 @@ Documentation and Support
 + index
 + show - This can be used later to determine whether to show a user or not.
 + update - current code updates the attributes as secure parameters and displays alert messages to user
-+ set_course - sets current_course in database so that the user will go back to the same course they left last session
 
 
 ####Courses_controller
@@ -180,5 +179,5 @@ Documentation and Support
 
 Credits
 -------
-<img src="http://i58.tinypic.com/264l3pj.png" style="max-width:200px;">
+<img src="http://i58.tinypic.com/264l3pj.png" style="max-width:50px;">
 
